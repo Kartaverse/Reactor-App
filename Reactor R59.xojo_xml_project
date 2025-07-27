@@ -134,6 +134,48 @@
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
     </HookInstance>
+    <HookInstance>
+      <ItemName>CancelClosing</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>254601215</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function CancelClosing() As Boolean</SourceLine>
+        <SourceLine>// The cancelClosing event is called when the app receives the quit signal</SourceLine>
+        <SourceLine>If App.DownloadRow &gt;= 0 and App.QuitAllowed = 0 Then</SourceLine>
+        <SourceLine>Var Quit_Message_Dialog As New MessageDialog                        // Create the MessageDialog object</SourceLine>
+        <SourceLine>Quit_Message_Dialog.IconType = MessageDialog.IconTypes.Caution // Display warning icon</SourceLine>
+        <SourceLine>Quit_Message_Dialog.ActionButton.Caption = "Quit"</SourceLine>
+        <SourceLine>Quit_Message_Dialog.CancelButton.Visible = True                        // Show the Cancel button</SourceLine>
+        <SourceLine>//Quit_Message_Dialog.AlternateActionButton.Visible = True       // Show the alternate action button</SourceLine>
+        <SourceLine>//Quit_Message_Dialog.AlternateActionButton.Caption = "Complete Downloads, Then Quit"</SourceLine>
+        <SourceLine>Quit_Message_Dialog.Message = "Do you want to quit Reactor?"</SourceLine>
+        <SourceLine>Quit_Message_Dialog.Explanation = "A download is still in progress."</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var Quit_Message_Dialog_Button As MessageDialogButton                 // For handling the result</SourceLine>
+        <SourceLine>Quit_Message_Dialog_Button = Quit_Message_Dialog.ShowModal  // Display the dialog</SourceLine>
+        <SourceLine>Select Case Quit_Message_Dialog_Button              // Determine which button was pressed.</SourceLine>
+        <SourceLine>Case Quit_Message_Dialog.ActionButton</SourceLine>
+        <SourceLine>// User pressed "Quit"</SourceLine>
+        <SourceLine>// Go ahead and quit the program</SourceLine>
+        <SourceLine>ReactorWindow.AtomDownloadCancel()</SourceLine>
+        <SourceLine>Return False</SourceLine>
+        <SourceLine>Case Quit_Message_Dialog.AlternateActionButton</SourceLine>
+        <SourceLine>// User pressed "Complete Downloads, Then Quit</SourceLine>
+        <SourceLine>// Do something with a deferred RSocket event handler</SourceLine>
+        <SourceLine>App.QuitOnDownloadComplete = 1</SourceLine>
+        <SourceLine>Return True</SourceLine>
+        <SourceLine>Case Quit_Message_Dialog.CancelButton</SourceLine>
+        <SourceLine>// User pressed "Cancel"</SourceLine>
+        <SourceLine>// Cancel the quit event and let the program continue running</SourceLine>
+        <SourceLine/>
+        <SourceLine>Return True</SourceLine>
+        <SourceLine>End Select</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </HookInstance>
     <Property>
       <ItemName>Atoms</ItemName>
       <Compatibility/>
@@ -221,6 +263,36 @@
       </ItemSource>
       <TextEncoding>134217984</TextEncoding>
       <ItemDeclaration>DownloadRow As Integer = -1</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
+    <Property>
+      <ItemName>QuitOnDownloadComplete</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>720623615</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>QuitOnDownloadComplete As Integer = 0</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>QuitOnDownloadComplete As Integer = 0</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
+    <Property>
+      <ItemName>QuitAllowed</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>464232447</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>QuitAllowed As Integer = 0</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>QuitAllowed As Integer = 0</ItemDeclaration>
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
     </Property>
@@ -349,6 +421,18 @@
         <ObjName>DownloadRow</ObjName>
         <PropertyGroup>Behavior</PropertyGroup>
         <PropertyValue>-1</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>QuitOnDownloadComplete</ObjName>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>0</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>QuitAllowed</ObjName>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>0</PropertyValue>
         <ItemType>Integer</ItemType>
       </ViewProperty>
     </ViewBehavior>
@@ -1457,6 +1541,48 @@
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
     </HookInstance>
+    <HookInstance>
+      <ItemName>CancelClosing</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>826646527</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function CancelClosing(appQuitting As Boolean) As Boolean</SourceLine>
+        <SourceLine>// The cancelClosing event is called when the app receives the quit signal</SourceLine>
+        <SourceLine>If App.DownloadRow &gt;= 0 and App.QuitAllowed = 0 Then</SourceLine>
+        <SourceLine>Var Quit_Message_Dialog As New MessageDialog                        // Create the MessageDialog object</SourceLine>
+        <SourceLine>Quit_Message_Dialog.IconType = MessageDialog.IconTypes.Caution // Display warning icon</SourceLine>
+        <SourceLine>Quit_Message_Dialog.ActionButton.Caption = "Quit"</SourceLine>
+        <SourceLine>Quit_Message_Dialog.CancelButton.Visible = True                        // Show the Cancel button</SourceLine>
+        <SourceLine>//Quit_Message_Dialog.AlternateActionButton.Visible = True       // Show the alternate action button</SourceLine>
+        <SourceLine>//Quit_Message_Dialog.AlternateActionButton.Caption = "Complete Downloads, Then Quit"</SourceLine>
+        <SourceLine>Quit_Message_Dialog.Message = "Do you want to quit Reactor?"</SourceLine>
+        <SourceLine>Quit_Message_Dialog.Explanation = "A download is still in progress."</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var Quit_Message_Dialog_Button As MessageDialogButton                 // For handling the result</SourceLine>
+        <SourceLine>Quit_Message_Dialog_Button = Quit_Message_Dialog.ShowModal  // Display the dialog</SourceLine>
+        <SourceLine>Select Case Quit_Message_Dialog_Button              // Determine which button was pressed.</SourceLine>
+        <SourceLine>Case Quit_Message_Dialog.ActionButton</SourceLine>
+        <SourceLine>// User pressed "Quit"</SourceLine>
+        <SourceLine>// Go ahead and quit the program</SourceLine>
+        <SourceLine>ReactorWindow.AtomDownloadCancel()</SourceLine>
+        <SourceLine>Return False</SourceLine>
+        <SourceLine>Case Quit_Message_Dialog.AlternateActionButton</SourceLine>
+        <SourceLine>// User pressed "Complete Downloads, Then Quit</SourceLine>
+        <SourceLine>// Do something with a deferred RSocket event handler</SourceLine>
+        <SourceLine>App.QuitOnDownloadComplete = 1</SourceLine>
+        <SourceLine>Return True</SourceLine>
+        <SourceLine>Case Quit_Message_Dialog.CancelButton</SourceLine>
+        <SourceLine>// User pressed "Cancel"</SourceLine>
+        <SourceLine>// Cancel the quit event and let the program continue running</SourceLine>
+        <SourceLine/>
+        <SourceLine>Return True</SourceLine>
+        <SourceLine>End Select</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </HookInstance>
     <MenuHandler>
       <ItemName>AboutReactorItem</ItemName>
       <Compatibility/>
@@ -1781,6 +1907,130 @@
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
       <ItemParams/>
+      <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>AtomDownloadCancel</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>2142982143</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub AtomDownloadCancel()</SourceLine>
+        <SourceLine>// Cancel the download task</SourceLine>
+        <SourceLine>RSocket.Disconnect()</SourceLine>
+        <SourceLine/>
+        <SourceLine>if App.DownloadRow &gt;= 0 Then</SourceLine>
+        <SourceLine>// Refresh the status displays</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Cancelled"</SourceLine>
+        <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
+        <SourceLine>DownloadProgress.Value = 0</SourceLine>
+        <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+        <SourceLine>App.DownloadRow = -1</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Remove the partial file</SourceLine>
+        <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil And App.DownloadFolderItem.Exists then</SourceLine>
+        <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>System.Debuglog("[Cancelled Download] " + App.DownloadFilename)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams/>
+      <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>AtomRemove</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>310880255</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub AtomRemove(row As Integer)</SourceLine>
+        <SourceLine>//Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
+        <SourceLine>If row &gt;= 0 Then</SourceLine>
+        <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
+        <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 0).IntegerValue</SourceLine>
+        <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var ID As String = Atom.Value("ID")</SourceLine>
+        <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
+        <SourceLine/>
+        <SourceLine>App.DownloadRow = row</SourceLine>
+        <SourceLine>Var AtomzFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz")</SourceLine>
+        <SourceLine>Var AtomzFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz").Child(ID + ".zip")</SourceLine>
+        <SourceLine/>
+        <SourceLine>App.DownloadFilename = AtomzFile.Name</SourceLine>
+        <SourceLine>App.DownloadFolderItem = AtomzFile</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Remove the partial file</SourceLine>
+        <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil And App.DownloadFolderItem.Exists then</SourceLine>
+        <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Refresh the status displays</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Removed"</SourceLine>
+        <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
+        <SourceLine>DownloadProgress.Value = 0</SourceLine>
+        <SourceLine/>
+        <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+        <SourceLine>App.DownloadRow = -1</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine/>
+        <SourceLine/>
+        <SourceLine/>
+        <SourceLine/>
+        <SourceLine/>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>row As Integer</ItemParams>
+      <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>AtomDownload</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>98697215</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub AtomDownload(row As Integer)</SourceLine>
+        <SourceLine>If row &gt;= 0 Then</SourceLine>
+        <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
+        <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 0).IntegerValue</SourceLine>
+        <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var ID As String = Atom.Value("ID")</SourceLine>
+        <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var AtomzFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz")</SourceLine>
+        <SourceLine>Var AtomzFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz").Child(ID + ".zip")</SourceLine>
+        <SourceLine/>
+        <SourceLine>App.DownloadFilename = AtomzFile.Name</SourceLine>
+        <SourceLine>App.DownloadFolderItem = AtomzFile</SourceLine>
+        <SourceLine/>
+        <SourceLine>App.DownloadRow = row</SourceLine>
+        <SourceLine/>
+        <SourceLine>RSocket.Send("GET", ZipFileURL, AtomzFile)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>row As Integer</ItemParams>
       <ItemResult/>
     </Method>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
@@ -2225,56 +2475,17 @@
           <SourceLine>End</SourceLine>
           <SourceLine/>
           <SourceLine>If row &gt;= 0 and column = 0 Then</SourceLine>
-          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
-          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 0).IntegerValue</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var ID As String = Atom.Value("ID")</SourceLine>
-          <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var AtomzFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz")</SourceLine>
-          <SourceLine>Var AtomzFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz").Child(ID + ".zip")</SourceLine>
-          <SourceLine>App.DownloadFilename = AtomzFile.Name</SourceLine>
-          <SourceLine>App.DownloadFolderItem = AtomzFile</SourceLine>
-          <SourceLine/>
           <SourceLine>App.DownloadRow = row</SourceLine>
           <SourceLine>If AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked Then</SourceLine>
           <SourceLine>// Remove the package</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Remove the partial file</SourceLine>
-          <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil And App.DownloadFolderItem.Exists then</SourceLine>
-          <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Refresh the status displays</SourceLine>
-          <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Removed"</SourceLine>
-          <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
-          <SourceLine>DownloadProgress.Value = 0</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
-          <SourceLine>App.DownloadRow = -1</SourceLine>
-          <SourceLine/>
-          <SourceLine>System.Debuglog("[Removed Package] " + App.DownloadFilename)</SourceLine>
+          <SourceLine>AtomRemove(row)</SourceLine>
           <SourceLine>ElseIf AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Unchecked Then</SourceLine>
           <SourceLine>// Download the package</SourceLine>
-          <SourceLine>Download(ZipFileURL, AtomzFile)</SourceLine>
+          <SourceLine>AtomDownload(row)</SourceLine>
           <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
           <SourceLine>ElseIf AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Indeterminate Then</SourceLine>
           <SourceLine>// Cancel the download task</SourceLine>
-          <SourceLine>RSocket.Disconnect()</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Remove the partial file</SourceLine>
-          <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil And App.DownloadFolderItem.Exists then</SourceLine>
-          <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Refresh the status displays</SourceLine>
-          <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Cancelled"</SourceLine>
-          <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
-          <SourceLine>DownloadProgress.Value = 0</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
-          <SourceLine>App.DownloadRow = -1</SourceLine>
-          <SourceLine/>
-          <SourceLine>System.Debuglog("[Cancelled Installing Package] " + App.DownloadFilename)</SourceLine>
+          <SourceLine>AtomDownloadCancel()</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
@@ -2325,17 +2536,7 @@
           <SourceLine>Sub Pressed()</SourceLine>
           <SourceLine>Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
           <SourceLine>If row &gt;= 0 Then</SourceLine>
-          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
-          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 0).IntegerValue</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var ID As String = Atom.Value("ID")</SourceLine>
-          <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
-          <SourceLine/>
-          <SourceLine>App.DownloadRow = row</SourceLine>
-          <SourceLine>Var AtomzFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz")</SourceLine>
-          <SourceLine>Var AtomzFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz").Child(ID + ".zip")</SourceLine>
-          <SourceLine>Download(ZipFileURL, AtomzFile)</SourceLine>
+          <SourceLine>AtomDownload(row)</SourceLine>
           <SourceLine>End if</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
@@ -2368,40 +2569,7 @@
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Pressed()</SourceLine>
           <SourceLine>Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
-          <SourceLine>If row &gt;= 0 Then</SourceLine>
-          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
-          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 0).IntegerValue</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var ID As String = Atom.Value("ID")</SourceLine>
-          <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
-          <SourceLine/>
-          <SourceLine>App.DownloadRow = row</SourceLine>
-          <SourceLine>Var AtomzFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz")</SourceLine>
-          <SourceLine>Var AtomzFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz").Child(ID + ".zip")</SourceLine>
-          <SourceLine/>
-          <SourceLine>App.DownloadFilename = AtomzFile.Name</SourceLine>
-          <SourceLine>App.DownloadFolderItem = AtomzFile</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Remove the partial file</SourceLine>
-          <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil And App.DownloadFolderItem.Exists then</SourceLine>
-          <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Refresh the status displays</SourceLine>
-          <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Removed"</SourceLine>
-          <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
-          <SourceLine>DownloadProgress.Value = 0</SourceLine>
-          <SourceLine/>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
-          <SourceLine>App.DownloadRow = -1</SourceLine>
-          <SourceLine>End if</SourceLine>
-          <SourceLine/>
-          <SourceLine/>
-          <SourceLine/>
-          <SourceLine/>
-          <SourceLine/>
-          <SourceLine/>
+          <SourceLine>AtomRemove(row)</SourceLine>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -2487,6 +2655,11 @@
           <SourceLine>CancelButton.Visible = False</SourceLine>
           <SourceLine>//DownloadStatsLabel.Text = ""</SourceLine>
           <SourceLine/>
+          <SourceLine>// The Reactor app was quit with the CancelClosing "Complete Downloads, Then Quit" option.</SourceLine>
+          <SourceLine>If App.QuitOnDownloadComplete = 1 Then</SourceLine>
+          <SourceLine>App.QuitAllowed = 1</SourceLine>
+          <SourceLine>Quit()</SourceLine>
+          <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
@@ -2505,23 +2678,7 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine>// Cancel the download task</SourceLine>
-          <SourceLine>RSocket.Disconnect()</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Refresh the status displays</SourceLine>
-          <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Cancelled"</SourceLine>
-          <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
-          <SourceLine>DownloadProgress.Value = 0</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
-          <SourceLine>App.DownloadRow = -1</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Remove the partial file</SourceLine>
-          <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil And App.DownloadFolderItem.Exists then</SourceLine>
-          <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine/>
-          <SourceLine>System.Debuglog("[Cancelled Download] " + App.DownloadFilename)</SourceLine>
-          <SourceLine/>
+          <SourceLine>AtomDownloadCancel()</SourceLine>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -3689,9 +3846,9 @@
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.Controls.AtomsListBox.SelectionChanged</EditorLocation>
+          <EditorLocation>App.CancelClosing</EditorLocation>
           <EditorPath/>
-          <EditingPartID>338128895</EditingPartID>
+          <EditingPartID>1350840319</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
