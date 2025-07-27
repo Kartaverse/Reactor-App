@@ -176,6 +176,60 @@
         <SourceLine>End Function</SourceLine>
       </ItemSource>
     </HookInstance>
+    <HookInstance>
+      <ItemName>AppleEventReceived</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>2054318079</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function AppleEventReceived(theEvent As AppleEvent, eventClass As String, eventID As String) As Boolean</SourceLine>
+        <SourceLine>If eventClass = "GURL" Then</SourceLine>
+        <SourceLine>// YouTube: Usa URI personalizados en tus Apps Xojo</SourceLine>
+        <SourceLine>// https://www.youtube.com/watch?v=N-WLwbfp7Nw</SourceLine>
+        <SourceLine>// https://blog.xojo.com/2016/05/09/let-your-os-x-desktop-app-react-to-custom-uris/</SourceLine>
+        <SourceLine/>
+        <SourceLine>// The string.ReplaceAll("/", "") function strips out the URL slashes from a string like "reactor://" to make it "reactor:"</SourceLine>
+        <SourceLine>Var url() as string = DecodeURLComponent(theEvent.StringParam("----")).DefineEncoding(encodings.UTF8).ReplaceAll("/", "").Split(":")</SourceLine>
+        <SourceLine>url.Remove(0)</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var Tokens As String = join(url, ":")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Remove ".atom" from the end of the string</SourceLine>
+        <SourceLine>// com.AndrewHazelden.KartaLink.Scripts.SpatialMetadata.atom</SourceLine>
+        <SourceLine>Var regex As New RegEx</SourceLine>
+        <SourceLine>regex.SearchPattern = "[.]atom$"  // Matches the end of the string</SourceLine>
+        <SourceLine>regex.ReplacementPattern = ""</SourceLine>
+        <SourceLine>Tokens = regex.Replace(Tokens)</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Remove ".zip" from the end of the string</SourceLine>
+        <SourceLine>// com.AndrewHazelden.KartaLink.Scripts.SpatialMetadata.zip</SourceLine>
+        <SourceLine>regex.SearchPattern = "[.]zip$"  // Matches the end of the string</SourceLine>
+        <SourceLine>regex.ReplacementPattern = ""</SourceLine>
+        <SourceLine>Tokens = regex.Replace(Tokens)</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Split the tokens</SourceLine>
+        <SourceLine>Var csvArray() As String = Tokens.Split(",")</SourceLine>
+        <SourceLine>ReactorWindow.DownloadStatsLabel.Text = Tokens</SourceLine>
+        <SourceLine>System.Debuglog("[Reactor URL] """ + Tokens + """")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Navigate to the atom package</SourceLine>
+        <SourceLine>// Var AtomID As String = csvArray(0)</SourceLine>
+        <SourceLine>Var AtomID As String = Tokens</SourceLine>
+        <SourceLine>ReactorWindow.AtomURL(AtomID)</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Enter the atom package name into the search field</SourceLine>
+        <SourceLine>// ReactorWindow.SearchTextField.Text = AtomID</SourceLine>
+        <SourceLine>// ReactorWindow.SearchButton.Press()</SourceLine>
+        <SourceLine/>
+        <SourceLine>Return True</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>Return False</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </HookInstance>
     <Property>
       <ItemName>Atoms</ItemName>
       <Compatibility/>
@@ -2033,6 +2087,38 @@
       <ItemParams>row As Integer</ItemParams>
       <ItemResult/>
     </Method>
+    <Method>
+      <ItemName>AtomURL</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>481331199</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub AtomURL(AtomID As String)</SourceLine>
+        <SourceLine>Var row As Integer</SourceLine>
+        <SourceLine>For row = 0 To CategoryListBox.LastRowIndex</SourceLine>
+        <SourceLine>If CategoryListBox.CellTextAt(row, 0) = "All" Then </SourceLine>
+        <SourceLine>CategoryListBox.SelectedRowIndex = row</SourceLine>
+        <SourceLine>CategoryListBox.SetFocus</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine/>
+        <SourceLine>For row = 0 To AtomsListBox.LastRowIndex</SourceLine>
+        <SourceLine>If AtomsListBox.CellTextAt(row, 9) = AtomID Then </SourceLine>
+        <SourceLine>AtomsListBox.SelectedRowIndex = row</SourceLine>
+        <SourceLine>AtomsListBox.SetFocus</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>AtomID As String</ItemParams>
+      <ItemResult/>
+    </Method>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
@@ -3173,7 +3259,7 @@
       <PropertyVal Name="TabIndex">12</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">6.9 MB of 600 MB (929 kB/sec) com.Vonk.FusionMograph.zip</PropertyVal>
+      <PropertyVal Name="Text">com.wesuckless.reactor.zip</PropertyVal>
       <PropertyVal Name="TextAlignment">0</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
       <PropertyVal Name="Tooltip"/>
@@ -3820,6 +3906,16 @@
       </ImageSpecification>
     </ImageRepresentation>
   </block>
+  <block type="IDEScriptStep" ID="1698770943">
+    <ObjName>Plist</ObjName>
+    <ObjContainerID>1501057023</ObjContainerID>
+    <StepAppliesTo>0</StepAppliesTo>
+    <ScriptText>
+      <Hex bytes="729">44696D2041707020417320537472696E67203D2043757272656E744275696C644C6F636174696F6E202B20222F22202B2043757272656E744275696C644170704E616D650D63616C6C20446F5368656C6C436F6D6D616E6428222F7573722F6C6962657865632F506C6973744275646479202D63202222616464203A434642756E646C6555524C547970657320617272617922222022202B20417070202B20222F436F6E74656E74732F496E666F2E706C6973742220290D63616C6C20446F5368656C6C436F6D6D616E6428222F7573722F6C6962657865632F506C6973744275646479202D63202222616464203A434642756E646C6555524C54797065733A30206469637422222022202B20417070202B20222F436F6E74656E74732F496E666F2E706C6973742220290D63616C6C20446F5368656C6C436F6D6D616E6428222F7573722F6C6962657865632F506C6973744275646479202D63202222616464203A434642756E646C6555524C54797065733A303A434642756E646C6555524C4E616D6520737472696E67202752656163746F722722222022202B20417070202B20222F436F6E74656E74732F496E666F2E706C6973742220290D63616C6C20446F5368656C6C436F6D6D616E6428222F7573722F6C6962657865632F506C6973744275646479202D63202222616464203A434642756E646C6555524C54797065733A303A434642756E646C6555524C536368656D657320617272617922222022202B20417070202B20222F436F6E74656E74732F496E666F2E706C6973742220290D63616C6C20446F5368656C6C436F6D6D616E6428222F7573722F6C6962657865632F506C6973744275646479202D63202222616464203A434642756E646C6555524C54797065733A303A434642756E646C6555524C536368656D65733A3020737472696E67202772656163746F722722222022202B20417070202B20222F436F6E74656E74732F496E666F2E706C6973742220290D</Hex>
+    </ScriptText>
+    <CopyFileStepArch>0</CopyFileStepArch>
+    <Target>0</Target>
+  </block>
   <block type="UIState" ID="0">
     <WarningPreferences>
       <ItemName>5</ItemName>
@@ -3839,14 +3935,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1920" height="983"/>
+        <Rect left="0" top="25" width="1918" height="951"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>App.CancelClosing</EditorLocation>
+          <EditorLocation>App.AppleEventReceived</EditorLocation>
           <EditorPath/>
           <EditingPartID>1350840319</EditingPartID>
           <EditorPath/>
