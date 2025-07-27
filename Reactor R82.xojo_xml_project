@@ -83,38 +83,6 @@
         <SourceLine>Sub Opening()</SourceLine>
         <SourceLine>App.AllowAutoQuit = True</SourceLine>
         <SourceLine/>
-        <SourceLine>// The Reactor folder is stored in the user's home account</SourceLine>
-        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
-        <SourceLine>Var JSONFolder As FolderItem = ReactorFolder.Child("JSON")</SourceLine>
-        <SourceLine>Var AtomzFolder As FolderItem = ReactorFolder.Child("Atomz")</SourceLine>
-        <SourceLine>Var AtomsFolder As FolderItem = ReactorFolder.Child("Atoms")</SourceLine>
-        <SourceLine>Var AtomsReactorFolder As FolderItem = AtomsFolder.Child("Reactor")</SourceLine>
-        <SourceLine>Var DeployFolder As FolderItem = ReactorFolder.Child("Deploy")</SourceLine>
-        <SourceLine>Var DeployAtomsFolder As FolderItem = DeployFolder.Child("Atoms")</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Create the folders</SourceLine>
-        <SourceLine>If ReactorFolder &lt;&gt; Nil And Not ReactorFolder.Exists Then</SourceLine>
-        <SourceLine>ReactorFolder.CreateFolder</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>If JSONFolder &lt;&gt; Nil And Not JSONFolder.Exists Then</SourceLine>
-        <SourceLine>JSONFolder.CreateFolder</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>If AtomzFolder &lt;&gt; Nil And Not AtomzFolder.Exists Then</SourceLine>
-        <SourceLine>AtomzFolder.CreateFolder</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>If AtomsFolder &lt;&gt; Nil And Not AtomsFolder.Exists Then</SourceLine>
-        <SourceLine>AtomsFolder.CreateFolder</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>If AtomsReactorFolder &lt;&gt; Nil And Not AtomsReactorFolder.Exists Then</SourceLine>
-        <SourceLine>AtomsReactorFolder.CreateFolder</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>If DeployFolder &lt;&gt; Nil And Not DeployFolder.Exists Then</SourceLine>
-        <SourceLine>DeployFolder.CreateFolder</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>If DeployAtomsFolder &lt;&gt; Nil And Not DeployAtomsFolder.Exists Then</SourceLine>
-        <SourceLine>DeployAtomsFolder.CreateFolder</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine/>
         <SourceLine>App.Header = "&lt;html&gt; " +_ </SourceLine>
         <SourceLine>"&lt;head&gt; " +_ </SourceLine>
         <SourceLine>"&lt;meta name=""qrichtext"" content=""1"" /&gt; " +_ </SourceLine>
@@ -130,6 +98,7 @@
         <SourceLine>"&lt;/head&gt; " +_ </SourceLine>
         <SourceLine>"&lt;body&gt; "</SourceLine>
         <SourceLine>App.Footer = "&lt;/body&gt;&lt;/html&gt;"</SourceLine>
+        <SourceLine/>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
@@ -1118,7 +1087,10 @@
         <SourceLine>// Me.Width = DesktopDisplay.DisplayAt(0).AvailableWidth</SourceLine>
         <SourceLine>// Me.Height = DesktopDisplay.DisplayAt(0).AvailableHeight - 28</SourceLine>
         <SourceLine/>
-        <SourceLine>//Download the Reactor.json file</SourceLine>
+        <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
+        <SourceLine>CreateReactorFolders()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Download the Reactor.json file</SourceLine>
         <SourceLine>JSONDownload()</SourceLine>
         <SourceLine/>
         <SourceLine>// Update the listboxes</SourceLine>
@@ -1142,20 +1114,27 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function CancelClosing(appQuitting As Boolean) As Boolean</SourceLine>
-        <SourceLine>// The cancelClosing event is called when the app receives the quit signal</SourceLine>
+        <SourceLine>// The CancelClosing event is called when the app receives the quit signal</SourceLine>
         <SourceLine>If App.DownloadRow &gt;= 0 and App.QuitAllowed = 0 Then</SourceLine>
-        <SourceLine>Var Quit_Message_Dialog As New MessageDialog                        // Create the MessageDialog object</SourceLine>
-        <SourceLine>Quit_Message_Dialog.IconType = MessageDialog.IconTypes.Caution // Display warning icon</SourceLine>
+        <SourceLine> // Create the MessageDialog object</SourceLine>
+        <SourceLine>Var Quit_Message_Dialog As New MessageDialog</SourceLine>
+        <SourceLine>// Display warning icon</SourceLine>
+        <SourceLine>Quit_Message_Dialog.IconType = MessageDialog.IconTypes.Caution </SourceLine>
         <SourceLine>Quit_Message_Dialog.ActionButton.Caption = "Quit"</SourceLine>
-        <SourceLine>Quit_Message_Dialog.CancelButton.Visible = True                        // Show the Cancel button</SourceLine>
-        <SourceLine>//Quit_Message_Dialog.AlternateActionButton.Visible = True       // Show the alternate action button</SourceLine>
+        <SourceLine>// Show the Cancel button</SourceLine>
+        <SourceLine>Quit_Message_Dialog.CancelButton.Visible = True                </SourceLine>
+        <SourceLine>// Show the alternate action button        </SourceLine>
+        <SourceLine>//Quit_Message_Dialog.AlternateActionButton.Visible = True       </SourceLine>
         <SourceLine>//Quit_Message_Dialog.AlternateActionButton.Caption = "Complete Downloads, Then Quit"</SourceLine>
         <SourceLine>Quit_Message_Dialog.Message = "Do you want to quit Reactor?"</SourceLine>
         <SourceLine>Quit_Message_Dialog.Explanation = "A download is still in progress."</SourceLine>
         <SourceLine/>
-        <SourceLine>Var Quit_Message_Dialog_Button As MessageDialogButton                 // For handling the result</SourceLine>
-        <SourceLine>Quit_Message_Dialog_Button = Quit_Message_Dialog.ShowModal  // Display the dialog</SourceLine>
-        <SourceLine>Select Case Quit_Message_Dialog_Button              // Determine which button was pressed.</SourceLine>
+        <SourceLine>// Hande the result</SourceLine>
+        <SourceLine>Var Quit_Message_Dialog_Button As MessageDialogButton             </SourceLine>
+        <SourceLine>// Display the dialog    </SourceLine>
+        <SourceLine>Quit_Message_Dialog_Button = Quit_Message_Dialog.ShowModal</SourceLine>
+        <SourceLine>// Determine which button was pressed.</SourceLine>
+        <SourceLine>Select Case Quit_Message_Dialog_Button              </SourceLine>
         <SourceLine>Case Quit_Message_Dialog.ActionButton</SourceLine>
         <SourceLine>// User pressed "Quit"</SourceLine>
         <SourceLine>// Go ahead and quit the program</SourceLine>
@@ -1630,6 +1609,9 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Sub AtomDownload(row As Integer)</SourceLine>
+        <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
+        <SourceLine>CreateReactorFolders()</SourceLine>
+        <SourceLine/>
         <SourceLine>If row &gt;= 0 Then</SourceLine>
         <SourceLine>Try</SourceLine>
         <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
@@ -1706,6 +1688,9 @@
         <SourceLine>Sub AtomDeploy()</SourceLine>
         <SourceLine>// UnZip the downloaded atomz package</SourceLine>
         <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil and App.DownloadFolderItem.exists Then</SourceLine>
+        <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
+        <SourceLine>CreateReactorFolders()</SourceLine>
+        <SourceLine/>
         <SourceLine>// Define the temp location for the zip expansion</SourceLine>
         <SourceLine>Var DestFolder As FolderItem = SpecialFolder.Temporary.Child("Reactor")</SourceLine>
         <SourceLine/>
@@ -1740,6 +1725,7 @@
         <SourceLine/>
         <SourceLine>// com.AndrewHazelden.KartaLink.Scripts.SpatialMetadata.json</SourceLine>
         <SourceLine>Var JSONAtomFile As FolderItem = WorkingDirectory.Child(AtomID + ".json")</SourceLine>
+        <SourceLine>Var LuaTableAtomFile As FolderItem = WorkingDirectory.Child(AtomID + ".atom")</SourceLine>
         <SourceLine/>
         <SourceLine>// Write the JSON file to disk</SourceLine>
         <SourceLine>Var tos As TextOutputStream</SourceLine>
@@ -1754,12 +1740,59 @@
         <SourceLine>// Debug: Reveal the working directory in a folder browsing window</SourceLine>
         <SourceLine>WorkingDirectory.Launch</SourceLine>
         <SourceLine/>
-        <SourceLine>// Debug: Print the deploy files</SourceLine>
-        <SourceLine>System.Debuglog("[Deploy]\n" + AtomDeploy.ToString(options))</SourceLine>
+        <SourceLine>// Debug: Print the atom package deploy files</SourceLine>
+        <SourceLine>//System.Debuglog("[Deploy]\n" + AtomDeploy.ToString(options))</SourceLine>
         <SourceLine/>
-        <SourceLine>If App.DownloadRow &gt;= 0 Then</SourceLine>
-        <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
+        <SourceLine>// Move the .atom and .json files to the Deploy folder</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+        <SourceLine>Var AtomsFolder As FolderItem = ReactorFolder.Child("Atoms")</SourceLine>
+        <SourceLine>Var AtomsReactorFolder As FolderItem = AtomsFolder.Child("Reactor")</SourceLine>
+        <SourceLine>Var DeployFolder As FolderItem = ReactorFolder.Child("Deploy")</SourceLine>
+        <SourceLine>Var DeployAtomsFolder As FolderItem = DeployFolder.Child("Atoms")</SourceLine>
+        <SourceLine>Var DeployAtomsReactorFolder As FolderItem = DeployAtomsFolder.Child("Reactor")</SourceLine>
+        <SourceLine>Var DeployJSONFolder As FolderItem = DeployFolder.Child("JSON")</SourceLine>
+        <SourceLine>Var DeployJSONReactorFolder As FolderItem = DeployJSONFolder.Child("Reactor")</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var DestFile As FolderItem</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>// JSON</SourceLine>
+        <SourceLine>DestFile = DeployJSONReactorFolder.Child(JSONAtomFile.Name)</SourceLine>
+        <SourceLine>If DestFile.Exists Then</SourceLine>
+        <SourceLine>DestFile.Remove()</SourceLine>
         <SourceLine>End If</SourceLine>
+        <SourceLine>If JSONAtomFile.Exists Then</SourceLine>
+        <SourceLine>JSONAtomFile.CopyTo(DeployJSONReactorFolder)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Atom</SourceLine>
+        <SourceLine>DestFile = AtomsReactorFolder.Child(LuaTableAtomFile.Name)</SourceLine>
+        <SourceLine>If DestFile.Exists Then</SourceLine>
+        <SourceLine>DestFile.Remove()</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>DestFile = DeployAtomsReactorFolder.Child(LuaTableAtomFile.Name)</SourceLine>
+        <SourceLine>If DestFile.Exists Then</SourceLine>
+        <SourceLine>DestFile.Remove()</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>if LuaTableAtomFile.exists Then</SourceLine>
+        <SourceLine>LuaTableAtomFile.CopyTo(AtomsReactorFolder)</SourceLine>
+        <SourceLine>LuaTableAtomFile.CopyTo(DeployAtomsReactorFolder)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Deploy files</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>Var DeployCount As Integer = AtomDeploy.Keys.Count</SourceLine>
+        <SourceLine>System.Debuglog("[Deploy File Count] " + DeployCount.ToString())</SourceLine>
+        <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
+        <SourceLine>// Var DeployFile As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>// System.Debuglog("[File] " + DeployFile.ToString())</SourceLine>
+        <SourceLine>System.Debuglog(AtomDeploy.ToString(options))</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
@@ -1786,6 +1819,9 @@
         <SourceLine>Var url As String = "https://kartaverse.github.io/Reactor-Docs/JSON/Reactor.json"</SourceLine>
         <SourceLine>Var JSONFile As FolderItem = JSONFolder.Child("Reactor.json")</SourceLine>
         <SourceLine/>
+        <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
+        <SourceLine>CreateReactorFolders()</SourceLine>
+        <SourceLine/>
         <SourceLine>// Socket</SourceLine>
         <SourceLine>RSocket.ClearRequestHeaders</SourceLine>
         <SourceLine>RSocket.RequestHeader("User-Agent") = "Xojo"</SourceLine>
@@ -1805,6 +1841,67 @@
         <SourceLine>tos = TextOutputStream.Create(JSONFile)</SourceLine>
         <SourceLine>tos.Write(App.Atoms.ToString(options))</SourceLine>
         <SourceLine>tos.Close</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams/>
+      <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>CreateReactorFolders</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>670963711</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub CreateReactorFolders()</SourceLine>
+        <SourceLine>// By default the Reactor folder is stored in the user's home account</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+        <SourceLine>Var JSONFolder As FolderItem = ReactorFolder.Child("JSON")</SourceLine>
+        <SourceLine>Var AtomzFolder As FolderItem = ReactorFolder.Child("Atomz")</SourceLine>
+        <SourceLine>Var AtomsFolder As FolderItem = ReactorFolder.Child("Atoms")</SourceLine>
+        <SourceLine>Var AtomsReactorFolder As FolderItem = AtomsFolder.Child("Reactor")</SourceLine>
+        <SourceLine>Var DeployFolder As FolderItem = ReactorFolder.Child("Deploy")</SourceLine>
+        <SourceLine>Var DeployAtomsFolder As FolderItem = DeployFolder.Child("Atoms")</SourceLine>
+        <SourceLine>Var DeployAtomsReactorFolder As FolderItem = DeployAtomsFolder.Child("Reactor")</SourceLine>
+        <SourceLine>Var DeployJSONFolder As FolderItem = DeployFolder.Child("JSON")</SourceLine>
+        <SourceLine>Var DeployJSONReactorFolder As FolderItem = DeployJSONFolder.Child("Reactor")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Create the folders</SourceLine>
+        <SourceLine>If ReactorFolder &lt;&gt; Nil And Not ReactorFolder.Exists Then</SourceLine>
+        <SourceLine>ReactorFolder.CreateFolder</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If JSONFolder &lt;&gt; Nil And Not JSONFolder.Exists Then</SourceLine>
+        <SourceLine>JSONFolder.CreateFolder</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If AtomzFolder &lt;&gt; Nil And Not AtomzFolder.Exists Then</SourceLine>
+        <SourceLine>AtomzFolder.CreateFolder</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If AtomsFolder &lt;&gt; Nil And Not AtomsFolder.Exists Then</SourceLine>
+        <SourceLine>AtomsFolder.CreateFolder</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If AtomsReactorFolder &lt;&gt; Nil And Not AtomsReactorFolder.Exists Then</SourceLine>
+        <SourceLine>AtomsReactorFolder.CreateFolder</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If DeployFolder &lt;&gt; Nil And Not DeployFolder.Exists Then</SourceLine>
+        <SourceLine>DeployFolder.CreateFolder</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If DeployAtomsFolder &lt;&gt; Nil And Not DeployAtomsFolder.Exists Then</SourceLine>
+        <SourceLine>DeployAtomsFolder.CreateFolder</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If DeployAtomsReactorFolder &lt;&gt; Nil And Not DeployAtomsReactorFolder.Exists Then</SourceLine>
+        <SourceLine>DeployAtomsReactorFolder.CreateFolder</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If DeployJSONFolder &lt;&gt; Nil And Not DeployJSONFolder.Exists Then</SourceLine>
+        <SourceLine>DeployJSONFolder.CreateFolder</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If DeployJSONReactorFolder &lt;&gt; Nil And Not DeployJSONReactorFolder.Exists Then</SourceLine>
+        <SourceLine>DeployJSONReactorFolder.CreateFolder</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
@@ -3941,14 +4038,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1773" height="1038"/>
+        <Rect left="0" top="25" width="1897" height="1367"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.AtomDownload</EditorLocation>
+          <EditorLocation>ReactorWindow.AtomDeploy</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
