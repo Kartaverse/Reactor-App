@@ -179,6 +179,51 @@
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
     </Property>
+    <Property>
+      <ItemName>DownloadFilename</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1652367359</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>DownloadFilename As String</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>DownloadFilename As String</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
+    <Property>
+      <ItemName>DownloadFolderItem</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>549918719</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>DownloadFolderItem As FolderItem</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>DownloadFolderItem As FolderItem</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
+    <Property>
+      <ItemName>DownloadRow</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>578922495</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>DownloadRow As Integer = -1</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>DownloadRow As Integer = -1</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <ViewBehavior>
       <ViewProperty>
@@ -294,6 +339,18 @@
         <ItemType>String</ItemType>
         <EditorType>MultiLineEditor</EditorType>
       </ViewProperty>
+      <ViewProperty>
+        <ObjName>DownloadFilename</ObjName>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <ItemType>String</ItemType>
+        <EditorType>MultiLineEditor</EditorType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>DownloadRow</ObjName>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>-1</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
     </ViewBehavior>
     <Constant>
       <ItemName>kFileQuitShortcut</ItemName>
@@ -351,1303 +408,440 @@
       </ConstantInstance>
     </Constant>
   </block>
-  <block type="DesktopWindow" ID="338128895">
-    <ObjName>ReactorWindow</ObjName>
+  <block type="Menu" ID="1789632511">
+    <ObjName>MenuBar1</ObjName>
     <ObjContainerID>0</ObjContainerID>
-    <IsClass>1</IsClass>
-    <Superclass>DesktopWindow</Superclass>
-    <ItemFlags>1</ItemFlags>
-    <IsInterface>0</IsInterface>
-    <Compatibility/>
-    <HookInstance>
-      <ItemName>Opening</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>1037426687</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Sub Opening()</SourceLine>
-        <SourceLine>// Window sizing</SourceLine>
-        <SourceLine>Me.Top = DesktopDisplay.DisplayAt(0).AvailableTop + 28</SourceLine>
-        <SourceLine>Me.Left = DesktopDisplay.DisplayAt(0).AvailableLeft</SourceLine>
-        <SourceLine>// Me.Width = DesktopDisplay.DisplayAt(0).AvailableWidth</SourceLine>
-        <SourceLine>// Me.Height = DesktopDisplay.DisplayAt(0).AvailableHeight - 28</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Working folder</SourceLine>
-        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
-        <SourceLine>Var JSONFolder As FolderItem = ReactorFolder.Child("JSON")</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Download the JSON file</SourceLine>
-        <SourceLine>Var url As String = "https://kartaverse.github.io/Reactor-Docs/JSON/Reactor.json"</SourceLine>
-        <SourceLine>Var JSONFile As FolderItem = JSONFolder.Child("Reactor.json")</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Socket</SourceLine>
-        <SourceLine>RSocket.ClearRequestHeaders</SourceLine>
-        <SourceLine>RSocket.RequestHeader("User-Agent") = "Xojo"</SourceLine>
-        <SourceLine>RSocket.AllowCertificateValidation = false</SourceLine>
-        <SourceLine/>
-        <SourceLine>App.Atoms = New JSONItem(RSocket.SendSync("GET", url, 5))</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Update the listboxes</SourceLine>
-        <SourceLine>AtomsRefresh()</SourceLine>
-        <SourceLine>CategoryRefresh()</SourceLine>
-        <SourceLine/>
-        <SourceLine/>
-        <SourceLine>End Sub</SourceLine>
-      </ItemSource>
-    </HookInstance>
-    <MenuHandler>
-      <ItemName>AboutReactorItem</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>1524930559</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function AboutReactorItem() As Boolean</SourceLine>
-        <SourceLine>AboutWindow.Show</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <MenuHandler>
-      <ItemName>ShowReactorItem</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>1415716863</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ShowReactorItem() As Boolean</SourceLine>
-        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
-        <SourceLine>ReactorFolder.Launch</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <MenuHandler>
-      <ItemName>ToolsShowDocsFolder</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>22220799</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ToolsShowDocsFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Docs")</SourceLine>
-        <SourceLine>ReactorFolder.Launch</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <MenuHandler>
-      <ItemName>ToolsShowCompsFolder</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>791074815</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ToolsShowCompsFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Comps")</SourceLine>
-        <SourceLine>ReactorFolder.Launch</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <MenuHandler>
-      <ItemName>ToolsShowFusesFolder</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>660707327</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ToolsShowFusesFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Fuses")</SourceLine>
-        <SourceLine>ReactorFolder.Launch</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <MenuHandler>
-      <ItemName>ToolsShowMacrosFolder</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>1721745407</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ToolsShowMacrosFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Macros")</SourceLine>
-        <SourceLine>ReactorFolder.Launch</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <MenuHandler>
-      <ItemName>ToolsShowPluginsFolder</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>499468287</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ToolsShowPluginsFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Plugins")</SourceLine>
-        <SourceLine>ReactorFolder.Launch</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <MenuHandler>
-      <ItemName>ToolsShowTemplatesFolder</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>1394919423</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ToolsShowTemplatesFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Templates")</SourceLine>
-        <SourceLine>ReactorFolder.Launch</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <MenuHandler>
-      <ItemName>ToolsShowBinFolder</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>664283135</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ToolsShowBinFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Bin")</SourceLine>
-        <SourceLine>ReactorFolder.Launch</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <MenuHandler>
-      <ItemName>ResourcesOnlineAtomPackageListings</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>951156735</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ResourcesOnlineAtomPackageListings() As Boolean</SourceLine>
-        <SourceLine>system.GotoURL("https://kartaverse.github.io/Reactor-Docs/")</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <MenuHandler>
-      <ItemName>ResourcesBugTracking</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>155916287</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ResourcesBugTracking() As Boolean</SourceLine>
-        <SourceLine>system.GotoURL("https://www.steakunderwater.com/wesuckless/viewforum.php?f=19")</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <MenuHandler>
-      <ItemName>ResourcesReactorOnlineRepository</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>952584191</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ResourcesReactorOnlineRepository() As Boolean</SourceLine>
-        <SourceLine>system.GotoURL("https://gitlab.com/WeSuckLess/Reactor")</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <MenuHandler>
-      <ItemName>ResourcesReactorOnlineDiscussion</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>1800859647</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ResourcesReactorOnlineDiscussion() As Boolean</SourceLine>
-        <SourceLine>system.GotoURL("https://www.steakunderwater.com/wesuckless/viewforum.php?f=32")</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <MenuHandler>
-      <ItemName>ResourcesWeSuckLess</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>1511925759</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ResourcesWeSuckLess() As Boolean</SourceLine>
-        <SourceLine>system.GotoURL("https://www.steakunderwater.com/")</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-    </MenuHandler>
-    <Method>
-      <ItemName>Download</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>6021119</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Sub Download(url As String, path As FolderItem)</SourceLine>
-        <SourceLine>// Get filename from URL</SourceLine>
-        <SourceLine>Var filenameLength As Integer</SourceLine>
-        <SourceLine>For i As Integer = url.Length - 1 DownTo 0</SourceLine>
-        <SourceLine>If url.Middle(i, 1) = "/" Then</SourceLine>
-        <SourceLine>filenameLength = url.Length - i</SourceLine>
-        <SourceLine>Exit For</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>Next</SourceLine>
-        <SourceLine/>
-        <SourceLine>Var filename As String</SourceLine>
-        <SourceLine>filename = url.Right(filenameLength).ReplaceAll("/", "")</SourceLine>
-        <SourceLine/>
-        <SourceLine>Var downloadFile As FolderItem = path</SourceLine>
-        <SourceLine>RSocket.Send("GET", url, downloadFile)</SourceLine>
-        <SourceLine>End Sub</SourceLine>
-      </ItemSource>
+    <MenuItem>
+      <ItemSpecialMenu>0</ItemSpecialMenu>
+      <ItemName>FileMenu</ItemName>
+      <ItemText>&amp;File</ItemText>
+      <ItemIndex>-2147483648</ItemIndex>
+      <ItemShortcut/>
+      <MenuAutoEnable>1</MenuAutoEnable>
       <TextEncoding>134217984</TextEncoding>
-      <AliasName/>
+      <MenuItemVisible>1</MenuItemVisible>
       <ItemFlags>0</ItemFlags>
-      <IsShared>0</IsShared>
-      <ItemParams>url As String, path As FolderItem</ItemParams>
-      <ItemResult/>
-    </Method>
-    <Method>
-      <ItemName>CategoryRefresh</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>1107865599</PartID>
-      <ItemSource>
+      <Superclass>DesktopMenuItem</Superclass>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>AboutReactorItem</ItemName>
+        <ItemText>About Reactor</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut/>
+        <MenuAutoEnable>1</MenuAutoEnable>
         <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Sub CategoryRefresh()</SourceLine>
-        <SourceLine>If App.Atoms &lt;&gt; Nil Then</SourceLine>
-        <SourceLine>CategoryListBox.RemoveAllRows()</SourceLine>
-        <SourceLine>CategoryListBox.AddExpandableRow( "All")</SourceLine>
-        <SourceLine>CategoryListBox.RowTagAt(CategoryListBox.LastAddedRowIndex) = "All"</SourceLine>
-        <SourceLine>CategoryListBox.RowExpandableAt(0) = False </SourceLine>
-        <SourceLine/>
-        <SourceLine>Var Depth As Integer = 0</SourceLine>
-        <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
-        <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
-        <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
-        <SourceLine>Var AtomCategoryArray() As String</SourceLine>
-        <SourceLine>AtomCategoryArray = AtomCategory.Split("/")</SourceLine>
-        <SourceLine/>
-        <SourceLine>If Depth &lt;= AtomCategoryArray.Count - 1 then</SourceLine>
-        <SourceLine>If Depth = 0 then</SourceLine>
-        <SourceLine>// Scan through the Category segments</SourceLine>
-        <SourceLine>Var ExcludeItem as Boolean = False</SourceLine>
-        <SourceLine>Var row As Integer</SourceLine>
-        <SourceLine>For row = 0 To CategoryListBox.LastRowIndex</SourceLine>
-        <SourceLine>If Depth = CategoryListBox.RowDepthAt(row) - 1 And CategoryListBox.CellTextAt(row) = AtomCategoryArray(Depth) Then </SourceLine>
-        <SourceLine>ExcludeItem = True</SourceLine>
-        <SourceLine>Exit For row // or Return if inside method</SourceLine>
-        <SourceLine>End if</SourceLine>
-        <SourceLine>Next</SourceLine>
-        <SourceLine/>
-        <SourceLine>If Not ExcludeItem then</SourceLine>
-        <SourceLine>CategoryListBox.AddRowAt(CategoryListBox.LastAddedRowIndex, AtomCategoryArray(Depth), Depth + 1)</SourceLine>
-        <SourceLine>CategoryListBox.CellTextAt(CategoryListBox.LastAddedRowIndex) = AtomCategoryArray(Depth)</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>End if</SourceLine>
-        <SourceLine>Next</SourceLine>
-        <SourceLine/>
-        <SourceLine>CategoryListBox.Sort</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>End Sub</SourceLine>
-      </ItemSource>
-      <TextEncoding>134217984</TextEncoding>
-      <AliasName/>
-      <ItemFlags>0</ItemFlags>
-      <IsShared>0</IsShared>
-      <ItemParams/>
-      <ItemResult/>
-    </Method>
-    <Method>
-      <ItemName>AtomsRefresh</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>1056473087</PartID>
-      <ItemSource>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>0</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+      </MenuItem>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>ToolsItem</ItemName>
+        <ItemText>Tools</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut/>
+        <MenuAutoEnable>1</MenuAutoEnable>
         <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Sub AtomsRefresh()</SourceLine>
-        <SourceLine>If App.Atoms &lt;&gt; Nil Then</SourceLine>
-        <SourceLine>Var AtomCount As Integer = App.Atoms.Keys.Count</SourceLine>
-        <SourceLine>AtomsListBox.RemoveAllRows()</SourceLine>
-        <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
-        <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
-        <SourceLine>Var AtomName As String =  Atom.Value("Name")</SourceLine>
-        <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
-        <SourceLine>Var AtomVersion As String =  Atom.Value("Version")</SourceLine>
-        <SourceLine>Var AtomAuthor As String =  Atom.Value("Author")</SourceLine>
-        <SourceLine>Var AtomDate As String = "2025-07-01" //Atom.Value("Date").ToString()</SourceLine>
-        <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
-        <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
-        <SourceLine>Var AtomDonation As String = "No"</SourceLine>
-        <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
-        <SourceLine/>
-        <SourceLine>AtomsListBox.Addrow("")</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 0) = AtomName</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 1) = AtomCategory</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 2) = AtomVersion</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 3) = AtomAuthor</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 4) = AtomDate</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 5) = AtomRepo</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 6) = AtomStatus</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 7) = AtomDonation</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 8) = AtomID</SourceLine>
-        <SourceLine>AtomsListBox.CellTagAt(AtomsListBox.LastAddedRowIndex, 0) = k</SourceLine>
-        <SourceLine>Next</SourceLine>
-        <SourceLine>AtomsListBox.Sort</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>End Sub</SourceLine>
-      </ItemSource>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>1</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ShowReactorItem</ItemName>
+          <ItemText>Show Reactor Folder</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>UntitledSeparator0</ItemName>
+          <ItemText>-</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ToolsShowDocsFolder</ItemName>
+          <ItemText>Show Docs Folder</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ToolsShowCompsFolder</ItemName>
+          <ItemText>Show Comps Folder</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ToolsShowTemplatesFolder</ItemName>
+          <ItemText>Show Templates Folder</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>UntitledSeparator1</ItemName>
+          <ItemText>-</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ToolsShowMacrosFolder</ItemName>
+          <ItemText>Show Macros Folder</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ToolsShowFusesFolder</ItemName>
+          <ItemText>Show Fuses Folder</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ToolsShowPluginsFolder</ItemName>
+          <ItemText>Show Plugins Folder</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>UntitledSeparator2</ItemName>
+          <ItemText>-</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ToolsShowBinFolder</ItemName>
+          <ItemText>Show Bin Folder</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+      </MenuItem>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>FileResources</ItemName>
+        <ItemText>Resources</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut/>
+        <MenuAutoEnable>1</MenuAutoEnable>
+        <TextEncoding>134217984</TextEncoding>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>1</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ResourcesOnlineAtomPackageListings</ItemName>
+          <ItemText>Online Atom Package Listings</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>UntitledSeparator4</ItemName>
+          <ItemText>-</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ResourcesReactorOnlineRepository</ItemName>
+          <ItemText>Reactor Online Repository</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ResourcesReactorOnlineDiscussion</ItemName>
+          <ItemText>Reactor Online Discussion</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>UntitledSeparator3</ItemName>
+          <ItemText>-</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ResourcesWeSuckLess</ItemName>
+          <ItemText>We Suck Less</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ResourcesBugTracking</ItemName>
+          <ItemText>Bug Tracking</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+      </MenuItem>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>UntitledSeparator</ItemName>
+        <ItemText>-</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut/>
+        <MenuAutoEnable>1</MenuAutoEnable>
+        <TextEncoding>134217984</TextEncoding>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>0</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+      </MenuItem>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>FileQuit</ItemName>
+        <ItemText>#App.kFileQuit</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut>#App.kFileQuitShortcut</ItemShortcut>
+        <MenuShortcut>#App.kFileQuitShortcut</MenuShortcut>
+        <MenuAutoEnable>1</MenuAutoEnable>
+        <TextEncoding>134217984</TextEncoding>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>0</ItemFlags>
+        <Superclass>DesktopQuitMenuItem</Superclass>
+      </MenuItem>
+    </MenuItem>
+    <MenuItem>
+      <ItemSpecialMenu>0</ItemSpecialMenu>
+      <ItemName>EditMenu</ItemName>
+      <ItemText>&amp;Edit</ItemText>
+      <ItemIndex>-2147483648</ItemIndex>
+      <ItemShortcut/>
+      <MenuAutoEnable>1</MenuAutoEnable>
       <TextEncoding>134217984</TextEncoding>
-      <AliasName/>
+      <MenuItemVisible>1</MenuItemVisible>
       <ItemFlags>0</ItemFlags>
-      <IsShared>0</IsShared>
-      <ItemParams/>
-      <ItemResult/>
-    </Method>
-    <PropertyVal Name="MenuBarVisible">False</PropertyVal>
-    <PropertyVal Name="MenuBar">1789632511</PropertyVal>
-    <PropertyVal Name="Backdrop">0</PropertyVal>
-    <PropertyVal Name="BackgroundColor">&amp;cFFFFFF</PropertyVal>
-    <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
-    <PropertyVal Name="ImplicitInstance">True</PropertyVal>
-    <PropertyVal Name="Visible">True</PropertyVal>
-    <PropertyVal Name="DefaultLocation">2</PropertyVal>
-    <PropertyVal Name="FullScreen">False</PropertyVal>
-    <PropertyVal Name="MacProcID">0</PropertyVal>
-    <PropertyVal Name="Composite">False</PropertyVal>
-    <PropertyVal Name="Resizeable">True</PropertyVal>
-    <PropertyVal Name="HasTitleBar">True</PropertyVal>
-    <PropertyVal Name="HasFullScreenButton">False</PropertyVal>
-    <PropertyVal Name="HasMinimizeButton">True</PropertyVal>
-    <PropertyVal Name="HasMaximizeButton">True</PropertyVal>
-    <PropertyVal Name="HasCloseButton">True</PropertyVal>
-    <PropertyVal Name="Title">Reactor</PropertyVal>
-    <PropertyVal Name="Type">0</PropertyVal>
-    <PropertyVal Name="MaximumHeight">1920</PropertyVal>
-    <PropertyVal Name="MaximumWidth">3840</PropertyVal>
-    <PropertyVal Name="MinimumHeight">600</PropertyVal>
-    <PropertyVal Name="MinimumWidth">1160</PropertyVal>
-    <PropertyVal Name="Height">600</PropertyVal>
-    <PropertyVal Name="Width">1160</PropertyVal>
-    <ViewBehavior>
-      <ViewProperty>
-        <ObjName>Name</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>ID</PropertyGroup>
-        <ItemType>String</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Interfaces</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>ID</PropertyGroup>
-        <ItemType>String</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Super</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>ID</PropertyGroup>
-        <ItemType>String</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Width</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Size</PropertyGroup>
-        <PropertyValue>600</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Height</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Size</PropertyGroup>
-        <PropertyValue>400</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MinimumWidth</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Size</PropertyGroup>
-        <PropertyValue>64</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MinimumHeight</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Size</PropertyGroup>
-        <PropertyValue>64</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MaximumWidth</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Size</PropertyGroup>
-        <PropertyValue>32000</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MaximumHeight</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Size</PropertyGroup>
-        <PropertyValue>32000</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Type</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>0</PropertyValue>
-        <ItemType>Types</ItemType>
-        <EditorType>Enum</EditorType>
-        <Enumeration>
-          <ItemDef>0 - Document</ItemDef>
-          <ItemDef>1 - Movable Modal</ItemDef>
-          <ItemDef>2 - Modal Dialog</ItemDef>
-          <ItemDef>3 - Floating Window</ItemDef>
-          <ItemDef>4 - Plain Box</ItemDef>
-          <ItemDef>5 - Shadowed Box</ItemDef>
-          <ItemDef>6 - Rounded Window</ItemDef>
-          <ItemDef>7 - Global Floating Window</ItemDef>
-          <ItemDef>8 - Sheet Window</ItemDef>
-          <ItemDef>9 - Modeless Dialog</ItemDef>
-        </Enumeration>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Title</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>Untitled</PropertyValue>
-        <ItemType>String</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>HasCloseButton</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>HasMaximizeButton</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>HasMinimizeButton</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>HasFullScreenButton</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>False</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>HasTitleBar</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Resizeable</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Composite</ObjName>
-        <PropertyGroup>OS X (Carbon)</PropertyGroup>
-        <PropertyValue>False</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MacProcID</ObjName>
-        <PropertyGroup>OS X (Carbon)</PropertyGroup>
-        <PropertyValue>0</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>FullScreen</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Behavior</PropertyGroup>
-        <PropertyValue>False</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>DefaultLocation</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Behavior</PropertyGroup>
-        <PropertyValue>2</PropertyValue>
-        <ItemType>Locations</ItemType>
-        <EditorType>Enum</EditorType>
-        <Enumeration>
-          <ItemDef>0 - Default</ItemDef>
-          <ItemDef>1 - Parent Window</ItemDef>
-          <ItemDef>2 - Main Screen</ItemDef>
-          <ItemDef>3 - Parent Window Screen</ItemDef>
-          <ItemDef>4 - Stagger</ItemDef>
-        </Enumeration>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Visible</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Behavior</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>ImplicitInstance</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Window Behavior</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>HasBackgroundColor</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Background</PropertyGroup>
-        <PropertyValue>False</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>BackgroundColor</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Background</PropertyGroup>
-        <PropertyValue>&amp;cFFFFFF</PropertyValue>
-        <ItemType>ColorGroup</ItemType>
-        <EditorType>ColorGroup</EditorType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Backdrop</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Background</PropertyGroup>
-        <ItemType>Picture</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MenuBar</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Menus</PropertyGroup>
-        <ItemType>DesktopMenuBar</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MenuBarVisible</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Deprecated</PropertyGroup>
-        <PropertyValue>False</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-    </ViewBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopListBox</Superclass>
-      <HookInstance>
-        <ItemName>Opening</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>450662399</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Opening()</SourceLine>
-          <SourceLine>Me.AllowExpandableRows = True</SourceLine>
-          <SourceLine>Me.ColumnSortTypeAt(0) = DesktopListBox.SortTypes.Sortable</SourceLine>
-          <SourceLine>Me.ColumnSortDirectionAt(0) = DesktopListBox.SortDirections.Ascending</SourceLine>
-          <SourceLine>Me.SortingColumn = 0</SourceLine>
-          <SourceLine>Me.HeadingIndex = 0</SourceLine>
-          <SourceLine>Me.Sort</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-      <HookInstance>
-        <ItemName>RowExpanded</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>1670039551</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub RowExpanded(row As Integer)</SourceLine>
-          <SourceLine>AtomsRefresh()</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-      <HookInstance>
-        <ItemName>SelectionChanged</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>44480511</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub SelectionChanged()</SourceLine>
-          <SourceLine>Var row As Integer = Me.SelectedRowIndex</SourceLine>
-          <SourceLine>If row &gt;= 0 Then</SourceLine>
-          <SourceLine>Var AtomCount As Integer = App.Atoms.Keys.Count</SourceLine>
-          <SourceLine>AtomsListBox.RemoveAllRows()</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var CellString As String = Me.CellTextAt(row, 0)</SourceLine>
-          <SourceLine>If CellString = "All" then</SourceLine>
-          <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
-          <SourceLine>Var AtomName As String =  Atom.Value("Name")</SourceLine>
-          <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
-          <SourceLine>Var AtomVersion As String =  Atom.Value("Version")</SourceLine>
-          <SourceLine>Var AtomAuthor As String =  Atom.Value("Author")</SourceLine>
-          <SourceLine>Var AtomDate As String = "2025-07-01" //Atom.Value("Date").ToString()</SourceLine>
-          <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
-          <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
-          <SourceLine>Var AtomDonation As String = "No"</SourceLine>
-          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
-          <SourceLine/>
-          <SourceLine>AtomsListBox.Addrow("")</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 0) = AtomName</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 1) = AtomCategory</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 2) = AtomVersion</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 3) = AtomAuthor</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 4) = AtomDate</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 5) = AtomRepo</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 6) = AtomStatus</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 7) = AtomDonation</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 8) = AtomID</SourceLine>
-          <SourceLine>AtomsListBox.CellTagAt(AtomsListBox.LastAddedRowIndex, 0) = k</SourceLine>
-          <SourceLine>Next</SourceLine>
-          <SourceLine>Else</SourceLine>
-          <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var AtomName As String =  Atom.Value("Name")</SourceLine>
-          <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
-          <SourceLine>Var AtomCategoryArray() As String</SourceLine>
-          <SourceLine>AtomCategoryArray = AtomCategory.Split("/")</SourceLine>
-          <SourceLine>if AtomCategoryArray(0) = CellString Then</SourceLine>
-          <SourceLine>Var AtomVersion As String =  Atom.Value("Version")</SourceLine>
-          <SourceLine>Var AtomAuthor As String =  Atom.Value("Author")</SourceLine>
-          <SourceLine>Var AtomDate As String = "2025-07-01" //Atom.Value("Date").ToString()</SourceLine>
-          <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
-          <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
-          <SourceLine>Var AtomDonation As String = "No"</SourceLine>
-          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
-          <SourceLine/>
-          <SourceLine>AtomsListBox.Addrow("")</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 0) = AtomName</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 1) = AtomCategory</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 2) = AtomVersion</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 3) = AtomAuthor</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 4) = AtomDate</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 5) = AtomRepo</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 6) = AtomStatus</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 7) = AtomDonation</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 8) = AtomID</SourceLine>
-          <SourceLine>AtomsListBox.CellTagAt(AtomsListBox.LastAddedRowIndex, 0) = k</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine>Next</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine>AtomsListBox.Sort</SourceLine>
-          <SourceLine>End</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopComboBox</Superclass>
-      <HookInstance>
-        <ItemName>TextChanged</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>1531467775</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub TextChanged()</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopListBox</Superclass>
-      <HookInstance>
-        <ItemName>Opening</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>974577663</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Opening()</SourceLine>
-          <SourceLine>Me.ColumnTypeAt(0) = DesktopListBox.CellTypes.CheckBox</SourceLine>
-          <SourceLine>Me.ColumnSortTypeAt(0) = DesktopListBox.SortTypes.Sortable</SourceLine>
-          <SourceLine>Me.ColumnSortDirectionAt(0) = DesktopListBox.SortDirections.Ascending</SourceLine>
-          <SourceLine>Me.SortingColumn = 0</SourceLine>
-          <SourceLine>Me.HeadingIndex = 0</SourceLine>
-          <SourceLine>Me.Sort</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-      <HookInstance>
-        <ItemName>MouseDown</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>641990655</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Function MouseDown(x As Integer, y As Integer) As Boolean</SourceLine>
-          <SourceLine>Var row As Integer = Me.RowFromXY(x, y)</SourceLine>
-          <SourceLine>Var col As Integer = Me.ColumnFromXY(x, y)</SourceLine>
-          <SourceLine>If row &gt;= 0 And col &gt;= 0 Then</SourceLine>
-          <SourceLine>Var CellString As String = Me.CellTextAt(row, 1)</SourceLine>
-          <SourceLine>Var AtomIndex As Integer = Me.CellTagAt(row, 0).IntegerValue</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
-          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var HTML As String = App.Header + AtomDescription + App.Footer</SourceLine>
-          <SourceLine>HTML = HTML.ReplaceAll("Reactor:",SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
-          <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
-          <SourceLine/>
-          <SourceLine>DescriptionHTMLViewer.LoadPage(HTML, DeployHTMLFile)</SourceLine>
-          <SourceLine>End</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Function</SourceLine>
-        </ItemSource>
-      </HookInstance>
-      <HookInstance>
-        <ItemName>SelectionChanged</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>927277055</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub SelectionChanged()</SourceLine>
-          <SourceLine>Var row As Integer = Me.SelectedRowIndex</SourceLine>
-          <SourceLine>If row &gt;= 0 Then</SourceLine>
-          <SourceLine>Var CellString As String = Me.CellTextAt(row, 1)</SourceLine>
-          <SourceLine>Var AtomIndex As Integer = Me.CellTagAt(row, 0).IntegerValue</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
-          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var HTML As String = App.Header + AtomDescription + App.Footer</SourceLine>
-          <SourceLine>HTML = HTML.ReplaceAll("Reactor:",SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
-          <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
-          <SourceLine/>
-          <SourceLine>DescriptionHTMLViewer.LoadPage(HTML, DeployHTMLFile)</SourceLine>
-          <SourceLine>End</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopHTMLViewer</Superclass>
-      <HookInstance>
-        <ItemName>DocumentComplete</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>1663475711</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub DocumentComplete(url as String)</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-      <HookInstance>
-        <ItemName>Opening</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>1951934463</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Opening()</SourceLine>
-          <SourceLine>Var HTML As String = App.Header + App.Footer</SourceLine>
-          <SourceLine>HTML = HTML.ReplaceAll("Reactor:",SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
-          <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
-          <SourceLine>DescriptionHTMLViewer.LoadPage(HTML, DeployHTMLFile)</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopButton</Superclass>
-      <HookInstance>
-        <ItemName>Pressed</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>2090135551</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine>Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
-          <SourceLine>If row &gt;= 0 Then</SourceLine>
-          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
-          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 0).IntegerValue</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var ID As String = Atom.Value("ID")</SourceLine>
-          <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var AtomzFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz")</SourceLine>
-          <SourceLine>Var AtomzFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz").Child(ID + ".zip")</SourceLine>
-          <SourceLine>Download(ZipFileURL, AtomzFile)</SourceLine>
-          <SourceLine>End if</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopButton</Superclass>
-      <HookInstance>
-        <ItemName>Pressed</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>94662655</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopButton</Superclass>
-      <HookInstance>
-        <ItemName>Pressed</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>587755519</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopTextField</Superclass>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopButton</Superclass>
-      <HookInstance>
-        <ItemName>Pressed</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>1784539135</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>RESTSocket</Superclass>
-    </ControlBehavior>
-    <Control>
-      <ControlClass>DesktopListBox</ControlClass>
-      <ItemName>DesktopListBox</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="AllowAutoHideScrollbars">True</PropertyVal>
-      <PropertyVal Name="AllowExpandableRows">True</PropertyVal>
-      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
-      <PropertyVal Name="AllowResizableColumns">False</PropertyVal>
-      <PropertyVal Name="AllowRowDragging">False</PropertyVal>
-      <PropertyVal Name="AllowRowReordering">False</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="ColumnCount">1</PropertyVal>
-      <PropertyVal Name="ColumnWidths"/>
-      <PropertyVal Name="DefaultRowHeight">-1</PropertyVal>
-      <PropertyVal Name="DropIndicatorVisible">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">System</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="GridLineStyle">0</PropertyVal>
-      <PropertyVal Name="HasBorder">True</PropertyVal>
-      <PropertyVal Name="HasHeader">False</PropertyVal>
-      <PropertyVal Name="HasHorizontalScrollbar">False</PropertyVal>
-      <PropertyVal Name="HasVerticalScrollbar">True</PropertyVal>
-      <PropertyVal Name="HeadingIndex">-1</PropertyVal>
-      <PropertyVal Name="Height">562</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="InitialValue"/>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">0</PropertyVal>
-      <PropertyVal Name="LockBottom">True</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">False</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="Name">CategoryListBox</PropertyVal>
-      <PropertyVal Name="RequiresSelection">False</PropertyVal>
-      <PropertyVal Name="RowSelectionType">0</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopListBox</PropertyVal>
-      <PropertyVal Name="TabIndex">0</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">38</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">188</PropertyVal>
-      <PropertyVal Name="_ScrollOffset">0</PropertyVal>
-      <PropertyVal Name="_ScrollWidth">-1</PropertyVal>
-      <ControlIndex>0</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>1337284607</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopComboBox</ControlClass>
-      <ItemName>DesktopComboBox</ItemName>
-      <PropertyVal Name="AllowAutoComplete">False</PropertyVal>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">System</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">19</PropertyVal>
-      <PropertyVal Name="Hint"/>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="InitialValue">
-        <Hex bytes="32">416C6C0A496E7374616C6C65640A4E65770A5570646174650A52656163746F72</Hex>
-      </PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">0</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">False</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="Name">RepoComboBox</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="SelectedRowIndex">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopComboBox</PropertyVal>
-      <PropertyVal Name="TabIndex">1</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">7</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">188</PropertyVal>
-      <ControlIndex>1</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>92030975</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopListBox</ControlClass>
-      <ItemName>DesktopListBox</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="AllowAutoHideScrollbars">True</PropertyVal>
-      <PropertyVal Name="AllowExpandableRows">False</PropertyVal>
-      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
-      <PropertyVal Name="AllowResizableColumns">True</PropertyVal>
-      <PropertyVal Name="AllowRowDragging">False</PropertyVal>
-      <PropertyVal Name="AllowRowReordering">False</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="ColumnCount">9</PropertyVal>
-      <PropertyVal Name="ColumnWidths">300,204,52,180,78,68,50,60,365</PropertyVal>
-      <PropertyVal Name="DefaultRowHeight">-1</PropertyVal>
-      <PropertyVal Name="DropIndicatorVisible">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">System</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="GridLineStyle">0</PropertyVal>
-      <PropertyVal Name="HasBorder">True</PropertyVal>
-      <PropertyVal Name="HasHeader">True</PropertyVal>
-      <PropertyVal Name="HasHorizontalScrollbar">True</PropertyVal>
-      <PropertyVal Name="HasVerticalScrollbar">True</PropertyVal>
-      <PropertyVal Name="HeadingIndex">-1</PropertyVal>
-      <PropertyVal Name="Height">241</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="InitialValue">
-        <Hex bytes="57">4E616D650943617465676F72790956657273696F6E09417574686F720944617465095265706F0953746174757309446F6E6174696F6E094944</Hex>
-      </PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">192</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="Name">AtomsListBox</PropertyVal>
-      <PropertyVal Name="RequiresSelection">False</PropertyVal>
-      <PropertyVal Name="RowSelectionType">0</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopListBox</PropertyVal>
-      <PropertyVal Name="TabIndex">2</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">38</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">968</PropertyVal>
-      <PropertyVal Name="_ScrollOffset">0</PropertyVal>
-      <PropertyVal Name="_ScrollWidth">-1</PropertyVal>
-      <ControlIndex>2</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>2135695359</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopHTMLViewer</ControlClass>
-      <ItemName>DesktopHTMLViewer</ItemName>
-      <PropertyVal Name="AutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="Height">273</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="InitialParent"/>
-      <PropertyVal Name="Left">192</PropertyVal>
-      <PropertyVal Name="LockBottom">True</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="Name">DescriptionHTMLViewer</PropertyVal>
-      <PropertyVal Name="Renderer">0</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopHTMLViewer</PropertyVal>
-      <PropertyVal Name="TabIndex">3</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">281</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">968</PropertyVal>
-      <ControlIndex>3</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>211204095</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopButton</ControlClass>
-      <ItemName>DesktopButton</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Cancel">False</PropertyVal>
-      <PropertyVal Name="Caption">Install</PropertyVal>
-      <PropertyVal Name="Default">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">System</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">20</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">880</PropertyVal>
-      <PropertyVal Name="LockBottom">True</PropertyVal>
-      <PropertyVal Name="LockLeft">False</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">False</PropertyVal>
-      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
-      <PropertyVal Name="Name">InstallButton</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopButton</PropertyVal>
-      <PropertyVal Name="TabIndex">4</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">566</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">260</PropertyVal>
-      <ControlIndex>4</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>2015277055</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopButton</ControlClass>
-      <ItemName>DesktopButton</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Cancel">False</PropertyVal>
-      <PropertyVal Name="Caption">Update</PropertyVal>
-      <PropertyVal Name="Default">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">System</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">20</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">536</PropertyVal>
-      <PropertyVal Name="LockBottom">True</PropertyVal>
-      <PropertyVal Name="LockLeft">False</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">False</PropertyVal>
-      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
-      <PropertyVal Name="Name">UpdateButton</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopButton</PropertyVal>
-      <PropertyVal Name="TabIndex">5</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">566</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">260</PropertyVal>
-      <ControlIndex>5</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>1619685375</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopButton</ControlClass>
-      <ItemName>DesktopButton</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Cancel">False</PropertyVal>
-      <PropertyVal Name="Caption">Remove</PropertyVal>
-      <PropertyVal Name="Default">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">System</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">20</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">200</PropertyVal>
-      <PropertyVal Name="LockBottom">True</PropertyVal>
-      <PropertyVal Name="LockLeft">False</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">False</PropertyVal>
-      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
-      <PropertyVal Name="Name">RemoveButton</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopButton</PropertyVal>
-      <PropertyVal Name="TabIndex">6</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">566</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">260</PropertyVal>
-      <ControlIndex>6</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>1765206015</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopTextField</ControlClass>
-      <ItemName>DesktopTextField</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
-      <PropertyVal Name="AllowSpellChecking">False</PropertyVal>
-      <PropertyVal Name="AllowTabs">False</PropertyVal>
-      <PropertyVal Name="BackgroundColor">&amp;hFFFFFF</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">System</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Format"/>
-      <PropertyVal Name="HasBorder">True</PropertyVal>
-      <PropertyVal Name="Height">22</PropertyVal>
-      <PropertyVal Name="Hint"/>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">251</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="MaximumCharactersAllowed">0</PropertyVal>
-      <PropertyVal Name="Name">SearchTextField</PropertyVal>
-      <PropertyVal Name="Password">False</PropertyVal>
-      <PropertyVal Name="ReadOnly">False</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopTextField</PropertyVal>
-      <PropertyVal Name="TabIndex">7</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text"/>
-      <PropertyVal Name="TextAlignment">0</PropertyVal>
-      <PropertyVal Name="TextColor">&amp;h000000</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">7</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="ValidationMask"/>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">902</PropertyVal>
-      <ControlIndex>7</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>891385855</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopButton</ControlClass>
-      <ItemName>DesktopButton</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Cancel">False</PropertyVal>
-      <PropertyVal Name="Caption">🔎</PropertyVal>
-      <PropertyVal Name="Default">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">Symbol</PropertyVal>
-      <PropertyVal Name="FontSize">1.6e+1</PropertyVal>
-      <PropertyVal Name="FontUnit">1</PropertyVal>
-      <PropertyVal Name="Height">20</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">200</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">False</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
-      <PropertyVal Name="Name">SearchButton</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopButton</PropertyVal>
-      <PropertyVal Name="TabIndex">8</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip">Search Reactor</PropertyVal>
-      <PropertyVal Name="Top">7</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">39</PropertyVal>
-      <ControlIndex>8</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>1062983679</PartID>
-    </Control>
-    <Control>
-      <ControlClass>RESTSocket</ControlClass>
-      <ItemName>RESTSocket</ItemName>
-      <PropertyVal Name="AllowCertificateValidation">False</PropertyVal>
-      <PropertyVal Name="FollowRedirects">False</PropertyVal>
-      <PropertyVal Name="HTTPStatusCode">0</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Name">RSocket</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">RESTSocket</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <ControlIndex>9</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>834740223</PartID>
-    </Control>
+      <Superclass>DesktopMenuItem</Superclass>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>EditUndo</ItemName>
+        <ItemText>&amp;Undo</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut>Cmd+Z</ItemShortcut>
+        <MenuShortcut>Z</MenuShortcut>
+        <MenuShortcutModifier>1</MenuShortcutModifier>
+        <MenuAutoEnable>1</MenuAutoEnable>
+        <TextEncoding>134217984</TextEncoding>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>0</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+      </MenuItem>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>EditSeparator1</ItemName>
+        <ItemText>-</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut/>
+        <MenuAutoEnable>1</MenuAutoEnable>
+        <TextEncoding>134217984</TextEncoding>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>0</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+      </MenuItem>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>EditCut</ItemName>
+        <ItemText>Cu&amp;t</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut>Cmd+X</ItemShortcut>
+        <MenuShortcut>X</MenuShortcut>
+        <MenuShortcutModifier>1</MenuShortcutModifier>
+        <MenuAutoEnable>1</MenuAutoEnable>
+        <TextEncoding>134217984</TextEncoding>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>0</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+      </MenuItem>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>EditCopy</ItemName>
+        <ItemText>&amp;Copy</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut>Cmd+C</ItemShortcut>
+        <MenuShortcut>C</MenuShortcut>
+        <MenuShortcutModifier>1</MenuShortcutModifier>
+        <MenuAutoEnable>1</MenuAutoEnable>
+        <TextEncoding>134217984</TextEncoding>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>0</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+      </MenuItem>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>EditPaste</ItemName>
+        <ItemText>&amp;Paste</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut>Cmd+V</ItemShortcut>
+        <MenuShortcut>V</MenuShortcut>
+        <MenuShortcutModifier>1</MenuShortcutModifier>
+        <MenuAutoEnable>1</MenuAutoEnable>
+        <TextEncoding>134217984</TextEncoding>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>0</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+      </MenuItem>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>EditClear</ItemName>
+        <ItemText>#App.kEditClear</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut/>
+        <MenuAutoEnable>1</MenuAutoEnable>
+        <TextEncoding>134217984</TextEncoding>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>0</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+      </MenuItem>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>EditSeparator2</ItemName>
+        <ItemText>-</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut/>
+        <MenuAutoEnable>1</MenuAutoEnable>
+        <TextEncoding>134217984</TextEncoding>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>0</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+      </MenuItem>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>EditSelectAll</ItemName>
+        <ItemText>Select &amp;All</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut>Cmd+A</ItemShortcut>
+        <MenuShortcut>A</MenuShortcut>
+        <MenuShortcutModifier>1</MenuShortcutModifier>
+        <MenuAutoEnable>1</MenuAutoEnable>
+        <TextEncoding>134217984</TextEncoding>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>0</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+      </MenuItem>
+    </MenuItem>
+    <MenuItem>
+      <ItemSpecialMenu>0</ItemSpecialMenu>
+      <ItemName>WindowMenu</ItemName>
+      <ItemText>Window</ItemText>
+      <ItemIndex>-2147483648</ItemIndex>
+      <ItemShortcut/>
+      <MenuAutoEnable>1</MenuAutoEnable>
+      <TextEncoding>134217984</TextEncoding>
+      <MenuItemVisible>1</MenuItemVisible>
+      <ItemFlags>0</ItemFlags>
+      <Superclass>DesktopMenuItem</Superclass>
+    </MenuItem>
+    <MenuItem>
+      <ItemSpecialMenu>0</ItemSpecialMenu>
+      <ItemName>HelpMenu</ItemName>
+      <ItemText>&amp;Help</ItemText>
+      <ItemIndex>-2147483648</ItemIndex>
+      <ItemShortcut/>
+      <MenuAutoEnable>1</MenuAutoEnable>
+      <TextEncoding>134217984</TextEncoding>
+      <MenuItemVisible>1</MenuItemVisible>
+      <ItemFlags>0</ItemFlags>
+      <Superclass>DesktopMenuItem</Superclass>
+    </MenuItem>
   </block>
   <block type="DesktopWindow" ID="296974335">
     <ObjName>AboutWindow</ObjName>
@@ -2158,7 +1352,7 @@
       <PropertyVal Name="TabIndex">5</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip">Magic Wands Have Never Looked Soo Good!</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
       <PropertyVal Name="Top">211</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -2199,440 +1393,1642 @@
       <PartID>1537968127</PartID>
     </Control>
   </block>
-  <block type="Menu" ID="1789632511">
-    <ObjName>MenuBar1</ObjName>
+  <block type="DesktopWindow" ID="338128895">
+    <ObjName>ReactorWindow</ObjName>
     <ObjContainerID>0</ObjContainerID>
-    <MenuItem>
-      <ItemSpecialMenu>0</ItemSpecialMenu>
-      <ItemName>FileMenu</ItemName>
-      <ItemText>&amp;File</ItemText>
-      <ItemIndex>-2147483648</ItemIndex>
-      <ItemShortcut/>
-      <MenuAutoEnable>1</MenuAutoEnable>
+    <IsClass>1</IsClass>
+    <Superclass>DesktopWindow</Superclass>
+    <ItemFlags>1</ItemFlags>
+    <IsInterface>0</IsInterface>
+    <Compatibility/>
+    <HookInstance>
+      <ItemName>Opening</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1037426687</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub Opening()</SourceLine>
+        <SourceLine>// Window sizing</SourceLine>
+        <SourceLine>Me.Top = DesktopDisplay.DisplayAt(0).AvailableTop + 28</SourceLine>
+        <SourceLine>Me.Left = DesktopDisplay.DisplayAt(0).AvailableLeft</SourceLine>
+        <SourceLine>// Me.Width = DesktopDisplay.DisplayAt(0).AvailableWidth</SourceLine>
+        <SourceLine>// Me.Height = DesktopDisplay.DisplayAt(0).AvailableHeight - 28</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Working folder</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+        <SourceLine>Var JSONFolder As FolderItem = ReactorFolder.Child("JSON")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Download the JSON file</SourceLine>
+        <SourceLine>Var url As String = "https://kartaverse.github.io/Reactor-Docs/JSON/Reactor.json"</SourceLine>
+        <SourceLine>Var JSONFile As FolderItem = JSONFolder.Child("Reactor.json")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Socket</SourceLine>
+        <SourceLine>RSocket.ClearRequestHeaders</SourceLine>
+        <SourceLine>RSocket.RequestHeader("User-Agent") = "Xojo"</SourceLine>
+        <SourceLine>RSocket.AllowCertificateValidation = false</SourceLine>
+        <SourceLine/>
+        <SourceLine>App.DownloadFilename = "Reactor.json"</SourceLine>
+        <SourceLine>App.DownloadFolderItem = JSONFile</SourceLine>
+        <SourceLine>App.Atoms = New JSONItem(RSocket.SendSync("GET", url, 5))</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " " + "100% "</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var options As New JSONOptions</SourceLine>
+        <SourceLine>options.Compact = False</SourceLine>
+        <SourceLine>options.IndentSpacing = 4</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var tos As TextOutputStream</SourceLine>
+        <SourceLine>If JSONFile &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>tos = TextOutputStream.Create(JSONFile)</SourceLine>
+        <SourceLine>tos.Write(App.Atoms.ToString(options))</SourceLine>
+        <SourceLine>tos.Close</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Update the listboxes</SourceLine>
+        <SourceLine>AtomsRefresh()</SourceLine>
+        <SourceLine>CategoryRefresh()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Reactor.json data processed</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = ""</SourceLine>
+        <SourceLine>DownloadProgress.Value = 0</SourceLine>
+        <SourceLine>DownloadProgress.Visible = False</SourceLine>
+        <SourceLine>CancelButton.Visible = False</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+    </HookInstance>
+    <MenuHandler>
+      <ItemName>AboutReactorItem</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1524930559</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function AboutReactorItem() As Boolean</SourceLine>
+        <SourceLine>AboutWindow.Show</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ShowReactorItem</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1415716863</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ShowReactorItem() As Boolean</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+        <SourceLine>ReactorFolder.Launch</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ToolsShowDocsFolder</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>22220799</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ToolsShowDocsFolder() As Boolean</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Docs")</SourceLine>
+        <SourceLine>ReactorFolder.Launch</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ToolsShowCompsFolder</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>791074815</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ToolsShowCompsFolder() As Boolean</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Comps")</SourceLine>
+        <SourceLine>ReactorFolder.Launch</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ToolsShowFusesFolder</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>660707327</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ToolsShowFusesFolder() As Boolean</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Fuses")</SourceLine>
+        <SourceLine>ReactorFolder.Launch</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ToolsShowMacrosFolder</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1721745407</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ToolsShowMacrosFolder() As Boolean</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Macros")</SourceLine>
+        <SourceLine>ReactorFolder.Launch</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ToolsShowPluginsFolder</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>499468287</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ToolsShowPluginsFolder() As Boolean</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Plugins")</SourceLine>
+        <SourceLine>ReactorFolder.Launch</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ToolsShowTemplatesFolder</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1394919423</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ToolsShowTemplatesFolder() As Boolean</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Templates")</SourceLine>
+        <SourceLine>ReactorFolder.Launch</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ToolsShowBinFolder</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>664283135</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ToolsShowBinFolder() As Boolean</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Bin")</SourceLine>
+        <SourceLine>ReactorFolder.Launch</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ResourcesOnlineAtomPackageListings</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>951156735</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ResourcesOnlineAtomPackageListings() As Boolean</SourceLine>
+        <SourceLine>system.GotoURL("https://kartaverse.github.io/Reactor-Docs/")</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ResourcesBugTracking</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>155916287</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ResourcesBugTracking() As Boolean</SourceLine>
+        <SourceLine>system.GotoURL("https://www.steakunderwater.com/wesuckless/viewforum.php?f=19")</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ResourcesReactorOnlineRepository</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>952584191</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ResourcesReactorOnlineRepository() As Boolean</SourceLine>
+        <SourceLine>system.GotoURL("https://gitlab.com/WeSuckLess/Reactor")</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ResourcesReactorOnlineDiscussion</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1800859647</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ResourcesReactorOnlineDiscussion() As Boolean</SourceLine>
+        <SourceLine>system.GotoURL("https://www.steakunderwater.com/wesuckless/viewforum.php?f=32")</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ResourcesWeSuckLess</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1511925759</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ResourcesWeSuckLess() As Boolean</SourceLine>
+        <SourceLine>system.GotoURL("https://www.steakunderwater.com/")</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <Method>
+      <ItemName>Download</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>6021119</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub Download(url As String, path As FolderItem)</SourceLine>
+        <SourceLine>// Get filename from URL</SourceLine>
+        <SourceLine>Var filenameLength As Integer</SourceLine>
+        <SourceLine>For i As Integer = url.Length - 1 DownTo 0</SourceLine>
+        <SourceLine>If url.Middle(i, 1) = "/" Then</SourceLine>
+        <SourceLine>filenameLength = url.Length - i</SourceLine>
+        <SourceLine>Exit For</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var filename As String</SourceLine>
+        <SourceLine>filename = url.Right(filenameLength).ReplaceAll("/", "")</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var downloadFile As FolderItem = path</SourceLine>
+        <SourceLine>App.DownloadFilename = downloadFile.Name</SourceLine>
+        <SourceLine>App.DownloadFolderItem = downloadFile</SourceLine>
+        <SourceLine>RSocket.Send("GET", url, downloadFile)</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
       <TextEncoding>134217984</TextEncoding>
-      <MenuItemVisible>1</MenuItemVisible>
+      <AliasName/>
       <ItemFlags>0</ItemFlags>
-      <Superclass>DesktopMenuItem</Superclass>
-      <MenuItem>
-        <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>AboutReactorItem</ItemName>
-        <ItemText>About Reactor</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
-        <ItemShortcut/>
-        <MenuAutoEnable>1</MenuAutoEnable>
+      <IsShared>0</IsShared>
+      <ItemParams>url As String, path As FolderItem</ItemParams>
+      <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>CategoryRefresh</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1107865599</PartID>
+      <ItemSource>
         <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>1</MenuItemVisible>
-        <ItemFlags>0</ItemFlags>
-        <Superclass>DesktopMenuItem</Superclass>
-      </MenuItem>
-      <MenuItem>
-        <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>ToolsItem</ItemName>
-        <ItemText>Tools</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
-        <ItemShortcut/>
-        <MenuAutoEnable>1</MenuAutoEnable>
-        <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>1</MenuItemVisible>
-        <ItemFlags>1</ItemFlags>
-        <Superclass>DesktopMenuItem</Superclass>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ShowReactorItem</ItemName>
-          <ItemText>Show Reactor Folder</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>UntitledSeparator0</ItemName>
-          <ItemText>-</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ToolsShowDocsFolder</ItemName>
-          <ItemText>Show Docs Folder</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ToolsShowCompsFolder</ItemName>
-          <ItemText>Show Comps Folder</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ToolsShowTemplatesFolder</ItemName>
-          <ItemText>Show Templates Folder</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>UntitledSeparator1</ItemName>
-          <ItemText>-</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ToolsShowMacrosFolder</ItemName>
-          <ItemText>Show Macros Folder</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ToolsShowFusesFolder</ItemName>
-          <ItemText>Show Fuses Folder</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ToolsShowPluginsFolder</ItemName>
-          <ItemText>Show Plugins Folder</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>UntitledSeparator2</ItemName>
-          <ItemText>-</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ToolsShowBinFolder</ItemName>
-          <ItemText>Show Bin Folder</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-      </MenuItem>
-      <MenuItem>
-        <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>FileResources</ItemName>
-        <ItemText>Resources</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
-        <ItemShortcut/>
-        <MenuAutoEnable>1</MenuAutoEnable>
-        <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>1</MenuItemVisible>
-        <ItemFlags>1</ItemFlags>
-        <Superclass>DesktopMenuItem</Superclass>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ResourcesOnlineAtomPackageListings</ItemName>
-          <ItemText>Online Atom Package Listings</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>UntitledSeparator4</ItemName>
-          <ItemText>-</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ResourcesReactorOnlineRepository</ItemName>
-          <ItemText>Reactor Online Repository</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ResourcesReactorOnlineDiscussion</ItemName>
-          <ItemText>Reactor Online Discussion</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>UntitledSeparator3</ItemName>
-          <ItemText>-</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ResourcesWeSuckLess</ItemName>
-          <ItemText>We Suck Less</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-        <MenuItem>
-          <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ResourcesBugTracking</ItemName>
-          <ItemText>Bug Tracking</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
-          <ItemShortcut/>
-          <MenuAutoEnable>1</MenuAutoEnable>
-          <TextEncoding>134217984</TextEncoding>
-          <MenuItemVisible>1</MenuItemVisible>
-          <ItemFlags>0</ItemFlags>
-          <Superclass>DesktopMenuItem</Superclass>
-        </MenuItem>
-      </MenuItem>
-      <MenuItem>
-        <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>UntitledSeparator</ItemName>
-        <ItemText>-</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
-        <ItemShortcut/>
-        <MenuAutoEnable>1</MenuAutoEnable>
-        <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>1</MenuItemVisible>
-        <ItemFlags>0</ItemFlags>
-        <Superclass>DesktopMenuItem</Superclass>
-      </MenuItem>
-      <MenuItem>
-        <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>FileQuit</ItemName>
-        <ItemText>#App.kFileQuit</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
-        <ItemShortcut>#App.kFileQuitShortcut</ItemShortcut>
-        <MenuShortcut>#App.kFileQuitShortcut</MenuShortcut>
-        <MenuAutoEnable>1</MenuAutoEnable>
-        <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>1</MenuItemVisible>
-        <ItemFlags>0</ItemFlags>
-        <Superclass>DesktopQuitMenuItem</Superclass>
-      </MenuItem>
-    </MenuItem>
-    <MenuItem>
-      <ItemSpecialMenu>0</ItemSpecialMenu>
-      <ItemName>EditMenu</ItemName>
-      <ItemText>&amp;Edit</ItemText>
-      <ItemIndex>-2147483648</ItemIndex>
-      <ItemShortcut/>
-      <MenuAutoEnable>1</MenuAutoEnable>
+        <SourceLine>Sub CategoryRefresh()</SourceLine>
+        <SourceLine>If App.Atoms &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>CategoryListBox.RemoveAllRows()</SourceLine>
+        <SourceLine>CategoryListBox.AddExpandableRow( "All")</SourceLine>
+        <SourceLine>CategoryListBox.RowTagAt(CategoryListBox.LastAddedRowIndex) = "All"</SourceLine>
+        <SourceLine>CategoryListBox.RowExpandableAt(0) = False </SourceLine>
+        <SourceLine/>
+        <SourceLine>Var Depth As Integer = 0</SourceLine>
+        <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
+        <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
+        <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
+        <SourceLine>Var AtomCategoryArray() As String</SourceLine>
+        <SourceLine>AtomCategoryArray = AtomCategory.Split("/")</SourceLine>
+        <SourceLine/>
+        <SourceLine>If Depth &lt;= AtomCategoryArray.Count - 1 then</SourceLine>
+        <SourceLine>If Depth = 0 then</SourceLine>
+        <SourceLine>// Scan through the Category segments</SourceLine>
+        <SourceLine>Var ExcludeItem as Boolean = False</SourceLine>
+        <SourceLine>Var row As Integer</SourceLine>
+        <SourceLine>For row = 0 To CategoryListBox.LastRowIndex</SourceLine>
+        <SourceLine>If Depth = CategoryListBox.RowDepthAt(row) - 1 And CategoryListBox.CellTextAt(row) = AtomCategoryArray(Depth) Then </SourceLine>
+        <SourceLine>ExcludeItem = True</SourceLine>
+        <SourceLine>Exit For row // or Return if inside method</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine/>
+        <SourceLine>If Not ExcludeItem then</SourceLine>
+        <SourceLine>CategoryListBox.AddRowAt(CategoryListBox.LastAddedRowIndex, AtomCategoryArray(Depth), Depth + 1)</SourceLine>
+        <SourceLine>CategoryListBox.CellTextAt(CategoryListBox.LastAddedRowIndex) = AtomCategoryArray(Depth)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine/>
+        <SourceLine>CategoryListBox.Sort</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
       <TextEncoding>134217984</TextEncoding>
-      <MenuItemVisible>1</MenuItemVisible>
+      <AliasName/>
       <ItemFlags>0</ItemFlags>
-      <Superclass>DesktopMenuItem</Superclass>
-      <MenuItem>
-        <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>EditUndo</ItemName>
-        <ItemText>&amp;Undo</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
-        <ItemShortcut>Cmd+Z</ItemShortcut>
-        <MenuShortcut>Z</MenuShortcut>
-        <MenuShortcutModifier>1</MenuShortcutModifier>
-        <MenuAutoEnable>1</MenuAutoEnable>
+      <IsShared>0</IsShared>
+      <ItemParams/>
+      <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>AtomsRefresh</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1056473087</PartID>
+      <ItemSource>
         <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>1</MenuItemVisible>
-        <ItemFlags>0</ItemFlags>
-        <Superclass>DesktopMenuItem</Superclass>
-      </MenuItem>
-      <MenuItem>
-        <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>EditSeparator1</ItemName>
-        <ItemText>-</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
-        <ItemShortcut/>
-        <MenuAutoEnable>1</MenuAutoEnable>
-        <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>1</MenuItemVisible>
-        <ItemFlags>0</ItemFlags>
-        <Superclass>DesktopMenuItem</Superclass>
-      </MenuItem>
-      <MenuItem>
-        <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>EditCut</ItemName>
-        <ItemText>Cu&amp;t</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
-        <ItemShortcut>Cmd+X</ItemShortcut>
-        <MenuShortcut>X</MenuShortcut>
-        <MenuShortcutModifier>1</MenuShortcutModifier>
-        <MenuAutoEnable>1</MenuAutoEnable>
-        <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>1</MenuItemVisible>
-        <ItemFlags>0</ItemFlags>
-        <Superclass>DesktopMenuItem</Superclass>
-      </MenuItem>
-      <MenuItem>
-        <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>EditCopy</ItemName>
-        <ItemText>&amp;Copy</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
-        <ItemShortcut>Cmd+C</ItemShortcut>
-        <MenuShortcut>C</MenuShortcut>
-        <MenuShortcutModifier>1</MenuShortcutModifier>
-        <MenuAutoEnable>1</MenuAutoEnable>
-        <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>1</MenuItemVisible>
-        <ItemFlags>0</ItemFlags>
-        <Superclass>DesktopMenuItem</Superclass>
-      </MenuItem>
-      <MenuItem>
-        <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>EditPaste</ItemName>
-        <ItemText>&amp;Paste</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
-        <ItemShortcut>Cmd+V</ItemShortcut>
-        <MenuShortcut>V</MenuShortcut>
-        <MenuShortcutModifier>1</MenuShortcutModifier>
-        <MenuAutoEnable>1</MenuAutoEnable>
-        <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>1</MenuItemVisible>
-        <ItemFlags>0</ItemFlags>
-        <Superclass>DesktopMenuItem</Superclass>
-      </MenuItem>
-      <MenuItem>
-        <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>EditClear</ItemName>
-        <ItemText>#App.kEditClear</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
-        <ItemShortcut/>
-        <MenuAutoEnable>1</MenuAutoEnable>
-        <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>1</MenuItemVisible>
-        <ItemFlags>0</ItemFlags>
-        <Superclass>DesktopMenuItem</Superclass>
-      </MenuItem>
-      <MenuItem>
-        <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>EditSeparator2</ItemName>
-        <ItemText>-</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
-        <ItemShortcut/>
-        <MenuAutoEnable>1</MenuAutoEnable>
-        <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>1</MenuItemVisible>
-        <ItemFlags>0</ItemFlags>
-        <Superclass>DesktopMenuItem</Superclass>
-      </MenuItem>
-      <MenuItem>
-        <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>EditSelectAll</ItemName>
-        <ItemText>Select &amp;All</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
-        <ItemShortcut>Cmd+A</ItemShortcut>
-        <MenuShortcut>A</MenuShortcut>
-        <MenuShortcutModifier>1</MenuShortcutModifier>
-        <MenuAutoEnable>1</MenuAutoEnable>
-        <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>1</MenuItemVisible>
-        <ItemFlags>0</ItemFlags>
-        <Superclass>DesktopMenuItem</Superclass>
-      </MenuItem>
-    </MenuItem>
-    <MenuItem>
-      <ItemSpecialMenu>0</ItemSpecialMenu>
-      <ItemName>WindowMenu</ItemName>
-      <ItemText>Window</ItemText>
-      <ItemIndex>-2147483648</ItemIndex>
-      <ItemShortcut/>
-      <MenuAutoEnable>1</MenuAutoEnable>
+        <SourceLine>Sub AtomsRefresh()</SourceLine>
+        <SourceLine>If App.Atoms &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>Var AtomCount As Integer = App.Atoms.Keys.Count</SourceLine>
+        <SourceLine>AtomsListBox.RemoveAllRows()</SourceLine>
+        <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
+        <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
+        <SourceLine>Var AtomName As String =  Atom.Value("Name")</SourceLine>
+        <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
+        <SourceLine>Var AtomVersion As String =  Atom.Value("Version")</SourceLine>
+        <SourceLine>Var AtomAuthor As String =  Atom.Value("Author")</SourceLine>
+        <SourceLine>Var AtomDate As String</SourceLine>
+        <SourceLine>//if Atom.Value("Date") &lt;&gt; Nil and Atom.Value("Date").HasKey("1.0") Then</SourceLine>
+        <SourceLine>// AtomDate = Atom.Value("Date").Value("1.0") + "-" + Atom.Value("Date").Value("2.0")  + "-" + Atom.Value("Date").Value("3.0") </SourceLine>
+        <SourceLine>//AtomDate = Atom.Value("Date").Child("1.0")</SourceLine>
+        <SourceLine>//End If</SourceLine>
+        <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
+        <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
+        <SourceLine>Var AtomDonation As String = "No"</SourceLine>
+        <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+        <SourceLine/>
+        <SourceLine>AtomsListBox.Addrow("")</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 1) = AtomName</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 2) = AtomCategory</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 3) = AtomVersion</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 4) = AtomAuthor</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 5) = AtomDate</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 6) = AtomRepo</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 7) = AtomStatus</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 8) = AtomDonation</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 9) = AtomID</SourceLine>
+        <SourceLine>AtomsListBox.CellTagAt(AtomsListBox.LastAddedRowIndex, 0) = k</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>AtomsListBox.Sort</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
       <TextEncoding>134217984</TextEncoding>
-      <MenuItemVisible>1</MenuItemVisible>
+      <AliasName/>
       <ItemFlags>0</ItemFlags>
-      <Superclass>DesktopMenuItem</Superclass>
-    </MenuItem>
-    <MenuItem>
-      <ItemSpecialMenu>0</ItemSpecialMenu>
-      <ItemName>HelpMenu</ItemName>
-      <ItemText>&amp;Help</ItemText>
-      <ItemIndex>-2147483648</ItemIndex>
-      <ItemShortcut/>
-      <MenuAutoEnable>1</MenuAutoEnable>
-      <TextEncoding>134217984</TextEncoding>
-      <MenuItemVisible>1</MenuItemVisible>
-      <ItemFlags>0</ItemFlags>
-      <Superclass>DesktopMenuItem</Superclass>
-    </MenuItem>
+      <IsShared>0</IsShared>
+      <ItemParams/>
+      <ItemResult/>
+    </Method>
+    <PropertyVal Name="MenuBarVisible">False</PropertyVal>
+    <PropertyVal Name="MenuBar">1789632511</PropertyVal>
+    <PropertyVal Name="Backdrop">0</PropertyVal>
+    <PropertyVal Name="BackgroundColor">&amp;cFFFFFF</PropertyVal>
+    <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
+    <PropertyVal Name="ImplicitInstance">True</PropertyVal>
+    <PropertyVal Name="Visible">True</PropertyVal>
+    <PropertyVal Name="DefaultLocation">2</PropertyVal>
+    <PropertyVal Name="FullScreen">False</PropertyVal>
+    <PropertyVal Name="MacProcID">0</PropertyVal>
+    <PropertyVal Name="Composite">False</PropertyVal>
+    <PropertyVal Name="Resizeable">True</PropertyVal>
+    <PropertyVal Name="HasTitleBar">True</PropertyVal>
+    <PropertyVal Name="HasFullScreenButton">False</PropertyVal>
+    <PropertyVal Name="HasMinimizeButton">True</PropertyVal>
+    <PropertyVal Name="HasMaximizeButton">True</PropertyVal>
+    <PropertyVal Name="HasCloseButton">True</PropertyVal>
+    <PropertyVal Name="Title">Reactor</PropertyVal>
+    <PropertyVal Name="Type">0</PropertyVal>
+    <PropertyVal Name="MaximumHeight">1920</PropertyVal>
+    <PropertyVal Name="MaximumWidth">3840</PropertyVal>
+    <PropertyVal Name="MinimumHeight">600</PropertyVal>
+    <PropertyVal Name="MinimumWidth">1160</PropertyVal>
+    <PropertyVal Name="Height">654</PropertyVal>
+    <PropertyVal Name="Width">1160</PropertyVal>
+    <ViewBehavior>
+      <ViewProperty>
+        <ObjName>Name</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>ID</PropertyGroup>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Interfaces</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>ID</PropertyGroup>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Super</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>ID</PropertyGroup>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Width</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>600</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Height</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>400</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MinimumWidth</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>64</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MinimumHeight</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>64</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MaximumWidth</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>32000</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MaximumHeight</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>32000</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Type</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>0</PropertyValue>
+        <ItemType>Types</ItemType>
+        <EditorType>Enum</EditorType>
+        <Enumeration>
+          <ItemDef>0 - Document</ItemDef>
+          <ItemDef>1 - Movable Modal</ItemDef>
+          <ItemDef>2 - Modal Dialog</ItemDef>
+          <ItemDef>3 - Floating Window</ItemDef>
+          <ItemDef>4 - Plain Box</ItemDef>
+          <ItemDef>5 - Shadowed Box</ItemDef>
+          <ItemDef>6 - Rounded Window</ItemDef>
+          <ItemDef>7 - Global Floating Window</ItemDef>
+          <ItemDef>8 - Sheet Window</ItemDef>
+          <ItemDef>9 - Modeless Dialog</ItemDef>
+        </Enumeration>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Title</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>Untitled</PropertyValue>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasCloseButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasMaximizeButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasMinimizeButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasFullScreenButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasTitleBar</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Resizeable</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Composite</ObjName>
+        <PropertyGroup>OS X (Carbon)</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MacProcID</ObjName>
+        <PropertyGroup>OS X (Carbon)</PropertyGroup>
+        <PropertyValue>0</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>FullScreen</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>DefaultLocation</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>2</PropertyValue>
+        <ItemType>Locations</ItemType>
+        <EditorType>Enum</EditorType>
+        <Enumeration>
+          <ItemDef>0 - Default</ItemDef>
+          <ItemDef>1 - Parent Window</ItemDef>
+          <ItemDef>2 - Main Screen</ItemDef>
+          <ItemDef>3 - Parent Window Screen</ItemDef>
+          <ItemDef>4 - Stagger</ItemDef>
+        </Enumeration>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Visible</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>ImplicitInstance</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Window Behavior</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasBackgroundColor</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Background</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>BackgroundColor</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Background</PropertyGroup>
+        <PropertyValue>&amp;cFFFFFF</PropertyValue>
+        <ItemType>ColorGroup</ItemType>
+        <EditorType>ColorGroup</EditorType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Backdrop</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Background</PropertyGroup>
+        <ItemType>Picture</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MenuBar</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Menus</PropertyGroup>
+        <ItemType>DesktopMenuBar</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MenuBarVisible</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Deprecated</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+    </ViewBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopListBox</Superclass>
+      <HookInstance>
+        <ItemName>Opening</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>450662399</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Opening()</SourceLine>
+          <SourceLine>Me.AllowExpandableRows = True</SourceLine>
+          <SourceLine>Me.ColumnSortTypeAt(0) = DesktopListBox.SortTypes.Sortable</SourceLine>
+          <SourceLine>Me.ColumnSortDirectionAt(0) = DesktopListBox.SortDirections.Ascending</SourceLine>
+          <SourceLine>Me.SortingColumn = 0</SourceLine>
+          <SourceLine>Me.HeadingIndex = 0</SourceLine>
+          <SourceLine>Me.Sort</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>RowExpanded</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1670039551</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub RowExpanded(row As Integer)</SourceLine>
+          <SourceLine>AtomsRefresh()</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>SelectionChanged</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>44480511</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub SelectionChanged()</SourceLine>
+          <SourceLine>Var SelectedCategory As String</SourceLine>
+          <SourceLine>Var row As Integer = Me.SelectedRowIndex</SourceLine>
+          <SourceLine>If row &gt;= 0 Then</SourceLine>
+          <SourceLine>Var AtomCount As Integer = App.Atoms.Keys.Count</SourceLine>
+          <SourceLine>AtomsListBox.RemoveAllRows()</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var CellString As String = Me.CellTextAt(row, 0)</SourceLine>
+          <SourceLine>SelectedCategory = CellString</SourceLine>
+          <SourceLine>If CellString = "All" then</SourceLine>
+          <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
+          <SourceLine>Var AtomName As String =  Atom.Value("Name")</SourceLine>
+          <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
+          <SourceLine>Var AtomVersion As String =  Atom.Value("Version")</SourceLine>
+          <SourceLine>Var AtomAuthor As String =  Atom.Value("Author")</SourceLine>
+          <SourceLine>Var AtomDate As String = "2025-07-01" //Atom.Value("Date").ToString()</SourceLine>
+          <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
+          <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
+          <SourceLine>Var AtomDonation As String = "No"</SourceLine>
+          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomsListBox.Addrow("")</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 1) = AtomName</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 2) = AtomCategory</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 3) = AtomVersion</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 4) = AtomAuthor</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 5) = AtomDate</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 6) = AtomRepo</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 7) = AtomStatus</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 8) = AtomDonation</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 9) = AtomID</SourceLine>
+          <SourceLine>AtomsListBox.CellTagAt(AtomsListBox.LastAddedRowIndex, 0) = k</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var AtomName As String =  Atom.Value("Name")</SourceLine>
+          <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
+          <SourceLine>Var AtomCategoryArray() As String</SourceLine>
+          <SourceLine>AtomCategoryArray = AtomCategory.Split("/")</SourceLine>
+          <SourceLine>if AtomCategoryArray(0) = CellString Then</SourceLine>
+          <SourceLine>Var AtomVersion As String =  Atom.Value("Version")</SourceLine>
+          <SourceLine>Var AtomAuthor As String =  Atom.Value("Author")</SourceLine>
+          <SourceLine>Var AtomDate As String = "2025-07-01" //Atom.Value("Date").ToString()</SourceLine>
+          <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
+          <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
+          <SourceLine>Var AtomDonation As String = "No"</SourceLine>
+          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomsListBox.Addrow("")</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 1) = AtomName</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 2) = AtomCategory</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 3) = AtomVersion</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 4) = AtomAuthor</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 5) = AtomDate</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 6) = AtomRepo</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 7) = AtomStatus</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 8) = AtomDonation</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 9) = AtomID</SourceLine>
+          <SourceLine>AtomsListBox.CellTagAt(AtomsListBox.LastAddedRowIndex, 0) = k</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>AtomsListBox.Sort</SourceLine>
+          <SourceLine>End</SourceLine>
+          <SourceLine/>
+          <SourceLine>System.Debuglog("[Category Selected] " + SelectedCategory)</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopComboBox</Superclass>
+      <HookInstance>
+        <ItemName>TextChanged</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1531467775</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub TextChanged()</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopListBox</Superclass>
+      <HookInstance>
+        <ItemName>Opening</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>974577663</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Opening()</SourceLine>
+          <SourceLine>Me.ColumnTypeAt(0) = DesktopListBox.CellTypes.CheckBox</SourceLine>
+          <SourceLine>Me.ColumnSortTypeAt(1) = DesktopListBox.SortTypes.Sortable</SourceLine>
+          <SourceLine>Me.ColumnSortDirectionAt(1) = DesktopListBox.SortDirections.Ascending</SourceLine>
+          <SourceLine>Me.SortingColumn = 0</SourceLine>
+          <SourceLine>Me.HeadingIndex = 1</SourceLine>
+          <SourceLine>Me.Sort</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>SelectionChanged</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>927277055</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub SelectionChanged()</SourceLine>
+          <SourceLine>Var row As Integer = Me.SelectedRowIndex</SourceLine>
+          <SourceLine>If row &gt;= 0 Then</SourceLine>
+          <SourceLine>Var CellString As String = Me.CellTextAt(row, 1)</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = Me.CellTagAt(row, 0).IntegerValue</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
+          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+          <SourceLine>Var SelectedAtom As String = AtomID</SourceLine>
+          <SourceLine/>
+          <SourceLine>System.Debuglog("[Atom Selected] " + SelectedAtom)</SourceLine>
+          <SourceLine>DownloadStatsLabel.Text = SelectedAtom + ".zip Selected"</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var HTML As String = App.Header + AtomDescription + App.Footer</SourceLine>
+          <SourceLine>HTML = HTML.ReplaceAll("Reactor:",SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
+          <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
+          <SourceLine/>
+          <SourceLine>DescriptionHTMLViewer.LoadPage(HTML, DeployHTMLFile)</SourceLine>
+          <SourceLine>End</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>CellPressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>316995583</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function CellPressed(row As Integer, column As Integer, x As Integer, y As Integer) As Boolean</SourceLine>
+          <SourceLine>If row &gt;= 0 And column &gt;= 1 Then</SourceLine>
+          <SourceLine>Var CellString As String = Me.CellTextAt(row, 1)</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = Me.CellTagAt(row, 0).IntegerValue</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
+          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+          <SourceLine>Var SelectedAtom As String = AtomID</SourceLine>
+          <SourceLine>System.Debuglog("[Atom Description] " + SelectedAtom)</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var HTML As String = App.Header + AtomDescription + App.Footer</SourceLine>
+          <SourceLine>HTML = HTML.ReplaceAll("Reactor:",SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
+          <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
+          <SourceLine/>
+          <SourceLine>DescriptionHTMLViewer.LoadPage(HTML, DeployHTMLFile)</SourceLine>
+          <SourceLine>End</SourceLine>
+          <SourceLine/>
+          <SourceLine>If row &gt;= 0 and column = 0 Then</SourceLine>
+          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 0).IntegerValue</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var ID As String = Atom.Value("ID")</SourceLine>
+          <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var AtomzFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz")</SourceLine>
+          <SourceLine>Var AtomzFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz").Child(ID + ".zip")</SourceLine>
+          <SourceLine>App.DownloadFilename = AtomzFile.Name</SourceLine>
+          <SourceLine>App.DownloadFolderItem = AtomzFile</SourceLine>
+          <SourceLine/>
+          <SourceLine>App.DownloadRow = row</SourceLine>
+          <SourceLine>If AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked Then</SourceLine>
+          <SourceLine>// Remove the package</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Remove the partial file</SourceLine>
+          <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil And App.DownloadFolderItem.Exists then</SourceLine>
+          <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Refresh the status displays</SourceLine>
+          <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Removed"</SourceLine>
+          <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
+          <SourceLine>DownloadProgress.Value = 0</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+          <SourceLine>App.DownloadRow = -1</SourceLine>
+          <SourceLine/>
+          <SourceLine>System.Debuglog("[Removed Package] " + App.DownloadFilename)</SourceLine>
+          <SourceLine>ElseIf AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Unchecked Then</SourceLine>
+          <SourceLine>// Download the package</SourceLine>
+          <SourceLine>Download(ZipFileURL, AtomzFile)</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
+          <SourceLine>ElseIf AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Indeterminate Then</SourceLine>
+          <SourceLine>// Cancel the download task</SourceLine>
+          <SourceLine>RSocket.Disconnect()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Remove the partial file</SourceLine>
+          <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil And App.DownloadFolderItem.Exists then</SourceLine>
+          <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Refresh the status displays</SourceLine>
+          <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Cancelled"</SourceLine>
+          <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
+          <SourceLine>DownloadProgress.Value = 0</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+          <SourceLine>App.DownloadRow = -1</SourceLine>
+          <SourceLine/>
+          <SourceLine>System.Debuglog("[Cancelled Installing Package] " + App.DownloadFilename)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopHTMLViewer</Superclass>
+      <HookInstance>
+        <ItemName>DocumentComplete</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1663475711</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub DocumentComplete(url as String)</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>Opening</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1951934463</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Opening()</SourceLine>
+          <SourceLine>Var HTML As String = App.Header + App.Footer</SourceLine>
+          <SourceLine>HTML = HTML.ReplaceAll("Reactor:",SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
+          <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
+          <SourceLine>DescriptionHTMLViewer.LoadPage(HTML, DeployHTMLFile)</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopButton</Superclass>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>2090135551</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine>Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>If row &gt;= 0 Then</SourceLine>
+          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 0).IntegerValue</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var ID As String = Atom.Value("ID")</SourceLine>
+          <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
+          <SourceLine/>
+          <SourceLine>App.DownloadRow = row</SourceLine>
+          <SourceLine>Var AtomzFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz")</SourceLine>
+          <SourceLine>Var AtomzFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz").Child(ID + ".zip")</SourceLine>
+          <SourceLine>Download(ZipFileURL, AtomzFile)</SourceLine>
+          <SourceLine>End if</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopButton</Superclass>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>94662655</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopButton</Superclass>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>587755519</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine>Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>If row &gt;= 0 Then</SourceLine>
+          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 0).IntegerValue</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var ID As String = Atom.Value("ID")</SourceLine>
+          <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
+          <SourceLine/>
+          <SourceLine>App.DownloadRow = row</SourceLine>
+          <SourceLine>Var AtomzFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz")</SourceLine>
+          <SourceLine>Var AtomzFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz").Child(ID + ".zip")</SourceLine>
+          <SourceLine/>
+          <SourceLine>App.DownloadFilename = AtomzFile.Name</SourceLine>
+          <SourceLine>App.DownloadFolderItem = AtomzFile</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Remove the partial file</SourceLine>
+          <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil And App.DownloadFolderItem.Exists then</SourceLine>
+          <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Refresh the status displays</SourceLine>
+          <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Removed"</SourceLine>
+          <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
+          <SourceLine>DownloadProgress.Value = 0</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+          <SourceLine>App.DownloadRow = -1</SourceLine>
+          <SourceLine>End if</SourceLine>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopTextField</Superclass>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopButton</Superclass>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1784539135</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>RESTSocket</Superclass>
+      <HookInstance>
+        <ItemName>ReceivingProgressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>977092607</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub ReceivingProgressed(bytesReceived As Int64, totalBytes As Int64, newData As String)</SourceLine>
+          <SourceLine>#PRAGMA unused newData</SourceLine>
+          <SourceLine/>
+          <SourceLine>CancelButton.Visible = True</SourceLine>
+          <SourceLine>DownloadProgress.Visible = True</SourceLine>
+          <SourceLine>DownloadProgress.Value = (bytesReceived / totalBytes) * 100</SourceLine>
+          <SourceLine/>
+          <SourceLine>If App.DownloadRow &gt;= 0 Then</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Indeterminate</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var megabytesReceived As Double = bytesReceived / 1000000</SourceLine>
+          <SourceLine>Var totalmegabytes As Double = totalBytes / 1000000</SourceLine>
+          <SourceLine/>
+          <SourceLine>If totalBytes = -1 then</SourceLine>
+          <SourceLine>// Unknown download size</SourceLine>
+          <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " " + megabytesReceived.ToString(Locale.Current, "#,##0.00") + " MB "</SourceLine>
+          <SourceLine>DownloadProgress.Indeterminate = True</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>// Known download size</SourceLine>
+          <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " " + megabytesReceived.ToString(Locale.Current, "#,##0.00") + " MB of " + totalmegabytes.ToString(Locale.Current, "#,##0.00") + " MB "</SourceLine>
+          <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
+          <SourceLine>// "com.Vonk.FusionMograph.zip 6.9 MB of 600 MB (929 kB/sec)"</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>FileReceived</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>962930687</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub FileReceived(URL As String, HTTPStatus As Integer, file As FolderItem)</SourceLine>
+          <SourceLine>#PRAGMA unused URL</SourceLine>
+          <SourceLine>#PRAGMA unused HTTPStatus</SourceLine>
+          <SourceLine/>
+          <SourceLine>DownloadProgress.Value = DownloadProgress.MaximumValue</SourceLine>
+          <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
+          <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " " + " Downloaded"</SourceLine>
+          <SourceLine/>
+          <SourceLine>If App.DownloadRow &gt;= 0 Then</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>System.Debuglog("[Downloaded Package] " + file.NativePath)</SourceLine>
+          <SourceLine>//MessageBox("Atom package download is done. The file is located here: " + file.NativePath)</SourceLine>
+          <SourceLine/>
+          <SourceLine>DownloadProgress.Value = 0</SourceLine>
+          <SourceLine>DownloadProgress.Visible = False</SourceLine>
+          <SourceLine>CancelButton.Visible = False</SourceLine>
+          <SourceLine>//DownloadStatsLabel.Text = ""</SourceLine>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopProgressBar</Superclass>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopButton</Superclass>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>628338687</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine>// Cancel the download task</SourceLine>
+          <SourceLine>RSocket.Disconnect()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Refresh the status displays</SourceLine>
+          <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Cancelled"</SourceLine>
+          <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
+          <SourceLine>DownloadProgress.Value = 0</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+          <SourceLine>App.DownloadRow = -1</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Remove the partial file</SourceLine>
+          <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil And App.DownloadFolderItem.Exists then</SourceLine>
+          <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>System.Debuglog("[Cancelled Download] " + App.DownloadFilename)</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopLabel</Superclass>
+    </ControlBehavior>
+    <Control>
+      <ControlClass>DesktopListBox</ControlClass>
+      <ItemName>DesktopListBox</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowAutoHideScrollbars">True</PropertyVal>
+      <PropertyVal Name="AllowExpandableRows">True</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
+      <PropertyVal Name="AllowResizableColumns">False</PropertyVal>
+      <PropertyVal Name="AllowRowDragging">False</PropertyVal>
+      <PropertyVal Name="AllowRowReordering">False</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="ColumnCount">1</PropertyVal>
+      <PropertyVal Name="ColumnWidths"/>
+      <PropertyVal Name="DefaultRowHeight">-1</PropertyVal>
+      <PropertyVal Name="DropIndicatorVisible">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="GridLineStyle">0</PropertyVal>
+      <PropertyVal Name="HasBorder">True</PropertyVal>
+      <PropertyVal Name="HasHeader">False</PropertyVal>
+      <PropertyVal Name="HasHorizontalScrollbar">False</PropertyVal>
+      <PropertyVal Name="HasVerticalScrollbar">True</PropertyVal>
+      <PropertyVal Name="HeadingIndex">-1</PropertyVal>
+      <PropertyVal Name="Height">616</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialValue"/>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">0</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">CategoryListBox</PropertyVal>
+      <PropertyVal Name="RequiresSelection">False</PropertyVal>
+      <PropertyVal Name="RowSelectionType">0</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopListBox</PropertyVal>
+      <PropertyVal Name="TabIndex">0</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">38</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">188</PropertyVal>
+      <PropertyVal Name="_ScrollOffset">0</PropertyVal>
+      <PropertyVal Name="_ScrollWidth">-1</PropertyVal>
+      <ControlIndex>0</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1337284607</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopComboBox</ControlClass>
+      <ItemName>DesktopComboBox</ItemName>
+      <PropertyVal Name="AllowAutoComplete">False</PropertyVal>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">19</PropertyVal>
+      <PropertyVal Name="Hint"/>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialValue">
+        <Hex bytes="32">416C6C0A496E7374616C6C65640A4E65770A5570646174650A52656163746F72</Hex>
+      </PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">0</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">RepoComboBox</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="SelectedRowIndex">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopComboBox</PropertyVal>
+      <PropertyVal Name="TabIndex">1</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">7</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">188</PropertyVal>
+      <ControlIndex>1</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>92030975</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopListBox</ControlClass>
+      <ItemName>DesktopListBox</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowAutoHideScrollbars">True</PropertyVal>
+      <PropertyVal Name="AllowExpandableRows">False</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
+      <PropertyVal Name="AllowResizableColumns">True</PropertyVal>
+      <PropertyVal Name="AllowRowDragging">False</PropertyVal>
+      <PropertyVal Name="AllowRowReordering">False</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="ColumnCount">10</PropertyVal>
+      <PropertyVal Name="ColumnWidths">45, 300,204,52,180,78,68,50,60,365</PropertyVal>
+      <PropertyVal Name="DefaultRowHeight">-1</PropertyVal>
+      <PropertyVal Name="DropIndicatorVisible">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="GridLineStyle">0</PropertyVal>
+      <PropertyVal Name="HasBorder">True</PropertyVal>
+      <PropertyVal Name="HasHeader">True</PropertyVal>
+      <PropertyVal Name="HasHorizontalScrollbar">True</PropertyVal>
+      <PropertyVal Name="HasVerticalScrollbar">True</PropertyVal>
+      <PropertyVal Name="HeadingIndex">-1</PropertyVal>
+      <PropertyVal Name="Height">244</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialValue">
+        <Hex bytes="65">496E7374616C6C094E616D650943617465676F72790956657273696F6E09417574686F720944617465095265706F0953746174757309446F6E6174696F6E094944</Hex>
+      </PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">192</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">AtomsListBox</PropertyVal>
+      <PropertyVal Name="RequiresSelection">False</PropertyVal>
+      <PropertyVal Name="RowSelectionType">0</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopListBox</PropertyVal>
+      <PropertyVal Name="TabIndex">2</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">38</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">968</PropertyVal>
+      <PropertyVal Name="_ScrollOffset">0</PropertyVal>
+      <PropertyVal Name="_ScrollWidth">-1</PropertyVal>
+      <ControlIndex>2</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>2135695359</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopHTMLViewer</ControlClass>
+      <ItemName>DesktopHTMLViewer</ItemName>
+      <PropertyVal Name="AutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Height">288</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialParent"/>
+      <PropertyVal Name="Left">192</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">DescriptionHTMLViewer</PropertyVal>
+      <PropertyVal Name="Renderer">0</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopHTMLViewer</PropertyVal>
+      <PropertyVal Name="TabIndex">3</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">281</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">968</PropertyVal>
+      <ControlIndex>3</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>211204095</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopButton</ControlClass>
+      <ItemName>DesktopButton</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Cancel">False</PropertyVal>
+      <PropertyVal Name="Caption">Install</PropertyVal>
+      <PropertyVal Name="Default">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">880</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
+      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
+      <PropertyVal Name="Name">InstallButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopButton</PropertyVal>
+      <PropertyVal Name="TabIndex">4</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">621</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">260</PropertyVal>
+      <ControlIndex>4</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>2015277055</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopButton</ControlClass>
+      <ItemName>DesktopButton</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Cancel">False</PropertyVal>
+      <PropertyVal Name="Caption">Update</PropertyVal>
+      <PropertyVal Name="Default">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">536</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
+      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
+      <PropertyVal Name="Name">UpdateButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopButton</PropertyVal>
+      <PropertyVal Name="TabIndex">5</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">621</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">260</PropertyVal>
+      <ControlIndex>5</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1619685375</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopButton</ControlClass>
+      <ItemName>DesktopButton</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Cancel">False</PropertyVal>
+      <PropertyVal Name="Caption">Remove</PropertyVal>
+      <PropertyVal Name="Default">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">200</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
+      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
+      <PropertyVal Name="Name">RemoveButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopButton</PropertyVal>
+      <PropertyVal Name="TabIndex">6</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">621</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">260</PropertyVal>
+      <ControlIndex>6</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1765206015</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopTextField</ControlClass>
+      <ItemName>DesktopTextField</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
+      <PropertyVal Name="AllowSpellChecking">False</PropertyVal>
+      <PropertyVal Name="AllowTabs">False</PropertyVal>
+      <PropertyVal Name="BackgroundColor">&amp;hFFFFFF</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Format"/>
+      <PropertyVal Name="HasBorder">True</PropertyVal>
+      <PropertyVal Name="Height">22</PropertyVal>
+      <PropertyVal Name="Hint"/>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">251</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="MaximumCharactersAllowed">0</PropertyVal>
+      <PropertyVal Name="Name">SearchTextField</PropertyVal>
+      <PropertyVal Name="Password">False</PropertyVal>
+      <PropertyVal Name="ReadOnly">False</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopTextField</PropertyVal>
+      <PropertyVal Name="TabIndex">7</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Text"/>
+      <PropertyVal Name="TextAlignment">0</PropertyVal>
+      <PropertyVal Name="TextColor">&amp;h000000</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">7</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="ValidationMask"/>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">902</PropertyVal>
+      <ControlIndex>7</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>891385855</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopButton</ControlClass>
+      <ItemName>DesktopButton</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Cancel">False</PropertyVal>
+      <PropertyVal Name="Caption">🔎</PropertyVal>
+      <PropertyVal Name="Default">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">Symbol</PropertyVal>
+      <PropertyVal Name="FontSize">1.6e+1</PropertyVal>
+      <PropertyVal Name="FontUnit">1</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">200</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
+      <PropertyVal Name="Name">SearchButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopButton</PropertyVal>
+      <PropertyVal Name="TabIndex">8</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip">Search Reactor</PropertyVal>
+      <PropertyVal Name="Top">7</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">39</PropertyVal>
+      <ControlIndex>8</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1062983679</PartID>
+    </Control>
+    <Control>
+      <ControlClass>RESTSocket</ControlClass>
+      <ItemName>RESTSocket</ItemName>
+      <PropertyVal Name="AllowCertificateValidation">False</PropertyVal>
+      <PropertyVal Name="FollowRedirects">False</PropertyVal>
+      <PropertyVal Name="HTTPStatusCode">0</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Name">RSocket</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">RESTSocket</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <ControlIndex>9</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>834740223</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopProgressBar</ControlClass>
+      <ItemName>DesktopProgressBar</ItemName>
+      <PropertyVal Name="Active">False</PropertyVal>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowTabStop">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Indeterminate">False</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialParent"/>
+      <PropertyVal Name="Left">192</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
+      <PropertyVal Name="MaximumValue">100</PropertyVal>
+      <PropertyVal Name="Name">DownloadProgress</PropertyVal>
+      <PropertyVal Name="PanelIndex">0</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopProgressBar</PropertyVal>
+      <PropertyVal Name="TabIndex">10</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">574</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Value">0.00</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">875</PropertyVal>
+      <PropertyVal Name="_mIndex">0</PropertyVal>
+      <PropertyVal Name="_mInitialParent"/>
+      <PropertyVal Name="_mName"/>
+      <PropertyVal Name="_mPanelIndex">0</PropertyVal>
+      <ControlIndex>10</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>549044223</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopButton</ControlClass>
+      <ItemName>DesktopButton</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Cancel">True</PropertyVal>
+      <PropertyVal Name="Caption">Cancel</PropertyVal>
+      <PropertyVal Name="Default">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">1079</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
+      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
+      <PropertyVal Name="Name">CancelButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopButton</PropertyVal>
+      <PropertyVal Name="TabIndex">11</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">574</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">61</PropertyVal>
+      <ControlIndex>11</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1960126463</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopLabel</ControlClass>
+      <ItemName>DesktopLabel</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">192</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
+      <PropertyVal Name="Multiline">False</PropertyVal>
+      <PropertyVal Name="Name">DownloadStatsLabel</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Selectable">False</PropertyVal>
+      <PropertyVal Name="Super">DesktopLabel</PropertyVal>
+      <PropertyVal Name="TabIndex">12</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Text">6.9 MB of 600 MB (929 kB/sec) com.Vonk.FusionMograph.zip</PropertyVal>
+      <PropertyVal Name="TextAlignment">0</PropertyVal>
+      <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">589</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">875</PropertyVal>
+      <ControlIndex>12</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1026347007</PartID>
+    </Control>
   </block>
   <block type="BuildAutomation" ID="1683482623">
     <ObjName>Build Automation</ObjName>
@@ -3170,15 +3566,15 @@
     </ViewBehavior>
   </block>
   <block type="MultiImage" ID="1879734271">
-    <ObjName>Magic</ObjName>
+    <ObjName>reactormagic</ObjName>
     <ObjContainerID>0</ObjContainerID>
-    <ItemName>Magic</ItemName>
+    <ItemName>reactormagic</ItemName>
     <ImageRepresentation>
       <SaveInfo>
         <Hex bytes="874">00F1D173020007005C030000626F6F6B5C03000000000410300000000000000000000000000000000000000000000000000000000000000000000000400200000400000003030000000400000500000001010000557365727300000003000000010100007666780007000000010100004465736B746F70000C00000001010000586F6A6F2052656163746F72040000000101000049636F6E100000000101000072656163746F726D616769632E706E67180000000106000010000000200000002C0000003C000000500000005C0000000800000004030000AD520000000000000800000004030000947C0000000000000800000004030000997C0000000000000800000004030000A503B3010000000008000000040300005F90B301000000000800000004030000017CB40100000000180000000106000094000000A4000000B4000000C4000000D4000000E4000000080000000004000041C69025714A48D3180000000102000001000000000000001F020000000000001F02000000000000080000000403000004000000000000000400000003030000F5010000080000000109000066696C653A2F2F2F0C000000010100004D6163696E746F736820484408000000040300000020458CD0010000080000000004000041C6E39A85000000240000000101000032333539463234392D424233462D344236352D384441302D35333230313036454131333218000000010200008100000001000000EF13000001000000EF1300000100000001000000010100002F00000000000000010500003300000001020000646E69620000000001000000000000000000000000000000000000000300000000000000706E673F3F3F3F000000000000000000E4000000FEFFFFFF01000000000000001200000004100000740000000000000005100000F40000000000000010100000240100000000000040100000140100000000000002200000F00100000000000005200000600100000000000010200000700100000000000011200000A40100000000000012200000840100000000000013200000940100000000000020200000D00100000000000030200000FC0100000000000001C00000440100000000000011C00000200000000000000012C00000540100000000000010D00000040000000000000017F000005C0000000000000022F0000004020000000000000000</Hex>
       </SaveInfo>
       <FullPath>/Users/vfx/Desktop/Xojo Reactor/Icon/reactormagic.png</FullPath>
-      <PartialPath>..\..\..\..\Desktop\Xojo Reactor\Icon\reactormagic.png</PartialPath>
+      <PartialPath>Icon\reactormagic.png</PartialPath>
       <ImageSpecification>
         <Comment/>
         <Device>31</Device>
@@ -3219,15 +3615,15 @@
     </ImageRepresentation>
   </block>
   <block type="MultiImage" ID="1972449279">
-    <ObjName>Logo</ObjName>
+    <ObjName>reactor</ObjName>
     <ObjContainerID>0</ObjContainerID>
-    <ItemName>Logo</ItemName>
+    <ItemName>reactor</ItemName>
     <ImageRepresentation>
       <SaveInfo>
         <Hex bytes="870">00F1D1730200070058030000626F6F6B58030000000004103000000000000000000000000000000000000000000000000000000000000000000000003C0200000400000003030000000400000500000001010000557365727300000003000000010100007666780007000000010100004465736B746F70000C00000001010000586F6A6F2052656163746F72040000000101000049636F6E0B0000000101000072656163746F722E706E6700180000000106000010000000200000002C0000003C000000500000005C0000000800000004030000AD520000000000000800000004030000947C0000000000000800000004030000997C0000000000000800000004030000A503B3010000000008000000040300005F90B301000000000800000004030000077CB40100000000180000000106000090000000A0000000B0000000C0000000D0000000E0000000080000000004000041C0005981000000180000000102000001000000000000001F020000000000001F02000000000000080000000403000004000000000000000400000003030000F5010000080000000109000066696C653A2F2F2F0C000000010100004D6163696E746F736820484408000000040300000020458CD0010000080000000004000041C6E39A85000000240000000101000032333539463234392D424233462D344236352D384441302D35333230313036454131333218000000010200008100000001000000EF13000001000000EF1300000100000001000000010100002F00000000000000010500003300000001020000646E69620000000001000000000000000000000000000000000000000300000000000000706E673F3F3F3F000000000000000000E4000000FEFFFFFF01000000000000001200000004100000700000000000000005100000F00000000000000010100000200100000000000040100000100100000000000002200000EC01000000000000052000005C01000000000000102000006C0100000000000011200000A00100000000000012200000800100000000000013200000900100000000000020200000CC0100000000000030200000F80100000000000001C00000400100000000000011C00000200000000000000012C00000500100000000000010D00000040000000000000017F000005C0000000000000022F0000000020000000000000000</Hex>
       </SaveInfo>
       <FullPath>/Users/vfx/Desktop/Xojo Reactor/Icon/reactor.png</FullPath>
-      <PartialPath>..\..\..\..\Desktop\Xojo Reactor\Icon\reactor.png</PartialPath>
+      <PartialPath>Icon\reactor.png</PartialPath>
       <ImageSpecification>
         <Comment/>
         <Device>31</Device>
@@ -3286,16 +3682,16 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1920" height="973"/>
+        <Rect left="0" top="25" width="1920" height="983"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>Logo</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.AtomsListBox.SelectionChanged</EditorLocation>
           <EditorPath/>
-          <EditingPartID>1972449279</EditingPartID>
+          <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
