@@ -2085,11 +2085,13 @@
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
-        <SourceLine>Var AtomVisible As Integer = 1</SourceLine>
+        <SourceLine>Var AtomVisible As Integer = 0</SourceLine>
         <SourceLine>Select Case RepoPopupMenu.SelectedRowIndex</SourceLine>
         <SourceLine>Case 0</SourceLine>
         <SourceLine>// All</SourceLine>
+        <SourceLine>if AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>Case 1</SourceLine>
         <SourceLine>// Installed</SourceLine>
         <SourceLine>If InstallState = True Then</SourceLine>
@@ -2099,14 +2101,14 @@
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 2</SourceLine>
         <SourceLine>// New</SourceLine>
-        <SourceLine>If DateTime.Now.Year = AtomDateYear Then</SourceLine>
+        <SourceLine>If DateTime.Now.Year = AtomDateYear  and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 3</SourceLine>
         <SourceLine>// Update</SourceLine>
-        <SourceLine>If AtomUpdated = True Then</SourceLine>
+        <SourceLine>If AtomUpdated = True  and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
@@ -2120,13 +2122,14 @@
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 5</SourceLine>
         <SourceLine>//Downloading</SourceLine>
-        <SourceLine>If AtomDownloading = True Then</SourceLine>
+        <SourceLine>If AtomDownloading = True  and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 6</SourceLine>
         <SourceLine>//Removing</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End Select</SourceLine>
         <SourceLine/>
         <SourceLine>If AtomVisible = 1 Then</SourceLine>
@@ -2197,11 +2200,13 @@
         <SourceLine/>
         <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
         <SourceLine/>
-        <SourceLine>Var AtomVisible As Integer = 1</SourceLine>
+        <SourceLine>Var AtomVisible As Integer = 0</SourceLine>
         <SourceLine>Select Case RepoPopupMenu.SelectedRowIndex</SourceLine>
         <SourceLine>Case 0</SourceLine>
         <SourceLine>// All</SourceLine>
+        <SourceLine>if AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>Case 1</SourceLine>
         <SourceLine>// Installed</SourceLine>
         <SourceLine>If InstallState = True Then</SourceLine>
@@ -2211,14 +2216,14 @@
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 2</SourceLine>
         <SourceLine>// New</SourceLine>
-        <SourceLine>If DateTime.Now.Year = AtomDateYear Then</SourceLine>
+        <SourceLine>If DateTime.Now.Year = AtomDateYear  and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 3</SourceLine>
         <SourceLine>// Update</SourceLine>
-        <SourceLine>If AtomUpdated = True Then</SourceLine>
+        <SourceLine>If AtomUpdated = True  and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
@@ -2232,13 +2237,14 @@
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 5</SourceLine>
         <SourceLine>//Downloading</SourceLine>
-        <SourceLine>If AtomDownloading = True Then</SourceLine>
+        <SourceLine>If AtomDownloading = True  and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 6</SourceLine>
         <SourceLine>//Removing</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End Select</SourceLine>
         <SourceLine/>
         <SourceLine>If AtomVisible = 1 Then</SourceLine>
@@ -2886,6 +2892,8 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function AtomIncompatible(InstalledAtomID As String) As Boolean</SourceLine>
+        <SourceLine>// Fix this to flag atoms that are yet to be installed</SourceLine>
+        <SourceLine/>
         <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
         <SourceLine>Var DeployAtomsFile As FolderItem = ReactorFolder.Child("Deploy").Child("Atoms").Child("Reactor").Child(InstalledAtomID + ".atom")</SourceLine>
         <SourceLine>Var DeployJSONFile As FolderItem = ReactorFolder.Child("Deploy").Child("JSON").Child("Reactor").Child(InstalledAtomID + ".json")</SourceLine>
@@ -2893,30 +2901,39 @@
         <SourceLine>Var AtomExists As Integer = 0</SourceLine>
         <SourceLine>Var IncompatibleAtom As Integer = 0</SourceLine>
         <SourceLine/>
+        <SourceLine>Var CheckAtom As New JSONItem</SourceLine>
+        <SourceLine/>
         <SourceLine>Try</SourceLine>
         <SourceLine>If DeployJSONFile &lt;&gt; Nil and DeployJSONFile.Exists Then</SourceLine>
         <SourceLine>// JSON file exists (Reactor.app install)</SourceLine>
         <SourceLine>AtomExists = 1</SourceLine>
-        <SourceLine/>
-        <SourceLine>Var InstalledJSONAtom As New JSONItem</SourceLine>
         <SourceLine/>
         <SourceLine>// Read the JSON file to disk</SourceLine>
         <SourceLine>Var tos As TextInputStream</SourceLine>
         <SourceLine>If DeployJSONFile &lt;&gt; Nil Then</SourceLine>
         <SourceLine>tos = TextInputStream.Open(DeployJSONFile)</SourceLine>
         <SourceLine>if tos &lt;&gt; Nil Then</SourceLine>
-        <SourceLine>InstalledJSONAtom.Load(tos.ReadAll())</SourceLine>
+        <SourceLine>CheckAtom.Load(tos.ReadAll())</SourceLine>
         <SourceLine>tos.Close</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Parse the atom file</SourceLine>
-        <SourceLine>If InstalledJSONAtom &lt;&gt; Nil Then</SourceLine>
-        <SourceLine>// Reactor.json atom data</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>If App.Atoms &lt;&gt; Nil Then</SourceLine>
         <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
         <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
-        <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+        <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
+        <SourceLine>Var AtomID As String = Atom.Value("ID")</SourceLine>
+        <SourceLine>If AtomID = InstalledAtomID Then</SourceLine>
+        <SourceLine>CheckAtom = Atom</SourceLine>
+        <SourceLine>Exit For k // or Return if inside method</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End if</SourceLine>
         <SourceLine/>
+        <SourceLine>// Parse the atom file</SourceLine>
+        <SourceLine>If CheckAtom &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>Var AtomID As String = CheckAtom.Value("ID")</SourceLine>
         <SourceLine>// See if the atoms are the same</SourceLine>
         <SourceLine>If InstalledAtomID = AtomID Then</SourceLine>
         <SourceLine>// Min/max Version</SourceLine>
@@ -2925,19 +2942,30 @@
         <SourceLine/>
         <SourceLine>If TargetWindows Then</SourceLine>
         <SourceLine>' Running on Windows</SourceLine>
+        <SourceLine>If AtomID = "com.wesuckless.NotWindows" Then</SourceLine>
+        <SourceLine>Return True</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>ElseIf TargetMacOS Then</SourceLine>
         <SourceLine>' Running on macOS</SourceLine>
+        <SourceLine>If AtomID  = "com.wesuckless.WindowsOnly" Then</SourceLine>
+        <SourceLine>Return True</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>ElseIf TargetLinux And TargetARM Then</SourceLine>
         <SourceLine>' Running on Raspberry Pi</SourceLine>
+        <SourceLine>If AtomID  = "com.wesuckless.WindowsOnly" Then</SourceLine>
+        <SourceLine>Return True</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>ElseIf TargetLinux Then</SourceLine>
         <SourceLine>' Running on Linux</SourceLine>
+        <SourceLine>If AtomID  = "com.wesuckless.WindowsOnly" Then</SourceLine>
+        <SourceLine>Return True</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>ElseIf TargetiOS Then</SourceLine>
         <SourceLine>' Running on iOS</SourceLine>
+        <SourceLine>If AtomID  = "com.wesuckless.WindowsOnly" Then</SourceLine>
+        <SourceLine>Return True</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine/>
-        <SourceLine>//Return True</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Next</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Catch error As IOException</SourceLine>
@@ -5122,14 +5150,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1901" height="1043"/>
+        <Rect left="0" top="25" width="1920" height="1055"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.AtomRemove</EditorLocation>
+          <EditorLocation>ReactorWindow.AtomsRefresh</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
