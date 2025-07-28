@@ -319,6 +319,36 @@
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
     </Property>
+    <Property>
+      <ItemName>DownloadAtomID</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1644142591</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>DownloadAtomID As String</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>DownloadAtomID As String</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
+    <Property>
+      <ItemName>DownloadAtom</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>92327935</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>DownloadAtom As JSONItem</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>DownloadAtom As JSONItem</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <ViewBehavior>
       <ViewProperty>
@@ -1624,8 +1654,8 @@
         <SourceLine>JSONDownload()</SourceLine>
         <SourceLine/>
         <SourceLine>// Update the listboxes</SourceLine>
-        <SourceLine>AtomsRefresh()</SourceLine>
         <SourceLine>CategoryRefresh()</SourceLine>
+        <SourceLine>AtomsRefresh()</SourceLine>
         <SourceLine/>
         <SourceLine>// Reactor.json data processed</SourceLine>
         <SourceLine>DownloadStatsLabel.Text = ""</SourceLine>
@@ -1929,6 +1959,7 @@
         <SourceLine>Var downloadFile As FolderItem = path</SourceLine>
         <SourceLine>App.DownloadFilename = downloadFile.Name</SourceLine>
         <SourceLine>App.DownloadFolderItem = downloadFile</SourceLine>
+        <SourceLine/>
         <SourceLine>RSocket.Send("GET", url, downloadFile)</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
@@ -1980,8 +2011,12 @@
         <SourceLine>End If</SourceLine>
         <SourceLine>End if</SourceLine>
         <SourceLine>Next</SourceLine>
-        <SourceLine/>
         <SourceLine>CategoryListBox.Sort</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Reset the category selection to All</SourceLine>
+        <SourceLine>If CategoryListbox.RowCount &gt;= 1 Then</SourceLine>
+        <SourceLine>CategoryListbox.SelectedRowIndex = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
@@ -2000,25 +2035,30 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Sub AtomsRefresh()</SourceLine>
+        <SourceLine>Var CategoryRow As Integer = CategoryListbox.SelectedRowIndex</SourceLine>
+        <SourceLine>Var SelectedCategory As String = CategoryListbox.CellTextAt(CategoryRow, 0)</SourceLine>
+        <SourceLine>If CategoryRow &gt;= 0 Then</SourceLine>
         <SourceLine>If App.Atoms &lt;&gt; Nil Then</SourceLine>
         <SourceLine>Var AtomCount As Integer = App.Atoms.Keys.Count</SourceLine>
         <SourceLine>AtomsListBox.RemoveAllRows()</SourceLine>
+        <SourceLine/>
+        <SourceLine>If SelectedCategory = "All" then</SourceLine>
         <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
         <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
         <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
         <SourceLine>Var AtomName As String =  Atom.Value("Name")</SourceLine>
         <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
-        <SourceLine>Var AtomVersion As Double =  Atom.Value("Version")</SourceLine>
-        <SourceLine>Var AtomAuthor As String =  Atom.Value("Author")</SourceLine>
+        <SourceLine>Var AtomVersion As Double = Atom.Value("Version")</SourceLine>
+        <SourceLine>Var AtomAuthor As String = Atom.Value("Author")</SourceLine>
         <SourceLine>Var AtomDateJSON As JSONItem = Atom.Value("Date")</SourceLine>
         <SourceLine>Var AtomDateYear As Double = AtomDateJSON.Value("1.0")</SourceLine>
         <SourceLine>Var AtomDateMonth As Double = AtomDateJSON.Value("2.0")</SourceLine>
         <SourceLine>Var AtomDateDay As Double = AtomDateJSON.Value("3.0")</SourceLine>
         <SourceLine>Var AtomDate As String = AtomDateYear.ToString(Locale.Current, "0000") + "-" + AtomDateMonth.ToString(Locale.Current, "00")  + "-"  + AtomDateDay.ToString(Locale.Current, "00")</SourceLine>
         <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
+        <SourceLine>Var AtomDonation As String = "No"</SourceLine>
         <SourceLine/>
         <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
-        <SourceLine/>
         <SourceLine>If DateTime.Now.Year = AtomDateYear Then</SourceLine>
         <SourceLine>AtomStatus = "New"</SourceLine>
         <SourceLine>End If</SourceLine>
@@ -2032,8 +2072,19 @@
         <SourceLine>If AtomDisabled = True Then</SourceLine>
         <SourceLine>AtomStatus = "Incompatible"</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Var AtomDonation As String = "No"</SourceLine>
         <SourceLine/>
+        <SourceLine>Var AtomDownloading As Boolean = False</SourceLine>
+        <SourceLine>If App.DownloadAtomID = AtomID Then</SourceLine>
+        <SourceLine>AtomDownloading = True</SourceLine>
+        <SourceLine>AtomStatus = "Downloading"</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>//Removing</SourceLine>
+        <SourceLine/>
+        <SourceLine>If App.DownloadRow &gt;= 0 Then</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
         <SourceLine>Var AtomVisible As Integer = 1</SourceLine>
         <SourceLine>Select Case RepoPopupMenu.SelectedRowIndex</SourceLine>
         <SourceLine>Case 0</SourceLine>
@@ -2041,7 +2092,7 @@
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Case 1</SourceLine>
         <SourceLine>// Installed</SourceLine>
-        <SourceLine>If AtomInstalled(AtomID) = True Then</SourceLine>
+        <SourceLine>If InstallState = True Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
@@ -2060,33 +2111,167 @@
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
+        <SourceLine>Case 4</SourceLine>
+        <SourceLine>// Incompatible</SourceLine>
+        <SourceLine>If AtomDisabled = True Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 5</SourceLine>
+        <SourceLine>//Downloading</SourceLine>
+        <SourceLine>If AtomDownloading = True Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 6</SourceLine>
+        <SourceLine>//Removing</SourceLine>
         <SourceLine>End Select</SourceLine>
         <SourceLine/>
         <SourceLine>If AtomVisible = 1 Then</SourceLine>
         <SourceLine>AtomsListBox.Addrow("")</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 1) = AtomName</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 2) = AtomCategory</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 3) = AtomVersion.ToString(Locale.Current, "0.0####")</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 4) = AtomAuthor</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 5) = AtomDate</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 6) = AtomRepo</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 7) = AtomStatus</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 8) = AtomDonation</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 9) = AtomID</SourceLine>
-        <SourceLine>AtomsListBox.CellTagAt(AtomsListBox.LastAddedRowIndex, 0) = k</SourceLine>
+        <SourceLine>Var NewRow as Integer = AtomsListBox.LastAddedRowIndex</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 1) = AtomName</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 2) = AtomCategory</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 3) = AtomVersion.ToString(Locale.Current, "0.0####")</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 4) = AtomAuthor</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 5) = AtomDate</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 6) = AtomRepo</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 7) = AtomStatus</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 8) = AtomDonation</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 9) = AtomID</SourceLine>
+        <SourceLine>AtomsListBox.CellTagAt(NewRow, 1) = k</SourceLine>
         <SourceLine/>
-        <SourceLine>// Is the atom installed already</SourceLine>
-        <SourceLine>If AtomInstalled(AtomID) = True then</SourceLine>
-        <SourceLine>AtomsListBox.CellCheckBoxStateAt(AtomsListBox.LastAddedRowIndex, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
+        <SourceLine>// Is the atom installed already / or is an update available?</SourceLine>
+        <SourceLine>If InstallState = True Then</SourceLine>
+        <SourceLine>AtomsListBox.CellTagAt(NewRow, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
+        <SourceLine>ElseIf AtomUpdated = True Then</SourceLine>
+        <SourceLine>AtomsListBox.CellTagAt(NewRow, 0) = DesktopCheckbox.VisualStates.Indeterminate</SourceLine>
         <SourceLine>Else</SourceLine>
-        <SourceLine>AtomsListBox.CellCheckBoxStateAt(AtomsListBox.LastAddedRowIndex, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+        <SourceLine>AtomsListBox.CellTagAt(NewRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>AtomsListBox.CellCheckBoxStateAt(NewRow, 0) = AtomsListBox.CellTagAt(NewRow, 0)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
+        <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var AtomName As String =  Atom.Value("Name")</SourceLine>
+        <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
+        <SourceLine>Var AtomCategoryArray() As String</SourceLine>
+        <SourceLine>AtomCategoryArray = AtomCategory.Split("/")</SourceLine>
+        <SourceLine>if AtomCategoryArray(0) = SelectedCategory Then</SourceLine>
+        <SourceLine>Var AtomID As String = Atom.Value("ID")</SourceLine>
+        <SourceLine>Var AtomVersion As Double =  Atom.Value("Version")</SourceLine>
+        <SourceLine>Var AtomAuthor As String =  Atom.Value("Author")</SourceLine>
+        <SourceLine>Var AtomDateJSON As JSONItem = Atom.Value("Date")</SourceLine>
+        <SourceLine>Var AtomDateYear As Double = AtomDateJSON.Value("1.0")</SourceLine>
+        <SourceLine>Var AtomDateMonth As Double = AtomDateJSON.Value("2.0")</SourceLine>
+        <SourceLine>Var AtomDateDay As Double = AtomDateJSON.Value("3.0")</SourceLine>
+        <SourceLine>Var AtomDate As String = AtomDateYear.ToString(Locale.Current, "0000") + "-" + AtomDateMonth.ToString(Locale.Current, "00")  + "-"  + AtomDateDay.ToString(Locale.Current, "00")</SourceLine>
+        <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
+        <SourceLine>Var AtomDonation As String = "No"</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
+        <SourceLine>If DateTime.Now.Year = AtomDateYear Then</SourceLine>
+        <SourceLine>AtomStatus = "New"</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var AtomUpdated As Boolean = AtomUpdateAvailable(AtomID)</SourceLine>
+        <SourceLine>If AtomUpdated = True Then</SourceLine>
+        <SourceLine>AtomStatus = "Update"</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var AtomDisabled As Boolean = AtomIncompatible(AtomID)</SourceLine>
+        <SourceLine>If AtomDisabled = True Then</SourceLine>
+        <SourceLine>AtomStatus = "Incompatible"</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var AtomDownloading As Boolean = False</SourceLine>
+        <SourceLine>If App.DownloadAtomID = AtomID Then</SourceLine>
+        <SourceLine>AtomDownloading = True</SourceLine>
+        <SourceLine>AtomStatus = "Downloading"</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var AtomVisible As Integer = 1</SourceLine>
+        <SourceLine>Select Case RepoPopupMenu.SelectedRowIndex</SourceLine>
+        <SourceLine>Case 0</SourceLine>
+        <SourceLine>// All</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Case 1</SourceLine>
+        <SourceLine>// Installed</SourceLine>
+        <SourceLine>If InstallState = True Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 2</SourceLine>
+        <SourceLine>// New</SourceLine>
+        <SourceLine>If DateTime.Now.Year = AtomDateYear Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 3</SourceLine>
+        <SourceLine>// Update</SourceLine>
+        <SourceLine>If AtomUpdated = True Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 4</SourceLine>
+        <SourceLine>// Incompatible</SourceLine>
+        <SourceLine>If AtomDisabled = True Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 5</SourceLine>
+        <SourceLine>//Downloading</SourceLine>
+        <SourceLine>If AtomDownloading = True Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 6</SourceLine>
+        <SourceLine>//Removing</SourceLine>
+        <SourceLine>End Select</SourceLine>
+        <SourceLine/>
+        <SourceLine>If AtomVisible = 1 Then</SourceLine>
+        <SourceLine>AtomsListBox.Addrow("")</SourceLine>
+        <SourceLine>Var NewRow as Integer = AtomsListBox.LastAddedRowIndex</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 1) = AtomName</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 2) = AtomCategory</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 3) = AtomVersion.ToString(Locale.Current, "0.0####")</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 4) = AtomAuthor</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 5) = AtomDate</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 6) = AtomRepo</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 7) = AtomStatus</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 8) = AtomDonation</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(NewRow, 9) = AtomID</SourceLine>
+        <SourceLine>AtomsListBox.CellTagAt(NewRow, 1) = k</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Is the atom installed already / or is an update available?</SourceLine>
+        <SourceLine>If InstallState = True Then</SourceLine>
+        <SourceLine>AtomsListBox.CellTagAt(NewRow, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
+        <SourceLine>ElseIf AtomUpdated = True Then</SourceLine>
+        <SourceLine>AtomsListBox.CellTagAt(NewRow, 0) = DesktopCheckbox.VisualStates.Indeterminate</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomsListBox.CellTagAt(NewRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>AtomsListBox.CellCheckBoxStateAt(NewRow, 0) = AtomsListBox.CellTagAt(NewRow, 0)</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Next</SourceLine>
-        <SourceLine>AtomsListBox.Sort</SourceLine>
         <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>AtomsListBox.Sort</SourceLine>
         <SourceLine/>
-        <SourceLine>App.DownloadRow = -1</SourceLine>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
       <TextEncoding>134217984</TextEncoding>
@@ -2108,19 +2293,31 @@
         <SourceLine>RSocket.Disconnect()</SourceLine>
         <SourceLine/>
         <SourceLine>if App.DownloadRow &gt;= 0 Then</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(App.DownloadRow, 7) = "Removing"</SourceLine>
+        <SourceLine>For c As Integer = 0 to AtomsListBox.ColumnCount - 1</SourceLine>
+        <SourceLine>AtomsListBox.RefreshCell(App.DownloadRow, c)</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine/>
         <SourceLine>// Refresh the status displays</SourceLine>
         <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Cancelled"</SourceLine>
         <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
         <SourceLine>DownloadProgress.Value = 0</SourceLine>
-        <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
-        <SourceLine>App.DownloadRow = -1</SourceLine>
         <SourceLine/>
         <SourceLine>// Remove the partial file</SourceLine>
         <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil And App.DownloadFolderItem.Exists then</SourceLine>
         <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
+        <SourceLine>AtomsListBox.CellTagAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+        <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+        <SourceLine>AtomsListBox.RefreshCell(App.DownloadRow, 0)</SourceLine>
+        <SourceLine/>
+        <SourceLine>App.DownloadRow = -1</SourceLine>
+        <SourceLine>App.DownloadAtomID = ""</SourceLine>
+        <SourceLine/>
         <SourceLine>System.Debuglog("[Cancelled Download] " + App.DownloadFilename)</SourceLine>
+        <SourceLine/>
+        <SourceLine>AtomsRefresh()</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
@@ -2140,18 +2337,25 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Sub AtomRemove(row As Integer)</SourceLine>
-        <SourceLine>//Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
         <SourceLine>If row &gt;= 0 Then</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(row, 7) = "Removing"</SourceLine>
+        <SourceLine>For c As Integer = 0 to AtomsListBox.ColumnCount - 1</SourceLine>
+        <SourceLine>AtomsListBox.RefreshCell(row, c)</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine/>
         <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
-        <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 0).IntegerValue</SourceLine>
+        <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
         <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
         <SourceLine/>
-        <SourceLine>Var ID As String = Atom.Value("ID")</SourceLine>
+        <SourceLine>Var AtomID As String = Atom.Value("ID")</SourceLine>
         <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
         <SourceLine/>
         <SourceLine>App.DownloadRow = row</SourceLine>
+        <SourceLine>App.DownloadAtomID = AtomID</SourceLine>
+        <SourceLine>App.DownloadAtom = Atom</SourceLine>
+        <SourceLine/>
         <SourceLine>Var AtomzFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz")</SourceLine>
-        <SourceLine>Var AtomzFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz").Child(ID + ".zip")</SourceLine>
+        <SourceLine>Var AtomzFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz").Child(AtomID + ".zip")</SourceLine>
         <SourceLine/>
         <SourceLine>App.DownloadFilename = AtomzFile.Name</SourceLine>
         <SourceLine>App.DownloadFolderItem = AtomzFile</SourceLine>
@@ -2161,17 +2365,29 @@
         <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
+        <SourceLine>// Remove the atom deploy file records</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+        <SourceLine>Var DeployAtomsFile As FolderItem = ReactorFolder.Child("Deploy").Child("Atoms").Child("Reactor").Child(AtomID + ".atom")</SourceLine>
+        <SourceLine>Var DeployJSONFile As FolderItem = ReactorFolder.Child("Deploy").Child("JSON").Child("Reactor").Child(AtomID + ".json")</SourceLine>
+        <SourceLine/>
+        <SourceLine>If DeployAtomsFile &lt;&gt; Nil And DeployAtomsFile.Exists then</SourceLine>
+        <SourceLine>DeployAtomsFile.Remove()</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If DeployJSONFile &lt;&gt; Nil And DeployJSONFile.Exists then</SourceLine>
+        <SourceLine>DeployJSONFile.Remove()</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
         <SourceLine>// Refresh the status displays</SourceLine>
         <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Removed"</SourceLine>
         <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
         <SourceLine>DownloadProgress.Value = 0</SourceLine>
         <SourceLine/>
-        <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
         <SourceLine>App.DownloadRow = -1</SourceLine>
+        <SourceLine>App.DownloadAtomID = ""</SourceLine>
+        <SourceLine>App.DownloadAtom = Nil</SourceLine>
+        <SourceLine/>
+        <SourceLine>AtomsRefresh()</SourceLine>
         <SourceLine>End if</SourceLine>
-        <SourceLine/>
-        <SourceLine/>
-        <SourceLine/>
         <SourceLine/>
         <SourceLine/>
         <SourceLine/>
@@ -2198,18 +2414,19 @@
         <SourceLine>If row &gt;= 0 Then</SourceLine>
         <SourceLine>Try</SourceLine>
         <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
-        <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 0).IntegerValue</SourceLine>
+        <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
         <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
         <SourceLine/>
-        <SourceLine>Var ID As String = Atom.Value("ID")</SourceLine>
+        <SourceLine>Var AtomID As String = Atom.Value("ID")</SourceLine>
         <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
         <SourceLine/>
         <SourceLine>Var AtomzFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz")</SourceLine>
-        <SourceLine>Var AtomzFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz").Child(ID + ".zip")</SourceLine>
+        <SourceLine>Var AtomzFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz").Child(AtomID + ".zip")</SourceLine>
         <SourceLine/>
         <SourceLine>App.DownloadFilename = AtomzFile.Name</SourceLine>
         <SourceLine>App.DownloadFolderItem = AtomzFile</SourceLine>
-        <SourceLine/>
+        <SourceLine>App.DownloadAtomID = AtomID</SourceLine>
+        <SourceLine>App.DownloadAtom = Atom</SourceLine>
         <SourceLine>App.DownloadRow = row</SourceLine>
         <SourceLine/>
         <SourceLine>RSocket.Send("GET", ZipFileURL, AtomzFile)</SourceLine>
@@ -2237,6 +2454,9 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Sub AtomURL(AtomID As String)</SourceLine>
+        <SourceLine>// This method supports the Reactor:/&lt;AtomID&gt; URL syntax</SourceLine>
+        <SourceLine>// It is used to navigate to the selected atom package</SourceLine>
+        <SourceLine/>
         <SourceLine>Var row As Integer</SourceLine>
         <SourceLine>For row = 0 To CategoryListBox.LastRowIndex</SourceLine>
         <SourceLine>If CategoryListBox.CellTextAt(row, 0) = "All" Then </SourceLine>
@@ -2262,13 +2482,13 @@
       <ItemResult/>
     </Method>
     <Method>
-      <ItemName>AtomDeploy</ItemName>
+      <ItemName>AtomDeployFiles</ItemName>
       <Compatibility/>
       <Visible>1</Visible>
       <PartID>21618687</PartID>
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Sub AtomDeploy()</SourceLine>
+        <SourceLine>Sub AtomDeployFiles()</SourceLine>
         <SourceLine>// UnZip the downloaded atomz package</SourceLine>
         <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil and App.DownloadFolderItem.exists Then</SourceLine>
         <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
@@ -2298,13 +2518,20 @@
         <SourceLine/>
         <SourceLine>// Extract a single JSON encoded Atom package defintion</SourceLine>
         <SourceLine>Var row As Integer = App.DownloadRow</SourceLine>
-        <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 0).IntegerValue</SourceLine>
-        <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
+        <SourceLine>// Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+        <SourceLine>Var Atom As JSONItem = App.DownloadAtom</SourceLine>
+        <SourceLine/>
         <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
         <SourceLine>Var AtomDeploy As JSONItem = Atom.Value("Deploy")</SourceLine>
+        <SourceLine>Var AtomDateJSON As JSONItem = Atom.Value("Date")</SourceLine>
+        <SourceLine>Var AtomDateYear As Double = AtomDateJSON.Value("1.0")</SourceLine>
         <SourceLine>Var options As New JSONOptions</SourceLine>
         <SourceLine>options.Compact = False</SourceLine>
         <SourceLine>options.IndentSpacing = 4</SourceLine>
+        <SourceLine/>
+        <SourceLine>App.DownloadAtomID = AtomID</SourceLine>
         <SourceLine/>
         <SourceLine>// com.AndrewHazelden.KartaLink.Scripts.SpatialMetadata.json</SourceLine>
         <SourceLine>Var JSONAtomFile As FolderItem = WorkingDirectory.Child(AtomID + ".json")</SourceLine>
@@ -2314,7 +2541,7 @@
         <SourceLine>Var tos As TextOutputStream</SourceLine>
         <SourceLine>If JSONAtomFile &lt;&gt; Nil Then</SourceLine>
         <SourceLine>tos = TextOutputStream.Create(JSONAtomFile)</SourceLine>
-        <SourceLine>If tos &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>If tos &lt;&gt; Nil and Atom &lt;&gt; Nil Then</SourceLine>
         <SourceLine>tos.Write(Atom.ToString(options))</SourceLine>
         <SourceLine>tos.Close</SourceLine>
         <SourceLine>End If</SourceLine>
@@ -2323,7 +2550,7 @@
         <SourceLine>// JSONAtomFile.Launch</SourceLine>
         <SourceLine/>
         <SourceLine>// Debug: Reveal the working directory in a folder browsing window</SourceLine>
-        <SourceLine>WorkingDirectory.Launch</SourceLine>
+        <SourceLine>// WorkingDirectory.Launch</SourceLine>
         <SourceLine/>
         <SourceLine>// Debug: Print the atom package deploy files</SourceLine>
         <SourceLine>//System.Debuglog("[Deploy]\n" + AtomDeploy.ToString(options))</SourceLine>
@@ -2370,14 +2597,33 @@
         <SourceLine>Try</SourceLine>
         <SourceLine>Var DeployCount As Integer = AtomDeploy.Keys.Count</SourceLine>
         <SourceLine>System.Debuglog("[Deploy File Count] " + DeployCount.ToString())</SourceLine>
+        <SourceLine>If AtomDeploy.Keys &lt;&gt; Nil Then</SourceLine>
         <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
         <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
         <SourceLine>// System.Debuglog("[File] " + DeployFile.ToString())</SourceLine>
-        <SourceLine>System.Debuglog(DeployVariant)</SourceLine>
+        <SourceLine>//System.Debuglog(DeployVariant)</SourceLine>
         <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>Catch error As IOException</SourceLine>
         <SourceLine>MessageBox(error.Message)</SourceLine>
         <SourceLine>End Try</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var AtomStatus As String</SourceLine>
+        <SourceLine>If DateTime.Now.Year = AtomDateYear Then</SourceLine>
+        <SourceLine>AtomStatus = "New"</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomStatus = "OK"</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>If row &lt;= AtomsListBox.RowCount -1 Then</SourceLine>
+        <SourceLine>AtomsListBox.CellTextAt(row, 7) = AtomStatus</SourceLine>
+        <SourceLine>For c As Integer = 0 to AtomsListBox.ColumnCount - 1</SourceLine>
+        <SourceLine>AtomsListBox.RefreshCell(row, c)</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine/>
+        <SourceLine>AtomsListBox.CellTagAt(row, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
+        <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
@@ -2413,6 +2659,7 @@
         <SourceLine>RSocket.AllowCertificateValidation = false</SourceLine>
         <SourceLine/>
         <SourceLine>App.DownloadFilename = "Reactor.json"</SourceLine>
+        <SourceLine>App.DownloadAtomID = ""</SourceLine>
         <SourceLine>App.DownloadFolderItem = JSONFile</SourceLine>
         <SourceLine>App.Atoms = New JSONItem(RSocket.SendSync("GET", url, 5))</SourceLine>
         <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " " + "100% "</SourceLine>
@@ -2424,7 +2671,7 @@
         <SourceLine>Var tos As TextOutputStream</SourceLine>
         <SourceLine>If JSONFile &lt;&gt; Nil Then</SourceLine>
         <SourceLine>tos = TextOutputStream.Create(JSONFile)</SourceLine>
-        <SourceLine>If tos &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>If tos &lt;&gt; Nil and App.Atoms &lt;&gt; Nil Then</SourceLine>
         <SourceLine>tos.Write(App.Atoms.ToString(options))</SourceLine>
         <SourceLine>tos.Close</SourceLine>
         <SourceLine>End If</SourceLine>
@@ -2987,110 +3234,44 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub SelectionChanged()</SourceLine>
-          <SourceLine>Var SelectedCategory As String</SourceLine>
-          <SourceLine>Var row As Integer = Me.SelectedRowIndex</SourceLine>
-          <SourceLine>If row &gt;= 0 Then</SourceLine>
-          <SourceLine>Var AtomCount As Integer = App.Atoms.Keys.Count</SourceLine>
-          <SourceLine>AtomsListBox.RemoveAllRows()</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var CellString As String = Me.CellTextAt(row, 0)</SourceLine>
-          <SourceLine>SelectedCategory = CellString</SourceLine>
-          <SourceLine>If CellString = "All" then</SourceLine>
-          <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
-          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
-          <SourceLine>Var AtomName As String =  Atom.Value("Name")</SourceLine>
-          <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
-          <SourceLine>Var AtomVersion As Double = Atom.Value("Version")</SourceLine>
-          <SourceLine>Var AtomAuthor As String = Atom.Value("Author")</SourceLine>
-          <SourceLine>Var AtomDateJSON As JSONItem = Atom.Value("Date")</SourceLine>
-          <SourceLine>// System.DebugLog("[Atom Date] " + AtomDateJSON.ToString())</SourceLine>
-          <SourceLine>Var AtomDateYear As Double = AtomDateJSON.Value("1.0")</SourceLine>
-          <SourceLine>Var AtomDateMonth As Double = AtomDateJSON.Value("2.0")</SourceLine>
-          <SourceLine>Var AtomDateDay As Double = AtomDateJSON.Value("3.0")</SourceLine>
-          <SourceLine>Var AtomDate As String = AtomDateYear.ToString(Locale.Current, "0000") + "-" + AtomDateMonth.ToString(Locale.Current, "00")  + "-"  + AtomDateDay.ToString(Locale.Current, "00")</SourceLine>
-          <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
-          <SourceLine>If AtomUpdateAvailable(AtomID) = True Then</SourceLine>
-          <SourceLine>AtomStatus = "Update"</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var AtomDonation As String = "No"</SourceLine>
-          <SourceLine/>
-          <SourceLine>AtomsListBox.Addrow("")</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 1) = AtomName</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 2) = AtomCategory</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 3) = AtomVersion.ToString(Locale.Current, "0.0####")</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 4) = AtomAuthor</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 5) = AtomDate</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 6) = AtomRepo</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 7) = AtomStatus</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 8) = AtomDonation</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 9) = AtomID</SourceLine>
-          <SourceLine>AtomsListBox.CellTagAt(AtomsListBox.LastAddedRowIndex, 0) = k</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Is the atom installed already</SourceLine>
-          <SourceLine>If AtomInstalled(AtomID) = True then</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(AtomsListBox.LastAddedRowIndex, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
-          <SourceLine>Else</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(AtomsListBox.LastAddedRowIndex, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine>Next</SourceLine>
-          <SourceLine>Else</SourceLine>
-          <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var AtomName As String =  Atom.Value("Name")</SourceLine>
-          <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
-          <SourceLine>Var AtomCategoryArray() As String</SourceLine>
-          <SourceLine>AtomCategoryArray = AtomCategory.Split("/")</SourceLine>
-          <SourceLine>if AtomCategoryArray(0) = CellString Then</SourceLine>
-          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
-          <SourceLine>Var AtomVersion As Double =  Atom.Value("Version")</SourceLine>
-          <SourceLine>Var AtomAuthor As String =  Atom.Value("Author")</SourceLine>
-          <SourceLine>Var AtomDateJSON As JSONItem = Atom.Value("Date")</SourceLine>
-          <SourceLine>// System.DebugLog("[Atom Date] " + AtomDateJSON.ToString())</SourceLine>
-          <SourceLine>Var AtomDateYear As Double = AtomDateJSON.Value("1.0")</SourceLine>
-          <SourceLine>Var AtomDateMonth As Double = AtomDateJSON.Value("2.0")</SourceLine>
-          <SourceLine>Var AtomDateDay As Double = AtomDateJSON.Value("3.0")</SourceLine>
-          <SourceLine>Var AtomDate As String = AtomDateYear.ToString(Locale.Current, "0000") + "-" + AtomDateMonth.ToString(Locale.Current, "00")  + "-"  + AtomDateDay.ToString(Locale.Current, "00")</SourceLine>
-          <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
-          <SourceLine>If AtomUpdateAvailable(AtomID) = True Then</SourceLine>
-          <SourceLine>AtomStatus = "Update"</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine/>
-          <SourceLine>Var AtomDonation As String = "No"</SourceLine>
-          <SourceLine/>
-          <SourceLine>AtomsListBox.Addrow("")</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 1) = AtomName</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 2) = AtomCategory</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 3) = AtomVersion.ToString(Locale.Current, "0.0####")</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 4) = AtomAuthor</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 5) = AtomDate</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 6) = AtomRepo</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 7) = AtomStatus</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 8) = AtomDonation</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 9) = AtomID</SourceLine>
-          <SourceLine>AtomsListBox.CellTagAt(AtomsListBox.LastAddedRowIndex, 0) = k</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Is the atom installed already</SourceLine>
-          <SourceLine>If AtomInstalled(AtomID) = True then</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(AtomsListBox.LastAddedRowIndex, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
-          <SourceLine>Else</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(AtomsListBox.LastAddedRowIndex, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine>Next</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine>AtomsListBox.Sort</SourceLine>
-          <SourceLine>End</SourceLine>
-          <SourceLine/>
-          <SourceLine>System.Debuglog("[Category Selected] " + SelectedCategory)</SourceLine>
-          <SourceLine/>
+          <SourceLine>AtomsRefresh()</SourceLine>
           <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>PaintCellBackground</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1801525247</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function PaintCellBackground(g As Graphics, row As Integer, column As Integer) As Boolean</SourceLine>
+          <SourceLine>If row = Me.SelectedRowIndex Then</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(24, 24, 24)</SourceLine>
+          <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine>ElseIf row Mod 2 = 0 Then</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(35, 35, 35)</SourceLine>
+          <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(40, 40, 40)</SourceLine>
+          <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>PaintCellText</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1413482495</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function PaintCellText(g as Graphics, row as Integer, column as Integer, x as Integer, y as Integer) As Boolean</SourceLine>
+          <SourceLine>// Light Grey</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(144, 144, 144)</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
         </ItemSource>
       </HookInstance>
     </ControlBehavior>
@@ -3125,7 +3306,7 @@
           <SourceLine>Var row As Integer = Me.SelectedRowIndex</SourceLine>
           <SourceLine>If row &gt;= 0 Then</SourceLine>
           <SourceLine>Var CellString As String = Me.CellTextAt(row, 1)</SourceLine>
-          <SourceLine>Var AtomIndex As Integer = Me.CellTagAt(row, 0).IntegerValue</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = Me.CellTagAt(row, 1).IntegerValue</SourceLine>
           <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
           <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
           <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
@@ -3152,13 +3333,14 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Function CellPressed(row As Integer, column As Integer, x As Integer, y As Integer) As Boolean</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = Me.CellTagAt(row, 1).IntegerValue</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+          <SourceLine/>
           <SourceLine>If row &gt;= 0 And column &gt;= 1 Then</SourceLine>
           <SourceLine>Var CellString As String = Me.CellTextAt(row, 1)</SourceLine>
-          <SourceLine>Var AtomIndex As Integer = Me.CellTagAt(row, 0).IntegerValue</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
-          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
-          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
           <SourceLine>Var SelectedAtom As String = AtomID</SourceLine>
+          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
           <SourceLine>System.Debuglog("[Atom Description] " + SelectedAtom)</SourceLine>
           <SourceLine/>
           <SourceLine>Var HTML As String = App.Header + AtomDescription + App.Footer</SourceLine>
@@ -3168,19 +3350,35 @@
           <SourceLine>DescriptionHTMLViewer.LoadPage(HTML, DeployHTMLFile)</SourceLine>
           <SourceLine>End</SourceLine>
           <SourceLine/>
+          <SourceLine>// The install checkbox column was clicked on</SourceLine>
           <SourceLine>If row &gt;= 0 and column = 0 Then</SourceLine>
-          <SourceLine>If AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked Then</SourceLine>
-          <SourceLine>// Remove the package</SourceLine>
+          <SourceLine>// Is the atom installed already</SourceLine>
+          <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
+          <SourceLine>// Verify no active downloads are in progress</SourceLine>
+          <SourceLine/>
+          <SourceLine>If AtomUpdateAvailable(AtomID) = True then</SourceLine>
+          <SourceLine>// Cancel the download task, and update the atom package</SourceLine>
+          <SourceLine>If App.DownloadRow = -1 Then</SourceLine>
           <SourceLine>AtomRemove(row)</SourceLine>
-          <SourceLine>ElseIf AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Unchecked Then</SourceLine>
+          <SourceLine>AtomDownload(row)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf InstallState = True then</SourceLine>
+          <SourceLine>// Remove the package</SourceLine>
+          <SourceLine>If App.DownloadRow = -1 Then</SourceLine>
+          <SourceLine>AtomRemove(row)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf InstallState = False Then</SourceLine>
+          <SourceLine>If App.DownloadRow = -1 Then</SourceLine>
           <SourceLine>// Download the package</SourceLine>
           <SourceLine>AtomDownload(row)</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
-          <SourceLine>ElseIf AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Indeterminate Then</SourceLine>
-          <SourceLine>// Cancel the download task</SourceLine>
-          <SourceLine>AtomDownloadCancel()</SourceLine>
+          <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>//AtomsRefresh()</SourceLine>
+          <SourceLine/>
+          <SourceLine>For RefreshRow As Integer = 0 to AtomsListBox.RowCount - 1</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(RefreshRow, 0) = AtomsListBox.CellTagAt(RefreshRow, 0)</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(RefreshRow, 0)</SourceLine>
+          <SourceLine>Next</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>End Function</SourceLine>
@@ -3196,6 +3394,14 @@
           <SourceLine>Function PaintCellText(g as Graphics, row as Integer, column as Integer, x as Integer, y as Integer) As Boolean</SourceLine>
           <SourceLine>Select Case Me.CellTextAt(row, 7)</SourceLine>
           <SourceLine>Case "OK"</SourceLine>
+          <SourceLine>// Light Grey</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(144, 144, 144)</SourceLine>
+          <SourceLine>Case "Downloading"</SourceLine>
+          <SourceLine>// Light Grey</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(144, 144, 144)</SourceLine>
+          <SourceLine>Case "Removing"</SourceLine>
+          <SourceLine>// Light Grey</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(144, 144, 144)</SourceLine>
           <SourceLine>Case "Update"</SourceLine>
           <SourceLine>// Upgrade Blue</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(140,153, 214)</SourceLine>
@@ -3214,6 +3420,28 @@
           <SourceLine/>
           <SourceLine/>
           <SourceLine/>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>PaintCellBackground</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1801525247</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function PaintCellBackground(g As Graphics, row As Integer, column As Integer) As Boolean</SourceLine>
+          <SourceLine>If row = Me.SelectedRowIndex Then</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(24, 24, 24)</SourceLine>
+          <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine>ElseIf row Mod 2 = 0 Then</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(35, 35, 35)</SourceLine>
+          <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(40, 40, 40)</SourceLine>
+          <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>End Function</SourceLine>
         </ItemSource>
@@ -3284,8 +3512,13 @@
           <SourceLine>DownloadProgress.Visible = True</SourceLine>
           <SourceLine>DownloadProgress.Value = (bytesReceived / totalBytes) * 100</SourceLine>
           <SourceLine/>
-          <SourceLine>If App.DownloadRow &gt;= 0 Then</SourceLine>
+          <SourceLine>If App.DownloadRow &gt;= 0 and App.DownloadRow &lt;= AtomsListBox.RowCount - 1  Then</SourceLine>
+          <SourceLine>AtomsListBox.CellTagAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Indeterminate</SourceLine>
           <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Indeterminate</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(App.DownloadRow, 7) = "Downloading"</SourceLine>
+          <SourceLine>For c As Integer = 0 to AtomsListBox.ColumnCount - 1</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(App.DownloadRow, c)</SourceLine>
+          <SourceLine>Next</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>Var megabytesReceived As Double = bytesReceived / 1000000</SourceLine>
@@ -3323,10 +3556,11 @@
           <SourceLine>//MessageBox("Atom package download is done. The file is located here: " + file.NativePath)</SourceLine>
           <SourceLine/>
           <SourceLine>If App.DownloadRow &gt;= 0 Then</SourceLine>
-          <SourceLine>AtomDeploy()</SourceLine>
+          <SourceLine>AtomDeployFiles()</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>App.DownloadRow = -1</SourceLine>
+          <SourceLine>App.DownloadAtomID = ""</SourceLine>
           <SourceLine>DownloadProgress.Value = 0</SourceLine>
           <SourceLine>DownloadProgress.Visible = False</SourceLine>
           <SourceLine>CancelButton.Visible = False</SourceLine>
@@ -3423,7 +3657,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">41</PropertyVal>
+      <PropertyVal Name="Top">38</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -3446,14 +3680,14 @@
       <PropertyVal Name="AllowRowReordering">False</PropertyVal>
       <PropertyVal Name="Bold">False</PropertyVal>
       <PropertyVal Name="ColumnCount">10</PropertyVal>
-      <PropertyVal Name="ColumnWidths">45,300,170,52,140,90,68,50,60,365</PropertyVal>
+      <PropertyVal Name="ColumnWidths">45,300,170,52,140,90,68,85,60,365</PropertyVal>
       <PropertyVal Name="DefaultRowHeight">-1</PropertyVal>
       <PropertyVal Name="DropIndicatorVisible">False</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
       <PropertyVal Name="FontName">System</PropertyVal>
       <PropertyVal Name="FontSize">0.0</PropertyVal>
       <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="GridLineStyle">0</PropertyVal>
+      <PropertyVal Name="GridLineStyle">2</PropertyVal>
       <PropertyVal Name="HasBorder">True</PropertyVal>
       <PropertyVal Name="HasHeader">True</PropertyVal>
       <PropertyVal Name="HasHorizontalScrollbar">True</PropertyVal>
@@ -3741,7 +3975,7 @@
       <PropertyVal Name="Height">22</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialValue">
-        <Hex bytes="37">416C6C0A496E7374616C6C65640A4E65770A5570646174650A496E636F6D70617469626C65</Hex>
+        <Hex bytes="58">416C6C0A496E7374616C6C65640A4E65770A5570646174650A496E636F6D70617469626C650A446F776E6C6F6164696E670A52656D6F76696E67</Hex>
       </PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
       <PropertyVal Name="Left">0</PropertyVal>
@@ -4226,40 +4460,6 @@
       <Superclass>DesktopMenuItem</Superclass>
     </MenuItem>
   </block>
-  <block type="BuildAutomation" ID="1683482623">
-    <ObjName>Build Automation</ObjName>
-    <ObjContainerID>0</ObjContainerID>
-  </block>
-  <block type="BuildStepsList" ID="2061359103">
-    <ObjName>Linux</ObjName>
-    <ObjContainerID>1683482623</ObjContainerID>
-  </block>
-  <block type="BuildProjectStep" ID="1843986431">
-    <ObjName>Build</ObjName>
-    <ObjContainerID>2061359103</ObjContainerID>
-  </block>
-  <block type="BuildStepsList" ID="1501057023">
-    <ObjName>Mac OS X</ObjName>
-    <ObjContainerID>1683482623</ObjContainerID>
-  </block>
-  <block type="BuildProjectStep" ID="960004095">
-    <ObjName>Build</ObjName>
-    <ObjContainerID>1501057023</ObjContainerID>
-  </block>
-  <block type="SignProjectScriptStep" ID="197961727">
-    <ObjName>Sign</ObjName>
-    <ObjContainerID>1501057023</ObjContainerID>
-    <DeveloperID/>
-    <macOSEntitlements>{"App Sandbox":"False","Hardened Runtime":"False","Notarize":"False","UserEntitlements":""}</macOSEntitlements>
-  </block>
-  <block type="BuildStepsList" ID="1146470399">
-    <ObjName>Windows</ObjName>
-    <ObjContainerID>1683482623</ObjContainerID>
-  </block>
-  <block type="BuildProjectStep" ID="1225613311">
-    <ObjName>Build</ObjName>
-    <ObjContainerID>1146470399</ObjContainerID>
-  </block>
   <block type="Module" ID="1841627135">
     <ObjName>JSONFormatter</ObjName>
     <ObjContainerID>0</ObjContainerID>
@@ -4702,6 +4902,40 @@
       </ViewProperty>
     </ViewBehavior>
   </block>
+  <block type="BuildAutomation" ID="1683482623">
+    <ObjName>Build Automation</ObjName>
+    <ObjContainerID>0</ObjContainerID>
+  </block>
+  <block type="BuildStepsList" ID="2061359103">
+    <ObjName>Linux</ObjName>
+    <ObjContainerID>1683482623</ObjContainerID>
+  </block>
+  <block type="BuildProjectStep" ID="1843986431">
+    <ObjName>Build</ObjName>
+    <ObjContainerID>2061359103</ObjContainerID>
+  </block>
+  <block type="BuildStepsList" ID="1501057023">
+    <ObjName>Mac OS X</ObjName>
+    <ObjContainerID>1683482623</ObjContainerID>
+  </block>
+  <block type="BuildProjectStep" ID="960004095">
+    <ObjName>Build</ObjName>
+    <ObjContainerID>1501057023</ObjContainerID>
+  </block>
+  <block type="SignProjectScriptStep" ID="197961727">
+    <ObjName>Sign</ObjName>
+    <ObjContainerID>1501057023</ObjContainerID>
+    <DeveloperID/>
+    <macOSEntitlements>{"App Sandbox":"False","Hardened Runtime":"False","Notarize":"False","UserEntitlements":""}</macOSEntitlements>
+  </block>
+  <block type="BuildStepsList" ID="1146470399">
+    <ObjName>Windows</ObjName>
+    <ObjContainerID>1683482623</ObjContainerID>
+  </block>
+  <block type="BuildProjectStep" ID="1225613311">
+    <ObjName>Build</ObjName>
+    <ObjContainerID>1146470399</ObjContainerID>
+  </block>
   <block type="Module" ID="137529343">
     <ObjName>RESTSocket</ObjName>
     <ObjContainerID>0</ObjContainerID>
@@ -4888,14 +5122,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="20" top="25" width="1416" height="973"/>
+        <Rect left="0" top="25" width="1901" height="1043"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.Controls.AtomsListBox.PaintCellText</EditorLocation>
+          <EditorLocation>ReactorWindow.AtomRemove</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
