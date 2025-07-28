@@ -2005,21 +2005,60 @@
         <SourceLine>AtomsListBox.RemoveAllRows()</SourceLine>
         <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
         <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
+        <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
         <SourceLine>Var AtomName As String =  Atom.Value("Name")</SourceLine>
         <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
         <SourceLine>Var AtomVersion As Double =  Atom.Value("Version")</SourceLine>
         <SourceLine>Var AtomAuthor As String =  Atom.Value("Author")</SourceLine>
         <SourceLine>Var AtomDateJSON As JSONItem = Atom.Value("Date")</SourceLine>
-        <SourceLine>// System.DebugLog("[Atom Date] " + AtomDateJSON.ToString())</SourceLine>
         <SourceLine>Var AtomDateYear As Double = AtomDateJSON.Value("1.0")</SourceLine>
         <SourceLine>Var AtomDateMonth As Double = AtomDateJSON.Value("2.0")</SourceLine>
         <SourceLine>Var AtomDateDay As Double = AtomDateJSON.Value("3.0")</SourceLine>
         <SourceLine>Var AtomDate As String = AtomDateYear.ToString(Locale.Current, "0000") + "-" + AtomDateMonth.ToString(Locale.Current, "00")  + "-"  + AtomDateDay.ToString(Locale.Current, "00")</SourceLine>
         <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
-        <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
-        <SourceLine>Var AtomDonation As String = "No"</SourceLine>
-        <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
         <SourceLine/>
+        <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
+        <SourceLine/>
+        <SourceLine>If DateTime.Now.Year = AtomDateYear Then</SourceLine>
+        <SourceLine>AtomStatus = "New"</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var AtomUpdated As Boolean = AtomUpdateAvailable(AtomID)</SourceLine>
+        <SourceLine>If AtomUpdated = True Then</SourceLine>
+        <SourceLine>AtomStatus = "Update"</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var AtomDonation As String = "No"</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var AtomVisible As Integer = 1</SourceLine>
+        <SourceLine>Select Case RepoPopupMenu.SelectedRowIndex</SourceLine>
+        <SourceLine>Case 0</SourceLine>
+        <SourceLine>// All</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Case 1</SourceLine>
+        <SourceLine>// Installed</SourceLine>
+        <SourceLine>If AtomInstalled(AtomID) = True Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 2</SourceLine>
+        <SourceLine>// New</SourceLine>
+        <SourceLine>If DateTime.Now.Year = AtomDateYear Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 3</SourceLine>
+        <SourceLine>// Update</SourceLine>
+        <SourceLine>If AtomUpdated = True Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End Select</SourceLine>
+        <SourceLine/>
+        <SourceLine>If AtomVisible = 1 Then</SourceLine>
         <SourceLine>AtomsListBox.Addrow("")</SourceLine>
         <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 1) = AtomName</SourceLine>
         <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 2) = AtomCategory</SourceLine>
@@ -2038,9 +2077,12 @@
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomsListBox.CellCheckBoxStateAt(AtomsListBox.LastAddedRowIndex, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
         <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>AtomsListBox.Sort</SourceLine>
         <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>App.DownloadRow = -1</SourceLine>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
       <TextEncoding>134217984</TextEncoding>
@@ -2268,8 +2310,10 @@
         <SourceLine>Var tos As TextOutputStream</SourceLine>
         <SourceLine>If JSONAtomFile &lt;&gt; Nil Then</SourceLine>
         <SourceLine>tos = TextOutputStream.Create(JSONAtomFile)</SourceLine>
+        <SourceLine>If tos &lt;&gt; Nil Then</SourceLine>
         <SourceLine>tos.Write(Atom.ToString(options))</SourceLine>
         <SourceLine>tos.Close</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>// Debug: Open the newly saved JSON encoded atom in the default editor</SourceLine>
         <SourceLine>// JSONAtomFile.Launch</SourceLine>
@@ -2376,8 +2420,10 @@
         <SourceLine>Var tos As TextOutputStream</SourceLine>
         <SourceLine>If JSONFile &lt;&gt; Nil Then</SourceLine>
         <SourceLine>tos = TextOutputStream.Create(JSONFile)</SourceLine>
+        <SourceLine>If tos &lt;&gt; Nil Then</SourceLine>
         <SourceLine>tos.Write(App.Atoms.ToString(options))</SourceLine>
         <SourceLine>tos.Close</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
@@ -2488,6 +2534,97 @@
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
       <ItemParams>AtomID As String</ItemParams>
+      <ItemResult>Boolean</ItemResult>
+    </Method>
+    <Method>
+      <ItemName>AtomUpdateAvailable</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1595957247</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function AtomUpdateAvailable(InstalledAtomID As String) As Boolean</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+        <SourceLine>Var DeployAtomsFile As FolderItem = ReactorFolder.Child("Deploy").Child("Atoms").Child("Reactor").Child(InstalledAtomID + ".atom")</SourceLine>
+        <SourceLine>Var DeployJSONFile As FolderItem = ReactorFolder.Child("Deploy").Child("JSON").Child("Reactor").Child(InstalledAtomID + ".json")</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var AtomExists As Integer = 0</SourceLine>
+        <SourceLine>Var UpdateAtom As Integer = 0</SourceLine>
+        <SourceLine/>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>If DeployAtomsFile.Exists and not DeployJSONFile.Exists Then</SourceLine>
+        <SourceLine>// ATOM file exists (Reactor.lua install)</SourceLine>
+        <SourceLine>AtomExists = 1</SourceLine>
+        <SourceLine/>
+        <SourceLine>// If the JSON atom file is not on disk, flag this as a legacy package that needs an update.</SourceLine>
+        <SourceLine>// This will allow us to add a JSON atom for any pre-installed item.</SourceLine>
+        <SourceLine>UpdateAtom = 1</SourceLine>
+        <SourceLine>Return True</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>If DeployJSONFile &lt;&gt; Nil and DeployJSONFile.Exists Then</SourceLine>
+        <SourceLine>// JSON file exists (Reactor.app install)</SourceLine>
+        <SourceLine>AtomExists = 1</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var InstalledJSONAtom As New JSONItem</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Read the JSON file to disk</SourceLine>
+        <SourceLine>Var tos As TextInputStream</SourceLine>
+        <SourceLine>If DeployJSONFile &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>tos = TextInputStream.Open(DeployJSONFile)</SourceLine>
+        <SourceLine>if tos &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>InstalledJSONAtom.Load(tos.ReadAll())</SourceLine>
+        <SourceLine>tos.Close</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Parse the atom file</SourceLine>
+        <SourceLine>If InstalledJSONAtom &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>Var InstalledAtomDateJSON As JSONItem = InstalledJSONAtom.Value("Date")</SourceLine>
+        <SourceLine>Var InstalledAtomDateYear As Double = InstalledAtomDateJSON.Value("1.0")</SourceLine>
+        <SourceLine>Var InstalledAtomDateMonth As Double = InstalledAtomDateJSON.Value("2.0")</SourceLine>
+        <SourceLine>Var InstalledAtomDateDay As Double = InstalledAtomDateJSON.Value("3.0")</SourceLine>
+        <SourceLine>Var InstalledAtomDate As String = InstalledAtomDateYear.ToString(Locale.Current, "0000") + "-" + InstalledAtomDateMonth.ToString(Locale.Current, "00")  + "-"  + InstalledAtomDateDay.ToString(Locale.Current, "00")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Reactor.json atom data</SourceLine>
+        <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
+        <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
+        <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// See if the atoms are the same</SourceLine>
+        <SourceLine>If InstalledAtomID = AtomID Then</SourceLine>
+        <SourceLine>Var AtomDateJSON As JSONItem = Atom.Value("Date")</SourceLine>
+        <SourceLine>Var AtomDateYear As Double = AtomDateJSON.Value("1.0")</SourceLine>
+        <SourceLine>Var AtomDateMonth As Double = AtomDateJSON.Value("2.0")</SourceLine>
+        <SourceLine>Var AtomDateDay As Double = AtomDateJSON.Value("3.0")</SourceLine>
+        <SourceLine>Var AtomDate As String = AtomDateYear.ToString(Locale.Current, "0000") + "-" + AtomDateMonth.ToString(Locale.Current, "00")  + "-"  + AtomDateDay.ToString(Locale.Current, "00")</SourceLine>
+        <SourceLine/>
+        <SourceLine>If InstalledAtomDate = AtomDate Then</SourceLine>
+        <SourceLine>// Check if the atom dates match</SourceLine>
+        <SourceLine>UpdateAtom = 0</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>// The dates are different</SourceLine>
+        <SourceLine>UpdateAtom = 1</SourceLine>
+        <SourceLine>Return True</SourceLine>
+        <SourceLine>// Todo: Possibly add version comparisons but floating point math might break comparision checks</SourceLine>
+        <SourceLine>End If </SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine/>
+        <SourceLine>Return False</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>InstalledAtomID As String</ItemParams>
       <ItemResult>Boolean</ItemResult>
     </Method>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
@@ -2780,6 +2917,7 @@
           <SourceLine>If CellString = "All" then</SourceLine>
           <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
           <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
+          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
           <SourceLine>Var AtomName As String =  Atom.Value("Name")</SourceLine>
           <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
           <SourceLine>Var AtomVersion As Double = Atom.Value("Version")</SourceLine>
@@ -2791,9 +2929,13 @@
           <SourceLine>Var AtomDateDay As Double = AtomDateJSON.Value("3.0")</SourceLine>
           <SourceLine>Var AtomDate As String = AtomDateYear.ToString(Locale.Current, "0000") + "-" + AtomDateMonth.ToString(Locale.Current, "00")  + "-"  + AtomDateDay.ToString(Locale.Current, "00")</SourceLine>
           <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
+          <SourceLine/>
           <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
+          <SourceLine>If AtomUpdateAvailable(AtomID) = True Then</SourceLine>
+          <SourceLine>AtomStatus = "Update"</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
           <SourceLine>Var AtomDonation As String = "No"</SourceLine>
-          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
           <SourceLine/>
           <SourceLine>AtomsListBox.Addrow("")</SourceLine>
           <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 1) = AtomName</SourceLine>
@@ -2809,9 +2951,9 @@
           <SourceLine/>
           <SourceLine>// Is the atom installed already</SourceLine>
           <SourceLine>If AtomInstalled(AtomID) = True then</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(AtomsListBox.LastAddedRowIndex, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
           <SourceLine>Else</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(AtomsListBox.LastAddedRowIndex, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Next</SourceLine>
           <SourceLine>Else</SourceLine>
@@ -2823,6 +2965,7 @@
           <SourceLine>Var AtomCategoryArray() As String</SourceLine>
           <SourceLine>AtomCategoryArray = AtomCategory.Split("/")</SourceLine>
           <SourceLine>if AtomCategoryArray(0) = CellString Then</SourceLine>
+          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
           <SourceLine>Var AtomVersion As Double =  Atom.Value("Version")</SourceLine>
           <SourceLine>Var AtomAuthor As String =  Atom.Value("Author")</SourceLine>
           <SourceLine>Var AtomDateJSON As JSONItem = Atom.Value("Date")</SourceLine>
@@ -2832,9 +2975,13 @@
           <SourceLine>Var AtomDateDay As Double = AtomDateJSON.Value("3.0")</SourceLine>
           <SourceLine>Var AtomDate As String = AtomDateYear.ToString(Locale.Current, "0000") + "-" + AtomDateMonth.ToString(Locale.Current, "00")  + "-"  + AtomDateDay.ToString(Locale.Current, "00")</SourceLine>
           <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
+          <SourceLine/>
           <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
+          <SourceLine>If AtomUpdateAvailable(AtomID) = True Then</SourceLine>
+          <SourceLine>AtomStatus = "Update"</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
           <SourceLine>Var AtomDonation As String = "No"</SourceLine>
-          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
           <SourceLine/>
           <SourceLine>AtomsListBox.Addrow("")</SourceLine>
           <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 1) = AtomName</SourceLine>
@@ -2850,9 +2997,9 @@
           <SourceLine/>
           <SourceLine>// Is the atom installed already</SourceLine>
           <SourceLine>If AtomInstalled(AtomID) = True then</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(AtomsListBox.LastAddedRowIndex, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
           <SourceLine>Else</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(AtomsListBox.LastAddedRowIndex, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Next</SourceLine>
@@ -2861,21 +3008,6 @@
           <SourceLine>End</SourceLine>
           <SourceLine/>
           <SourceLine>System.Debuglog("[Category Selected] " + SelectedCategory)</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopComboBox</Superclass>
-      <HookInstance>
-        <ItemName>TextChanged</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>1531467775</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub TextChanged()</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
@@ -2956,7 +3088,6 @@
           <SourceLine>End</SourceLine>
           <SourceLine/>
           <SourceLine>If row &gt;= 0 and column = 0 Then</SourceLine>
-          <SourceLine>App.DownloadRow = row</SourceLine>
           <SourceLine>If AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked Then</SourceLine>
           <SourceLine>// Remove the package</SourceLine>
           <SourceLine>AtomRemove(row)</SourceLine>
@@ -2968,7 +3099,37 @@
           <SourceLine>// Cancel the download task</SourceLine>
           <SourceLine>AtomDownloadCancel()</SourceLine>
           <SourceLine>End If</SourceLine>
+          <SourceLine>//AtomsRefresh()</SourceLine>
           <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>PaintCellText</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1413482495</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function PaintCellText(g as Graphics, row as Integer, column as Integer, x as Integer, y as Integer) As Boolean</SourceLine>
+          <SourceLine>Select Case Me.CellTextAt(row, 7)</SourceLine>
+          <SourceLine>Case "OK"</SourceLine>
+          <SourceLine>Case "Update"</SourceLine>
+          <SourceLine>// Upgrade Blue</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(140,153, 214)</SourceLine>
+          <SourceLine>Case "New"</SourceLine>
+          <SourceLine>// New Green</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(140, 214, 153)</SourceLine>
+          <SourceLine>Case "Disabled"</SourceLine>
+          <SourceLine>// Faint Red</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(255, 139, 140)</SourceLine>
+          <SourceLine>End Select</SourceLine>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine/>
           <SourceLine/>
           <SourceLine>End Function</SourceLine>
         </ItemSource>
@@ -3118,6 +3279,23 @@
     <ControlBehavior>
       <Superclass>DesktopLabel</Superclass>
     </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopPopupMenu</Superclass>
+      <HookInstance>
+        <ItemName>SelectionChanged</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>213397503</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub SelectionChanged(item As DesktopMenuItem)</SourceLine>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
+          <SourceLine>AtomsRefresh()</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
     <Control>
       <ControlClass>DesktopListBox</ControlClass>
       <ItemName>DesktopListBox</ItemName>
@@ -3143,7 +3321,7 @@
       <PropertyVal Name="HasHorizontalScrollbar">False</PropertyVal>
       <PropertyVal Name="HasVerticalScrollbar">True</PropertyVal>
       <PropertyVal Name="HeadingIndex">-1</PropertyVal>
-      <PropertyVal Name="Height">615</PropertyVal>
+      <PropertyVal Name="Height">612</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialValue"/>
       <PropertyVal Name="Italic">False</PropertyVal>
@@ -3161,7 +3339,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">38</PropertyVal>
+      <PropertyVal Name="Top">41</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -3171,46 +3349,6 @@
       <ControlIndex>0</ControlIndex>
       <Locked>0</Locked>
       <PartID>1337284607</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopComboBox</ControlClass>
-      <ItemName>DesktopComboBox</ItemName>
-      <PropertyVal Name="AllowAutoComplete">False</PropertyVal>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">System</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">19</PropertyVal>
-      <PropertyVal Name="Hint"/>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="InitialValue">
-        <Hex bytes="32">416C6C0A496E7374616C6C65640A4E65770A5570646174650A52656163746F72</Hex>
-      </PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">0</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">False</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="Name">RepoComboBox</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="SelectedRowIndex">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopComboBox</PropertyVal>
-      <PropertyVal Name="TabIndex">1</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">7</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">188</PropertyVal>
-      <ControlIndex>1</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>92030975</PartID>
     </Control>
     <Control>
       <ControlClass>DesktopListBox</ControlClass>
@@ -3224,7 +3362,7 @@
       <PropertyVal Name="AllowRowReordering">False</PropertyVal>
       <PropertyVal Name="Bold">False</PropertyVal>
       <PropertyVal Name="ColumnCount">10</PropertyVal>
-      <PropertyVal Name="ColumnWidths">45, 300,204,52,180,90,68,50,60,365</PropertyVal>
+      <PropertyVal Name="ColumnWidths">45,300,170,52,140,90,68,50,60,365</PropertyVal>
       <PropertyVal Name="DefaultRowHeight">-1</PropertyVal>
       <PropertyVal Name="DropIndicatorVisible">False</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
@@ -3264,7 +3402,7 @@
       <PropertyVal Name="Width">968</PropertyVal>
       <PropertyVal Name="_ScrollOffset">0</PropertyVal>
       <PropertyVal Name="_ScrollWidth">-1</PropertyVal>
-      <ControlIndex>2</ControlIndex>
+      <ControlIndex>1</ControlIndex>
       <Locked>0</Locked>
       <PartID>2135695359</PartID>
     </Control>
@@ -3292,7 +3430,7 @@
       <PropertyVal Name="Top">281</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">968</PropertyVal>
-      <ControlIndex>3</ControlIndex>
+      <ControlIndex>2</ControlIndex>
       <Locked>0</Locked>
       <PartID>211204095</PartID>
     </Control>
@@ -3338,8 +3476,8 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="ValidationMask"/>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">902</PropertyVal>
-      <ControlIndex>4</ControlIndex>
+      <PropertyVal Name="Width">889</PropertyVal>
+      <ControlIndex>3</ControlIndex>
       <Locked>0</Locked>
       <PartID>891385855</PartID>
     </Control>
@@ -3376,7 +3514,7 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">39</PropertyVal>
-      <ControlIndex>5</ControlIndex>
+      <ControlIndex>4</ControlIndex>
       <Locked>0</Locked>
       <PartID>1062983679</PartID>
     </Control>
@@ -3391,7 +3529,7 @@
       <PropertyVal Name="Scope">0</PropertyVal>
       <PropertyVal Name="Super">RESTSocket</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <ControlIndex>6</ControlIndex>
+      <ControlIndex>5</ControlIndex>
       <Locked>0</Locked>
       <PartID>834740223</PartID>
     </Control>
@@ -3428,7 +3566,7 @@
       <PropertyVal Name="_mInitialParent"/>
       <PropertyVal Name="_mName"/>
       <PropertyVal Name="_mPanelIndex">0</PropertyVal>
-      <ControlIndex>7</ControlIndex>
+      <ControlIndex>6</ControlIndex>
       <Locked>0</Locked>
       <PartID>549044223</PartID>
     </Control>
@@ -3465,7 +3603,7 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">61</PropertyVal>
-      <ControlIndex>8</ControlIndex>
+      <ControlIndex>7</ControlIndex>
       <Locked>0</Locked>
       <PartID>1960126463</PartID>
     </Control>
@@ -3503,9 +3641,46 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">875</PropertyVal>
-      <ControlIndex>9</ControlIndex>
+      <ControlIndex>8</ControlIndex>
       <Locked>0</Locked>
       <PartID>1026347007</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopPopupMenu</ControlClass>
+      <ItemName>DesktopPopupMenu</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">22</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialValue">
+        <Hex bytes="24">416C6C0A496E7374616C6C65640A4E65770A557064617465</Hex>
+      </PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">0</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">RepoPopupMenu</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="SelectedRowIndex">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopPopupMenu</PropertyVal>
+      <PropertyVal Name="TabIndex">13</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">7</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">188</PropertyVal>
+      <ControlIndex>9</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1318504447</PartID>
     </Control>
   </block>
   <block type="Menu" ID="1789632511">
@@ -4629,16 +4804,16 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="22" top="25" width="1631" height="960"/>
+        <Rect left="21" top="25" width="1810" height="992"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>LicenseWindow</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.AtomsListBox.PaintCellText</EditorLocation>
           <EditorPath/>
-          <EditingPartID>2046642175</EditingPartID>
+          <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
