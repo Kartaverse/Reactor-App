@@ -13,7 +13,7 @@
     <LongVersion/>
     <InfoVersion/>
     <AutoIncVersion>0</AutoIncVersion>
-    <DefaultViewID>338128895</DefaultViewID>
+    <DefaultViewID>2046642175</DefaultViewID>
     <ProjectType>0</ProjectType>
     <DefaultLanguage>0</DefaultLanguage>
     <CurrentLanguage>0</CurrentLanguage>
@@ -546,7 +546,7 @@
     <PropertyVal Name="BackgroundColor">&amp;cFFFFFF</PropertyVal>
     <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
     <PropertyVal Name="ImplicitInstance">True</PropertyVal>
-    <PropertyVal Name="Visible">True</PropertyVal>
+    <PropertyVal Name="Visible">False</PropertyVal>
     <PropertyVal Name="DefaultLocation">2</PropertyVal>
     <PropertyVal Name="FullScreen">False</PropertyVal>
     <PropertyVal Name="MacProcID">0</PropertyVal>
@@ -1063,6 +1063,536 @@
       <ControlIndex>6</ControlIndex>
       <Locked>0</Locked>
       <PartID>1537968127</PartID>
+    </Control>
+  </block>
+  <block type="DesktopWindow" ID="2046642175">
+    <ObjName>LicenseWindow</ObjName>
+    <ObjContainerID>0</ObjContainerID>
+    <IsClass>1</IsClass>
+    <Superclass>DesktopWindow</Superclass>
+    <ItemFlags>1</ItemFlags>
+    <IsInterface>0</IsInterface>
+    <Compatibility/>
+    <HookInstance>
+      <ItemName>Opening</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1196244991</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub Opening()</SourceLine>
+        <SourceLine>// Window sizing</SourceLine>
+        <SourceLine>//Me.Top = DesktopDisplay.DisplayAt(0).AvailableTop + 28 + (ReactorWindow.Height / 2) - (Me.Height / 2)</SourceLine>
+        <SourceLine>//Me.Left = ReactorWindow.Left + (ReactorWindow.Width / 2) - (Me.Width / 2)</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Me.Width = DesktopDisplay.DisplayAt(0).AvailableWidth</SourceLine>
+        <SourceLine>// Me.Height = DesktopDisplay.DisplayAt(0).AvailableHeight - 28</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+    </HookInstance>
+    <PropertyVal Name="MenuBarVisible">False</PropertyVal>
+    <PropertyVal Name="MenuBar"/>
+    <PropertyVal Name="Backdrop">0</PropertyVal>
+    <PropertyVal Name="BackgroundColor">&amp;cFFFFFF</PropertyVal>
+    <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
+    <PropertyVal Name="ImplicitInstance">True</PropertyVal>
+    <PropertyVal Name="Visible">True</PropertyVal>
+    <PropertyVal Name="DefaultLocation">2</PropertyVal>
+    <PropertyVal Name="FullScreen">False</PropertyVal>
+    <PropertyVal Name="MacProcID">0</PropertyVal>
+    <PropertyVal Name="Composite">False</PropertyVal>
+    <PropertyVal Name="Resizeable">False</PropertyVal>
+    <PropertyVal Name="HasTitleBar">True</PropertyVal>
+    <PropertyVal Name="HasFullScreenButton">False</PropertyVal>
+    <PropertyVal Name="HasMinimizeButton">False</PropertyVal>
+    <PropertyVal Name="HasMaximizeButton">False</PropertyVal>
+    <PropertyVal Name="HasCloseButton">False</PropertyVal>
+    <PropertyVal Name="Title">About Reactor</PropertyVal>
+    <PropertyVal Name="Type">0</PropertyVal>
+    <PropertyVal Name="MaximumHeight">400</PropertyVal>
+    <PropertyVal Name="MaximumWidth">620</PropertyVal>
+    <PropertyVal Name="MinimumHeight">400</PropertyVal>
+    <PropertyVal Name="MinimumWidth">620</PropertyVal>
+    <PropertyVal Name="Height">400</PropertyVal>
+    <PropertyVal Name="Width">620</PropertyVal>
+    <ViewBehavior>
+      <ViewProperty>
+        <ObjName>Name</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>ID</PropertyGroup>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Interfaces</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>ID</PropertyGroup>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Super</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>ID</PropertyGroup>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Width</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>600</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Height</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>400</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MinimumWidth</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>64</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MinimumHeight</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>64</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MaximumWidth</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>32000</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MaximumHeight</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>32000</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Type</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>0</PropertyValue>
+        <ItemType>Types</ItemType>
+        <EditorType>Enum</EditorType>
+        <Enumeration>
+          <ItemDef>0 - Document</ItemDef>
+          <ItemDef>1 - Movable Modal</ItemDef>
+          <ItemDef>2 - Modal Dialog</ItemDef>
+          <ItemDef>3 - Floating Window</ItemDef>
+          <ItemDef>4 - Plain Box</ItemDef>
+          <ItemDef>5 - Shadowed Box</ItemDef>
+          <ItemDef>6 - Rounded Window</ItemDef>
+          <ItemDef>7 - Global Floating Window</ItemDef>
+          <ItemDef>8 - Sheet Window</ItemDef>
+          <ItemDef>9 - Modeless Dialog</ItemDef>
+        </Enumeration>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Title</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>Untitled</PropertyValue>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasCloseButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasMaximizeButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasMinimizeButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasFullScreenButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasTitleBar</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Resizeable</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Composite</ObjName>
+        <PropertyGroup>OS X (Carbon)</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MacProcID</ObjName>
+        <PropertyGroup>OS X (Carbon)</PropertyGroup>
+        <PropertyValue>0</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>FullScreen</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>DefaultLocation</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>2</PropertyValue>
+        <ItemType>Locations</ItemType>
+        <EditorType>Enum</EditorType>
+        <Enumeration>
+          <ItemDef>0 - Default</ItemDef>
+          <ItemDef>1 - Parent Window</ItemDef>
+          <ItemDef>2 - Main Screen</ItemDef>
+          <ItemDef>3 - Parent Window Screen</ItemDef>
+          <ItemDef>4 - Stagger</ItemDef>
+        </Enumeration>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Visible</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>ImplicitInstance</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Window Behavior</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasBackgroundColor</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Background</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>BackgroundColor</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Background</PropertyGroup>
+        <PropertyValue>&amp;cFFFFFF</PropertyValue>
+        <ItemType>ColorGroup</ItemType>
+        <EditorType>ColorGroup</EditorType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Backdrop</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Background</PropertyGroup>
+        <ItemType>Picture</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MenuBar</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Menus</PropertyGroup>
+        <ItemType>DesktopMenuBar</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MenuBarVisible</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Deprecated</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+    </ViewBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopLabel</Superclass>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopLabel</Superclass>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopLabel</Superclass>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopCanvas</Superclass>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopButton</Superclass>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1178068991</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine>ReactorWindow.Show</SourceLine>
+          <SourceLine>LicenseWindow.Close</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopButton</Superclass>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>2038394879</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine>Quit()</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <Control>
+      <ControlClass>DesktopLabel</ControlClass>
+      <ItemName>DesktopLabel</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">3.6e+1</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">50</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">209</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Multiline">False</PropertyVal>
+      <PropertyVal Name="Name">TitleLabel</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Selectable">False</PropertyVal>
+      <PropertyVal Name="Super">DesktopLabel</PropertyVal>
+      <PropertyVal Name="TabIndex">0</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Text">Reactor</PropertyVal>
+      <PropertyVal Name="TextAlignment">2</PropertyVal>
+      <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">71</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">203</PropertyVal>
+      <ControlIndex>0</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>296470527</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopLabel</ControlClass>
+      <ItemName>DesktopLabel</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">1.4e+1</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">152</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">70</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Multiline">True</PropertyVal>
+      <PropertyVal Name="Name">LicenseTermsLabel</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Selectable">False</PropertyVal>
+      <PropertyVal Name="Super">DesktopLabel</PropertyVal>
+      <PropertyVal Name="TabIndex">1</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Text">THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</PropertyVal>
+      <PropertyVal Name="TextAlignment">0</PropertyVal>
+      <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">171</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">480</PropertyVal>
+      <ControlIndex>1</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1595035647</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopLabel</ControlClass>
+      <ItemName>DesktopLabel</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">1.4e+1</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">25</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">20</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Multiline">True</PropertyVal>
+      <PropertyVal Name="Name">HeadingLabel</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Selectable">False</PropertyVal>
+      <PropertyVal Name="Super">DesktopLabel</PropertyVal>
+      <PropertyVal Name="TabIndex">4</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Text">To use this software, you must agree to the terms of the software license agreement.</PropertyVal>
+      <PropertyVal Name="TextAlignment">2</PropertyVal>
+      <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">133</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">580</PropertyVal>
+      <ControlIndex>2</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1034719231</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopCanvas</ControlClass>
+      <ItemName>DesktopCanvas</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowFocus">False</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
+      <PropertyVal Name="AllowTabs">False</PropertyVal>
+      <PropertyVal Name="Backdrop">1972449279</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Height">68</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Left">276</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">LogoCanvas</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
+      <PropertyVal Name="TabIndex">6</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">0</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">68</PropertyVal>
+      <ControlIndex>3</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1537968127</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopButton</ControlClass>
+      <ItemName>DesktopButton</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Cancel">False</PropertyVal>
+      <PropertyVal Name="Caption">Agree</PropertyVal>
+      <PropertyVal Name="Default">True</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">356</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
+      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
+      <PropertyVal Name="Name">AgreeButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopButton</PropertyVal>
+      <PropertyVal Name="TabIndex">7</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">351</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">80</PropertyVal>
+      <ControlIndex>4</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1146753023</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopButton</ControlClass>
+      <ItemName>DesktopButton</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Cancel">True</PropertyVal>
+      <PropertyVal Name="Caption">Disagree</PropertyVal>
+      <PropertyVal Name="Default">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialParent"/>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">184</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
+      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
+      <PropertyVal Name="Name">DisagreeButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopButton</PropertyVal>
+      <PropertyVal Name="TabIndex">8</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">351</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">80</PropertyVal>
+      <ControlIndex>5</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1455753215</PartID>
     </Control>
   </block>
   <block type="DesktopWindow" ID="338128895">
@@ -1966,7 +2496,7 @@
     <PropertyVal Name="BackgroundColor">&amp;cFFFFFF</PropertyVal>
     <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
     <PropertyVal Name="ImplicitInstance">True</PropertyVal>
-    <PropertyVal Name="Visible">True</PropertyVal>
+    <PropertyVal Name="Visible">False</PropertyVal>
     <PropertyVal Name="DefaultLocation">2</PropertyVal>
     <PropertyVal Name="FullScreen">False</PropertyVal>
     <PropertyVal Name="MacProcID">0</PropertyVal>
@@ -4099,16 +4629,16 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="23" top="25" width="1897" height="1055"/>
+        <Rect left="22" top="25" width="1631" height="960"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.CreateReactorFolders</EditorLocation>
+          <EditorLocation>LicenseWindow</EditorLocation>
           <EditorPath/>
-          <EditingPartID>338128895</EditingPartID>
+          <EditingPartID>2046642175</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
