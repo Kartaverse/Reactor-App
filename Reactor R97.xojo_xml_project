@@ -2028,6 +2028,10 @@
         <SourceLine>AtomStatus = "Update"</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
+        <SourceLine>Var AtomDisabled As Boolean = AtomIncompatible(AtomID)</SourceLine>
+        <SourceLine>If AtomDisabled = True Then</SourceLine>
+        <SourceLine>AtomStatus = "Incompatible"</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>Var AtomDonation As String = "No"</SourceLine>
         <SourceLine/>
         <SourceLine>Var AtomVisible As Integer = 1</SourceLine>
@@ -2627,6 +2631,83 @@
       <ItemParams>InstalledAtomID As String</ItemParams>
       <ItemResult>Boolean</ItemResult>
     </Method>
+    <Method>
+      <ItemName>AtomIncompatible</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>217421823</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function AtomIncompatible(InstalledAtomID As String) As Boolean</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+        <SourceLine>Var DeployAtomsFile As FolderItem = ReactorFolder.Child("Deploy").Child("Atoms").Child("Reactor").Child(InstalledAtomID + ".atom")</SourceLine>
+        <SourceLine>Var DeployJSONFile As FolderItem = ReactorFolder.Child("Deploy").Child("JSON").Child("Reactor").Child(InstalledAtomID + ".json")</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var AtomExists As Integer = 0</SourceLine>
+        <SourceLine>Var IncompatibleAtom As Integer = 0</SourceLine>
+        <SourceLine/>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>If DeployJSONFile &lt;&gt; Nil and DeployJSONFile.Exists Then</SourceLine>
+        <SourceLine>// JSON file exists (Reactor.app install)</SourceLine>
+        <SourceLine>AtomExists = 1</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var InstalledJSONAtom As New JSONItem</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Read the JSON file to disk</SourceLine>
+        <SourceLine>Var tos As TextInputStream</SourceLine>
+        <SourceLine>If DeployJSONFile &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>tos = TextInputStream.Open(DeployJSONFile)</SourceLine>
+        <SourceLine>if tos &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>InstalledJSONAtom.Load(tos.ReadAll())</SourceLine>
+        <SourceLine>tos.Close</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Parse the atom file</SourceLine>
+        <SourceLine>If InstalledJSONAtom &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>// Reactor.json atom data</SourceLine>
+        <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
+        <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
+        <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// See if the atoms are the same</SourceLine>
+        <SourceLine>If InstalledAtomID = AtomID Then</SourceLine>
+        <SourceLine>// Min/max Version</SourceLine>
+        <SourceLine>// OS match</SourceLine>
+        <SourceLine>// IncompatibleAtom = True</SourceLine>
+        <SourceLine/>
+        <SourceLine>If TargetWindows Then</SourceLine>
+        <SourceLine>' Running on Windows</SourceLine>
+        <SourceLine>ElseIf TargetMacOS Then</SourceLine>
+        <SourceLine>' Running on macOS</SourceLine>
+        <SourceLine>ElseIf TargetLinux And TargetARM Then</SourceLine>
+        <SourceLine>' Running on Raspberry Pi</SourceLine>
+        <SourceLine>ElseIf TargetLinux Then</SourceLine>
+        <SourceLine>' Running on Linux</SourceLine>
+        <SourceLine>ElseIf TargetiOS Then</SourceLine>
+        <SourceLine>' Running on iOS</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>//Return True</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine/>
+        <SourceLine>Return False</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>InstalledAtomID As String</ItemParams>
+      <ItemResult>Boolean</ItemResult>
+    </Method>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
@@ -3122,6 +3203,9 @@
           <SourceLine>// New Green</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(140, 214, 153)</SourceLine>
           <SourceLine>Case "Disabled"</SourceLine>
+          <SourceLine>// Faint Red</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(255, 139, 140)</SourceLine>
+          <SourceLine>Case "Incompatible"</SourceLine>
           <SourceLine>// Faint Red</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(255, 139, 140)</SourceLine>
           <SourceLine>End Select</SourceLine>
@@ -3657,7 +3741,7 @@
       <PropertyVal Name="Height">22</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialValue">
-        <Hex bytes="24">416C6C0A496E7374616C6C65640A4E65770A557064617465</Hex>
+        <Hex bytes="37">416C6C0A496E7374616C6C65640A4E65770A5570646174650A496E636F6D70617469626C65</Hex>
       </PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
       <PropertyVal Name="Left">0</PropertyVal>
@@ -4804,7 +4888,7 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="21" top="25" width="1810" height="992"/>
+        <Rect left="20" top="25" width="1416" height="973"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
