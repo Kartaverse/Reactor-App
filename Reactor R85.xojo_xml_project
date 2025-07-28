@@ -1501,6 +1501,13 @@
         <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 8) = AtomDonation</SourceLine>
         <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 9) = AtomID</SourceLine>
         <SourceLine>AtomsListBox.CellTagAt(AtomsListBox.LastAddedRowIndex, 0) = k</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Is the atom installed already</SourceLine>
+        <SourceLine>If AtomInstalled(AtomID) = True then</SourceLine>
+        <SourceLine>AtomsListBox.CellCheckBoxStateAt(AtomsListBox.LastAddedRowIndex, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomsListBox.CellCheckBoxStateAt(AtomsListBox.LastAddedRowIndex, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>AtomsListBox.Sort</SourceLine>
         <SourceLine>End If</SourceLine>
@@ -1786,9 +1793,9 @@
         <SourceLine>Var DeployCount As Integer = AtomDeploy.Keys.Count</SourceLine>
         <SourceLine>System.Debuglog("[Deploy File Count] " + DeployCount.ToString())</SourceLine>
         <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
-        <SourceLine>// Var DeployFile As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
         <SourceLine>// System.Debuglog("[File] " + DeployFile.ToString())</SourceLine>
-        <SourceLine>System.Debuglog(AtomDeploy.ToString(options))</SourceLine>
+        <SourceLine>System.Debuglog(DeployVariant)</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>Catch error As IOException</SourceLine>
         <SourceLine>MessageBox(error.Message)</SourceLine>
@@ -1861,6 +1868,8 @@
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Sub CreateReactorFolders()</SourceLine>
         <SourceLine>// By default the Reactor folder is stored in the user's home account</SourceLine>
+        <SourceLine>Var TempFolder As FolderItem = SpecialFolder.Temporary.Child("Reactor")</SourceLine>
+        <SourceLine/>
         <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
         <SourceLine>Var JSONFolder As FolderItem = ReactorFolder.Child("JSON")</SourceLine>
         <SourceLine>Var AtomzFolder As FolderItem = ReactorFolder.Child("Atomz")</SourceLine>
@@ -1873,6 +1882,9 @@
         <SourceLine>Var DeployJSONReactorFolder As FolderItem = DeployJSONFolder.Child("Reactor")</SourceLine>
         <SourceLine/>
         <SourceLine>// Create the folders</SourceLine>
+        <SourceLine>If TempFolder &lt;&gt; Nil And Not TempFolder.Exists Then</SourceLine>
+        <SourceLine>TempFolder.CreateFolder</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>If ReactorFolder &lt;&gt; Nil And Not ReactorFolder.Exists Then</SourceLine>
         <SourceLine>ReactorFolder.CreateFolder</SourceLine>
         <SourceLine>End If</SourceLine>
@@ -1912,6 +1924,41 @@
       <IsShared>0</IsShared>
       <ItemParams/>
       <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>AtomInstalled</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1302185983</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function AtomInstalled(AtomID As String) As Boolean</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+        <SourceLine>Var DeployAtomsFile As FolderItem = ReactorFolder.Child("Deploy").Child("Atoms").Child("Reactor").Child(AtomID + ".atom")</SourceLine>
+        <SourceLine>Var DeployJSONFile As FolderItem = ReactorFolder.Child("Deploy").Child("JSON").Child("Reactor").Child(AtomID + ".json")</SourceLine>
+        <SourceLine/>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>If DeployAtomsFile.Exists Then</SourceLine>
+        <SourceLine>// Atom file exists (legacy Reactor.lua install)</SourceLine>
+        <SourceLine>Return True</SourceLine>
+        <SourceLine>ElseIf DeployJSONFile.Exists Then</SourceLine>
+        <SourceLine>// JSON file exists (Reactor.app install)</SourceLine>
+        <SourceLine>Return True</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>Return False</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>AtomID As String</ItemParams>
+      <ItemResult>Boolean</ItemResult>
     </Method>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
@@ -2229,6 +2276,13 @@
           <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 8) = AtomDonation</SourceLine>
           <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 9) = AtomID</SourceLine>
           <SourceLine>AtomsListBox.CellTagAt(AtomsListBox.LastAddedRowIndex, 0) = k</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Is the atom installed already</SourceLine>
+          <SourceLine>If AtomInstalled(AtomID) = True then</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+          <SourceLine>End If</SourceLine>
           <SourceLine>Next</SourceLine>
           <SourceLine>Else</SourceLine>
           <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
@@ -2263,6 +2317,13 @@
           <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 8) = AtomDonation</SourceLine>
           <SourceLine>AtomsListBox.CellTextAt(AtomsListBox.LastAddedRowIndex, 9) = AtomID</SourceLine>
           <SourceLine>AtomsListBox.CellTagAt(AtomsListBox.LastAddedRowIndex, 0) = k</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Is the atom installed already</SourceLine>
+          <SourceLine>If AtomInstalled(AtomID) = True then</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+          <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Next</SourceLine>
           <SourceLine>End If</SourceLine>
@@ -4038,14 +4099,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1897" height="1367"/>
+        <Rect left="23" top="25" width="1897" height="1055"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.AtomDeploy</EditorLocation>
+          <EditorLocation>ReactorWindow.CreateReactorFolders</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
