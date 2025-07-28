@@ -1400,39 +1400,39 @@
           <SourceLine>Var ReactorSetupFile As FolderItem = SpecialFolder.Desktop.Child("Reactor Setup.lua")</SourceLine>
           <SourceLine/>
           <SourceLine>// Text file contents</SourceLine>
-          <SourceLine>Var LuaScript As String = "--[[ " + EndOfLine +_ </SourceLine>
-          <SourceLine>"Connect Reactor to Fusion " + EndOfLine +_ </SourceLine>
-          <SourceLine>" " + EndOfLine +_ </SourceLine>
-          <SourceLine>"Setting up Reactor for the first time is a 3 step process. " + EndOfLine + EndOfLine +_ </SourceLine>
-          <SourceLine>" " + EndOfLine +_ </SourceLine>
-          <SourceLine>"1. Click the 'Create Script' button. A new 'Reactor Setup.lua' script will be saved to your desktop folder. " + EndOfLine +_ </SourceLine>
-          <SourceLine>" " + EndOfLine +_ </SourceLine>
-          <SourceLine>"2. Launch Resolve/Fusion and navigate to the Fusion page. " + EndOfLine +_ </SourceLine>
-          <SourceLine>" " + EndOfLine +_ </SourceLine>
-          <SourceLine>"3. Drag the 'Reactor Setup.lua' script from your desktop folder into the Fusion node graph or Console window. A Fusion preference called a PathMap will be configured automatically for Reactor using this script. " + EndOfLine +_ </SourceLine>
-          <SourceLine>" " + EndOfLine +_ </SourceLine>
-          <SourceLine>"--]] " + EndOfLine +_ </SourceLine>
-          <SourceLine>" " + EndOfLine +_ </SourceLine>
-          <SourceLine>"print('[Connect Reactor to Fusion]') " + EndOfLine +_ </SourceLine>
-          <SourceLine>" " + EndOfLine +_ </SourceLine>
-          <SourceLine>"-- Set the customized Reactor PathMap " + EndOfLine +_ </SourceLine>
-          <SourceLine>"local reactor_root = app:MapPath([[" + ReactorInstallDirectory + "]]) " + EndOfLine +_ </SourceLine>
-          <SourceLine>"app:SetPrefs([[Global.Paths.Map.Reactor:]], reactor_root) " + EndOfLine +_ </SourceLine>
-          <SourceLine>"local userpath = app:GetPrefs([[Global.Paths.Map.UserPaths:]]) " + EndOfLine +_ </SourceLine>
-          <SourceLine>"if not userpath:find([[Reactor:Deploy]]) then " + EndOfLine +_ </SourceLine>
-          <SourceLine>"    userpath = userpath .. [[;Reactor:Deploy]] " + EndOfLine +_ </SourceLine>
-          <SourceLine>"    app:SetPrefs([[Global.Paths.Map.UserPaths:]], userpath) " + EndOfLine +_ </SourceLine>
-          <SourceLine>"end " + EndOfLine +_ </SourceLine>
-          <SourceLine>" " + EndOfLine +_ </SourceLine>
-          <SourceLine>"-- Add a Reactor:System/Scripts Scripts PathMap entry " + EndOfLine +_ </SourceLine>
-          <SourceLine>"local scriptpath = app:GetPrefs([[Global.Paths.Map.Scripts:]]) " + EndOfLine +_ </SourceLine>
-          <SourceLine>"if not scriptpath:find([[Reactor:System/Scripts]]) then " + EndOfLine +_ </SourceLine>
-          <SourceLine>"    scriptpath = scriptpath .. [[;Reactor:System/Scripts]] " + EndOfLine +_ </SourceLine>
-          <SourceLine>"    app:SetPrefs([[Global.Paths.Map.Scripts:]], scriptpath) " + EndOfLine +_ </SourceLine>
-          <SourceLine>"end " + EndOfLine +_ </SourceLine>
-          <SourceLine>"app:SavePrefs() " + EndOfLine +_ </SourceLine>
-          <SourceLine>" " + EndOfLine +_ </SourceLine>
-          <SourceLine>"print([[[Reactor: PathMap] ']] .. tostring(app:GetPrefs([[Global.Paths.Map.Reactor:]])) .. [[']]) " + EndOfLine +_ </SourceLine>
+          <SourceLine>Var LuaScript As String = "--[[" + EndOfLine +_ </SourceLine>
+          <SourceLine>"Connect Reactor to Fusion" + EndOfLine +_ </SourceLine>
+          <SourceLine>"" + EndOfLine +_ </SourceLine>
+          <SourceLine>"Setting up Reactor for the first time is a 3 step process." + EndOfLine + EndOfLine +_ </SourceLine>
+          <SourceLine>"" + EndOfLine +_ </SourceLine>
+          <SourceLine>"1. Click the 'Create Script' button. A new 'Reactor Setup.lua' script will be saved to your desktop folder." + EndOfLine +_ </SourceLine>
+          <SourceLine>"" + EndOfLine +_ </SourceLine>
+          <SourceLine>"2. Launch Resolve/Fusion and navigate to the Fusion page." + EndOfLine +_ </SourceLine>
+          <SourceLine>"" + EndOfLine +_ </SourceLine>
+          <SourceLine>"3. Drag the 'Reactor Setup.lua' script from your desktop folder into the Fusion node graph or Console window. A Fusion preference called a PathMap will be configured automatically for Reactor using this script." + EndOfLine +_ </SourceLine>
+          <SourceLine>"" + EndOfLine +_ </SourceLine>
+          <SourceLine>"--]]" + EndOfLine +_ </SourceLine>
+          <SourceLine>"" + EndOfLine +_ </SourceLine>
+          <SourceLine>"print('[Connect Reactor to Fusion]')" + EndOfLine +_ </SourceLine>
+          <SourceLine>"" + EndOfLine +_ </SourceLine>
+          <SourceLine>"-- Set the customized Reactor PathMap" + EndOfLine +_ </SourceLine>
+          <SourceLine>"local reactor_root = app:MapPath([[" + ReactorInstallDirectory + "]])" + EndOfLine +_ </SourceLine>
+          <SourceLine>"app:SetPrefs([[Global.Paths.Map.Reactor:]], reactor_root)" + EndOfLine +_ </SourceLine>
+          <SourceLine>"local userpath = app:GetPrefs([[Global.Paths.Map.UserPaths:]])" + EndOfLine +_ </SourceLine>
+          <SourceLine>"if not userpath:find([[Reactor:Deploy]]) then" + EndOfLine +_ </SourceLine>
+          <SourceLine>"    userpath = userpath .. [[;Reactor:Deploy]]" + EndOfLine +_ </SourceLine>
+          <SourceLine>"    app:SetPrefs([[Global.Paths.Map.UserPaths:]], userpath)" + EndOfLine +_ </SourceLine>
+          <SourceLine>"end" + EndOfLine +_ </SourceLine>
+          <SourceLine>"" + EndOfLine +_ </SourceLine>
+          <SourceLine>"-- Add a Reactor:System/Scripts Scripts PathMap entry" + EndOfLine +_ </SourceLine>
+          <SourceLine>"local scriptpath = app:GetPrefs([[Global.Paths.Map.Scripts:]])" + EndOfLine +_ </SourceLine>
+          <SourceLine>"if not scriptpath:find([[Reactor:System/Scripts]]) then" + EndOfLine +_ </SourceLine>
+          <SourceLine>"    scriptpath = scriptpath .. [[;Reactor:System/Scripts]]" + EndOfLine +_ </SourceLine>
+          <SourceLine>"    app:SetPrefs([[Global.Paths.Map.Scripts:]], scriptpath)" + EndOfLine +_ </SourceLine>
+          <SourceLine>"end" + EndOfLine +_ </SourceLine>
+          <SourceLine>"app:SavePrefs()" + EndOfLine +_ </SourceLine>
+          <SourceLine>"" + EndOfLine +_ </SourceLine>
+          <SourceLine>"print([[[Reactor: PathMap] ']] .. tostring(app:GetPrefs([[Global.Paths.Map.Reactor:]])) .. [[']])" + EndOfLine +_ </SourceLine>
           <SourceLine>""</SourceLine>
           <SourceLine/>
           <SourceLine>// Write the text file to disk</SourceLine>
@@ -1446,7 +1446,7 @@
           <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>// Show the desktop folder</SourceLine>
-          <SourceLine>SpecialFolder.Desktop.Launch</SourceLine>
+          <SourceLine>//SpecialFolder.Desktop.Launch</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
@@ -5782,7 +5782,7 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1754" height="1038"/>
+        <Rect left="0" top="25" width="1920" height="1049"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
