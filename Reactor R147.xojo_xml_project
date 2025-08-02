@@ -18,7 +18,7 @@
     <DefaultLanguage>0</DefaultLanguage>
     <CurrentLanguage>0</CurrentLanguage>
     <DefaultEncoding>0</DefaultEncoding>
-    <BuildFlags>2320</BuildFlags>
+    <BuildFlags>6400</BuildFlags>
     <UseBuildsFolder>1</UseBuildsFolder>
     <WebApp>0</WebApp>
     <Icon>
@@ -131,6 +131,7 @@
     <HiDPI>1</HiDPI>
     <DarkMode>1</DarkMode>
     <BuildLinuxX86Name>Reactor</BuildLinuxX86Name>
+    <BuildCarbonExecutableFormat>1</BuildCarbonExecutableFormat>
     <DebuggerCommandLine/>
     <LinuxArchitecture>1</LinuxArchitecture>
     <MacArchitecture>3</MacArchitecture>
@@ -5073,7 +5074,7 @@
       <PropertyVal Name="Left">192</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
       <PropertyVal Name="LockTop">True</PropertyVal>
       <PropertyVal Name="MaximumCharactersAllowed">0</PropertyVal>
       <PropertyVal Name="Name">SearchTextField</PropertyVal>
@@ -5316,8 +5317,8 @@
       <PropertyVal Name="Italic">False</PropertyVal>
       <PropertyVal Name="Left">933</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
       <PropertyVal Name="LockTop">True</PropertyVal>
       <PropertyVal Name="MacButtonStyle">0</PropertyVal>
       <PropertyVal Name="Name">ConnectReactorToFusionButton</PropertyVal>
@@ -6470,16 +6471,16 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1000" height="814"/>
+        <Rect left="-1" top="25" width="1680" height="977"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>App</EditorLocation>
+          <EditorLocation>ReactorWindow</EditorLocation>
           <EditorPath/>
-          <EditingPartID>1350840319</EditingPartID>
+          <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
