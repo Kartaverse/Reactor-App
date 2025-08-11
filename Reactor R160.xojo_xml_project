@@ -3898,7 +3898,8 @@
         <SourceLine>If AtomDeploy.Keys &lt;&gt; Nil Then</SourceLine>
         <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
         <SourceLine/>
-        <SourceLine>// Todo: Complete file copying code</SourceLine>
+        <SourceLine>// Todo: Handle OS-Secific deploy files</SourceLine>
+        <SourceLine>if k &lt;&gt; "Mac" and k &lt;&gt; "Windows" and k &lt;&gt; "Linux" Then</SourceLine>
         <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
         <SourceLine>Var DeployFileSource As FolderItem =  New FolderItem(WorkingDirectory.NativePath + "/" + DeployVariant.StringValue)</SourceLine>
         <SourceLine>Var DeployFileDest As FolderItem =  New FolderItem(App.DeployFolder.NativePath + "/" + DeployVariant.StringValue)</SourceLine>
@@ -3925,6 +3926,7 @@
         <SourceLine/>
         <SourceLine>//System.Debuglog("[Key] " + k + " [Dest File] " + DeployVariant.StringValue + " [Source File] " + DeployFile.NativePath + " [Exists] " + DeployFile.Exists.ToString)</SourceLine>
         <SourceLine>//System.Debuglog("[File] " + DeployFile.ToString())</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Catch error As IOException</SourceLine>
@@ -4276,7 +4278,7 @@
         <SourceLine>// System.DebugLog(Path)</SourceLine>
         <SourceLine/>
         <SourceLine>// Normalize the file slashes to Unix style</SourceLine>
-        <SourceLine> Pat = Path.ReplaceAll("\", "/")</SourceLine>
+        <SourceLine>Path = Path.ReplaceAll("\", "/")</SourceLine>
         <SourceLine>// De-duplicate any doubled up slashesh</SourceLine>
         <SourceLine>Path = Path.ReplaceAll("//", "/")</SourceLine>
         <SourceLine/>
@@ -4794,6 +4796,7 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Function PaintCellBackground(g As Graphics, row As Integer, column As Integer) As Boolean</SourceLine>
+          <SourceLine>// Draw the row shading</SourceLine>
           <SourceLine>If row = Me.SelectedRowIndex Then</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(24, 24, 24)</SourceLine>
           <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
@@ -4804,6 +4807,11 @@
           <SourceLine>g.DrawingColor = Color.RGB(40, 40, 40)</SourceLine>
           <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
           <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Draw the checkbox</SourceLine>
+          <SourceLine>//If column = 0 Then</SourceLine>
+          <SourceLine>//g.DrawPicture(CheckBoxOn, 4, 4, 12, 12)</SourceLine>
+          <SourceLine>//End If</SourceLine>
           <SourceLine/>
           <SourceLine>End Function</SourceLine>
         </ItemSource>
@@ -5016,6 +5024,124 @@
         </ItemSource>
       </HookInstance>
     </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopButton</Superclass>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>620652543</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine>Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>If row &gt;= 0 Then</SourceLine>
+          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
+          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+          <SourceLine>Var SelectedAtom As String = AtomID</SourceLine>
+          <SourceLine/>
+          <SourceLine>System.Debuglog("[Remove Button] " + SelectedAtom)</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomRemove(row)</SourceLine>
+          <SourceLine/>
+          <SourceLine>For RefreshRow As Integer = 0 to AtomsListBox.RowCount - 1</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(RefreshRow, 0) = AtomsListBox.CellTagAt(RefreshRow, 0)</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(RefreshRow, 0)</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopButton</Superclass>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>979922943</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine>Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>If row &gt;= 0 Then</SourceLine>
+          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
+          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+          <SourceLine>Var SelectedAtom As String = AtomID</SourceLine>
+          <SourceLine/>
+          <SourceLine>System.Debuglog("[Update Button] " + SelectedAtom)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Is the atom installed already</SourceLine>
+          <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
+          <SourceLine>// Verify no active downloads are in progress</SourceLine>
+          <SourceLine/>
+          <SourceLine>If AtomUpdateAvailable(AtomID) = True then</SourceLine>
+          <SourceLine>// Cancel the download task, and update the atom package</SourceLine>
+          <SourceLine>If App.DownloadRow = -1 Then</SourceLine>
+          <SourceLine>AtomRemove(row)</SourceLine>
+          <SourceLine>AtomDownload(row)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>For RefreshRow As Integer = 0 to AtomsListBox.RowCount - 1</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(RefreshRow, 0) = AtomsListBox.CellTagAt(RefreshRow, 0)</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(RefreshRow, 0)</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopButton</Superclass>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1875154943</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine>Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>If row &gt;= 0 Then</SourceLine>
+          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
+          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+          <SourceLine>Var SelectedAtom As String = AtomID</SourceLine>
+          <SourceLine/>
+          <SourceLine>System.Debuglog("[Install Button] " + SelectedAtom)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Is the atom installed already</SourceLine>
+          <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
+          <SourceLine>// Verify no active downloads are in progress</SourceLine>
+          <SourceLine/>
+          <SourceLine>If AtomUpdateAvailable(AtomID) = True then</SourceLine>
+          <SourceLine>// Cancel the download task, and update the atom package</SourceLine>
+          <SourceLine>If App.DownloadRow = -1 Then</SourceLine>
+          <SourceLine>AtomRemove(row)</SourceLine>
+          <SourceLine>AtomDownload(row)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>AtomDownload(row)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>For RefreshRow As Integer = 0 to AtomsListBox.RowCount - 1</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(RefreshRow, 0) = AtomsListBox.CellTagAt(RefreshRow, 0)</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(RefreshRow, 0)</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
     <Control>
       <ControlClass>DesktopListBox</ControlClass>
       <ItemName>DesktopListBox</ItemName>
@@ -5131,7 +5257,7 @@
       <ItemName>DesktopHTMLViewer</ItemName>
       <PropertyVal Name="AutoDeactivate">True</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="Height">320</PropertyVal>
+      <PropertyVal Name="Height">286</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent"/>
       <PropertyVal Name="Left">192</PropertyVal>
@@ -5432,6 +5558,117 @@
       <ControlIndex>10</ControlIndex>
       <Locked>0</Locked>
       <PartID>1585162239</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopButton</ControlClass>
+      <ItemName>DesktopButton</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Cancel">True</PropertyVal>
+      <PropertyVal Name="Caption">Remove</PropertyVal>
+      <PropertyVal Name="Default">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">192</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
+      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
+      <PropertyVal Name="Name">RemoveButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopButton</PropertyVal>
+      <PropertyVal Name="TabIndex">17</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">579</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">300</PropertyVal>
+      <ControlIndex>11</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1482766335</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopButton</ControlClass>
+      <ItemName>DesktopButton</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Cancel">True</PropertyVal>
+      <PropertyVal Name="Caption">Update</PropertyVal>
+      <PropertyVal Name="Default">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">504</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
+      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
+      <PropertyVal Name="Name">UpdateButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopButton</PropertyVal>
+      <PropertyVal Name="TabIndex">18</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">579</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">294</PropertyVal>
+      <ControlIndex>12</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>592365567</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopButton</ControlClass>
+      <ItemName>DesktopButton</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Cancel">True</PropertyVal>
+      <PropertyVal Name="Caption">Install</PropertyVal>
+      <PropertyVal Name="Default">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">810</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
+      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
+      <PropertyVal Name="Name">InstallButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopButton</PropertyVal>
+      <PropertyVal Name="TabIndex">19</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">579</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">300</PropertyVal>
+      <ControlIndex>13</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1667713023</PartID>
     </Control>
   </block>
   <block type="Menu" ID="1789632511">
@@ -6548,6 +6785,100 @@
     <CopyFileStepArch>0</CopyFileStepArch>
     <Target>0</Target>
   </block>
+  <block type="MultiImage" ID="2028554239">
+    <ObjName>CheckBoxOff</ObjName>
+    <ObjContainerID>0</ObjContainerID>
+    <ItemName>CheckBoxOff</ItemName>
+    <ImageRepresentation>
+      <SaveInfo>
+        <Hex bytes="8">00F1D17302000000</Hex>
+      </SaveInfo>
+      <ImageSpecification>
+        <Comment/>
+        <Device>31</Device>
+        <Height>30</Height>
+        <Orientation>0</Orientation>
+        <Platform>15</Platform>
+        <Resolution>72</Resolution>
+        <Width>30</Width>
+        <HeightDouble>30</HeightDouble>
+        <WidthDouble>30</WidthDouble>
+      </ImageSpecification>
+    </ImageRepresentation>
+    <ImageRepresentation>
+      <ImageSpecification>
+        <Comment/>
+        <Device>31</Device>
+        <Height>30</Height>
+        <Orientation>0</Orientation>
+        <Platform>15</Platform>
+        <Resolution>144</Resolution>
+        <Width>30</Width>
+        <HeightDouble>30</HeightDouble>
+        <WidthDouble>30</WidthDouble>
+      </ImageSpecification>
+    </ImageRepresentation>
+    <ImageRepresentation>
+      <ImageSpecification>
+        <Comment/>
+        <Device>31</Device>
+        <Height>30</Height>
+        <Orientation>0</Orientation>
+        <Platform>15</Platform>
+        <Resolution>216</Resolution>
+        <Width>30</Width>
+        <HeightDouble>30</HeightDouble>
+        <WidthDouble>30</WidthDouble>
+      </ImageSpecification>
+    </ImageRepresentation>
+  </block>
+  <block type="MultiImage" ID="1688289279">
+    <ObjName>CheckBoxOn</ObjName>
+    <ObjContainerID>0</ObjContainerID>
+    <ItemName>CheckBoxOn</ItemName>
+    <ImageRepresentation>
+      <SaveInfo>
+        <Hex bytes="8">00F1D17302000000</Hex>
+      </SaveInfo>
+      <ImageSpecification>
+        <Comment/>
+        <Device>31</Device>
+        <Height>30</Height>
+        <Orientation>0</Orientation>
+        <Platform>15</Platform>
+        <Resolution>72</Resolution>
+        <Width>30</Width>
+        <HeightDouble>30</HeightDouble>
+        <WidthDouble>30</WidthDouble>
+      </ImageSpecification>
+    </ImageRepresentation>
+    <ImageRepresentation>
+      <ImageSpecification>
+        <Comment/>
+        <Device>31</Device>
+        <Height>30</Height>
+        <Orientation>0</Orientation>
+        <Platform>15</Platform>
+        <Resolution>144</Resolution>
+        <Width>30</Width>
+        <HeightDouble>30</HeightDouble>
+        <WidthDouble>30</WidthDouble>
+      </ImageSpecification>
+    </ImageRepresentation>
+    <ImageRepresentation>
+      <ImageSpecification>
+        <Comment/>
+        <Device>31</Device>
+        <Height>30</Height>
+        <Orientation>0</Orientation>
+        <Platform>15</Platform>
+        <Resolution>216</Resolution>
+        <Width>30</Width>
+        <HeightDouble>30</HeightDouble>
+        <WidthDouble>30</WidthDouble>
+      </ImageSpecification>
+    </ImageRepresentation>
+  </block>
   <block type="UIState" ID="0">
     <WarningPreferences>
       <ItemName>5</ItemName>
@@ -6567,14 +6898,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1574" height="923"/>
+        <Rect left="3" top="25" width="1788" height="1006"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.CreateParentSubFolders</EditorLocation>
+          <EditorLocation>ReactorWindow.AtomDeployFiles</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
