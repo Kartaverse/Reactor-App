@@ -3909,8 +3909,8 @@
         <SourceLine>End if</SourceLine>
         <SourceLine>If not DeployFileDest.Parent.Exists Then</SourceLine>
         <SourceLine>Try</SourceLine>
-        <SourceLine>System.Debuglog("[Create Folder] " + DeployFileDest.Parent.NativePath)</SourceLine>
-        <SourceLine>DeployFileDest.Parent.CreateFolder()</SourceLine>
+        <SourceLine>System.Debuglog("[Create Folders] " + DeployFileDest.Parent.NativePath)</SourceLine>
+        <SourceLine>ReactorWindow.CreateParentSubFolders(DeployFileDest)</SourceLine>
         <SourceLine>Catch error As IOException</SourceLine>
         <SourceLine>MessageBox(error.Message)</SourceLine>
         <SourceLine>End Try</SourceLine>
@@ -4260,6 +4260,58 @@
       <IsShared>0</IsShared>
       <ItemParams>InstalledAtomID As String</ItemParams>
       <ItemResult>Boolean</ItemResult>
+    </Method>
+    <Method>
+      <ItemName>CreateParentSubFolders</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1648504831</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub CreateParentSubFolders(Path_FolderItem As FolderItem)</SourceLine>
+        <SourceLine>// CreateParentSubFolders - Accepts a file based filepath and creates the intermediate sub-folders</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var Path As String = Path_FolderItem.Parent.NativePath</SourceLine>
+        <SourceLine>// Var Path As String = "/Users/vfx/Desktop/Moonshot/Settings/Screener/Screener.csv"</SourceLine>
+        <SourceLine>// System.DebugLog(Path)</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Normalize the file slashes to Unix style</SourceLine>
+        <SourceLine> Pat = Path.ReplaceAll("\", "/")</SourceLine>
+        <SourceLine>// De-duplicate any doubled up slashesh</SourceLine>
+        <SourceLine>Path = Path.ReplaceAll("//", "/")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Use Unix style slashes when building filepath strings</SourceLine>
+        <SourceLine>Var Separator As String = "/"</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var New_Path As String = ""</SourceLine>
+        <SourceLine>Var Path_Segments() As String = Path.Split(Separator)</SourceLine>
+        <SourceLine>For Each p As String In Path_Segments</SourceLine>
+        <SourceLine>// Check for empty segments</SourceLine>
+        <SourceLine>If p &lt;&gt; "" Then</SourceLine>
+        <SourceLine>// Append the sub-folders starting at the base directory</SourceLine>
+        <SourceLine>New_Path = New_Path + Separator + p</SourceLine>
+        <SourceLine>Var FileDest As FolderItem =  New FolderItem(New_Path)</SourceLine>
+        <SourceLine>If not FileDest.Exists Then</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>FileDest.CreateFolder()</SourceLine>
+        <SourceLine>//System.DebugLog("""" + FileDest.NativePath + """" + EndOfLine)</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine/>
+        <SourceLine/>
+        <SourceLine>//Return Path_FolderItem</SourceLine>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>Path_FolderItem As FolderItem</ItemParams>
+      <ItemResult/>
     </Method>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
@@ -6515,14 +6567,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1920" height="989"/>
+        <Rect left="0" top="25" width="1574" height="923"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.AtomDeployFiles</EditorLocation>
+          <EditorLocation>ReactorWindow.CreateParentSubFolders</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
