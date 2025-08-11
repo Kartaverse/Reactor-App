@@ -1330,7 +1330,7 @@
       <PropertyVal Name="TabIndex">4</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">Version π (3.14) - 2025-07-26</PropertyVal>
+      <PropertyVal Name="Text">Version 4 - 2025-08-11</PropertyVal>
       <PropertyVal Name="TextAlignment">2</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
       <PropertyVal Name="Tooltip"/>
@@ -3815,7 +3815,7 @@
         <SourceLine>FolderName = regex.Replace(FolderName)</SourceLine>
         <SourceLine/>
         <SourceLine>// This temp sub-folder where the deploy files need to be sourced from when moving the files to the final install location</SourceLine>
-        <SourceLine>Var WorkingDirectory As FolderItem = App.ReactorFolder.Child("Reactor-master-Atoms-" + FolderName).Child("Atoms").Child(FolderName)</SourceLine>
+        <SourceLine>Var WorkingDirectory As FolderItem = App.TemporaryAtomFolder.Child("Reactor-master-Atoms-" + FolderName).Child("Atoms").Child(FolderName)</SourceLine>
         <SourceLine/>
         <SourceLine>// Extract a single JSON encoded Atom package defintion</SourceLine>
         <SourceLine>Var row As Integer = App.DownloadRow</SourceLine>
@@ -3893,12 +3893,38 @@
         <SourceLine>Try</SourceLine>
         <SourceLine>Var DeployCount As Integer = AtomDeploy.Keys.Count</SourceLine>
         <SourceLine>System.Debuglog("[Deploy File Count] " + DeployCount.ToString())</SourceLine>
+        <SourceLine>// MessageBox(VarType(AtomDeploy).ToString)</SourceLine>
+        <SourceLine>// Type 9 = Object</SourceLine>
         <SourceLine>If AtomDeploy.Keys &lt;&gt; Nil Then</SourceLine>
         <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
+        <SourceLine/>
         <SourceLine>// Todo: Complete file copying code</SourceLine>
-        <SourceLine>// Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
-        <SourceLine>// System.Debuglog("[File] " + DeployFile.ToString())</SourceLine>
-        <SourceLine>// System.Debuglog(DeployVariant)</SourceLine>
+        <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>Var DeployFileSource As FolderItem =  New FolderItem(WorkingDirectory.NativePath + "/" + DeployVariant.StringValue)</SourceLine>
+        <SourceLine>Var DeployFileDest As FolderItem =  New FolderItem(App.DeployFolder.NativePath + "/" + DeployVariant.StringValue)</SourceLine>
+        <SourceLine/>
+        <SourceLine>If DeployFileDest.Exists Then</SourceLine>
+        <SourceLine>// Remove any legacy pre-existing files with the same filename</SourceLine>
+        <SourceLine>DeployFileDest.Remove()</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>If not DeployFileDest.Parent.Exists Then</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>System.Debuglog("[Create Folder] " + DeployFileDest.Parent.NativePath)</SourceLine>
+        <SourceLine>DeployFileDest.Parent.CreateFolder()</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>System.Debuglog("[Read File] " + DeployFileSource.NativePath)</SourceLine>
+        <SourceLine>System.Debuglog("[Write File] " + DeployFileDest.NativePath)</SourceLine>
+        <SourceLine>DeployFileSource.CopyTo(DeployFileDest)</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine/>
+        <SourceLine>//System.Debuglog("[Key] " + k + " [Dest File] " + DeployVariant.StringValue + " [Source File] " + DeployFile.NativePath + " [Exists] " + DeployFile.Exists.ToString)</SourceLine>
+        <SourceLine>//System.Debuglog("[File] " + DeployFile.ToString())</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Catch error As IOException</SourceLine>
@@ -4763,24 +4789,6 @@
       </HookInstance>
     </ControlBehavior>
     <ControlBehavior>
-      <Superclass>DesktopTextField</Superclass>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopButton</Superclass>
-      <HookInstance>
-        <ItemName>Pressed</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>1784539135</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
       <Superclass>RESTSocket</Superclass>
       <HookInstance>
         <ItemName>ReceivingProgressed</ItemName>
@@ -4910,6 +4918,48 @@
           <SourceLine>Sub Pressed()</SourceLine>
           <SourceLine>ConnectDialogWindow.Show</SourceLine>
           <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopButton</Superclass>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>229724159</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopSearchField</Superclass>
+      <HookInstance>
+        <ItemName>TextChanged</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1072457727</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub TextChanged()</SourceLine>
+          <SourceLine>'MessageBox(Me.Text)</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1851760639</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine>MessageBox(Me.Text)</SourceLine>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -5053,90 +5103,6 @@
       <PartID>211204095</PartID>
     </Control>
     <Control>
-      <ControlClass>DesktopTextField</ControlClass>
-      <ItemName>DesktopTextField</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
-      <PropertyVal Name="AllowSpellChecking">False</PropertyVal>
-      <PropertyVal Name="AllowTabs">False</PropertyVal>
-      <PropertyVal Name="BackgroundColor">&amp;hFFFFFF</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">System</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Format"/>
-      <PropertyVal Name="HasBorder">True</PropertyVal>
-      <PropertyVal Name="Height">22</PropertyVal>
-      <PropertyVal Name="Hint"/>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">192</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">False</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="MaximumCharactersAllowed">0</PropertyVal>
-      <PropertyVal Name="Name">SearchTextField</PropertyVal>
-      <PropertyVal Name="Password">False</PropertyVal>
-      <PropertyVal Name="ReadOnly">False</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopTextField</PropertyVal>
-      <PropertyVal Name="TabIndex">7</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text"/>
-      <PropertyVal Name="TextAlignment">0</PropertyVal>
-      <PropertyVal Name="TextColor">&amp;h000000</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">9</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="ValidationMask"/>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">249</PropertyVal>
-      <ControlIndex>3</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>891385855</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopButton</ControlClass>
-      <ItemName>DesktopButton</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Cancel">False</PropertyVal>
-      <PropertyVal Name="Caption">Search</PropertyVal>
-      <PropertyVal Name="Default">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">System</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">2</PropertyVal>
-      <PropertyVal Name="Height">20</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">453</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">False</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
-      <PropertyVal Name="Name">SearchButton</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopButton</PropertyVal>
-      <PropertyVal Name="TabIndex">8</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip">Search Reactor</PropertyVal>
-      <PropertyVal Name="Top">9</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">61</PropertyVal>
-      <ControlIndex>4</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>1062983679</PartID>
-    </Control>
-    <Control>
       <ControlClass>RESTSocket</ControlClass>
       <ItemName>RESTSocket</ItemName>
       <PropertyVal Name="AllowCertificateValidation">False</PropertyVal>
@@ -5147,7 +5113,7 @@
       <PropertyVal Name="Scope">0</PropertyVal>
       <PropertyVal Name="Super">RESTSocket</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <ControlIndex>5</ControlIndex>
+      <ControlIndex>3</ControlIndex>
       <Locked>0</Locked>
       <PartID>834740223</PartID>
     </Control>
@@ -5184,7 +5150,7 @@
       <PropertyVal Name="_mInitialParent"/>
       <PropertyVal Name="_mName"/>
       <PropertyVal Name="_mPanelIndex">0</PropertyVal>
-      <ControlIndex>6</ControlIndex>
+      <ControlIndex>4</ControlIndex>
       <Locked>0</Locked>
       <PartID>549044223</PartID>
     </Control>
@@ -5221,7 +5187,7 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">61</PropertyVal>
-      <ControlIndex>7</ControlIndex>
+      <ControlIndex>5</ControlIndex>
       <Locked>0</Locked>
       <PartID>1960126463</PartID>
     </Control>
@@ -5259,7 +5225,7 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">875</PropertyVal>
-      <ControlIndex>8</ControlIndex>
+      <ControlIndex>6</ControlIndex>
       <Locked>0</Locked>
       <PartID>1026347007</PartID>
     </Control>
@@ -5296,7 +5262,7 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">188</PropertyVal>
-      <ControlIndex>9</ControlIndex>
+      <ControlIndex>7</ControlIndex>
       <Locked>0</Locked>
       <PartID>1318504447</PartID>
     </Control>
@@ -5333,9 +5299,87 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">177</PropertyVal>
-      <ControlIndex>10</ControlIndex>
+      <ControlIndex>8</ControlIndex>
       <Locked>0</Locked>
       <PartID>1040080895</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopButton</ControlClass>
+      <ItemName>DesktopButton</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Cancel">False</PropertyVal>
+      <PropertyVal Name="Caption">Update All</PropertyVal>
+      <PropertyVal Name="Default">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">2</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">841</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
+      <PropertyVal Name="Name">UpdateAllButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopButton</PropertyVal>
+      <PropertyVal Name="TabIndex">15</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip">Update all atom packages</PropertyVal>
+      <PropertyVal Name="Top">9</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">80</PropertyVal>
+      <ControlIndex>9</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>877701119</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopSearchField</ControlClass>
+      <ItemName>DesktopSearchField</ItemName>
+      <PropertyVal Name="Active">False</PropertyVal>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
+      <PropertyVal Name="AllowRecentItems">False</PropertyVal>
+      <PropertyVal Name="AllowTabStop">True</PropertyVal>
+      <PropertyVal Name="ClearMenuItemValue">Clear</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Height">22</PropertyVal>
+      <PropertyVal Name="Hint"/>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialParent"/>
+      <PropertyVal Name="Left">192</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="MaximumRecentItems">-1</PropertyVal>
+      <PropertyVal Name="Name">AtomSearchField</PropertyVal>
+      <PropertyVal Name="PanelIndex">0</PropertyVal>
+      <PropertyVal Name="RecentItemsValue">Recent Searches</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopSearchField</PropertyVal>
+      <PropertyVal Name="TabIndex">16</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="Text"/>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">9</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">322</PropertyVal>
+      <PropertyVal Name="_mIndex">0</PropertyVal>
+      <PropertyVal Name="_mInitialParent"/>
+      <PropertyVal Name="_mName"/>
+      <PropertyVal Name="_mPanelIndex">0</PropertyVal>
+      <ControlIndex>10</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1585162239</PartID>
     </Control>
   </block>
   <block type="Menu" ID="1789632511">
@@ -6350,9 +6394,9 @@
     <ItemName>reactormagic</ItemName>
     <ImageRepresentation>
       <SaveInfo>
-        <Hex bytes="874">00F1D173020007005C030000626F6F6B5C03000000000410300000000000000000000000000000000000000000000000000000000000000000000000400200000400000003030000000400000500000001010000557365727300000003000000010100007666780007000000010100004465736B746F70000C00000001010000586F6A6F2052656163746F72040000000101000049636F6E100000000101000072656163746F726D616769632E706E67180000000106000010000000200000002C0000003C000000500000005C0000000800000004030000AD520000000000000800000004030000947C0000000000000800000004030000997C0000000000000800000004030000A503B3010000000008000000040300005F90B301000000000800000004030000017CB40100000000180000000106000094000000A4000000B4000000C4000000D4000000E4000000080000000004000041C69025714A48D3180000000102000001000000000000001F020000000000001F02000000000000080000000403000004000000000000000400000003030000F5010000080000000109000066696C653A2F2F2F0C000000010100004D6163696E746F736820484408000000040300000020458CD0010000080000000004000041C6E39A85000000240000000101000032333539463234392D424233462D344236352D384441302D35333230313036454131333218000000010200008100000001000000EF13000001000000EF1300000100000001000000010100002F00000000000000010500003300000001020000646E69620000000001000000000000000000000000000000000000000300000000000000706E673F3F3F3F000000000000000000E4000000FEFFFFFF01000000000000001200000004100000740000000000000005100000F40000000000000010100000240100000000000040100000140100000000000002200000F00100000000000005200000600100000000000010200000700100000000000011200000A40100000000000012200000840100000000000013200000940100000000000020200000D00100000000000030200000FC0100000000000001C00000440100000000000011C00000200000000000000012C00000540100000000000010D00000040000000000000017F000005C0000000000000022F0000004020000000000000000</Hex>
+        <Hex bytes="910">00F1D1730200070080030000626F6F6B800300000000041030000000000000000000000000000000000000000000000000000000000000000000000064020000040000000303000000040000050000000101000055736572730000000300000001010000766678000800000001010000416D62726F7369610400000001010000446F63730C00000001010000586F6A6F2052656163746F72040000000101000049636F6E100000000101000072656163746F726D616769632E706E671C0000000106000010000000200000002C0000003C000000480000005C000000680000000800000004030000AD520000000000000800000004030000947C000000000000080000000403000068B8F60000000000080000000403000011C4F600000000000800000004030000A503B3010000000008000000040300005F90B301000000000800000004030000017CB401000000001C00000001060000A4000000B4000000C4000000D4000000E4000000F400000004010000080000000004000041C69025714A48D3180000000102000001000000000000001F020000000000001F02000000000000080000000403000005000000000000000400000003030000F5010000080000000109000066696C653A2F2F2F0C000000010100004D6163696E746F736820484408000000040300000020458CD0010000080000000004000041C6E39A85000000240000000101000032333539463234392D424233462D344236352D384441302D35333230313036454131333218000000010200008100000001000000EF13000001000000EF1300000100000001000000010100002F00000000000000010500003300000001020000646E69620000000001000000000000000000000000000000000000000300000000000000706E673F3F3F3F000000000000000000E4000000FEFFFFFF01000000000000001200000004100000800000000000000005100000140100000000000010100000480100000000000040100000380100000000000002200000140200000000000005200000840100000000000010200000940100000000000011200000C80100000000000012200000A80100000000000013200000B80100000000000020200000F40100000000000030200000200200000000000001C00000680100000000000011C00000200000000000000012C00000780100000000000010D00000040000000000000017F00000680000000000000022F0000028020000000000000000</Hex>
       </SaveInfo>
-      <FullPath>/Users/vfx/Desktop/Xojo Reactor/Icon/reactormagic.png</FullPath>
+      <FullPath>/Users/vfx/Ambrosia/Docs/Xojo Reactor/Icon/reactormagic.png</FullPath>
       <PartialPath>Icon\reactormagic.png</PartialPath>
       <ImageSpecification>
         <Comment/>
@@ -6399,9 +6443,9 @@
     <ItemName>reactor</ItemName>
     <ImageRepresentation>
       <SaveInfo>
-        <Hex bytes="870">00F1D1730200070058030000626F6F6B58030000000004103000000000000000000000000000000000000000000000000000000000000000000000003C0200000400000003030000000400000500000001010000557365727300000003000000010100007666780007000000010100004465736B746F70000C00000001010000586F6A6F2052656163746F72040000000101000049636F6E0B0000000101000072656163746F722E706E6700180000000106000010000000200000002C0000003C000000500000005C0000000800000004030000AD520000000000000800000004030000947C0000000000000800000004030000997C0000000000000800000004030000A503B3010000000008000000040300005F90B301000000000800000004030000077CB40100000000180000000106000090000000A0000000B0000000C0000000D0000000E0000000080000000004000041C0005981000000180000000102000001000000000000001F020000000000001F02000000000000080000000403000004000000000000000400000003030000F5010000080000000109000066696C653A2F2F2F0C000000010100004D6163696E746F736820484408000000040300000020458CD0010000080000000004000041C6E39A85000000240000000101000032333539463234392D424233462D344236352D384441302D35333230313036454131333218000000010200008100000001000000EF13000001000000EF1300000100000001000000010100002F00000000000000010500003300000001020000646E69620000000001000000000000000000000000000000000000000300000000000000706E673F3F3F3F000000000000000000E4000000FEFFFFFF01000000000000001200000004100000700000000000000005100000F00000000000000010100000200100000000000040100000100100000000000002200000EC01000000000000052000005C01000000000000102000006C0100000000000011200000A00100000000000012200000800100000000000013200000900100000000000020200000CC0100000000000030200000F80100000000000001C00000400100000000000011C00000200000000000000012C00000500100000000000010D00000040000000000000017F000005C0000000000000022F0000000020000000000000000</Hex>
+        <Hex bytes="906">00F1D173020007007C030000626F6F6B7C0300000000041030000000000000000000000000000000000000000000000000000000000000000000000060020000040000000303000000040000050000000101000055736572730000000300000001010000766678000800000001010000416D62726F7369610400000001010000446F63730C00000001010000586F6A6F2052656163746F72040000000101000049636F6E0B0000000101000072656163746F722E706E67001C0000000106000010000000200000002C0000003C000000480000005C000000680000000800000004030000AD520000000000000800000004030000947C000000000000080000000403000068B8F60000000000080000000403000011C4F600000000000800000004030000A503B3010000000008000000040300005F90B301000000000800000004030000077CB401000000001C00000001060000A0000000B0000000C0000000D0000000E0000000F000000000010000080000000004000041C0005981000000180000000102000001000000000000001F020000000000001F02000000000000080000000403000005000000000000000400000003030000F5010000080000000109000066696C653A2F2F2F0C000000010100004D6163696E746F736820484408000000040300000020458CD0010000080000000004000041C6E39A85000000240000000101000032333539463234392D424233462D344236352D384441302D35333230313036454131333218000000010200008100000001000000EF13000001000000EF1300000100000001000000010100002F00000000000000010500003300000001020000646E69620000000001000000000000000000000000000000000000000300000000000000706E673F3F3F3F000000000000000000E4000000FEFFFFFF010000000000000012000000041000007C0000000000000005100000100100000000000010100000440100000000000040100000340100000000000002200000100200000000000005200000800100000000000010200000900100000000000011200000C40100000000000012200000A40100000000000013200000B40100000000000020200000F001000000000000302000001C0200000000000001C00000640100000000000011C00000200000000000000012C00000740100000000000010D00000040000000000000017F00000680000000000000022F0000024020000000000000000</Hex>
       </SaveInfo>
-      <FullPath>/Users/vfx/Desktop/Xojo Reactor/Icon/reactor.png</FullPath>
+      <FullPath>/Users/vfx/Ambrosia/Docs/Xojo Reactor/Icon/reactor.png</FullPath>
       <PartialPath>Icon\reactor.png</PartialPath>
       <ImageSpecification>
         <Comment/>
@@ -6471,14 +6515,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="-1" top="25" width="1680" height="977"/>
+        <Rect left="0" top="25" width="1920" height="989"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow</EditorLocation>
+          <EditorLocation>ReactorWindow.AtomDeployFiles</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
