@@ -192,6 +192,7 @@
         <SourceLine>App.DeployAtomsReactorFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Atoms").Child("Reactor"))</SourceLine>
         <SourceLine>App.DeployJSONFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("JSON"))</SourceLine>
         <SourceLine>App.DeployJSONReactorFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("JSON").Child("Reactor"))</SourceLine>
+        <SourceLine>App.DeployTemplatesFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Templates"))</SourceLine>
         <SourceLine>App.JSONFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("JSON"))</SourceLine>
         <SourceLine>App.TemporaryAtomFolder = App.CreateNewFolder(SpecialFolder.Temporary.Child("Reactor"))</SourceLine>
         <SourceLine/>
@@ -651,6 +652,21 @@
       </ItemSource>
       <TextEncoding>134217984</TextEncoding>
       <ItemDeclaration>JSONFolder As FolderItem</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
+    <Property>
+      <ItemName>DeployTemplatesFolder</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>319420415</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>DeployTemplatesFolder As FolderItem</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>DeployTemplatesFolder As FolderItem</ItemDeclaration>
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
     </Property>
@@ -3576,6 +3592,21 @@
         <SourceLine/>
         <SourceLine>AtomsListBox.Sort</SourceLine>
         <SourceLine/>
+        <SourceLine>// List the package totals in the Window titlebar</SourceLine>
+        <SourceLine>Var SelectedCategory As String = RepoPopupMenu.SelectedRowText</SourceLine>
+        <SourceLine>Var FilteredAtomCount As Integer = AtomsListBox.RowCount</SourceLine>
+        <SourceLine>If SelectedCategory = "All" then</SourceLine>
+        <SourceLine>ReactorWindow.Title = "Reactor Package Manager - " + FilteredAtomCount.ToString + " Packages"</SourceLine>
+        <SourceLine>ElseIf SelectedCategory = "Installed" then</SourceLine>
+        <SourceLine>ReactorWindow.Title = "Reactor Package Manager - " + FilteredAtomCount.ToString + " Installed Packages"</SourceLine>
+        <SourceLine>ElseIf SelectedCategory = "New" then</SourceLine>
+        <SourceLine>ReactorWindow.Title = "Reactor Package Manager - " + FilteredAtomCount.ToString + " New Packages"</SourceLine>
+        <SourceLine>ElseIf SelectedCategory = "Update" then</SourceLine>
+        <SourceLine>ReactorWindow.Title = "Reactor Package Manager -  " + FilteredAtomCount.ToString + " Updated Packages"</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>ReactorWindow.Title = "Reactor Package Manager"</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
       <TextEncoding>134217984</TextEncoding>
@@ -3650,6 +3681,7 @@
         <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
         <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
         <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+        <SourceLine>Var AtomDeploy As JSONItem = Atom.Value("Deploy")</SourceLine>
         <SourceLine/>
         <SourceLine>Var AtomID As String = Atom.Value("ID")</SourceLine>
         <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
@@ -3680,6 +3712,35 @@
         <SourceLine>// Remove any legacy pre-existing file</SourceLine>
         <SourceLine>DeployJSONFile.Remove()</SourceLine>
         <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine/>
+        <SourceLine>// Deploy files</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>Var DeployCount As Integer = AtomDeploy.Keys.Count</SourceLine>
+        <SourceLine>System.Debuglog("[Deploy File Count] " + DeployCount.ToString())</SourceLine>
+        <SourceLine>// MessageBox(VarType(AtomDeploy).ToString)</SourceLine>
+        <SourceLine>// Type 9 = Object</SourceLine>
+        <SourceLine>If AtomDeploy.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
+        <SourceLine>// Todo: Handle OS-Secific deploy files</SourceLine>
+        <SourceLine>if k &lt;&gt; "Mac" and k &lt;&gt; "Windows" and k &lt;&gt; "Linux" Then</SourceLine>
+        <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>Var DeployFileDest As FolderItem =  New FolderItem(App.DeployFolder.NativePath + "/" + DeployVariant.StringValue)</SourceLine>
+        <SourceLine/>
+        <SourceLine>If DeployFileDest.Exists Then</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>// Remove any legacy pre-existing files with the same filename</SourceLine>
+        <SourceLine>DeployFileDest.Remove()</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
         <SourceLine/>
         <SourceLine>// Refresh the status displays</SourceLine>
         <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Removed"</SourceLine>
@@ -3714,7 +3775,7 @@
         <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
         <SourceLine>CreateReactorFolders()</SourceLine>
         <SourceLine/>
-        <SourceLine>If row &gt;= 0 Then</SourceLine>
+        <SourceLine>If row &gt;= 0 and row &lt;= AtomsListBox.RowCount - 1 Then</SourceLine>
         <SourceLine>Try</SourceLine>
         <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
         <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
@@ -3923,9 +3984,6 @@
         <SourceLine>Catch error As IOException</SourceLine>
         <SourceLine>MessageBox(error.Message)</SourceLine>
         <SourceLine>End Try</SourceLine>
-        <SourceLine/>
-        <SourceLine>//System.Debuglog("[Key] " + k + " [Dest File] " + DeployVariant.StringValue + " [Source File] " + DeployFile.NativePath + " [Exists] " + DeployFile.Exists.ToString)</SourceLine>
-        <SourceLine>//System.Debuglog("[File] " + DeployFile.ToString())</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>End If</SourceLine>
@@ -3949,6 +4007,10 @@
         <SourceLine>AtomsListBox.CellTagAt(row, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
         <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
         <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " " + " Installed"</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Donations</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
@@ -5083,10 +5145,8 @@
           <SourceLine/>
           <SourceLine>If AtomUpdateAvailable(AtomID) = True then</SourceLine>
           <SourceLine>// Cancel the download task, and update the atom package</SourceLine>
-          <SourceLine>If App.DownloadRow = -1 Then</SourceLine>
           <SourceLine>AtomRemove(row)</SourceLine>
           <SourceLine>AtomDownload(row)</SourceLine>
-          <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>For RefreshRow As Integer = 0 to AtomsListBox.RowCount - 1</SourceLine>
@@ -6785,100 +6845,6 @@
     <CopyFileStepArch>0</CopyFileStepArch>
     <Target>0</Target>
   </block>
-  <block type="MultiImage" ID="2028554239">
-    <ObjName>CheckBoxOff</ObjName>
-    <ObjContainerID>0</ObjContainerID>
-    <ItemName>CheckBoxOff</ItemName>
-    <ImageRepresentation>
-      <SaveInfo>
-        <Hex bytes="8">00F1D17302000000</Hex>
-      </SaveInfo>
-      <ImageSpecification>
-        <Comment/>
-        <Device>31</Device>
-        <Height>30</Height>
-        <Orientation>0</Orientation>
-        <Platform>15</Platform>
-        <Resolution>72</Resolution>
-        <Width>30</Width>
-        <HeightDouble>30</HeightDouble>
-        <WidthDouble>30</WidthDouble>
-      </ImageSpecification>
-    </ImageRepresentation>
-    <ImageRepresentation>
-      <ImageSpecification>
-        <Comment/>
-        <Device>31</Device>
-        <Height>30</Height>
-        <Orientation>0</Orientation>
-        <Platform>15</Platform>
-        <Resolution>144</Resolution>
-        <Width>30</Width>
-        <HeightDouble>30</HeightDouble>
-        <WidthDouble>30</WidthDouble>
-      </ImageSpecification>
-    </ImageRepresentation>
-    <ImageRepresentation>
-      <ImageSpecification>
-        <Comment/>
-        <Device>31</Device>
-        <Height>30</Height>
-        <Orientation>0</Orientation>
-        <Platform>15</Platform>
-        <Resolution>216</Resolution>
-        <Width>30</Width>
-        <HeightDouble>30</HeightDouble>
-        <WidthDouble>30</WidthDouble>
-      </ImageSpecification>
-    </ImageRepresentation>
-  </block>
-  <block type="MultiImage" ID="1688289279">
-    <ObjName>CheckBoxOn</ObjName>
-    <ObjContainerID>0</ObjContainerID>
-    <ItemName>CheckBoxOn</ItemName>
-    <ImageRepresentation>
-      <SaveInfo>
-        <Hex bytes="8">00F1D17302000000</Hex>
-      </SaveInfo>
-      <ImageSpecification>
-        <Comment/>
-        <Device>31</Device>
-        <Height>30</Height>
-        <Orientation>0</Orientation>
-        <Platform>15</Platform>
-        <Resolution>72</Resolution>
-        <Width>30</Width>
-        <HeightDouble>30</HeightDouble>
-        <WidthDouble>30</WidthDouble>
-      </ImageSpecification>
-    </ImageRepresentation>
-    <ImageRepresentation>
-      <ImageSpecification>
-        <Comment/>
-        <Device>31</Device>
-        <Height>30</Height>
-        <Orientation>0</Orientation>
-        <Platform>15</Platform>
-        <Resolution>144</Resolution>
-        <Width>30</Width>
-        <HeightDouble>30</HeightDouble>
-        <WidthDouble>30</WidthDouble>
-      </ImageSpecification>
-    </ImageRepresentation>
-    <ImageRepresentation>
-      <ImageSpecification>
-        <Comment/>
-        <Device>31</Device>
-        <Height>30</Height>
-        <Orientation>0</Orientation>
-        <Platform>15</Platform>
-        <Resolution>216</Resolution>
-        <Width>30</Width>
-        <HeightDouble>30</HeightDouble>
-        <WidthDouble>30</WidthDouble>
-      </ImageSpecification>
-    </ImageRepresentation>
-  </block>
   <block type="UIState" ID="0">
     <WarningPreferences>
       <ItemName>5</ItemName>
@@ -6898,14 +6864,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="3" top="25" width="1788" height="1006"/>
+        <Rect left="42" top="25" width="1878" height="1006"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.AtomDeployFiles</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.UpdateButton.Pressed</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
