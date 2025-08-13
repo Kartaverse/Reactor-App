@@ -3433,10 +3433,10 @@
         <SourceLine>If App.DownloadAtomID = AtomID Then</SourceLine>
         <SourceLine>AtomDownloading = True</SourceLine>
         <SourceLine>AtomStatus = "Downloading"</SourceLine>
-        <SourceLine>ElseIf App.DownloadDependencies.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
-        <SourceLine>// Atom Dependency</SourceLine>
-        <SourceLine>AtomDownloading = True</SourceLine>
-        <SourceLine>AtomStatus = "Downloading"</SourceLine>
+        <SourceLine>'ElseIf App.DownloadDependencies.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
+        <SourceLine>'// Atom Dependency</SourceLine>
+        <SourceLine>'AtomDownloading = True</SourceLine>
+        <SourceLine>'AtomStatus = "Downloading"</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
@@ -3579,10 +3579,10 @@
         <SourceLine>If App.DownloadAtomID = AtomID Then</SourceLine>
         <SourceLine>AtomDownloading = True</SourceLine>
         <SourceLine>AtomStatus = "Downloading"</SourceLine>
-        <SourceLine>ElseIf App.DownloadDependencies.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
-        <SourceLine>// Atom Dependency</SourceLine>
-        <SourceLine>AtomDownloading = True</SourceLine>
-        <SourceLine>AtomStatus = "Downloading"</SourceLine>
+        <SourceLine>'ElseIf App.DownloadDependencies.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
+        <SourceLine>'// Atom Dependency</SourceLine>
+        <SourceLine>'AtomDownloading = True</SourceLine>
+        <SourceLine>'AtomStatus = "Downloading"</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
