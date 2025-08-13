@@ -1232,7 +1232,7 @@
       <PropertyVal Name="TabIndex">1</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">Reactor is a package manager for Fusion and Resolve. Reactor streamlines the installation of 3rd party content through the use of "Atom" packages that are synced automatically with a Git repository. Now with 3x the magic!</PropertyVal>
+      <PropertyVal Name="Text">Reactor is a package manager for Fusion and Resolve. Reactor streamlines the installation of 3rd party content through the use of "Atom" packages that are synced automatically with a Git repository. Now with 4x the magic!</PropertyVal>
       <PropertyVal Name="TextAlignment">2</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
       <PropertyVal Name="Tooltip"/>
@@ -1366,11 +1366,11 @@
       <PropertyVal Name="AllowFocus">False</PropertyVal>
       <PropertyVal Name="AllowFocusRing">False</PropertyVal>
       <PropertyVal Name="AllowTabs">False</PropertyVal>
-      <PropertyVal Name="Backdrop">1879734271</PropertyVal>
+      <PropertyVal Name="Backdrop">777148415</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
       <PropertyVal Name="Height">29</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Left">217</PropertyVal>
+      <PropertyVal Name="Left">195</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">True</PropertyVal>
       <PropertyVal Name="LockRight">False</PropertyVal>
@@ -1385,7 +1385,7 @@
       <PropertyVal Name="Top">211</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">112</PropertyVal>
+      <PropertyVal Name="Width">157</PropertyVal>
       <ControlIndex>5</ControlIndex>
       <Locked>0</Locked>
       <PartID>1853695999</PartID>
@@ -5419,7 +5419,7 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine/>
+          <SourceLine>MessageBox("Work in progress feature: This button will allow you to update all atom packages in a single click.")</SourceLine>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -5451,7 +5451,9 @@
           <SourceLine>// Enter was pressed after typing search text</SourceLine>
           <SourceLine>//MessageBox(Me.Text)</SourceLine>
           <SourceLine/>
+          <SourceLine>Me.AddRecentItem(Me.Text)</SourceLine>
           <SourceLine>AtomsRefresh()</SourceLine>
+          <SourceLine/>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -5917,7 +5919,7 @@
       <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
       <PropertyVal Name="Bold">False</PropertyVal>
       <PropertyVal Name="Cancel">False</PropertyVal>
-      <PropertyVal Name="Caption">Update All</PropertyVal>
+      <PropertyVal Name="Caption">Update All Packages</PropertyVal>
       <PropertyVal Name="Default">False</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
       <PropertyVal Name="FontName">System</PropertyVal>
@@ -5926,10 +5928,10 @@
       <PropertyVal Name="Height">20</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">841</PropertyVal>
+      <PropertyVal Name="Left">770</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
       <PropertyVal Name="LockTop">True</PropertyVal>
       <PropertyVal Name="MacButtonStyle">0</PropertyVal>
       <PropertyVal Name="Name">UpdateAllButton</PropertyVal>
@@ -5943,7 +5945,7 @@
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">80</PropertyVal>
+      <PropertyVal Name="Width">151</PropertyVal>
       <ControlIndex>9</ControlIndex>
       <Locked>0</Locked>
       <PartID>877701119</PartID>
@@ -5965,7 +5967,7 @@
       <PropertyVal Name="Left">192</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
       <PropertyVal Name="LockTop">True</PropertyVal>
       <PropertyVal Name="MaximumRecentItems">-1</PropertyVal>
       <PropertyVal Name="Name">AtomSearchField</PropertyVal>
@@ -5980,7 +5982,7 @@
       <PropertyVal Name="Top">9</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">322</PropertyVal>
+      <PropertyVal Name="Width">566</PropertyVal>
       <PropertyVal Name="_mIndex">0</PropertyVal>
       <PropertyVal Name="_mInitialParent"/>
       <PropertyVal Name="_mName"/>
@@ -7107,55 +7109,6 @@
       </ViewProperty>
     </ViewBehavior>
   </block>
-  <block type="MultiImage" ID="1879734271">
-    <ObjName>reactormagic</ObjName>
-    <ObjContainerID>0</ObjContainerID>
-    <ItemName>reactormagic</ItemName>
-    <ImageRepresentation>
-      <SaveInfo>
-        <Hex bytes="910">00F1D1730200070080030000626F6F6B800300000000041030000000000000000000000000000000000000000000000000000000000000000000000064020000040000000303000000040000050000000101000055736572730000000300000001010000766678000800000001010000416D62726F7369610400000001010000446F63730C00000001010000586F6A6F2052656163746F72040000000101000049636F6E100000000101000072656163746F726D616769632E706E671C0000000106000010000000200000002C0000003C000000480000005C000000680000000800000004030000AD520000000000000800000004030000947C000000000000080000000403000068B8F60000000000080000000403000011C4F600000000000800000004030000A503B3010000000008000000040300005F90B301000000000800000004030000017CB401000000001C00000001060000A4000000B4000000C4000000D4000000E4000000F400000004010000080000000004000041C69025714A48D3180000000102000001000000000000001F020000000000001F02000000000000080000000403000005000000000000000400000003030000F5010000080000000109000066696C653A2F2F2F0C000000010100004D6163696E746F736820484408000000040300000020458CD0010000080000000004000041C6E39A85000000240000000101000032333539463234392D424233462D344236352D384441302D35333230313036454131333218000000010200008100000001000000EF13000001000000EF1300000100000001000000010100002F00000000000000010500003300000001020000646E69620000000001000000000000000000000000000000000000000300000000000000706E673F3F3F3F000000000000000000E4000000FEFFFFFF01000000000000001200000004100000800000000000000005100000140100000000000010100000480100000000000040100000380100000000000002200000140200000000000005200000840100000000000010200000940100000000000011200000C80100000000000012200000A80100000000000013200000B80100000000000020200000F40100000000000030200000200200000000000001C00000680100000000000011C00000200000000000000012C00000780100000000000010D00000040000000000000017F00000680000000000000022F0000028020000000000000000</Hex>
-      </SaveInfo>
-      <FullPath>/Users/vfx/Ambrosia/Docs/Xojo Reactor/Icon/reactormagic.png</FullPath>
-      <PartialPath>Icon\reactormagic.png</PartialPath>
-      <ImageSpecification>
-        <Comment/>
-        <Device>31</Device>
-        <Height>29</Height>
-        <Orientation>0</Orientation>
-        <Platform>15</Platform>
-        <Resolution>72</Resolution>
-        <Width>112</Width>
-        <HeightDouble>29</HeightDouble>
-        <WidthDouble>112</WidthDouble>
-      </ImageSpecification>
-    </ImageRepresentation>
-    <ImageRepresentation>
-      <ImageSpecification>
-        <Comment/>
-        <Device>31</Device>
-        <Height>-1</Height>
-        <Orientation>0</Orientation>
-        <Platform>15</Platform>
-        <Resolution>144</Resolution>
-        <Width>-1</Width>
-        <HeightDouble>-1</HeightDouble>
-        <WidthDouble>-1</WidthDouble>
-      </ImageSpecification>
-    </ImageRepresentation>
-    <ImageRepresentation>
-      <ImageSpecification>
-        <Comment/>
-        <Device>31</Device>
-        <Height>-1</Height>
-        <Orientation>0</Orientation>
-        <Platform>15</Platform>
-        <Resolution>216</Resolution>
-        <Width>-1</Width>
-        <HeightDouble>-1</HeightDouble>
-        <WidthDouble>-1</WidthDouble>
-      </ImageSpecification>
-    </ImageRepresentation>
-  </block>
   <block type="MultiImage" ID="1972449279">
     <ObjName>reactor</ObjName>
     <ObjContainerID>0</ObjContainerID>
@@ -7215,6 +7168,55 @@
     <CopyFileStepArch>0</CopyFileStepArch>
     <Target>0</Target>
   </block>
+  <block type="MultiImage" ID="777148415">
+    <ObjName>reactormagic</ObjName>
+    <ObjContainerID>0</ObjContainerID>
+    <ItemName>reactormagic</ItemName>
+    <ImageRepresentation>
+      <SaveInfo>
+        <Hex bytes="910">00F1D1730200070080030000626F6F6B800300000000041030000000000000000000000000000000000000000000000000000000000000000000000064020000040000000303000000040000050000000101000055736572730000000300000001010000766678000800000001010000416D62726F7369610400000001010000446F63730C00000001010000586F6A6F2052656163746F72040000000101000049636F6E100000000101000072656163746F726D616769632E706E671C0000000106000010000000200000002C0000003C000000480000005C000000680000000800000004030000AD520000000000000800000004030000947C000000000000080000000403000068B8F60000000000080000000403000011C4F600000000000800000004030000A503B3010000000008000000040300005F90B301000000000800000004030000017CB401000000001C00000001060000A4000000B4000000C4000000D4000000E4000000F400000004010000080000000004000041C69025714A48D3180000000102000001000000000000001F020000000000001F02000000000000080000000403000005000000000000000400000003030000F5010000080000000109000066696C653A2F2F2F0C000000010100004D6163696E746F736820484408000000040300000020458CD0010000080000000004000041C6E39A85000000240000000101000032333539463234392D424233462D344236352D384441302D35333230313036454131333218000000010200008100000001000000EF13000001000000EF1300000100000001000000010100002F00000000000000010500003300000001020000646E69620000000001000000000000000000000000000000000000000300000000000000706E673F3F3F3F000000000000000000E4000000FEFFFFFF01000000000000001200000004100000800000000000000005100000140100000000000010100000480100000000000040100000380100000000000002200000140200000000000005200000840100000000000010200000940100000000000011200000C80100000000000012200000A80100000000000013200000B80100000000000020200000F40100000000000030200000200200000000000001C00000680100000000000011C00000200000000000000012C00000780100000000000010D00000040000000000000017F00000680000000000000022F0000028020000000000000000</Hex>
+      </SaveInfo>
+      <FullPath>/Users/vfx/Ambrosia/Docs/Xojo Reactor/Icon/reactormagic.png</FullPath>
+      <PartialPath>Icon\reactormagic.png</PartialPath>
+      <ImageSpecification>
+        <Comment/>
+        <Device>31</Device>
+        <Height>29</Height>
+        <Orientation>0</Orientation>
+        <Platform>15</Platform>
+        <Resolution>72</Resolution>
+        <Width>150</Width>
+        <HeightDouble>29</HeightDouble>
+        <WidthDouble>150</WidthDouble>
+      </ImageSpecification>
+    </ImageRepresentation>
+    <ImageRepresentation>
+      <ImageSpecification>
+        <Comment/>
+        <Device>31</Device>
+        <Height>-1</Height>
+        <Orientation>0</Orientation>
+        <Platform>15</Platform>
+        <Resolution>144</Resolution>
+        <Width>-1</Width>
+        <HeightDouble>-1</HeightDouble>
+        <WidthDouble>-1</WidthDouble>
+      </ImageSpecification>
+    </ImageRepresentation>
+    <ImageRepresentation>
+      <ImageSpecification>
+        <Comment/>
+        <Device>31</Device>
+        <Height>-1</Height>
+        <Orientation>0</Orientation>
+        <Platform>15</Platform>
+        <Resolution>216</Resolution>
+        <Width>-1</Width>
+        <HeightDouble>-1</HeightDouble>
+        <WidthDouble>-1</WidthDouble>
+      </ImageSpecification>
+    </ImageRepresentation>
+  </block>
   <block type="UIState" ID="0">
     <WarningPreferences>
       <ItemName>5</ItemName>
@@ -7234,14 +7236,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1920" height="967"/>
+        <Rect left="0" top="25" width="1920" height="741"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.AtomsRefresh</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.UpdateAllButton.Pressed</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
