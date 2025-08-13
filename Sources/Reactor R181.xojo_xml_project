@@ -1754,6 +1754,7 @@
           <SourceLine>"app:SavePrefs()" + EndOfLine +_ </SourceLine>
           <SourceLine>"" + EndOfLine +_ </SourceLine>
           <SourceLine>"print([[[Reactor: PathMap] ']] .. tostring(app:GetPrefs([[Global.Paths.Map.Reactor:]])) .. [[']])" + EndOfLine +_ </SourceLine>
+          <SourceLine>"app:DoAction('Console_Show', {Show = True})" + EndOfLine +_ </SourceLine>
           <SourceLine>""</SourceLine>
           <SourceLine/>
           <SourceLine>// Write the text file to disk</SourceLine>
@@ -2824,7 +2825,7 @@
       <PropertyVal Name="AllowFocus">False</PropertyVal>
       <PropertyVal Name="AllowFocusRing">True</PropertyVal>
       <PropertyVal Name="AllowTabs">False</PropertyVal>
-      <PropertyVal Name="Backdrop">1972449279</PropertyVal>
+      <PropertyVal Name="Backdrop">1257814015</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
       <PropertyVal Name="Height">68</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
@@ -3378,7 +3379,11 @@
         <SourceLine>Var AtomDateDay As Double = AtomDateJSON.Value("3.0")</SourceLine>
         <SourceLine>Var AtomDate As String = AtomDateYear.ToString(Locale.Current, "0000") + "-" + AtomDateMonth.ToString(Locale.Current, "00")  + "-"  + AtomDateDay.ToString(Locale.Current, "00")</SourceLine>
         <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
+        <SourceLine/>
         <SourceLine>Var AtomDonation As String = "No"</SourceLine>
+        <SourceLine>If Atom.HasKey("Donation") Then</SourceLine>
+        <SourceLine>AtomDonation = "Yes"</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
         <SourceLine>If DateTime.Now.Year = AtomDateYear Then</SourceLine>
@@ -3502,7 +3507,11 @@
         <SourceLine>Var AtomDateDay As Double = AtomDateJSON.Value("3.0")</SourceLine>
         <SourceLine>Var AtomDate As String = AtomDateYear.ToString(Locale.Current, "0000") + "-" + AtomDateMonth.ToString(Locale.Current, "00")  + "-"  + AtomDateDay.ToString(Locale.Current, "00")</SourceLine>
         <SourceLine>Var AtomRepo As String = "Reactor"</SourceLine>
+        <SourceLine/>
         <SourceLine>Var AtomDonation As String = "No"</SourceLine>
+        <SourceLine>If Atom.HasKey("Donation") Then</SourceLine>
+        <SourceLine>AtomDonation = "Yes"</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>Var AtomStatus As String = "OK"</SourceLine>
         <SourceLine>If DateTime.Now.Year = AtomDateYear Then</SourceLine>
@@ -4180,7 +4189,47 @@
         <SourceLine/>
         <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " " + " Installed"</SourceLine>
         <SourceLine/>
-        <SourceLine>// Donations</SourceLine>
+        <SourceLine>// Donation</SourceLine>
+        <SourceLine>If Atom.HasKey("Donation") Then</SourceLine>
+        <SourceLine>Var AtomDonation As JSONItem = Atom.Value("Donation")</SourceLine>
+        <SourceLine>Var Amount As String = ""</SourceLine>
+        <SourceLine>Var URL As String = ""</SourceLine>
+        <SourceLine>If AtomDonation.HasKey("URL") Then</SourceLine>
+        <SourceLine>URL = AtomDonation.Value("URL").StringValue</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If AtomDonation.HasKey("Amount") Then</SourceLine>
+        <SourceLine>Amount = AtomDonation.Value("Amount").StringValue</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Show a donate dialog</SourceLine>
+        <SourceLine>Var Donation_Dialog As New MessageDialog</SourceLine>
+        <SourceLine>Donation_Dialog.IconType = MessageDialog.IconTypes.Question</SourceLine>
+        <SourceLine>Donation_Dialog.ActionButton.Caption = "Not right now... but I will consider it!"</SourceLine>
+        <SourceLine>//Donation_Dialog.CancelButton.Visible = True</SourceLine>
+        <SourceLine>Donation_Dialog.AlternateActionButton.Visible = True</SourceLine>
+        <SourceLine>Donation_Dialog.AlternateActionButton.Caption = "Shut up and take my money!"</SourceLine>
+        <SourceLine/>
+        <SourceLine>If Amount &lt;&gt; "" Then</SourceLine>
+        <SourceLine>Donation_Dialog.Message = "The author of the atom " + AtomID + " has suggested a donation of " + Amount</SourceLine>
+        <SourceLine/>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>Donation_Dialog.Message = "The author of the atom " + AtomID + " has suggested a donation."</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>Donation_Dialog.Explanation = "Click the button to donate via the URL: " + URL</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var Donation_Dialog_Button As MessageDialogButton</SourceLine>
+        <SourceLine>Donation_Dialog_Button = Donation_Dialog.ShowModal</SourceLine>
+        <SourceLine>Select Case Donation_Dialog_Button</SourceLine>
+        <SourceLine>Case Donation_Dialog.ActionButton</SourceLine>
+        <SourceLine>// User pressed "Not right now... but I will consider it!"</SourceLine>
+        <SourceLine>Case Donation_Dialog.AlternateActionButton</SourceLine>
+        <SourceLine>// User pressed "Shut up and take my money!"</SourceLine>
+        <SourceLine>System.GotoURL(URL)</SourceLine>
+        <SourceLine>Case Donation_Dialog.CancelButton</SourceLine>
+        <SourceLine>// User pressed "Cancel"</SourceLine>
+        <SourceLine>End Select</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
@@ -4742,6 +4791,47 @@
       <ItemParams>Atom As JSONItem</ItemParams>
       <ItemResult>String</ItemResult>
     </Method>
+    <Method>
+      <ItemName>HTMLDonation</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1956585471</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function HTMLDonation(Atom As JSONItem) As String</SourceLine>
+        <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+        <SourceLine>Var HTML As String = ""</SourceLine>
+        <SourceLine/>
+        <SourceLine>If Atom.HasKey("Donation") Then</SourceLine>
+        <SourceLine>Var AtomDonation As JSONItem = Atom.Value("Donation")</SourceLine>
+        <SourceLine>Var Amount As String = ""</SourceLine>
+        <SourceLine>Var URL As String = ""</SourceLine>
+        <SourceLine/>
+        <SourceLine>If AtomDonation.HasKey("URL") Then</SourceLine>
+        <SourceLine>URL = AtomDonation.Value("URL").StringValue</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If AtomDonation.HasKey("Amount") Then</SourceLine>
+        <SourceLine>Amount = AtomDonation.Value("Amount").StringValue</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>If Amount &lt;&gt; "" Then</SourceLine>
+        <SourceLine>HTML = "&lt;p&gt;Suggested Donation: " + Amount + "&lt;/p&gt;" + EndOfLine</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>HTML = "&lt;p&gt;Suggested Donation: Yes&lt;/p&gt;" + EndOfLine</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>Return HTML</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>Atom As JSONItem</ItemParams>
+      <ItemResult>String</ItemResult>
+    </Method>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
@@ -5102,7 +5192,7 @@
           <SourceLine>System.Debuglog("[Atom Selected] " + SelectedAtom)</SourceLine>
           <SourceLine>DownloadStatsLabel.Text = SelectedAtom + ".zip Selected"</SourceLine>
           <SourceLine/>
-          <SourceLine>Var HTML As String = App.Header + AtomDescription + HTMLDeployFilesList(Atom) + HTMLDependencies(Atom) + App.Footer</SourceLine>
+          <SourceLine>Var HTML As String = App.Header + AtomDescription + HTMLDonation(Atom) +  HTMLDependencies(Atom) + HTMLDeployFilesList(Atom) + App.Footer</SourceLine>
           <SourceLine>//HTML = HTML.ReplaceAll("Reactor:", SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
           <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
           <SourceLine/>
@@ -5132,7 +5222,7 @@
           <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
           <SourceLine>System.Debuglog("[Atom Description] " + SelectedAtom)</SourceLine>
           <SourceLine/>
-          <SourceLine>Var HTML As String = App.Header + AtomDescription + HTMLDeployFilesList(Atom) + HTMLDependencies(Atom) +  App.Footer</SourceLine>
+          <SourceLine>Var HTML As String = App.Header + AtomDescription + HTMLDonation(Atom) +  HTMLDependencies(Atom) + HTMLDeployFilesList(Atom) + App.Footer</SourceLine>
           <SourceLine>//HTML = HTML.ReplaceAll("Reactor:", SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
           <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
           <SourceLine/>
@@ -7125,7 +7215,7 @@
     <ItemName>AboutReactorLogo</ItemName>
     <ImageRepresentation>
       <SaveInfo>
-        <Hex bytes="930">00F1D1730200070094030000626F6F6B94030000000004103000000000000000000000000000000000000000000000000000000000000000000000006C020000040000000303000000040000050000000101000055736572730000000300000001010000766678000800000001010000416D62726F7369610400000001010000446F63730C00000001010000586F6A6F2052656163746F72040000000101000049636F6E160000000101000041626F75742052656163746F72204C6F676F2E706E6700001C0000000106000010000000200000002C0000003C000000480000005C000000680000000800000004030000AD520000000000000800000004030000947C000000000000080000000403000068B8F60000000000080000000403000011C4F600000000000800000004030000A503B3010000000008000000040300005F90B30100000000080000000403000012C7D101000000001C00000001060000AC000000BC000000CC000000DC000000EC000000FC0000000C010000080000000004000041C0005981000000180000000102000001000000000000001F020000000000001F020000000000000000000001050000080000000403000005000000000000000400000003030000F5010000080000000109000066696C653A2F2F2F0C000000010100004D6163696E746F736820484408000000040300000020458CD0010000080000000004000041C6E39A85000000240000000101000032333539463234392D424233462D344236352D384441302D35333230313036454131333218000000010200008100000001000000EF13000001000000EF1300000100000001000000010100002F0000003300000001020000646E69620000000001000000000000000000000000000000000000000300000000000000706E673F3F3F3F000000000000000000F0000000FEFFFFFF010000000000000013000000041000008800000000000000051000001C0100000000000010100000500100000000000040100000400100000000000002200000240200000000000005200000940100000000000010200000A40100000000000011200000D80100000000000012200000B80100000000000013200000C80100000000000020200000040200000000000030200000700100000000000001C00000780100000000000011C00000200000000000000012C00000880100000000000001D00000700100000000000010D00000040000000000000017F00000680000000000000022F0000030020000000000000000</Hex>
+        <Hex bytes="918">00F1D1730200070088030000626F6F6B88030000000004103000000000000000000000000000000000000000000000000000000000000000000000006C020000040000000303000000040000050000000101000055736572730000000300000001010000766678000800000001010000416D62726F7369610400000001010000446F63730C00000001010000586F6A6F2052656163746F72040000000101000049636F6E160000000101000041626F75742052656163746F72204C6F676F2E706E6700001C0000000106000010000000200000002C0000003C000000480000005C000000680000000800000004030000AD520000000000000800000004030000947C000000000000080000000403000068B8F60000000000080000000403000011C4F600000000000800000004030000A503B3010000000008000000040300005F90B30100000000080000000403000012C7D101000000001C00000001060000AC000000BC000000CC000000DC000000EC000000FC0000000C010000080000000004000041C0005981000000180000000102000001000000000000001F020000000000001F02000000000000080000000403000005000000000000000400000003030000F5010000080000000109000066696C653A2F2F2F0C000000010100004D6163696E746F736820484408000000040300000020458CD0010000080000000004000041C6E39A85000000240000000101000032333539463234392D424233462D344236352D384441302D35333230313036454131333218000000010200008100000001000000EF13000001000000EF1300000100000001000000010100002F00000000000000010500003300000001020000646E69620000000001000000000000000000000000000000000000000300000000000000706E673F3F3F3F000000000000000000E4000000FEFFFFFF010000000000000012000000041000008800000000000000051000001C01000000000000101000005001000000000000401000004001000000000000022000001C02000000000000052000008C01000000000000102000009C0100000000000011200000D00100000000000012200000B00100000000000013200000C00100000000000020200000FC0100000000000030200000280200000000000001C00000700100000000000011C00000200000000000000012C00000800100000000000010D00000040000000000000017F00000680000000000000022F0000030020000000000000000</Hex>
       </SaveInfo>
       <FullPath>/Users/vfx/Ambrosia/Docs/Xojo Reactor/Icon/About Reactor Logo.png</FullPath>
       <PartialPath>Icon\About Reactor Logo.png</PartialPath>
@@ -7145,26 +7235,26 @@
       <ImageSpecification>
         <Comment/>
         <Device>31</Device>
-        <Height>68</Height>
+        <Height>-1</Height>
         <Orientation>0</Orientation>
         <Platform>15</Platform>
         <Resolution>144</Resolution>
-        <Width>68</Width>
-        <HeightDouble>68</HeightDouble>
-        <WidthDouble>68</WidthDouble>
+        <Width>-1</Width>
+        <HeightDouble>-1</HeightDouble>
+        <WidthDouble>-1</WidthDouble>
       </ImageSpecification>
     </ImageRepresentation>
     <ImageRepresentation>
       <ImageSpecification>
         <Comment/>
         <Device>31</Device>
-        <Height>68</Height>
+        <Height>-1</Height>
         <Orientation>0</Orientation>
         <Platform>15</Platform>
         <Resolution>216</Resolution>
-        <Width>68</Width>
-        <HeightDouble>68</HeightDouble>
-        <WidthDouble>68</WidthDouble>
+        <Width>-1</Width>
+        <HeightDouble>-1</HeightDouble>
+        <WidthDouble>-1</WidthDouble>
       </ImageSpecification>
     </ImageRepresentation>
   </block>
@@ -7174,7 +7264,7 @@
     <ItemName>AboutReactorMagic</ItemName>
     <ImageRepresentation>
       <SaveInfo>
-        <Hex bytes="930">00F1D1730200070094030000626F6F6B94030000000004103000000000000000000000000000000000000000000000000000000000000000000000006C020000040000000303000000040000050000000101000055736572730000000300000001010000766678000800000001010000416D62726F7369610400000001010000446F63730C00000001010000586F6A6F2052656163746F72040000000101000049636F6E170000000101000041626F75742052656163746F72204D616769632E706E67001C0000000106000010000000200000002C0000003C000000480000005C000000680000000800000004030000AD520000000000000800000004030000947C000000000000080000000403000068B8F60000000000080000000403000011C4F600000000000800000004030000A503B3010000000008000000040300005F90B30100000000080000000403000013C7D101000000001C00000001060000AC000000BC000000CC000000DC000000EC000000FC0000000C010000080000000004000041C69025714A48D3180000000102000001000000000000001F020000000000001F020000000000000000000001050000080000000403000005000000000000000400000003030000F5010000080000000109000066696C653A2F2F2F0C000000010100004D6163696E746F736820484408000000040300000020458CD0010000080000000004000041C6E39A85000000240000000101000032333539463234392D424233462D344236352D384441302D35333230313036454131333218000000010200008100000001000000EF13000001000000EF1300000100000001000000010100002F0000003300000001020000646E69620000000001000000000000000000000000000000000000000300000000000000706E673F3F3F3F000000000000000000F0000000FEFFFFFF010000000000000013000000041000008800000000000000051000001C0100000000000010100000500100000000000040100000400100000000000002200000240200000000000005200000940100000000000010200000A40100000000000011200000D80100000000000012200000B80100000000000013200000C80100000000000020200000040200000000000030200000700100000000000001C00000780100000000000011C00000200000000000000012C00000880100000000000001D00000700100000000000010D00000040000000000000017F00000680000000000000022F0000030020000000000000000</Hex>
+        <Hex bytes="918">00F1D1730200070088030000626F6F6B88030000000004103000000000000000000000000000000000000000000000000000000000000000000000006C020000040000000303000000040000050000000101000055736572730000000300000001010000766678000800000001010000416D62726F7369610400000001010000446F63730C00000001010000586F6A6F2052656163746F72040000000101000049636F6E170000000101000041626F75742052656163746F72204D616769632E706E67001C0000000106000010000000200000002C0000003C000000480000005C000000680000000800000004030000AD520000000000000800000004030000947C000000000000080000000403000068B8F60000000000080000000403000011C4F600000000000800000004030000A503B3010000000008000000040300005F90B30100000000080000000403000013C7D101000000001C00000001060000AC000000BC000000CC000000DC000000EC000000FC0000000C010000080000000004000041C69025714A48D3180000000102000001000000000000001F020000000000001F02000000000000080000000403000005000000000000000400000003030000F5010000080000000109000066696C653A2F2F2F0C000000010100004D6163696E746F736820484408000000040300000020458CD0010000080000000004000041C6E39A85000000240000000101000032333539463234392D424233462D344236352D384441302D35333230313036454131333218000000010200008100000001000000EF13000001000000EF1300000100000001000000010100002F00000000000000010500003300000001020000646E69620000000001000000000000000000000000000000000000000300000000000000706E673F3F3F3F000000000000000000E4000000FEFFFFFF010000000000000012000000041000008800000000000000051000001C01000000000000101000005001000000000000401000004001000000000000022000001C02000000000000052000008C01000000000000102000009C0100000000000011200000D00100000000000012200000B00100000000000013200000C00100000000000020200000FC0100000000000030200000280200000000000001C00000700100000000000011C00000200000000000000012C00000800100000000000010D00000040000000000000017F00000680000000000000022F0000030020000000000000000</Hex>
       </SaveInfo>
       <FullPath>/Users/vfx/Ambrosia/Docs/Xojo Reactor/Icon/About Reactor Magic.png</FullPath>
       <PartialPath>Icon\About Reactor Magic.png</PartialPath>
@@ -7194,26 +7284,26 @@
       <ImageSpecification>
         <Comment/>
         <Device>31</Device>
-        <Height>29</Height>
+        <Height>-1</Height>
         <Orientation>0</Orientation>
         <Platform>15</Platform>
         <Resolution>144</Resolution>
-        <Width>150</Width>
-        <HeightDouble>29</HeightDouble>
-        <WidthDouble>150</WidthDouble>
+        <Width>-1</Width>
+        <HeightDouble>-1</HeightDouble>
+        <WidthDouble>-1</WidthDouble>
       </ImageSpecification>
     </ImageRepresentation>
     <ImageRepresentation>
       <ImageSpecification>
         <Comment/>
         <Device>31</Device>
-        <Height>29</Height>
+        <Height>-1</Height>
         <Orientation>0</Orientation>
         <Platform>15</Platform>
         <Resolution>216</Resolution>
-        <Width>150</Width>
-        <HeightDouble>29</HeightDouble>
-        <WidthDouble>150</WidthDouble>
+        <Width>-1</Width>
+        <HeightDouble>-1</HeightDouble>
+        <WidthDouble>-1</WidthDouble>
       </ImageSpecification>
     </ImageRepresentation>
   </block>
@@ -7236,16 +7326,16 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="8" top="114" width="1920" height="741"/>
+        <Rect left="0" top="25" width="1920" height="980"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>AboutWindow.Controls.MagicCanvas</EditorLocation>
+          <EditorLocation>ReactorWindow.AtomDeployFiles</EditorLocation>
           <EditorPath/>
-          <EditingPartID>296974335</EditingPartID>
+          <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
