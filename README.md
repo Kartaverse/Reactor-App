@@ -1,4 +1,6 @@
-# Reactor App
+# Reactor for macOS
+
+Reactor 4 Beta Build 1 - 2025-08-13
 
 ## Overview
 
@@ -6,12 +8,37 @@ Reactor is a package manager created by the [We Suck Less Community](https://www
 
 ## What's New?
 
-https://www.youtube.com/watch?v=x8tJzbjXeh4
+The Reactor Package Manager has been revamped as a desktop application that works seamlessly on macOS, Windows, and Linux.
 
-The Resolve/Fusion community project called "Reactor" is back! And guess what? It's ready for launch at SIGGRAPH 2025! The Reactor Package Manager has been revamped as a desktop application that works seamlessly on macOS, Windows, and Linux.
+## Reactor Folder
 
-Just double-click on the Reactor application icon, and you’ll be up and running in seconds.
+With Reactor Standalone the "Reactor:" PathMap folder is created in your user account's home folder at:
 
-Here’s the best part: Reactor can now be used outside of a Resolve/Fusion hosted session. This means you can install community made atom packages for use with Resolve Free v19.1 - 20+. You can even use the latest Kartaverse fuses, with Resolve Free again, too.
+    $HOME/Reactor/
 
-This Reactor update is a huge win for the community, since Blackmagic Design removed the core UI Manager scripting capabilities that Reactor relied on in the past. Reactor has risen like a phoenix from the ashes!
+This location is typically:
+
+    /Users/<Your User Account>/Reactor/
+
+## macOS Install
+
+1. Copy "Reactor.App" to your applications folder.
+
+2. Run the following command in the terminal to allow the app to run:
+
+		xattr -dr com.apple.quarantine /Applications/Reactor.app
+
+3. Double click on "Reactor.App" to launch the program.
+
+## Development Todo List
+
+The following features will be completed before the official release ships:
+
+- Add donation tag support
+- Add dependency tag support
+- Add download queue
+- Add multi-selection in the atom window
+- Add support for the "Update All Packages" button
+- Add preference window
+    - Add a Reactor custom install path option
+
