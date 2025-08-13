@@ -4386,9 +4386,11 @@
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function HTMLDeployFilesList(Atom As JSONItem) As String</SourceLine>
         <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
-        <SourceLine>Var AtomDeploy As JSONItem = Atom.Value("Deploy")</SourceLine>
+        <SourceLine>Var HTML As String = ""</SourceLine>
         <SourceLine/>
-        <SourceLine>Var HTML As String = "&lt;p&gt;Installed Files:&lt;ul&gt;" + EndOfLine</SourceLine>
+        <SourceLine>If Atom.HasKey("Deploy") Then</SourceLine>
+        <SourceLine>Var AtomDeploy As JSONItem = Atom.Value("Deploy")</SourceLine>
+        <SourceLine>HTML = "&lt;p&gt;Installed Files:&lt;ul&gt;" + EndOfLine</SourceLine>
         <SourceLine/>
         <SourceLine>// Deploy files</SourceLine>
         <SourceLine>Try</SourceLine>
@@ -4410,6 +4412,53 @@
         <SourceLine>End Try</SourceLine>
         <SourceLine/>
         <SourceLine>HTML = HTML + "&lt;/ul&gt;&lt;/p&gt;" + EndOfLine</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>Return HTML</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>Atom As JSONItem</ItemParams>
+      <ItemResult>String</ItemResult>
+    </Method>
+    <Method>
+      <ItemName>HTMLDependencies</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>710504447</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function HTMLDependencies(Atom As JSONItem) As String</SourceLine>
+        <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+        <SourceLine>Var HTML As String = ""</SourceLine>
+        <SourceLine/>
+        <SourceLine>If Atom.HasKey("Dependencies") Then</SourceLine>
+        <SourceLine>Var AtomDependencies As JSONItem = Atom.Value("Dependencies")</SourceLine>
+        <SourceLine> HTML = "&lt;p&gt;Dependencies:&lt;ul&gt;" + EndOfLine</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Dependencies files</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>Var DependenciesCount As Integer = AtomDependencies.Keys.Count</SourceLine>
+        <SourceLine>System.Debuglog("[Dependencies Count] " + DependenciesCount.ToString())</SourceLine>
+        <SourceLine>// MessageBox(VarType(AtomDependencies).ToString)</SourceLine>
+        <SourceLine>// Type 9 = Object</SourceLine>
+        <SourceLine>If AtomDependencies.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each k As String In AtomDependencies.Keys</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var DependenciesVariant As Variant = AtomDependencies.Value(k)</SourceLine>
+        <SourceLine>HTML = HTML + "&lt;li&gt;&amp;nbsp;&amp;nbsp;" + DependenciesVariant.StringValue + "&lt;/li&gt;" + EndOfLine</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine/>
+        <SourceLine>HTML = HTML + "&lt;/ul&gt;&lt;/p&gt;" + EndOfLine</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>Return HTML</SourceLine>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
@@ -4781,7 +4830,7 @@
           <SourceLine>System.Debuglog("[Atom Selected] " + SelectedAtom)</SourceLine>
           <SourceLine>DownloadStatsLabel.Text = SelectedAtom + ".zip Selected"</SourceLine>
           <SourceLine/>
-          <SourceLine>Var HTML As String = App.Header + AtomDescription + HTMLDeployFilesList(Atom) + App.Footer</SourceLine>
+          <SourceLine>Var HTML As String = App.Header + AtomDescription + HTMLDeployFilesList(Atom) + HTMLDependencies(Atom) + App.Footer</SourceLine>
           <SourceLine>//HTML = HTML.ReplaceAll("Reactor:", SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
           <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
           <SourceLine/>
@@ -4811,7 +4860,7 @@
           <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
           <SourceLine>System.Debuglog("[Atom Description] " + SelectedAtom)</SourceLine>
           <SourceLine/>
-          <SourceLine>Var HTML As String = App.Header + AtomDescription + HTMLDeployFilesList(Atom) +  App.Footer</SourceLine>
+          <SourceLine>Var HTML As String = App.Header + AtomDescription + HTMLDeployFilesList(Atom) + HTMLDependencies(Atom) +  App.Footer</SourceLine>
           <SourceLine>//HTML = HTML.ReplaceAll("Reactor:", SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
           <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
           <SourceLine/>
@@ -6908,7 +6957,7 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1693" height="934"/>
+        <Rect left="0" top="25" width="1920" height="934"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
