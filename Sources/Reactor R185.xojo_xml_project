@@ -670,6 +670,21 @@
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
     </Property>
+    <Property>
+      <ItemName>DownloadDependencies()</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>520775679</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>DownloadDependencies() As String</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>DownloadDependencies() As String</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <ViewBehavior>
       <ViewProperty>
@@ -3358,6 +3373,19 @@
         <SourceLine>Sub AtomsRefresh()</SourceLine>
         <SourceLine>Var SearchText As String = AtomSearchField.Text</SourceLine>
         <SourceLine/>
+        <SourceLine>// Dependencies Check</SourceLine>
+        <SourceLine>If App.Atoms &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
+        <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
+        <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+        <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
+        <SourceLine>If InstallState = True Then</SourceLine>
+        <SourceLine>ExpandDependencies(Atom)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Atoms Refresh</SourceLine>
         <SourceLine>Var CategoryRow As Integer = CategoryListbox.SelectedRowIndex</SourceLine>
         <SourceLine>If CategoryRow &gt;= 0 Then</SourceLine>
         <SourceLine>Var SelectedCategory As String = CategoryListbox.CellTextAt(CategoryRow, 0)</SourceLine>
@@ -3404,6 +3432,10 @@
         <SourceLine>If App.DownloadAtomID = AtomID Then</SourceLine>
         <SourceLine>AtomDownloading = True</SourceLine>
         <SourceLine>AtomStatus = "Downloading"</SourceLine>
+        <SourceLine>ElseIf App.DownloadDependencies.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
+        <SourceLine>// Atom Dependency</SourceLine>
+        <SourceLine>AtomDownloading = True</SourceLine>
+        <SourceLine>AtomStatus = "Downloading"</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
@@ -3443,20 +3475,27 @@
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 5</SourceLine>
+        <SourceLine>// Dependencies</SourceLine>
+        <SourceLine>If App.DownloadDependencies.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 6</SourceLine>
         <SourceLine>// Incompatible</SourceLine>
         <SourceLine>If AtomDisabled = True Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 6</SourceLine>
+        <SourceLine>Case 7</SourceLine>
         <SourceLine>//Downloading</SourceLine>
         <SourceLine>If AtomDownloading = True and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 7</SourceLine>
+        <SourceLine>Case 8</SourceLine>
         <SourceLine>// Removing</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End Select</SourceLine>
@@ -3539,6 +3578,10 @@
         <SourceLine>If App.DownloadAtomID = AtomID Then</SourceLine>
         <SourceLine>AtomDownloading = True</SourceLine>
         <SourceLine>AtomStatus = "Downloading"</SourceLine>
+        <SourceLine>ElseIf App.DownloadDependencies.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
+        <SourceLine>// Atom Dependency</SourceLine>
+        <SourceLine>AtomDownloading = True</SourceLine>
+        <SourceLine>AtomStatus = "Downloading"</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
@@ -3579,20 +3622,27 @@
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 5</SourceLine>
+        <SourceLine>// Dependencies</SourceLine>
+        <SourceLine>If App.DownloadDependencies.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 6</SourceLine>
         <SourceLine>// Incompatible</SourceLine>
         <SourceLine>If AtomDisabled = True Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 6</SourceLine>
+        <SourceLine>Case 7</SourceLine>
         <SourceLine>//Downloading</SourceLine>
         <SourceLine>If AtomDownloading = True and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 7</SourceLine>
+        <SourceLine>Case 8</SourceLine>
         <SourceLine>// Removing</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End Select</SourceLine>
@@ -3892,6 +3942,9 @@
         <SourceLine>App.DownloadAtomID = AtomID</SourceLine>
         <SourceLine>App.DownloadAtom = Atom</SourceLine>
         <SourceLine>App.DownloadRow = row</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Dependencies</SourceLine>
+        <SourceLine>ExpandDependencies(Atom)</SourceLine>
         <SourceLine/>
         <SourceLine>RSocket.Send("GET", ZipFileURL, AtomzFile)</SourceLine>
         <SourceLine>Catch e As UnsupportedOperationException</SourceLine>
@@ -4847,6 +4900,46 @@
       <IsShared>0</IsShared>
       <ItemParams>Atom As JSONItem</ItemParams>
       <ItemResult>String</ItemResult>
+    </Method>
+    <Method>
+      <ItemName>ExpandDependencies</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>805023743</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub ExpandDependencies(Atom As JSONItem)</SourceLine>
+        <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Dependencies</SourceLine>
+        <SourceLine>If Atom.HasKey("Dependencies") Then</SourceLine>
+        <SourceLine>Var AtomDependencies As JSONItem = Atom.Value("Dependencies")</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>If AtomDependencies.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each k As String In AtomDependencies.Keys</SourceLine>
+        <SourceLine>Var DependenciesVariant As Variant = AtomDependencies.Value(k)</SourceLine>
+        <SourceLine>App.DownloadDependencies().Add(DependenciesVariant.StringValue)</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// De-duplicate array entries</SourceLine>
+        <SourceLine>App.DownloadDependencies.Sort</SourceLine>
+        <SourceLine>for i As integer = App.DownloadDependencies.Ubound - 1 downto 0</SourceLine>
+        <SourceLine>if App.DownloadDependencies(i) = App.DownloadDependencies(i + 1) then App.DownloadDependencies.Remove(i)</SourceLine>
+        <SourceLine>next</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>Atom As JSONItem</ItemParams>
+      <ItemResult/>
     </Method>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
@@ -5957,7 +6050,7 @@
       <PropertyVal Name="Height">22</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialValue">
-        <Hex bytes="65">416C6C0A496E7374616C6C65640A446F6E6174650A4E65770A5570646174650A496E636F6D70617469626C650A446F776E6C6F6164696E670A52656D6F76696E67</Hex>
+        <Hex bytes="78">416C6C0A496E7374616C6C65640A446F6E6174650A4E65770A5570646174650A446570656E64656E636965730A496E636F6D70617469626C650A446F776E6C6F6164696E670A52656D6F76696E67</Hex>
       </PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
       <PropertyVal Name="Left">0</PropertyVal>
@@ -7342,15 +7435,16 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="-1" top="25" width="1920" height="980"/>
+        <Rect left="0" top="25" width="1670" height="981"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation/>
+          <EditorLocation>ReactorWindow.Controls.AtomSearchField</EditorLocation>
           <EditorPath/>
+          <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
