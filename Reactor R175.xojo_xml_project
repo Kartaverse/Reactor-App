@@ -3355,6 +3355,8 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Sub AtomsRefresh()</SourceLine>
+        <SourceLine>Var SearchText As String = AtomSearchField.Text</SourceLine>
+        <SourceLine/>
         <SourceLine>Var CategoryRow As Integer = CategoryListbox.SelectedRowIndex</SourceLine>
         <SourceLine>If CategoryRow &gt;= 0 Then</SourceLine>
         <SourceLine>Var SelectedCategory As String = CategoryListbox.CellTextAt(CategoryRow, 0)</SourceLine>
@@ -3446,6 +3448,17 @@
         <SourceLine>//Removing</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End Select</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Apply search filter to AtomsListBox content</SourceLine>
+        <SourceLine>If AtomVisible = 1 and SearchText &lt;&gt; "" Then</SourceLine>
+        <SourceLine>// Check if any text exists in the search field</SourceLine>
+        <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
+        <SourceLine>If AtomName.Contains(SearchText) or AtomCategory.Contains(SearchText) or AtomAuthor.Contains(SearchText) or AtomID.Contains(SearchText) or TextDeployFilesList(Atom).Contains(SearchText) or AtomDescription.Contains(SearchText) Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>If AtomVisible = 1 Then</SourceLine>
         <SourceLine>AtomsListBox.Addrow("")</SourceLine>
@@ -3560,6 +3573,17 @@
         <SourceLine>//Removing</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End Select</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Apply search filter to AtomsListBox content</SourceLine>
+        <SourceLine>If AtomVisible = 1 and SearchText &lt;&gt; "" Then</SourceLine>
+        <SourceLine>// Check if any text exists in the search field</SourceLine>
+        <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
+        <SourceLine>If AtomName.Contains(SearchText) or AtomCategory.Contains(SearchText) or AtomAuthor.Contains(SearchText) or AtomID.Contains(SearchText) or TextDeployFilesList(Atom).Contains(SearchText) or AtomDescription.Contains(SearchText) Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>If AtomVisible = 1 Then</SourceLine>
         <SourceLine>AtomsListBox.Addrow("")</SourceLine>
@@ -4644,6 +4668,80 @@
       <ItemParams>Atom As JSONItem</ItemParams>
       <ItemResult>String</ItemResult>
     </Method>
+    <Method>
+      <ItemName>TextDeployFilesList</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1044916223</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function TextDeployFilesList(Atom As JSONItem) As String</SourceLine>
+        <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+        <SourceLine>Var Txt As String = ""</SourceLine>
+        <SourceLine/>
+        <SourceLine>If Atom.HasKey("Deploy") Then</SourceLine>
+        <SourceLine>Var AtomDeploy As JSONItem = Atom.Value("Deploy")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Deploy files</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>Var DeployCount As Integer = AtomDeploy.Keys.Count</SourceLine>
+        <SourceLine>System.Debuglog("[Deploy File Count] " + DeployCount.ToString())</SourceLine>
+        <SourceLine>// MessageBox(VarType(AtomDeploy).ToString)</SourceLine>
+        <SourceLine>// Type 9 = Object</SourceLine>
+        <SourceLine>If AtomDeploy.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
+        <SourceLine>// Todo: Handle OS-Secific deploy files</SourceLine>
+        <SourceLine>if k &lt;&gt; "Mac" and k &lt;&gt; "Windows" and k &lt;&gt; "Linux" Then</SourceLine>
+        <SourceLine>// Common Files</SourceLine>
+        <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>Txt = Txt + DeployVariant.StringValue + EndOfLine</SourceLine>
+        <SourceLine>ElseIf k = "Mac" and TargetMacOS Then</SourceLine>
+        <SourceLine>// macOS Files</SourceLine>
+        <SourceLine>Var AtomDeployOS As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
+        <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
+        <SourceLine>Txt = Txt + DeployOSVariant.StringValue + EndOfLine</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>ElseIf k = "Windows" and TargetWindows Then</SourceLine>
+        <SourceLine>// Windows Files</SourceLine>
+        <SourceLine>Var AtomDeployOS As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
+        <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
+        <SourceLine>Txt = Txt + DeployOSVariant.StringValue + EndOfLine</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>ElseIf k = "Linux" and TargetLinux Then</SourceLine>
+        <SourceLine>// Linux Files</SourceLine>
+        <SourceLine>Var AtomDeployOS As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
+        <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
+        <SourceLine>Txt = Txt + DeployOSVariant.StringValue + EndOfLine</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine/>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>Return Txt</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>Atom As JSONItem</ItemParams>
+      <ItemResult>String</ItemResult>
+    </Method>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
@@ -5336,7 +5434,9 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub TextChanged()</SourceLine>
+          <SourceLine>// Live typed search text</SourceLine>
           <SourceLine>'MessageBox(Me.Text)</SourceLine>
+          <SourceLine/>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -5348,7 +5448,10 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine>MessageBox(Me.Text)</SourceLine>
+          <SourceLine>// Enter was pressed after typing search text</SourceLine>
+          <SourceLine>//MessageBox(Me.Text)</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomsRefresh()</SourceLine>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -7131,14 +7234,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1920" height="934"/>
+        <Rect left="0" top="25" width="1920" height="967"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.AtomRemove</EditorLocation>
+          <EditorLocation>ReactorWindow.AtomsRefresh</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
