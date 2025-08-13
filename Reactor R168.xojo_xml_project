@@ -4377,6 +4377,50 @@
       <ItemParams>Path_FolderItem As FolderItem</ItemParams>
       <ItemResult/>
     </Method>
+    <Method>
+      <ItemName>HTMLDeployFilesList</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1291470847</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function HTMLDeployFilesList(Atom As JSONItem) As String</SourceLine>
+        <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+        <SourceLine>Var AtomDeploy As JSONItem = Atom.Value("Deploy")</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var HTML As String = "&lt;p&gt;Installed Files:&lt;ul&gt;" + EndOfLine</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Deploy files</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>Var DeployCount As Integer = AtomDeploy.Keys.Count</SourceLine>
+        <SourceLine>System.Debuglog("[Deploy File Count] " + DeployCount.ToString())</SourceLine>
+        <SourceLine>// MessageBox(VarType(AtomDeploy).ToString)</SourceLine>
+        <SourceLine>// Type 9 = Object</SourceLine>
+        <SourceLine>If AtomDeploy.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
+        <SourceLine>// Todo: Handle OS-Secific deploy files</SourceLine>
+        <SourceLine>if k &lt;&gt; "Mac" and k &lt;&gt; "Windows" and k &lt;&gt; "Linux" Then</SourceLine>
+        <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>HTML = HTML + "&lt;li&gt;&amp;nbsp;&amp;nbsp;" + DeployVariant.StringValue + "&lt;/li&gt;" + EndOfLine</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine/>
+        <SourceLine>HTML = HTML + "&lt;/ul&gt;&lt;/p&gt;" + EndOfLine</SourceLine>
+        <SourceLine>Return HTML</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>Atom As JSONItem</ItemParams>
+      <ItemResult>String</ItemResult>
+    </Method>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
@@ -4737,7 +4781,7 @@
           <SourceLine>System.Debuglog("[Atom Selected] " + SelectedAtom)</SourceLine>
           <SourceLine>DownloadStatsLabel.Text = SelectedAtom + ".zip Selected"</SourceLine>
           <SourceLine/>
-          <SourceLine>Var HTML As String = App.Header + AtomDescription + App.Footer</SourceLine>
+          <SourceLine>Var HTML As String = App.Header + AtomDescription + HTMLDeployFilesList(Atom) + App.Footer</SourceLine>
           <SourceLine>//HTML = HTML.ReplaceAll("Reactor:", SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
           <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
           <SourceLine/>
@@ -4767,7 +4811,7 @@
           <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
           <SourceLine>System.Debuglog("[Atom Description] " + SelectedAtom)</SourceLine>
           <SourceLine/>
-          <SourceLine>Var HTML As String = App.Header + AtomDescription + App.Footer</SourceLine>
+          <SourceLine>Var HTML As String = App.Header + AtomDescription + HTMLDeployFilesList(Atom) +  App.Footer</SourceLine>
           <SourceLine>//HTML = HTML.ReplaceAll("Reactor:", SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
           <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
           <SourceLine/>
@@ -6864,14 +6908,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="42" top="25" width="1878" height="1006"/>
+        <Rect left="0" top="25" width="1693" height="934"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.Controls.UpdateButton.Pressed</EditorLocation>
+          <EditorLocation>ReactorWindow.HTMLDeployFilesList</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
