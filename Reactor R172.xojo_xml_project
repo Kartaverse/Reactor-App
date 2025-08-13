@@ -4402,8 +4402,36 @@
         <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
         <SourceLine>// Todo: Handle OS-Secific deploy files</SourceLine>
         <SourceLine>if k &lt;&gt; "Mac" and k &lt;&gt; "Windows" and k &lt;&gt; "Linux" Then</SourceLine>
+        <SourceLine>// Common Files</SourceLine>
         <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
         <SourceLine>HTML = HTML + "&lt;li&gt;&amp;nbsp;&amp;nbsp;" + DeployVariant.StringValue + "&lt;/li&gt;" + EndOfLine</SourceLine>
+        <SourceLine>ElseIf k = "Mac" and TargetMacOS Then</SourceLine>
+        <SourceLine>// macOS Files</SourceLine>
+        <SourceLine>Var AtomDeployOS As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
+        <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
+        <SourceLine>HTML = HTML + "&lt;li&gt;&amp;nbsp;&amp;nbsp;" + DeployOSVariant.StringValue + "&lt;/li&gt;" + EndOfLine</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>ElseIf k = "Windows" and TargetWindows Then</SourceLine>
+        <SourceLine>// Windows Files</SourceLine>
+        <SourceLine>Var AtomDeployOS As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
+        <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
+        <SourceLine>HTML = HTML + "&lt;li&gt;&amp;nbsp;&amp;nbsp;" + DeployOSVariant.StringValue + "&lt;/li&gt;" + EndOfLine</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>ElseIf k = "Linux" and TargetLinux Then</SourceLine>
+        <SourceLine>// Linux Files</SourceLine>
+        <SourceLine>Var AtomDeployOS As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
+        <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
+        <SourceLine>HTML = HTML + "&lt;li&gt;&amp;nbsp;&amp;nbsp;" + DeployOSVariant.StringValue + "&lt;/li&gt;" + EndOfLine</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>End If</SourceLine>
