@@ -3724,6 +3724,7 @@
         <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
         <SourceLine>// Todo: Handle OS-Secific deploy files</SourceLine>
         <SourceLine>if k &lt;&gt; "Mac" and k &lt;&gt; "Windows" and k &lt;&gt; "Linux" Then</SourceLine>
+        <SourceLine>// Common Files</SourceLine>
         <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
         <SourceLine>Var DeployFileDest As FolderItem =  New FolderItem(App.DeployFolder.NativePath + "/" + DeployVariant.StringValue)</SourceLine>
         <SourceLine/>
@@ -3735,6 +3736,60 @@
         <SourceLine>MessageBox(error.Message)</SourceLine>
         <SourceLine>End Try</SourceLine>
         <SourceLine>End if</SourceLine>
+        <SourceLine>ElseIf k = "Mac" and TargetMacOS Then</SourceLine>
+        <SourceLine>// macOS Files</SourceLine>
+        <SourceLine>Var AtomDeployOS As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
+        <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
+        <SourceLine>Var DeployFileDest As FolderItem =  New FolderItem(App.DeployFolder.NativePath + "/" + DeployOSVariant.StringValue)</SourceLine>
+        <SourceLine/>
+        <SourceLine>If DeployFileDest.Exists Then</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>// Remove any legacy pre-existing files with the same filename</SourceLine>
+        <SourceLine>DeployFileDest.Remove()</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>ElseIf k = "Windows" and TargetWindows Then</SourceLine>
+        <SourceLine>// Windows Files</SourceLine>
+        <SourceLine>Var AtomDeployOS As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
+        <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
+        <SourceLine>Var DeployFileDest As FolderItem =  New FolderItem(App.DeployFolder.NativePath + "/" + DeployOSVariant.StringValue)</SourceLine>
+        <SourceLine/>
+        <SourceLine>If DeployFileDest.Exists Then</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>// Remove any legacy pre-existing files with the same filename</SourceLine>
+        <SourceLine>DeployFileDest.Remove()</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>ElseIf k = "Linux" and TargetLinux Then</SourceLine>
+        <SourceLine>// Linux Files</SourceLine>
+        <SourceLine>Var AtomDeployOS As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
+        <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
+        <SourceLine>Var DeployFileDest As FolderItem =  New FolderItem(App.DeployFolder.NativePath + "/" + DeployOSVariant.StringValue)</SourceLine>
+        <SourceLine/>
+        <SourceLine>If DeployFileDest.Exists Then</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>// Remove any legacy pre-existing files with the same filename</SourceLine>
+        <SourceLine>DeployFileDest.Remove()</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>End If</SourceLine>
@@ -3961,6 +4016,7 @@
         <SourceLine/>
         <SourceLine>// Todo: Handle OS-Secific deploy files</SourceLine>
         <SourceLine>if k &lt;&gt; "Mac" and k &lt;&gt; "Windows" and k &lt;&gt; "Linux" Then</SourceLine>
+        <SourceLine>// Common Files</SourceLine>
         <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
         <SourceLine>Var DeployFileSource As FolderItem =  New FolderItem(WorkingDirectory.NativePath + "/" + DeployVariant.StringValue)</SourceLine>
         <SourceLine>Var DeployFileDest As FolderItem =  New FolderItem(App.DeployFolder.NativePath + "/" + DeployVariant.StringValue)</SourceLine>
@@ -3984,6 +4040,96 @@
         <SourceLine>Catch error As IOException</SourceLine>
         <SourceLine>MessageBox(error.Message)</SourceLine>
         <SourceLine>End Try</SourceLine>
+        <SourceLine>ElseIf k = "Mac" and TargetMacOS Then</SourceLine>
+        <SourceLine>// macOS Files</SourceLine>
+        <SourceLine>Var AtomDeployOS As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
+        <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
+        <SourceLine>Var DeployFileSource As FolderItem =  New FolderItem(WorkingDirectory.NativePath + "/Mac/" + DeployOSVariant.StringValue)</SourceLine>
+        <SourceLine>Var DeployFileDest As FolderItem =  New FolderItem(App.DeployFolder.NativePath + "/" + DeployOSVariant.StringValue)</SourceLine>
+        <SourceLine/>
+        <SourceLine>If DeployFileDest.Exists Then</SourceLine>
+        <SourceLine>// Remove any legacy pre-existing files with the same filename</SourceLine>
+        <SourceLine>DeployFileDest.Remove()</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>If not DeployFileDest.Parent.Exists Then</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>System.Debuglog("[Create Folders] " + DeployFileDest.Parent.NativePath)</SourceLine>
+        <SourceLine>ReactorWindow.CreateParentSubFolders(DeployFileDest)</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>System.Debuglog("[Read File] " + DeployFileSource.NativePath)</SourceLine>
+        <SourceLine>System.Debuglog("[Write File] " + DeployFileDest.NativePath)</SourceLine>
+        <SourceLine>DeployFileSource.CopyTo(DeployFileDest)</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>ElseIf k = "Windows" and TargetWindows Then</SourceLine>
+        <SourceLine>// Windows Files</SourceLine>
+        <SourceLine>Var AtomDeployOS As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
+        <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
+        <SourceLine>Var DeployFileSource As FolderItem =  New FolderItem(WorkingDirectory.NativePath + "/Windows/" + DeployOSVariant.StringValue)</SourceLine>
+        <SourceLine>Var DeployFileDest As FolderItem =  New FolderItem(App.DeployFolder.NativePath + "/" + DeployOSVariant.StringValue)</SourceLine>
+        <SourceLine/>
+        <SourceLine>If DeployFileDest.Exists Then</SourceLine>
+        <SourceLine>// Remove any legacy pre-existing files with the same filename</SourceLine>
+        <SourceLine>DeployFileDest.Remove()</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>If not DeployFileDest.Parent.Exists Then</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>System.Debuglog("[Create Folders] " + DeployFileDest.Parent.NativePath)</SourceLine>
+        <SourceLine>ReactorWindow.CreateParentSubFolders(DeployFileDest)</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>System.Debuglog("[Read File] " + DeployFileSource.NativePath)</SourceLine>
+        <SourceLine>System.Debuglog("[Write File] " + DeployFileDest.NativePath)</SourceLine>
+        <SourceLine>DeployFileSource.CopyTo(DeployFileDest)</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>ElseIf k = "Linux" and TargetLinux Then</SourceLine>
+        <SourceLine>// Linux Files</SourceLine>
+        <SourceLine>Var AtomDeployOS As JSONItem = AtomDeploy.Value(k)</SourceLine>
+        <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
+        <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
+        <SourceLine>Var DeployFileSource As FolderItem =  New FolderItem(WorkingDirectory.NativePath + "/Linux/" + DeployOSVariant.StringValue)</SourceLine>
+        <SourceLine>Var DeployFileDest As FolderItem =  New FolderItem(App.DeployFolder.NativePath + "/" + DeployOSVariant.StringValue)</SourceLine>
+        <SourceLine/>
+        <SourceLine>If DeployFileDest.Exists Then</SourceLine>
+        <SourceLine>// Remove any legacy pre-existing files with the same filename</SourceLine>
+        <SourceLine>DeployFileDest.Remove()</SourceLine>
+        <SourceLine>End if</SourceLine>
+        <SourceLine>If not DeployFileDest.Parent.Exists Then</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>System.Debuglog("[Create Folders] " + DeployFileDest.Parent.NativePath)</SourceLine>
+        <SourceLine>ReactorWindow.CreateParentSubFolders(DeployFileDest)</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>System.Debuglog("[Read File] " + DeployFileSource.NativePath)</SourceLine>
+        <SourceLine>System.Debuglog("[Write File] " + DeployFileDest.NativePath)</SourceLine>
+        <SourceLine>DeployFileSource.CopyTo(DeployFileDest)</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>End If</SourceLine>
@@ -6992,7 +7138,7 @@
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.HTMLDeployFilesList</EditorLocation>
+          <EditorLocation>ReactorWindow.AtomRemove</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
