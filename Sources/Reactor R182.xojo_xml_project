@@ -7,7 +7,7 @@
     <MinorVersion>0</MinorVersion>
     <SubVersion>0</SubVersion>
     <Release>0</Release>
-    <NonRelease>0</NonRelease>
+    <NonRelease>2</NonRelease>
     <Region/>
     <ShortVersion/>
     <LongVersion>Copyright © 2017-2025 We Suck Less</LongVersion>
@@ -1346,7 +1346,7 @@
       <PropertyVal Name="TabIndex">4</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">Version 4 - 2025-08-11</PropertyVal>
+      <PropertyVal Name="Text">Version 4 Beta 2 - 2025-08-11</PropertyVal>
       <PropertyVal Name="TextAlignment">2</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
       <PropertyVal Name="Tooltip"/>
@@ -3422,35 +3422,42 @@
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 2</SourceLine>
+        <SourceLine>// Donate</SourceLine>
+        <SourceLine>If InstallState = True and Atom.HasKey("Donation") Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 3</SourceLine>
         <SourceLine>// New</SourceLine>
         <SourceLine>If DateTime.Now.Year = AtomDateYear and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 3</SourceLine>
+        <SourceLine>Case 4</SourceLine>
         <SourceLine>// Update</SourceLine>
         <SourceLine>If AtomUpdated = True and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 4</SourceLine>
+        <SourceLine>Case 5</SourceLine>
         <SourceLine>// Incompatible</SourceLine>
         <SourceLine>If AtomDisabled = True Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 5</SourceLine>
+        <SourceLine>Case 6</SourceLine>
         <SourceLine>//Downloading</SourceLine>
         <SourceLine>If AtomDownloading = True and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 6</SourceLine>
-        <SourceLine>//Removing</SourceLine>
+        <SourceLine>Case 7</SourceLine>
+        <SourceLine>// Removing</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End Select</SourceLine>
         <SourceLine/>
@@ -3551,35 +3558,42 @@
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 2</SourceLine>
+        <SourceLine>// Donate</SourceLine>
+        <SourceLine>If InstallState = True and Atom.HasKey("Donation") Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 3</SourceLine>
         <SourceLine>// New</SourceLine>
         <SourceLine>If DateTime.Now.Year = AtomDateYear and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 3</SourceLine>
+        <SourceLine>Case 4</SourceLine>
         <SourceLine>// Update</SourceLine>
         <SourceLine>If AtomUpdated = True and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 4</SourceLine>
+        <SourceLine>Case 5</SourceLine>
         <SourceLine>// Incompatible</SourceLine>
         <SourceLine>If AtomDisabled = True Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 5</SourceLine>
+        <SourceLine>Case 6</SourceLine>
         <SourceLine>//Downloading</SourceLine>
         <SourceLine>If AtomDownloading = True and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 6</SourceLine>
-        <SourceLine>//Removing</SourceLine>
+        <SourceLine>Case 7</SourceLine>
+        <SourceLine>// Removing</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End Select</SourceLine>
         <SourceLine/>
@@ -4815,10 +4829,12 @@
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>If Amount &lt;&gt; "" Then</SourceLine>
-        <SourceLine>HTML = "&lt;p&gt;Suggested Donation: " + Amount + "&lt;/p&gt;" + EndOfLine</SourceLine>
+        <SourceLine>HTML = HTML + "&lt;p&gt;Suggested Donation: " + Amount + "&lt;br&gt;" + EndOfLine</SourceLine>
         <SourceLine>Else</SourceLine>
-        <SourceLine>HTML = "&lt;p&gt;Suggested Donation: Yes&lt;/p&gt;" + EndOfLine</SourceLine>
+        <SourceLine>HTML = HTML + "&lt;p&gt;Suggested Donation: Yes&lt;br&gt;" + EndOfLine</SourceLine>
         <SourceLine>End If</SourceLine>
+        <SourceLine>HTML = HTML + "Donation URL: " + URL+ "&lt;/p&gt;" + EndOfLine</SourceLine>
+        <SourceLine>// HTML = HTML + "Donation URL: &lt;a href=""" + URL + """&gt;" + URL+ "&lt;/a&gt;&lt;/p&gt;" + EndOfLine</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>Return HTML</SourceLine>
@@ -5941,7 +5957,7 @@
       <PropertyVal Name="Height">22</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialValue">
-        <Hex bytes="58">416C6C0A496E7374616C6C65640A4E65770A5570646174650A496E636F6D70617469626C650A446F776E6C6F6164696E670A52656D6F76696E67</Hex>
+        <Hex bytes="65">416C6C0A496E7374616C6C65640A446F6E6174650A4E65770A5570646174650A496E636F6D70617469626C650A446F776E6C6F6164696E670A52656D6F76696E67</Hex>
       </PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
       <PropertyVal Name="Left">0</PropertyVal>
@@ -7326,16 +7342,15 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1920" height="980"/>
+        <Rect left="-1" top="25" width="1920" height="980"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.AtomDeployFiles</EditorLocation>
+          <EditorLocation/>
           <EditorPath/>
-          <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
