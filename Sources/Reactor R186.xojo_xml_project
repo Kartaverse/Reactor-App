@@ -3375,6 +3375,7 @@
         <SourceLine/>
         <SourceLine>// Dependencies Check</SourceLine>
         <SourceLine>If App.Atoms &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>App.DownloadDependencies().RemoveAll()</SourceLine>
         <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
         <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
         <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
@@ -7442,7 +7443,7 @@
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.Controls.AtomSearchField</EditorLocation>
+          <EditorLocation>ReactorWindow.AtomsRefresh</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
