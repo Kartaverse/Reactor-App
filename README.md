@@ -1,6 +1,6 @@
 # Reactor for macOS
 
-Reactor 4 Beta Build 2 - 2025-08-13
+Reactor 4 Beta Build 4 - 2025-08-14
 
 ## Overview
 
@@ -34,9 +34,5 @@ This location is typically:
 
 The following features will be completed before the official release ships:
 
-- Add dependency tag support
-- Add download queue
-- Add multi-selection in the atom window
-- Add support for the "Update All Packages" button
-- Add preference window
+- Add a preference window
     - Add a Reactor custom install path option

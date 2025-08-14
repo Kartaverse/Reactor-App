@@ -839,6 +839,11 @@
         <ItemType>String</ItemType>
         <EditorType>MultiLineEditor</EditorType>
       </ViewProperty>
+      <ViewProperty>
+        <ObjName>DownloadName</ObjName>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <ItemType>String</ItemType>
+      </ViewProperty>
     </ViewBehavior>
     <Constant>
       <ItemName>kFileQuitShortcut</ItemName>
@@ -1370,7 +1375,7 @@
       <PropertyVal Name="TabIndex">4</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">Version 4 Beta 2 - 2025-08-11</PropertyVal>
+      <PropertyVal Name="Text">Version 4 Beta 4 - 2025-08-14</PropertyVal>
       <PropertyVal Name="TextAlignment">2</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
       <PropertyVal Name="Tooltip"/>
@@ -7660,9 +7665,9 @@
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.Controls.AtomsListBox.PaintCellText</EditorLocation>
+          <EditorLocation>AboutWindow.Controls.AboutLabel3</EditorLocation>
           <EditorPath/>
-          <EditingPartID>338128895</EditingPartID>
+          <EditingPartID>296974335</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
