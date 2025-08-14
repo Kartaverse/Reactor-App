@@ -843,6 +843,7 @@
         <ObjName>DownloadName</ObjName>
         <PropertyGroup>Behavior</PropertyGroup>
         <ItemType>String</ItemType>
+        <EditorType>MultiLineEditor</EditorType>
       </ViewProperty>
     </ViewBehavior>
     <Constant>
@@ -1362,7 +1363,7 @@
       <PropertyVal Name="Height">23</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">171</PropertyVal>
+      <PropertyVal Name="Left">159</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">True</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -1383,7 +1384,7 @@
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">203</PropertyVal>
+      <PropertyVal Name="Width">229</PropertyVal>
       <ControlIndex>4</ControlIndex>
       <Locked>0</Locked>
       <PartID>1034719231</PartID>
@@ -3443,16 +3444,16 @@
         <SourceLine>AtomStatus = "Incompatible"</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
+        <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
         <SourceLine>Var AtomDownloading As Boolean = False</SourceLine>
         <SourceLine>If App.DownloadAtomID = AtomID Then</SourceLine>
         <SourceLine>AtomDownloading = True</SourceLine>
         <SourceLine>AtomStatus = "Downloading"</SourceLine>
-        <SourceLine>ElseIf App.DownloadList.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
+        <SourceLine>ElseIf App.DownloadList.IndexOf(AtomID) &lt;&gt; -1 and InstallState = False Then</SourceLine>
         <SourceLine>AtomDownloading = True</SourceLine>
         <SourceLine>AtomStatus = "Queued"</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
-        <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
         <SourceLine>Var AtomVisible As Integer = 0</SourceLine>
         <SourceLine>Select Case RepoPopupMenu.SelectedRowIndex</SourceLine>
         <SourceLine>Case 0</SourceLine>
@@ -3509,9 +3510,6 @@
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 8</SourceLine>
-        <SourceLine>// Removing</SourceLine>
-        <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End Select</SourceLine>
         <SourceLine/>
         <SourceLine>// Apply search filter to AtomsListBox content</SourceLine>
@@ -3588,16 +3586,15 @@
         <SourceLine>AtomStatus = "Incompatible"</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
+        <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
         <SourceLine>Var AtomDownloading As Boolean = False</SourceLine>
         <SourceLine>If App.DownloadAtomID = AtomID Then</SourceLine>
         <SourceLine>AtomDownloading = True</SourceLine>
         <SourceLine>AtomStatus = "Downloading"</SourceLine>
-        <SourceLine>ElseIf App.DownloadList.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
+        <SourceLine>ElseIf App.DownloadList.IndexOf(AtomID) &lt;&gt; -1 and InstallState = False Then</SourceLine>
         <SourceLine>AtomDownloading = True</SourceLine>
         <SourceLine>AtomStatus = "Queued"</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine/>
-        <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
         <SourceLine/>
         <SourceLine>Var AtomVisible As Integer = 0</SourceLine>
         <SourceLine>Select Case RepoPopupMenu.SelectedRowIndex</SourceLine>
@@ -3655,9 +3652,6 @@
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 8</SourceLine>
-        <SourceLine>// Removing</SourceLine>
-        <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End Select</SourceLine>
         <SourceLine/>
         <SourceLine>// Apply search filter to AtomsListBox content</SourceLine>
@@ -4908,36 +4902,6 @@
         <SourceLine>End Try</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
-        <SourceLine>// Expand the dependencies for the items already in the download queue</SourceLine>
-        <SourceLine>If App.Atoms &lt;&gt; Nil Then</SourceLine>
-        <SourceLine>For Each a As String In App.Atoms.Keys</SourceLine>
-        <SourceLine>Var RefAtom As JSONItem = App.Atoms.Value(a)</SourceLine>
-        <SourceLine>Var RefAtomID As String = Atom.Value("ID")</SourceLine>
-        <SourceLine>If RefAtom &lt;&gt; Nil and App.DownloadList.IndexOf(RefAtomID) &lt;&gt; -1 and RefAtom.HasKey("Dependencies") Then</SourceLine>
-        <SourceLine>Var DependencyList As JSONItem = RefAtom.Value("Dependencies")</SourceLine>
-        <SourceLine>Try</SourceLine>
-        <SourceLine>If DependencyList.Keys &lt;&gt; Nil Then</SourceLine>
-        <SourceLine>For Each k As String In DependencyList.Keys</SourceLine>
-        <SourceLine>Var DependenciesVariant As Variant = DependencyList.Value(k)</SourceLine>
-        <SourceLine>// Add the dependencies to the download queue</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Is the atom installed already</SourceLine>
-        <SourceLine>InstallState = AtomInstalled(DependenciesVariant.StringValue)</SourceLine>
-        <SourceLine>If InstallState = False Then</SourceLine>
-        <SourceLine>// Add the atom package to the download queue</SourceLine>
-        <SourceLine>App.DownloadList().Add(DependenciesVariant.StringValue)</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>Next</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>Catch error As IOException</SourceLine>
-        <SourceLine>MessageBox(error.Message)</SourceLine>
-        <SourceLine>End Try</SourceLine>
-        <SourceLine/>
-        <SourceLine>Exit For a //Break out of the loop</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>Next</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine/>
         <SourceLine>// De-duplicate array entries</SourceLine>
         <SourceLine>App.DownloadList.Sort</SourceLine>
         <SourceLine>For i As Integer = App.DownloadList.Ubound - 1 DownTo 0</SourceLine>
@@ -5497,10 +5461,9 @@
           <SourceLine/>
           <SourceLine>If InstallState = False Then</SourceLine>
           <SourceLine>AtomDownloadQueue(AtomID, Atom)</SourceLine>
+          <SourceLine>ElseIf InstallState = True Then</SourceLine>
+          <SourceLine>AtomRemoveByAtomID(AtomID)</SourceLine>
           <SourceLine>End If</SourceLine>
-          <SourceLine/>
-          <SourceLine>AtomsListBox.CellTextAt(row, 6) = "Queued"</SourceLine>
-          <SourceLine>AtomsListBox.RefreshCell(row, 6)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
@@ -5527,9 +5490,6 @@
           <SourceLine>// Light Grey</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(144, 144, 144)</SourceLine>
           <SourceLine>Case "Complete"</SourceLine>
-          <SourceLine>// Light Grey</SourceLine>
-          <SourceLine>g.DrawingColor = Color.RGB(144, 144, 144)</SourceLine>
-          <SourceLine>Case "Removing"</SourceLine>
           <SourceLine>// Light Grey</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(144, 144, 144)</SourceLine>
           <SourceLine>Case "Update"</SourceLine>
@@ -5668,11 +5628,6 @@
           <SourceLine>End If</SourceLine>
           <SourceLine>Next</SourceLine>
           <SourceLine/>
-          <SourceLine>// Clear the item from the download queue</SourceLine>
-          <SourceLine>For i As Integer = App.DownloadList.Ubound - 1 DownTo 0</SourceLine>
-          <SourceLine>if App.DownloadList(i) = App.DownloadAtomID Then App.DownloadList.Remove(i)</SourceLine>
-          <SourceLine>Next</SourceLine>
-          <SourceLine/>
           <SourceLine>App.DownloadAtomID = ""</SourceLine>
           <SourceLine>App.DownloadName = ""</SourceLine>
           <SourceLine>DownloadProgress.Value = 0</SourceLine>
@@ -5680,8 +5635,13 @@
           <SourceLine>//CancelButton.Visible = False</SourceLine>
           <SourceLine>// DownloadStatsLabel.Text = ""</SourceLine>
           <SourceLine/>
+          <SourceLine>// Clear the item from the download queue</SourceLine>
+          <SourceLine>For i As Integer = App.DownloadList.Ubound - 1 DownTo 0</SourceLine>
+          <SourceLine>if App.DownloadList(i) = App.DownloadAtomID Then App.DownloadList.Remove(i)</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine/>
           <SourceLine>// The Reactor app was quit with the CancelClosing "Complete Downloads, Then Quit" option.</SourceLine>
-          <SourceLine>If App.DownloadList.Count &lt;= 0 and App.QuitOnDownloadComplete = 1 Then</SourceLine>
+          <SourceLine>If App.QuitOnDownloadComplete = 1 Then</SourceLine>
           <SourceLine>App.QuitAllowed = 1</SourceLine>
           <SourceLine>Quit()</SourceLine>
           <SourceLine>End If</SourceLine>
@@ -6258,7 +6218,7 @@
       <PropertyVal Name="Height">22</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialValue">
-        <Hex bytes="78">416C6C0A496E7374616C6C65640A446F6E6174650A4E65770A5570646174650A446570656E64656E636965730A496E636F6D70617469626C650A446F776E6C6F6164696E670A52656D6F76696E67</Hex>
+        <Hex bytes="69">416C6C0A496E7374616C6C65640A446F6E6174650A4E65770A5570646174650A446570656E64656E636965730A496E636F6D70617469626C650A446F776E6C6F6164696E67</Hex>
       </PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
       <PropertyVal Name="Left">0</PropertyVal>
@@ -7665,9 +7625,9 @@
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>AboutWindow.Controls.AboutLabel3</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.RSocket.FileReceived</EditorLocation>
           <EditorPath/>
-          <EditingPartID>296974335</EditingPartID>
+          <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
