@@ -34,5 +34,7 @@ This location is typically:
 
 The following features will be completed before the official release ships:
 
-- Add a preference window
+- Add a macOS Code Signing Certificate
+- Create Windows/Linux Builds
+- Add preference window
     - Add a Reactor custom install path option
