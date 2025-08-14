@@ -208,7 +208,7 @@
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function CancelClosing() As Boolean</SourceLine>
         <SourceLine>// The cancelClosing event is called when the app receives the quit signal</SourceLine>
-        <SourceLine>If App.DownloadRow &gt;= 0 and App.QuitAllowed = 0 Then</SourceLine>
+        <SourceLine>If App.DownloadList.Count &gt;= 1 and App.QuitAllowed = 0 Then</SourceLine>
         <SourceLine>Var Quit_Message_Dialog As New MessageDialog                        // Create the MessageDialog object</SourceLine>
         <SourceLine>Quit_Message_Dialog.IconType = MessageDialog.IconTypes.Caution // Display warning icon</SourceLine>
         <SourceLine>Quit_Message_Dialog.ActionButton.Caption = "Quit"</SourceLine>
@@ -412,21 +412,6 @@
       </ItemSource>
       <TextEncoding>134217984</TextEncoding>
       <ItemDeclaration>DownloadFolderItem As FolderItem</ItemDeclaration>
-      <ItemFlags>0</ItemFlags>
-      <IsShared>0</IsShared>
-    </Property>
-    <Property>
-      <ItemName>DownloadRow</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>578922495</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>DownloadRow As Integer = -1</SourceLine>
-        <SourceLine/>
-      </ItemSource>
-      <TextEncoding>134217984</TextEncoding>
-      <ItemDeclaration>DownloadRow As Integer = -1</ItemDeclaration>
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
     </Property>
@@ -671,17 +656,32 @@
       <IsShared>0</IsShared>
     </Property>
     <Property>
-      <ItemName>DownloadDependencies()</ItemName>
+      <ItemName>DependencyList()</ItemName>
       <Compatibility/>
       <Visible>1</Visible>
       <PartID>520775679</PartID>
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
-        <SourceLine>DownloadDependencies() As String</SourceLine>
+        <SourceLine>DependencyList() As String</SourceLine>
         <SourceLine/>
       </ItemSource>
       <TextEncoding>134217984</TextEncoding>
-      <ItemDeclaration>DownloadDependencies() As String</ItemDeclaration>
+      <ItemDeclaration>DependencyList() As String</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
+    <Property>
+      <ItemName>DownloadList()</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>487905279</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>DownloadList() As String</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>DownloadList() As String</ItemDeclaration>
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
     </Property>
@@ -805,12 +805,6 @@
         <PropertyGroup>Behavior</PropertyGroup>
         <ItemType>String</ItemType>
         <EditorType>MultiLineEditor</EditorType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>DownloadRow</ObjName>
-        <PropertyGroup>Behavior</PropertyGroup>
-        <PropertyValue>-1</PropertyValue>
-        <ItemType>Integer</ItemType>
       </ViewProperty>
       <ViewProperty>
         <ObjName>QuitOnDownloadComplete</ObjName>
@@ -2995,7 +2989,7 @@
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function CancelClosing(appQuitting As Boolean) As Boolean</SourceLine>
         <SourceLine>// The CancelClosing event is called when the app receives the quit signal</SourceLine>
-        <SourceLine>If App.DownloadRow &gt;= 0 and App.QuitAllowed = 0 Then</SourceLine>
+        <SourceLine>If App.DownloadList.Count &gt;= 1 and App.QuitAllowed = 0 Then</SourceLine>
         <SourceLine> // Create the MessageDialog object</SourceLine>
         <SourceLine>Var Quit_Message_Dialog As New MessageDialog</SourceLine>
         <SourceLine>// Display warning icon</SourceLine>
@@ -3375,7 +3369,7 @@
         <SourceLine/>
         <SourceLine>// Dependencies Check</SourceLine>
         <SourceLine>If App.Atoms &lt;&gt; Nil Then</SourceLine>
-        <SourceLine>App.DownloadDependencies().RemoveAll()</SourceLine>
+        <SourceLine>App.DependencyList().RemoveAll()</SourceLine>
         <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
         <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
         <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
@@ -3433,10 +3427,9 @@
         <SourceLine>If App.DownloadAtomID = AtomID Then</SourceLine>
         <SourceLine>AtomDownloading = True</SourceLine>
         <SourceLine>AtomStatus = "Downloading"</SourceLine>
-        <SourceLine>'ElseIf App.DownloadDependencies.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
-        <SourceLine>'// Atom Dependency</SourceLine>
-        <SourceLine>'AtomDownloading = True</SourceLine>
-        <SourceLine>'AtomStatus = "Downloading"</SourceLine>
+        <SourceLine>ElseIf App.DownloadList.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
+        <SourceLine>AtomDownloading = True</SourceLine>
+        <SourceLine>AtomStatus = "Queued"</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
@@ -3477,7 +3470,7 @@
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 5</SourceLine>
         <SourceLine>// Dependencies</SourceLine>
-        <SourceLine>If App.DownloadDependencies.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
+        <SourceLine>If App.DependencyList.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
@@ -3490,7 +3483,7 @@
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 7</SourceLine>
-        <SourceLine>//Downloading</SourceLine>
+        <SourceLine>// Downloading</SourceLine>
         <SourceLine>If AtomDownloading = True and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
@@ -3528,7 +3521,7 @@
         <SourceLine>// Is the atom installed already / or is an update available?</SourceLine>
         <SourceLine>If InstallState = True Then</SourceLine>
         <SourceLine>AtomsListBox.CellTagAt(NewRow, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
-        <SourceLine>ElseIf AtomUpdated = True Then</SourceLine>
+        <SourceLine>ElseIf AtomUpdated = True or AtomDownloading = True Then</SourceLine>
         <SourceLine>AtomsListBox.CellTagAt(NewRow, 0) = DesktopCheckbox.VisualStates.Indeterminate</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomsListBox.CellTagAt(NewRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
@@ -3579,10 +3572,9 @@
         <SourceLine>If App.DownloadAtomID = AtomID Then</SourceLine>
         <SourceLine>AtomDownloading = True</SourceLine>
         <SourceLine>AtomStatus = "Downloading"</SourceLine>
-        <SourceLine>'ElseIf App.DownloadDependencies.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
-        <SourceLine>'// Atom Dependency</SourceLine>
-        <SourceLine>'AtomDownloading = True</SourceLine>
-        <SourceLine>'AtomStatus = "Downloading"</SourceLine>
+        <SourceLine>ElseIf App.DownloadList.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
+        <SourceLine>AtomDownloading = True</SourceLine>
+        <SourceLine>AtomStatus = "Queued"</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
@@ -3624,7 +3616,7 @@
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 5</SourceLine>
         <SourceLine>// Dependencies</SourceLine>
-        <SourceLine>If App.DownloadDependencies.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
+        <SourceLine>If App.DependencyList.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
@@ -3637,7 +3629,7 @@
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 7</SourceLine>
-        <SourceLine>//Downloading</SourceLine>
+        <SourceLine>// Downloading</SourceLine>
         <SourceLine>If AtomDownloading = True and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
@@ -3675,7 +3667,7 @@
         <SourceLine>// Is the atom installed already / or is an update available?</SourceLine>
         <SourceLine>If InstallState = True Then</SourceLine>
         <SourceLine>AtomsListBox.CellTagAt(NewRow, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
-        <SourceLine>ElseIf AtomUpdated = True Then</SourceLine>
+        <SourceLine>ElseIf AtomUpdated = True or AtomDownloading = True Then</SourceLine>
         <SourceLine>AtomsListBox.CellTagAt(NewRow, 0) = DesktopCheckbox.VisualStates.Indeterminate</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomsListBox.CellTagAt(NewRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
@@ -3701,6 +3693,10 @@
         <SourceLine>ReactorWindow.Title = "Reactor Package Manager - " + FilteredAtomCount.ToString + " New Packages"</SourceLine>
         <SourceLine>ElseIf SelectedCategory = "Update" then</SourceLine>
         <SourceLine>ReactorWindow.Title = "Reactor Package Manager -  " + FilteredAtomCount.ToString + " Updated Packages"</SourceLine>
+        <SourceLine>ElseIf SelectedCategory = "Dependencies" then</SourceLine>
+        <SourceLine>ReactorWindow.Title = "Reactor Package Manager - " + FilteredAtomCount.ToString + " Required Packages"</SourceLine>
+        <SourceLine>ElseIf SelectedCategory = "Downloading" then</SourceLine>
+        <SourceLine>ReactorWindow.Title = "Reactor Package Manager - " + FilteredAtomCount.ToString + " Packages"</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>ReactorWindow.Title = "Reactor Package Manager"</SourceLine>
         <SourceLine>End If</SourceLine>
@@ -3725,12 +3721,7 @@
         <SourceLine>// Cancel the download task</SourceLine>
         <SourceLine>RSocket.Disconnect()</SourceLine>
         <SourceLine/>
-        <SourceLine>if App.DownloadRow &gt;= 0 Then</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(App.DownloadRow, 6) = "Removing"</SourceLine>
-        <SourceLine>For c As Integer = 0 to AtomsListBox.ColumnCount - 1</SourceLine>
-        <SourceLine>AtomsListBox.RefreshCell(App.DownloadRow, c)</SourceLine>
-        <SourceLine>Next</SourceLine>
-        <SourceLine/>
+        <SourceLine>If App.DownloadList.Count &gt;= 1 Then</SourceLine>
         <SourceLine>// Refresh the status displays</SourceLine>
         <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Cancelled"</SourceLine>
         <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
@@ -3741,12 +3732,13 @@
         <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
-        <SourceLine>AtomsListBox.CellTagAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
-        <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
-        <SourceLine>AtomsListBox.RefreshCell(App.DownloadRow, 0)</SourceLine>
-        <SourceLine/>
-        <SourceLine>App.DownloadRow = -1</SourceLine>
         <SourceLine>App.DownloadAtomID = ""</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Purge the download queue</SourceLine>
+        <SourceLine>For i As Integer = 0 to App.DownloadList.Count - 1</SourceLine>
+        <SourceLine>App.DownloadList.Remove(i)</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>App.DownloadList.Sort</SourceLine>
         <SourceLine/>
         <SourceLine>System.Debuglog("[Cancelled Download] " + App.DownloadFilename)</SourceLine>
         <SourceLine/>
@@ -3783,19 +3775,11 @@
         <SourceLine/>
         <SourceLine>Var AtomID As String = Atom.Value("ID")</SourceLine>
         <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
-        <SourceLine/>
-        <SourceLine>App.DownloadRow = row</SourceLine>
-        <SourceLine>App.DownloadAtomID = AtomID</SourceLine>
-        <SourceLine>App.DownloadAtom = Atom</SourceLine>
-        <SourceLine/>
         <SourceLine>Var AtomzFile As FolderItem = App.AtomzFolder.Child(AtomID + ".zip")</SourceLine>
         <SourceLine/>
-        <SourceLine>App.DownloadFilename = AtomzFile.Name</SourceLine>
-        <SourceLine>App.DownloadFolderItem = AtomzFile</SourceLine>
-        <SourceLine/>
         <SourceLine>// Remove the partial file</SourceLine>
-        <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil And App.DownloadFolderItem.Exists then</SourceLine>
-        <SourceLine>App.DownloadFolderItem.Remove()</SourceLine>
+        <SourceLine>If AtomzFile &lt;&gt; Nil And AtomzFile.Exists then</SourceLine>
+        <SourceLine>AtomzFile.Remove()</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>// Remove the atom deploy file records</SourceLine>
@@ -3811,16 +3795,10 @@
         <SourceLine>DeployJSONFile.Remove()</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
-        <SourceLine/>
         <SourceLine>// Deploy files</SourceLine>
         <SourceLine>Try</SourceLine>
-        <SourceLine>Var DeployCount As Integer = AtomDeploy.Keys.Count</SourceLine>
-        <SourceLine>System.Debuglog("[Deploy File Count] " + DeployCount.ToString())</SourceLine>
-        <SourceLine>// MessageBox(VarType(AtomDeploy).ToString)</SourceLine>
-        <SourceLine>// Type 9 = Object</SourceLine>
         <SourceLine>If AtomDeploy.Keys &lt;&gt; Nil Then</SourceLine>
         <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
-        <SourceLine>// Todo: Handle OS-Secific deploy files</SourceLine>
         <SourceLine>if k &lt;&gt; "Mac" and k &lt;&gt; "Windows" and k &lt;&gt; "Linux" Then</SourceLine>
         <SourceLine>// Common Files</SourceLine>
         <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
@@ -3896,17 +3874,17 @@
         <SourceLine>End Try</SourceLine>
         <SourceLine/>
         <SourceLine>// Refresh the status displays</SourceLine>
-        <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " Removed"</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = AtomzFile.Name + " Removed"</SourceLine>
         <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
         <SourceLine>DownloadProgress.Value = 0</SourceLine>
         <SourceLine/>
-        <SourceLine>App.DownloadRow = -1</SourceLine>
-        <SourceLine>App.DownloadAtomID = ""</SourceLine>
-        <SourceLine>App.DownloadAtom = Nil</SourceLine>
-        <SourceLine/>
-        <SourceLine>AtomsRefresh()</SourceLine>
+        <SourceLine>For i As Integer = 0 to App.DownloadList.Count - 1</SourceLine>
+        <SourceLine>If App.DownloadList(i) = AtomID Then</SourceLine>
+        <SourceLine>App.DownloadList.Remove(i)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>App.DownloadList.Sort</SourceLine>
         <SourceLine>End if</SourceLine>
-        <SourceLine/>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
@@ -3942,10 +3920,9 @@
         <SourceLine>App.DownloadFolderItem = AtomzFile</SourceLine>
         <SourceLine>App.DownloadAtomID = AtomID</SourceLine>
         <SourceLine>App.DownloadAtom = Atom</SourceLine>
-        <SourceLine>App.DownloadRow = row</SourceLine>
         <SourceLine/>
         <SourceLine>// Dependencies</SourceLine>
-        <SourceLine>ExpandDependencies(Atom)</SourceLine>
+        <SourceLine>// ExpandDependencies(Atom)</SourceLine>
         <SourceLine/>
         <SourceLine>RSocket.Send("GET", ZipFileURL, AtomzFile)</SourceLine>
         <SourceLine>Catch e As UnsupportedOperationException</SourceLine>
@@ -4035,8 +4012,6 @@
         <SourceLine>Var WorkingDirectory As FolderItem = App.TemporaryAtomFolder.Child("Reactor-master-Atoms-" + FolderName).Child("Atoms").Child(FolderName)</SourceLine>
         <SourceLine/>
         <SourceLine>// Extract a single JSON encoded Atom package defintion</SourceLine>
-        <SourceLine>Var row As Integer = App.DownloadRow</SourceLine>
-        <SourceLine/>
         <SourceLine>Var Atom As JSONItem = App.DownloadAtom</SourceLine>
         <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
         <SourceLine>Var AtomDeploy As JSONItem = Atom.Value("Deploy")</SourceLine>
@@ -4108,14 +4083,8 @@
         <SourceLine/>
         <SourceLine>// Deploy files</SourceLine>
         <SourceLine>Try</SourceLine>
-        <SourceLine>Var DeployCount As Integer = AtomDeploy.Keys.Count</SourceLine>
-        <SourceLine>System.Debuglog("[Deploy File Count] " + DeployCount.ToString())</SourceLine>
-        <SourceLine>// MessageBox(VarType(AtomDeploy).ToString)</SourceLine>
-        <SourceLine>// Type 9 = Object</SourceLine>
         <SourceLine>If AtomDeploy.Keys &lt;&gt; Nil Then</SourceLine>
         <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Todo: Handle OS-Secific deploy files</SourceLine>
         <SourceLine>if k &lt;&gt; "Mac" and k &lt;&gt; "Windows" and k &lt;&gt; "Linux" Then</SourceLine>
         <SourceLine>// Common Files</SourceLine>
         <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
@@ -4243,16 +4212,6 @@
         <SourceLine>AtomStatus = "New"</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomStatus = "OK"</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine/>
-        <SourceLine>If row &lt;= AtomsListBox.RowCount - 1 Then</SourceLine>
-        <SourceLine>AtomsListBox.CellTextAt(row, 6) = AtomStatus</SourceLine>
-        <SourceLine>For c As Integer = 0 to AtomsListBox.ColumnCount - 1</SourceLine>
-        <SourceLine>AtomsListBox.RefreshCell(row, c)</SourceLine>
-        <SourceLine>Next</SourceLine>
-        <SourceLine/>
-        <SourceLine>AtomsListBox.CellTagAt(row, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
-        <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = DesktopCheckbox.VisualStates.Checked</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " " + " Installed"</SourceLine>
@@ -4524,7 +4483,6 @@
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function AtomIncompatible(InstalledAtomID As String) As Boolean</SourceLine>
         <SourceLine>// Fix this to flag atoms that are yet to be installed</SourceLine>
-        <SourceLine/>
         <SourceLine>Var DeployAtomsFile As FolderItem = App.DeployAtomsReactorFolder.Child(InstalledAtomID + ".atom")</SourceLine>
         <SourceLine>Var DeployJSONFile As FolderItem = App.DeployJSONReactorFolder.Child(InstalledAtomID + ".json")</SourceLine>
         <SourceLine/>
@@ -4681,13 +4639,8 @@
         <SourceLine/>
         <SourceLine>// Deploy files</SourceLine>
         <SourceLine>Try</SourceLine>
-        <SourceLine>Var DeployCount As Integer = AtomDeploy.Keys.Count</SourceLine>
-        <SourceLine>System.Debuglog("[Deploy File Count] " + DeployCount.ToString())</SourceLine>
-        <SourceLine>// MessageBox(VarType(AtomDeploy).ToString)</SourceLine>
-        <SourceLine>// Type 9 = Object</SourceLine>
         <SourceLine>If AtomDeploy.Keys &lt;&gt; Nil Then</SourceLine>
         <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
-        <SourceLine>// Todo: Handle OS-Secific deploy files</SourceLine>
         <SourceLine>if k &lt;&gt; "Mac" and k &lt;&gt; "Windows" and k &lt;&gt; "Linux" Then</SourceLine>
         <SourceLine>// Common Files</SourceLine>
         <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
@@ -4752,19 +4705,19 @@
         <SourceLine>Var HTML As String = ""</SourceLine>
         <SourceLine/>
         <SourceLine>If Atom.HasKey("Dependencies") Then</SourceLine>
-        <SourceLine>Var AtomDependencies As JSONItem = Atom.Value("Dependencies")</SourceLine>
+        <SourceLine>Var DependencyList As JSONItem = Atom.Value("Dependencies")</SourceLine>
         <SourceLine> HTML = "&lt;p&gt;Dependencies:&lt;ul&gt;" + EndOfLine</SourceLine>
         <SourceLine/>
         <SourceLine>// Dependencies files</SourceLine>
         <SourceLine>Try</SourceLine>
-        <SourceLine>Var DependenciesCount As Integer = AtomDependencies.Keys.Count</SourceLine>
+        <SourceLine>Var DependenciesCount As Integer = DependencyList.Keys.Count</SourceLine>
         <SourceLine>System.Debuglog("[Dependencies Count] " + DependenciesCount.ToString())</SourceLine>
-        <SourceLine>// MessageBox(VarType(AtomDependencies).ToString)</SourceLine>
+        <SourceLine>// MessageBox(VarType(DependencyList).ToString)</SourceLine>
         <SourceLine>// Type 9 = Object</SourceLine>
-        <SourceLine>If AtomDependencies.Keys &lt;&gt; Nil Then</SourceLine>
-        <SourceLine>For Each k As String In AtomDependencies.Keys</SourceLine>
+        <SourceLine>If DependencyList.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each k As String In DependencyList.Keys</SourceLine>
         <SourceLine/>
-        <SourceLine>Var DependenciesVariant As Variant = AtomDependencies.Value(k)</SourceLine>
+        <SourceLine>Var DependenciesVariant As Variant = DependencyList.Value(k)</SourceLine>
         <SourceLine>HTML = HTML + "&lt;li&gt;&amp;nbsp;&amp;nbsp;" + DependenciesVariant.StringValue + "&lt;/li&gt;" + EndOfLine</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>End If</SourceLine>
@@ -4801,13 +4754,8 @@
         <SourceLine/>
         <SourceLine>// Deploy files</SourceLine>
         <SourceLine>Try</SourceLine>
-        <SourceLine>Var DeployCount As Integer = AtomDeploy.Keys.Count</SourceLine>
-        <SourceLine>System.Debuglog("[Deploy File Count] " + DeployCount.ToString())</SourceLine>
-        <SourceLine>// MessageBox(VarType(AtomDeploy).ToString)</SourceLine>
-        <SourceLine>// Type 9 = Object</SourceLine>
         <SourceLine>If AtomDeploy.Keys &lt;&gt; Nil Then</SourceLine>
         <SourceLine>For Each k As String In AtomDeploy.Keys</SourceLine>
-        <SourceLine>// Todo: Handle OS-Secific deploy files</SourceLine>
         <SourceLine>if k &lt;&gt; "Mac" and k &lt;&gt; "Windows" and k &lt;&gt; "Linux" Then</SourceLine>
         <SourceLine>// Common Files</SourceLine>
         <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
@@ -4914,12 +4862,12 @@
         <SourceLine/>
         <SourceLine>// Dependencies</SourceLine>
         <SourceLine>If Atom.HasKey("Dependencies") Then</SourceLine>
-        <SourceLine>Var AtomDependencies As JSONItem = Atom.Value("Dependencies")</SourceLine>
+        <SourceLine>Var DependencyList As JSONItem = Atom.Value("Dependencies")</SourceLine>
         <SourceLine>Try</SourceLine>
-        <SourceLine>If AtomDependencies.Keys &lt;&gt; Nil Then</SourceLine>
-        <SourceLine>For Each k As String In AtomDependencies.Keys</SourceLine>
-        <SourceLine>Var DependenciesVariant As Variant = AtomDependencies.Value(k)</SourceLine>
-        <SourceLine>App.DownloadDependencies().Add(DependenciesVariant.StringValue)</SourceLine>
+        <SourceLine>If DependencyList.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each k As String In DependencyList.Keys</SourceLine>
+        <SourceLine>Var DependenciesVariant As Variant = DependencyList.Value(k)</SourceLine>
+        <SourceLine>App.DependencyList().Add(DependenciesVariant.StringValue)</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Catch error As IOException</SourceLine>
@@ -4928,10 +4876,10 @@
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>// De-duplicate array entries</SourceLine>
-        <SourceLine>App.DownloadDependencies.Sort</SourceLine>
-        <SourceLine>for i As integer = App.DownloadDependencies.Ubound - 1 downto 0</SourceLine>
-        <SourceLine>if App.DownloadDependencies(i) = App.DownloadDependencies(i + 1) then App.DownloadDependencies.Remove(i)</SourceLine>
-        <SourceLine>next</SourceLine>
+        <SourceLine>App.DependencyList.Sort</SourceLine>
+        <SourceLine>For i As Integer = App.DependencyList.Ubound - 1 DownTo 0</SourceLine>
+        <SourceLine>if App.DependencyList(i) = App.DependencyList(i + 1) Then App.DependencyList.Remove(i)</SourceLine>
+        <SourceLine>Next</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
@@ -4940,6 +4888,57 @@
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
       <ItemParams>Atom As JSONItem</ItemParams>
+      <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>AtomDownloadQueue</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1348354047</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub AtomDownloadQueue(AtomID As String, Atom As JSONItem)</SourceLine>
+        <SourceLine>// Todo: </SourceLine>
+        <SourceLine>// Check if an installed atom has an update</SourceLine>
+        <SourceLine>// If a package is installed, verify if any missing dependencies are required</SourceLine>
+        <SourceLine>// Don't reinstall an atom if no update is needed (json exists and date is the same on disk)</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Is the atom installed already</SourceLine>
+        <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
+        <SourceLine>If InstallState = False Then</SourceLine>
+        <SourceLine>// Add the atom package to the download queue</SourceLine>
+        <SourceLine>App.DownloadList().Add(AtomID)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Dependencies</SourceLine>
+        <SourceLine>If Atom &lt;&gt; Nil and Atom.HasKey("Dependencies") Then</SourceLine>
+        <SourceLine>Var DependencyList As JSONItem = Atom.Value("Dependencies")</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>If DependencyList.Keys &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>For Each k As String In DependencyList.Keys</SourceLine>
+        <SourceLine>Var DependenciesVariant As Variant = DependencyList.Value(k)</SourceLine>
+        <SourceLine>// Add the dependencies to the download queue</SourceLine>
+        <SourceLine>App.DownloadList().Add(DependenciesVariant.StringValue)</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// De-duplicate array entries</SourceLine>
+        <SourceLine>App.DownloadList.Sort</SourceLine>
+        <SourceLine>For i As Integer = App.DownloadList.Ubound - 1 DownTo 0</SourceLine>
+        <SourceLine>if App.DownloadList(i) = App.DownloadList(i + 1) Then App.DownloadList.Remove(i)</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>AtomID As String, Atom As JSONItem</ItemParams>
       <ItemResult/>
     </Method>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
@@ -5345,29 +5344,12 @@
           <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
           <SourceLine>// Verify no active downloads are in progress</SourceLine>
           <SourceLine/>
-          <SourceLine>If AtomUpdateAvailable(AtomID) = True then</SourceLine>
-          <SourceLine>// Cancel the download task, and update the atom package</SourceLine>
-          <SourceLine>If App.DownloadRow = -1 Then</SourceLine>
-          <SourceLine>AtomRemove(row)</SourceLine>
-          <SourceLine>AtomDownload(row)</SourceLine>
+          <SourceLine>If InstallState = False Then</SourceLine>
+          <SourceLine>AtomDownloadQueue(AtomID, Atom)</SourceLine>
           <SourceLine>End If</SourceLine>
-          <SourceLine>ElseIf InstallState = True then</SourceLine>
-          <SourceLine>// Remove the package</SourceLine>
-          <SourceLine>If App.DownloadRow = -1 Then</SourceLine>
-          <SourceLine>AtomRemove(row)</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine>ElseIf InstallState = False Then</SourceLine>
-          <SourceLine>If App.DownloadRow = -1 Then</SourceLine>
-          <SourceLine>// Download the package</SourceLine>
-          <SourceLine>AtomDownload(row)</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine>//AtomsRefresh()</SourceLine>
           <SourceLine/>
-          <SourceLine>For RefreshRow As Integer = 0 to AtomsListBox.RowCount - 1</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(RefreshRow, 0) = AtomsListBox.CellTagAt(RefreshRow, 0)</SourceLine>
-          <SourceLine>AtomsListBox.RefreshCell(RefreshRow, 0)</SourceLine>
-          <SourceLine>Next</SourceLine>
+          <SourceLine>AtomsListBox.CellTextAt(row, 6) = "Queued"</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(row, 6)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
@@ -5388,6 +5370,9 @@
           <SourceLine>// Light Grey</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(144, 144, 144)</SourceLine>
           <SourceLine>Case "Downloading"</SourceLine>
+          <SourceLine>// Light Grey</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(144, 144, 144)</SourceLine>
+          <SourceLine>Case "Queued"</SourceLine>
           <SourceLine>// Light Grey</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(144, 144, 144)</SourceLine>
           <SourceLine>Case "Removing"</SourceLine>
@@ -5491,15 +5476,6 @@
           <SourceLine>DownloadProgress.Visible = True</SourceLine>
           <SourceLine>DownloadProgress.Value = (bytesReceived / totalBytes) * 100</SourceLine>
           <SourceLine/>
-          <SourceLine>If App.DownloadRow &gt;= 0 and App.DownloadRow &lt;= AtomsListBox.RowCount - 1  Then</SourceLine>
-          <SourceLine>AtomsListBox.CellTagAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Indeterminate</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(App.DownloadRow, 0) = DesktopCheckbox.VisualStates.Indeterminate</SourceLine>
-          <SourceLine>AtomsListBox.CellTextAt(App.DownloadRow, 6) = "Downloading"</SourceLine>
-          <SourceLine>For c As Integer = 0 to AtomsListBox.ColumnCount - 1</SourceLine>
-          <SourceLine>AtomsListBox.RefreshCell(App.DownloadRow, c)</SourceLine>
-          <SourceLine>Next</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine/>
           <SourceLine>Var megabytesReceived As Double = bytesReceived / 1000000</SourceLine>
           <SourceLine>Var totalmegabytes As Double = totalBytes / 1000000</SourceLine>
           <SourceLine/>
@@ -5532,18 +5508,19 @@
           <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " " + " Downloaded"</SourceLine>
           <SourceLine/>
           <SourceLine>System.Debuglog("[Downloaded Package] " + file.NativePath)</SourceLine>
-          <SourceLine>//MessageBox("Atom package download is done. The file is located here: " + file.NativePath)</SourceLine>
           <SourceLine/>
-          <SourceLine>If App.DownloadRow &gt;= 0 Then</SourceLine>
           <SourceLine>AtomDeployFiles()</SourceLine>
-          <SourceLine>End If</SourceLine>
           <SourceLine/>
-          <SourceLine>App.DownloadRow = -1</SourceLine>
+          <SourceLine>// Clear the item from the download queue</SourceLine>
+          <SourceLine>For i As Integer = App.DownloadList.Ubound - 1 DownTo 0</SourceLine>
+          <SourceLine>if App.DownloadList(i) = App.DownloadAtomID Then App.DownloadList.Remove(i)</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine/>
           <SourceLine>App.DownloadAtomID = ""</SourceLine>
           <SourceLine>DownloadProgress.Value = 0</SourceLine>
           <SourceLine>DownloadProgress.Visible = False</SourceLine>
           <SourceLine>CancelButton.Visible = False</SourceLine>
-          <SourceLine>//DownloadStatsLabel.Text = ""</SourceLine>
+          <SourceLine>// DownloadStatsLabel.Text = ""</SourceLine>
           <SourceLine/>
           <SourceLine>// The Reactor app was quit with the CancelClosing "Complete Downloads, Then Quit" option.</SourceLine>
           <SourceLine>If App.QuitOnDownloadComplete = 1 Then</SourceLine>
@@ -5668,24 +5645,15 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine>Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
-          <SourceLine>If row &gt;= 0 Then</SourceLine>
-          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
-          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
-          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
-          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
-          <SourceLine>Var SelectedAtom As String = AtomID</SourceLine>
-          <SourceLine/>
-          <SourceLine>System.Debuglog("[Remove Button] " + SelectedAtom)</SourceLine>
+          <SourceLine>For row As Integer = 0 To AtomsListBox.LastRowIndex</SourceLine>
+          <SourceLine>If AtomsListBox.RowSelectedAt(row) Then</SourceLine>
+          <SourceLine>'System.Debuglog("[Remove Button] " + SelectedAtom)</SourceLine>
           <SourceLine/>
           <SourceLine>AtomRemove(row)</SourceLine>
-          <SourceLine/>
-          <SourceLine>For RefreshRow As Integer = 0 to AtomsListBox.RowCount - 1</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(RefreshRow, 0) = AtomsListBox.CellTagAt(RefreshRow, 0)</SourceLine>
-          <SourceLine>AtomsListBox.RefreshCell(RefreshRow, 0)</SourceLine>
-          <SourceLine>Next</SourceLine>
           <SourceLine>End If</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomsRefresh()</SourceLine>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -5718,7 +5686,8 @@
           <SourceLine>If AtomUpdateAvailable(AtomID) = True then</SourceLine>
           <SourceLine>// Cancel the download task, and update the atom package</SourceLine>
           <SourceLine>AtomRemove(row)</SourceLine>
-          <SourceLine>AtomDownload(row)</SourceLine>
+          <SourceLine>//AtomDownload(row)</SourceLine>
+          <SourceLine>AtomDownloadQueue(AtomID, Atom)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>For RefreshRow As Integer = 0 to AtomsListBox.RowCount - 1</SourceLine>
@@ -5726,6 +5695,8 @@
           <SourceLine>AtomsListBox.RefreshCell(RefreshRow, 0)</SourceLine>
           <SourceLine>Next</SourceLine>
           <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomsRefresh()</SourceLine>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -5740,8 +5711,8 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine>Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
-          <SourceLine>If row &gt;= 0 Then</SourceLine>
+          <SourceLine>For row As Integer = 0 To AtomsListBox.LastRowIndex</SourceLine>
+          <SourceLine>If AtomsListBox.RowSelectedAt(row) Then</SourceLine>
           <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
           <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
           <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
@@ -5757,18 +5728,73 @@
           <SourceLine/>
           <SourceLine>If AtomUpdateAvailable(AtomID) = True then</SourceLine>
           <SourceLine>// Cancel the download task, and update the atom package</SourceLine>
-          <SourceLine>If App.DownloadRow = -1 Then</SourceLine>
           <SourceLine>AtomRemove(row)</SourceLine>
-          <SourceLine>AtomDownload(row)</SourceLine>
-          <SourceLine>End If</SourceLine>
+          <SourceLine>AtomDownloadQueue(AtomID, Atom)</SourceLine>
           <SourceLine>Else</SourceLine>
-          <SourceLine>AtomDownload(row)</SourceLine>
+          <SourceLine>AtomDownloadQueue(AtomID, Atom)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
-          <SourceLine>For RefreshRow As Integer = 0 to AtomsListBox.RowCount - 1</SourceLine>
-          <SourceLine>AtomsListBox.CellCheckBoxStateAt(RefreshRow, 0) = AtomsListBox.CellTagAt(RefreshRow, 0)</SourceLine>
-          <SourceLine>AtomsListBox.RefreshCell(RefreshRow, 0)</SourceLine>
+          <SourceLine>'AtomsListBox.CellCheckBoxStateAt(row, 0) = AtomsListBox.CellTagAt(row, 0)</SourceLine>
+          <SourceLine>'AtomsListBox.RefreshCell(row, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomsListBox.CellTextAt(row, 6) = "Queued"</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(row, 6)</SourceLine>
+          <SourceLine>End If</SourceLine>
           <SourceLine>Next</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomsRefresh()</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>Timer</Superclass>
+      <HookInstance>
+        <ItemName>Action</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>222375935</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Action()</SourceLine>
+          <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
+          <SourceLine>CreateReactorFolders()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Check if a download slot is open</SourceLine>
+          <SourceLine>If App.DownloadAtomID = "" Then</SourceLine>
+          <SourceLine>if App.DownloadList.Count &gt;= 1 Then</SourceLine>
+          <SourceLine>If App.Atoms &lt;&gt; Nil Then</SourceLine>
+          <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
+          <SourceLine>Var AtomID As String = Atom.Value("ID")</SourceLine>
+          <SourceLine>Var ZipFileURL As String =  Atom.Value("Zipfile")</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var AtomzFile As FolderItem = App.AtomzFolder.Child(AtomID + ".zip")</SourceLine>
+          <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
+          <SourceLine>If InstallState = False Then</SourceLine>
+          <SourceLine>If App.DownloadList.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
+          <SourceLine>Try</SourceLine>
+          <SourceLine>App.DownloadFilename = AtomzFile.Name</SourceLine>
+          <SourceLine>App.DownloadFolderItem = AtomzFile</SourceLine>
+          <SourceLine>App.DownloadAtomID = AtomID</SourceLine>
+          <SourceLine>App.DownloadAtom = Atom</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Dependencies</SourceLine>
+          <SourceLine>// ExpandDependencies(Atom)</SourceLine>
+          <SourceLine/>
+          <SourceLine>RSocket.Send("GET", ZipFileURL, AtomzFile)</SourceLine>
+          <SourceLine>Catch e As UnsupportedOperationException</SourceLine>
+          <SourceLine>System.DebugLog(e.Message + EndOfLine + " [Error] " + e.ErrorNumber.ToText)</SourceLine>
+          <SourceLine>Catch e As RuntimeException</SourceLine>
+          <SourceLine>System.DebugLog(e.Message + EndOfLine + " [Error] " + e.ErrorNumber.ToText)</SourceLine>
+          <SourceLine>End Try</SourceLine>
+          <SourceLine/>
+          <SourceLine>Exit For k //Break out of the loop</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End if</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
@@ -5866,7 +5892,7 @@
       <PropertyVal Name="LockTop">True</PropertyVal>
       <PropertyVal Name="Name">AtomsListBox</PropertyVal>
       <PropertyVal Name="RequiresSelection">False</PropertyVal>
-      <PropertyVal Name="RowSelectionType">0</PropertyVal>
+      <PropertyVal Name="RowSelectionType">1</PropertyVal>
       <PropertyVal Name="Scope">0</PropertyVal>
       <PropertyVal Name="Super">DesktopListBox</PropertyVal>
       <PropertyVal Name="TabIndex">2</PropertyVal>
@@ -6301,6 +6327,21 @@
       <ControlIndex>13</ControlIndex>
       <Locked>0</Locked>
       <PartID>1667713023</PartID>
+    </Control>
+    <Control>
+      <ControlClass>Timer</ControlClass>
+      <ItemName>Timer</ItemName>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Name">QueueTimer</PropertyVal>
+      <PropertyVal Name="Period">500</PropertyVal>
+      <PropertyVal Name="RunMode">2</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">Timer</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <ControlIndex>14</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1757388799</PartID>
     </Control>
   </block>
   <block type="Menu" ID="1789632511">
@@ -7436,14 +7477,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1670" height="981"/>
+        <Rect left="-5" top="25" width="1925" height="1006"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.AtomsRefresh</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.QueueTimer.Action</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
