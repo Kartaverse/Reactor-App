@@ -216,7 +216,7 @@
         <SourceLine>//Quit_Message_Dialog.AlternateActionButton.Visible = True       // Show the alternate action button</SourceLine>
         <SourceLine>//Quit_Message_Dialog.AlternateActionButton.Caption = "Complete Downloads, Then Quit"</SourceLine>
         <SourceLine>Quit_Message_Dialog.Message = "Do you want to quit Reactor?"</SourceLine>
-        <SourceLine>Quit_Message_Dialog.Explanation = "A download is still in progress."</SourceLine>
+        <SourceLine>//Quit_Message_Dialog.Explanation = "A download is still in progress."</SourceLine>
         <SourceLine/>
         <SourceLine>Var Quit_Message_Dialog_Button As MessageDialogButton                 // For handling the result</SourceLine>
         <SourceLine>Quit_Message_Dialog_Button = Quit_Message_Dialog.ShowModal  // Display the dialog</SourceLine>
@@ -3018,11 +3018,11 @@
         <SourceLine>Quit_Message_Dialog.ActionButton.Caption = "Quit"</SourceLine>
         <SourceLine>// Show the Cancel button</SourceLine>
         <SourceLine>Quit_Message_Dialog.CancelButton.Visible = True                </SourceLine>
-        <SourceLine>// Show the alternate action button        </SourceLine>
+        <SourceLine>// Show the alternate action button</SourceLine>
         <SourceLine>//Quit_Message_Dialog.AlternateActionButton.Visible = True       </SourceLine>
         <SourceLine>//Quit_Message_Dialog.AlternateActionButton.Caption = "Complete Downloads, Then Quit"</SourceLine>
         <SourceLine>Quit_Message_Dialog.Message = "Do you want to quit Reactor?"</SourceLine>
-        <SourceLine>Quit_Message_Dialog.Explanation = "A download is still in progress."</SourceLine>
+        <SourceLine>//Quit_Message_Dialog.Explanation = "A download is still in progress."</SourceLine>
         <SourceLine/>
         <SourceLine>// Hande the result</SourceLine>
         <SourceLine>Var Quit_Message_Dialog_Button As MessageDialogButton             </SourceLine>
@@ -5640,13 +5640,6 @@
           <SourceLine>if App.DownloadList(i) = App.DownloadAtomID Then App.DownloadList.Remove(i)</SourceLine>
           <SourceLine>Next</SourceLine>
           <SourceLine/>
-          <SourceLine>// The Reactor app was quit with the CancelClosing "Complete Downloads, Then Quit" option.</SourceLine>
-          <SourceLine>If App.QuitOnDownloadComplete = 1 Then</SourceLine>
-          <SourceLine>App.QuitAllowed = 1</SourceLine>
-          <SourceLine>Quit()</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine/>
-          <SourceLine/>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -5890,8 +5883,15 @@
           <SourceLine>CreateReactorFolders()</SourceLine>
           <SourceLine/>
           <SourceLine>// Check if a download slot is open</SourceLine>
+          <SourceLine>If App.DownloadList.Count = 0 Then</SourceLine>
+          <SourceLine>// The Reactor app was quit with the CancelClosing "Complete Downloads, Then Quit" option.</SourceLine>
+          <SourceLine>If App.QuitOnDownloadComplete = 1 Then</SourceLine>
+          <SourceLine>App.QuitAllowed = 1</SourceLine>
+          <SourceLine>Quit()</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
           <SourceLine>If App.DownloadAtomID = "" Then</SourceLine>
-          <SourceLine>if App.DownloadList.Count &gt;= 1 Then</SourceLine>
+          <SourceLine>If App.DownloadList.Count &gt;= 1 Then</SourceLine>
           <SourceLine>If App.Atoms &lt;&gt; Nil Then</SourceLine>
           <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
           <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
@@ -7618,16 +7618,16 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1920" height="1006"/>
+        <Rect left="-1" top="25" width="1920" height="1006"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.Controls.RSocket.FileReceived</EditorLocation>
+          <EditorLocation>App.CancelClosing</EditorLocation>
           <EditorPath/>
-          <EditingPartID>338128895</EditingPartID>
+          <EditingPartID>1350840319</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
