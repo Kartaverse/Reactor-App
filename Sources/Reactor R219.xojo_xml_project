@@ -7,7 +7,7 @@
     <MinorVersion>0</MinorVersion>
     <SubVersion>0</SubVersion>
     <Release>0</Release>
-    <NonRelease>4</NonRelease>
+    <NonRelease>7</NonRelease>
     <Region/>
     <ShortVersion/>
     <LongVersion>Copyright © 2017-2025 We Suck Less</LongVersion>
@@ -1346,7 +1346,7 @@
       <PropertyVal Name="TabIndex">4</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">Version 4 Beta 4 - 2025-08-14</PropertyVal>
+      <PropertyVal Name="Text">Version 4 Beta 7 - 2025-08-14</PropertyVal>
       <PropertyVal Name="TextAlignment">2</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
       <PropertyVal Name="Tooltip"/>
@@ -4223,7 +4223,8 @@
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Sub JSONDownload()</SourceLine>
         <SourceLine>// Download the JSON file</SourceLine>
-        <SourceLine>Var url As String = "https://kartaverse.github.io/Reactor-Docs/JSON/Reactor.json"</SourceLine>
+        <SourceLine>//Var url As String = "https://kartaverse.github.io/Reactor-Docs/JSON/Reactor.json"</SourceLine>
+        <SourceLine>Var url As String = "https://gitlab.com/WeSuckLess/Reactor/-/raw/master/JSON/Reactor.json?ref_type=heads"</SourceLine>
         <SourceLine>Var JSONFile As FolderItem = App.CreateNewFolder(App.JSONFolder).Child("Reactor.json")</SourceLine>
         <SourceLine/>
         <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
@@ -7595,9 +7596,9 @@
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.AtomsRefresh</EditorLocation>
+          <EditorLocation>AboutWindow.Controls.AboutLabel3</EditorLocation>
           <EditorPath/>
-          <EditingPartID>338128895</EditingPartID>
+          <EditingPartID>296974335</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
