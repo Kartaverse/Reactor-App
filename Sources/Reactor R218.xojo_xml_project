@@ -207,37 +207,7 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function CancelClosing() As Boolean</SourceLine>
-        <SourceLine>'// The cancelClosing event is called when the app receives the quit signal</SourceLine>
-        <SourceLine>'If App.DownloadList.Count &gt;= 1 and App.QuitAllowed = 0 Then</SourceLine>
-        <SourceLine>'Var Quit_Message_Dialog As New MessageDialog                        // Create the MessageDialog object</SourceLine>
-        <SourceLine>'Quit_Message_Dialog.IconType = MessageDialog.IconTypes.Caution // Display warning icon</SourceLine>
-        <SourceLine>'Quit_Message_Dialog.ActionButton.Caption = "Quit"</SourceLine>
-        <SourceLine>'Quit_Message_Dialog.CancelButton.Visible = True                        // Show the Cancel button</SourceLine>
-        <SourceLine>'//Quit_Message_Dialog.AlternateActionButton.Visible = True       // Show the alternate action button</SourceLine>
-        <SourceLine>'//Quit_Message_Dialog.AlternateActionButton.Caption = "Complete Downloads, Then Quit"</SourceLine>
-        <SourceLine>'Quit_Message_Dialog.Message = "Do you want to quit Reactor?"</SourceLine>
-        <SourceLine>'//Quit_Message_Dialog.Explanation = "A download is still in progress."</SourceLine>
-        <SourceLine>'</SourceLine>
-        <SourceLine>'Var Quit_Message_Dialog_Button As MessageDialogButton                 // For handling the result</SourceLine>
-        <SourceLine>'Quit_Message_Dialog_Button = Quit_Message_Dialog.ShowModal  // Display the dialog</SourceLine>
-        <SourceLine>'Select Case Quit_Message_Dialog_Button              // Determine which button was pressed.</SourceLine>
-        <SourceLine>'Case Quit_Message_Dialog.ActionButton</SourceLine>
-        <SourceLine>'// User pressed "Quit"</SourceLine>
-        <SourceLine>'// Go ahead and quit the program</SourceLine>
-        <SourceLine>'ReactorWindow.AtomDownloadCancel()</SourceLine>
-        <SourceLine>'Return False</SourceLine>
-        <SourceLine>'Case Quit_Message_Dialog.AlternateActionButton</SourceLine>
-        <SourceLine>'// User pressed "Complete Downloads, Then Quit</SourceLine>
-        <SourceLine>'// Do something with a deferred RSocket event handler</SourceLine>
-        <SourceLine>'App.QuitOnDownloadComplete = 1</SourceLine>
-        <SourceLine>'Return True</SourceLine>
-        <SourceLine>'Case Quit_Message_Dialog.CancelButton</SourceLine>
-        <SourceLine>'// User pressed "Cancel"</SourceLine>
-        <SourceLine>'// Cancel the quit event and let the program continue running</SourceLine>
-        <SourceLine>'</SourceLine>
-        <SourceLine>'Return True</SourceLine>
-        <SourceLine>'End Select</SourceLine>
-        <SourceLine>'End If</SourceLine>
+        <SourceLine/>
         <SourceLine>End Function</SourceLine>
       </ItemSource>
     </HookInstance>
@@ -1904,7 +1874,7 @@
       <PropertyVal Name="AllowFocus">False</PropertyVal>
       <PropertyVal Name="AllowFocusRing">True</PropertyVal>
       <PropertyVal Name="AllowTabs">False</PropertyVal>
-      <PropertyVal Name="Backdrop">1972449279</PropertyVal>
+      <PropertyVal Name="Backdrop">1257814015</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
       <PropertyVal Name="Height">68</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
@@ -3018,16 +2988,14 @@
         <SourceLine>Quit_Message_Dialog.ActionButton.Caption = "Quit"</SourceLine>
         <SourceLine>// Show the Cancel button</SourceLine>
         <SourceLine>Quit_Message_Dialog.CancelButton.Visible = True                </SourceLine>
-        <SourceLine>// Show the alternate action button</SourceLine>
-        <SourceLine>//Quit_Message_Dialog.AlternateActionButton.Visible = True       </SourceLine>
-        <SourceLine>//Quit_Message_Dialog.AlternateActionButton.Caption = "Complete Downloads, Then Quit"</SourceLine>
         <SourceLine>Quit_Message_Dialog.Message = "Do you want to quit Reactor?"</SourceLine>
-        <SourceLine>//Quit_Message_Dialog.Explanation = "A download is still in progress."</SourceLine>
         <SourceLine/>
         <SourceLine>// Hande the result</SourceLine>
         <SourceLine>Var Quit_Message_Dialog_Button As MessageDialogButton             </SourceLine>
+        <SourceLine/>
         <SourceLine>// Display the dialog    </SourceLine>
         <SourceLine>Quit_Message_Dialog_Button = Quit_Message_Dialog.ShowModal</SourceLine>
+        <SourceLine/>
         <SourceLine>// Determine which button was pressed.</SourceLine>
         <SourceLine>Select Case Quit_Message_Dialog_Button              </SourceLine>
         <SourceLine>Case Quit_Message_Dialog.ActionButton</SourceLine>
@@ -3707,6 +3675,8 @@
         <SourceLine>ReactorWindow.Title = "Reactor Package Manager - " + FilteredAtomCount.ToString + " New Packages"</SourceLine>
         <SourceLine>ElseIf SelectedCategory = "Update" then</SourceLine>
         <SourceLine>ReactorWindow.Title = "Reactor Package Manager -  " + FilteredAtomCount.ToString + " Updated Packages"</SourceLine>
+        <SourceLine>ElseIf SelectedCategory = "Donate" then</SourceLine>
+        <SourceLine>ReactorWindow.Title = "Reactor Package Manager -  " + FilteredAtomCount.ToString + " Packages"</SourceLine>
         <SourceLine>ElseIf SelectedCategory = "Dependencies" then</SourceLine>
         <SourceLine>ReactorWindow.Title = "Reactor Package Manager - " + FilteredAtomCount.ToString + " Required Packages"</SourceLine>
         <SourceLine>ElseIf SelectedCategory = "Downloading" then</SourceLine>
@@ -7625,9 +7595,9 @@
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>App.CancelClosing</EditorLocation>
+          <EditorLocation>ReactorWindow.AtomsRefresh</EditorLocation>
           <EditorPath/>
-          <EditingPartID>1350840319</EditingPartID>
+          <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>

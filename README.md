@@ -1,6 +1,6 @@
 # Reactor for macOS
 
-Reactor 4 Beta Build 4 - 2025-08-14
+Reactor 4 Beta Build 5 - 2025-08-14
 
 ## Overview
 
@@ -38,3 +38,34 @@ The following features will be completed before the official release ships:
 - Create Windows/Linux Builds
 - Add preference window
     - Add a Reactor custom install path option
+
+
+## Reactor URL Link Format
+
+The new Reactor standalone application registers itself system-wide as a custom URL handler for clickable URLs that are formatted as "Reactor:/<AtomID>". This makes installing atom packages a breeze. Simply clicking a Chrome/Firefox/Safari webpage or forum link can automatically launch the Reactor.app program and bring you right to the desired atom package's description.
+
+### Sample Reactor Weblinks
+
+BBCode:
+
+```
+[url=Reactor:/com.PieterVanHoute.KAK]Install the KAK Atom Package[/url]
+[url=Reactor:/com.wesuckless.KickAssShaderZ]Install the KickAss ShaderZ Atom Package[/url]
+[url=Reactor:/com.KomKomDoorn.krokodoveFu19]Install the KKD Atom Package[/url]
+```
+
+HTML:
+
+```
+<a href="Reactor:/com.PieterVanHoute.KAK">Install the KAK Atom Package</a>
+<a href="Reactor:/com.wesuckless.KickAssShaderZ">Install the KickAss ShaderZ Atom Package</a>
+<a href="Reactor:/com.KomKomDoorn.krokodoveFu19">Install the KKD Atom Package</a>
+```
+
+Markdown:
+
+```
+[Install the KAK Atom Package](Reactor:/com.PieterVanHoute.KAK)
+[Install the KickAss ShaderZ Atom Package](Reactor:/com.wesuckless.KickAssShaderZ)
+[Install the KKD Atom Package](Reactor:/com.KomKomDoorn.krokodoveFu19)
+```
