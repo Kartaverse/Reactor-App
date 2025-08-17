@@ -7,7 +7,7 @@
     <MinorVersion>0</MinorVersion>
     <SubVersion>0</SubVersion>
     <Release>0</Release>
-    <NonRelease>7</NonRelease>
+    <NonRelease>8</NonRelease>
     <Region/>
     <ShortVersion/>
     <LongVersion>Copyright © 2017-2025 We Suck Less</LongVersion>
@@ -182,6 +182,37 @@
         <SourceLine>"&lt;/head&gt; " +_ </SourceLine>
         <SourceLine>"&lt;body&gt; "</SourceLine>
         <SourceLine>App.Footer = "&lt;/body&gt;&lt;/html&gt;"</SourceLine>
+        <SourceLine/>
+        <SourceLine/>
+        <SourceLine>'Var App.ReactorFolder As FolderItem</SourceLine>
+        <SourceLine>'</SourceLine>
+        <SourceLine>'// Home</SourceLine>
+        <SourceLine>'App.ReactorFolder = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+        <SourceLine>'// $HOME/Reactor/</SourceLine>
+        <SourceLine>'</SourceLine>
+        <SourceLine>'// Fusion Studio</SourceLine>
+        <SourceLine>'If TargetWindows Then</SourceLine>
+        <SourceLine>'App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("Fusion").Child("Reactor")</SourceLine>
+        <SourceLine>'// C:\ProgramData\Blackmagic Design\Fusion\Reactor\</SourceLine>
+        <SourceLine>'ElseIf TargetMacOS Then</SourceLine>
+        <SourceLine>'App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("Fusion").Child("Reactor")</SourceLine>
+        <SourceLine>'// /Library/Application Support/Blackmagic Design/Fusion/Reactor/</SourceLine>
+        <SourceLine>'ElseIf TargetLinux Then</SourceLine>
+        <SourceLine>'App.ReactorFolder = SpecialFolder.Variable.Child("Blackmagic Design").Child("Fusion").Child("Reactor")</SourceLine>
+        <SourceLine>'// /var/BlackmagicDesign/Fusion/Reactor/</SourceLine>
+        <SourceLine>'End If</SourceLine>
+        <SourceLine>'</SourceLine>
+        <SourceLine>'// Resolve Studio</SourceLine>
+        <SourceLine>'If TargetWindows Then</SourceLine>
+        <SourceLine>'App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor")</SourceLine>
+        <SourceLine>'// C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Reactor\</SourceLine>
+        <SourceLine>'ElseIf TargetMacOS Then</SourceLine>
+        <SourceLine>'App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor")</SourceLine>
+        <SourceLine>'// /Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Reactor/</SourceLine>
+        <SourceLine>'ElseIf TargetLinux Then</SourceLine>
+        <SourceLine>'App.ReactorFolder = SpecialFolder.Variable.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor")</SourceLine>
+        <SourceLine>'// /var/BlackmagicDesign/DaVinci Resolve/Fusion/Reactor/</SourceLine>
+        <SourceLine>'End If</SourceLine>
         <SourceLine/>
         <SourceLine>App.ReactorFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor"))</SourceLine>
         <SourceLine>App.AtomsFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Atoms"))</SourceLine>
@@ -1346,7 +1377,7 @@
       <PropertyVal Name="TabIndex">4</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">Version 4 Beta 7 - 2025-08-14</PropertyVal>
+      <PropertyVal Name="Text">Version 4 Beta 8 - 2025-08-17</PropertyVal>
       <PropertyVal Name="TextAlignment">2</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
       <PropertyVal Name="Tooltip"/>
@@ -1420,6 +1451,606 @@
       <ControlIndex>6</ControlIndex>
       <Locked>0</Locked>
       <PartID>1537968127</PartID>
+    </Control>
+  </block>
+  <block type="DesktopWindow" ID="241967103">
+    <ObjName>PreferencesWindow</ObjName>
+    <ObjContainerID>0</ObjContainerID>
+    <IsClass>1</IsClass>
+    <Superclass>DesktopWindow</Superclass>
+    <ItemFlags>1</ItemFlags>
+    <IsInterface>0</IsInterface>
+    <Compatibility/>
+    <HookInstance>
+      <ItemName>Opening</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1196244991</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub Opening()</SourceLine>
+        <SourceLine>// Window sizing</SourceLine>
+        <SourceLine>If ReactorWindow.Visible = True Then</SourceLine>
+        <SourceLine>Me.Top = DesktopDisplay.DisplayAt(0).AvailableTop + 28 + (ReactorWindow.Height / 2) - (Me.Height / 2)</SourceLine>
+        <SourceLine>Me.Left = ReactorWindow.Left + (ReactorWindow.Width / 2) - (Me.Width / 2)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+    </HookInstance>
+    <PropertyVal Name="MenuBarVisible">False</PropertyVal>
+    <PropertyVal Name="MenuBar"/>
+    <PropertyVal Name="Backdrop">0</PropertyVal>
+    <PropertyVal Name="BackgroundColor">&amp;cFFFFFF</PropertyVal>
+    <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
+    <PropertyVal Name="ImplicitInstance">True</PropertyVal>
+    <PropertyVal Name="Visible">False</PropertyVal>
+    <PropertyVal Name="DefaultLocation">2</PropertyVal>
+    <PropertyVal Name="FullScreen">False</PropertyVal>
+    <PropertyVal Name="MacProcID">0</PropertyVal>
+    <PropertyVal Name="Composite">False</PropertyVal>
+    <PropertyVal Name="Resizeable">True</PropertyVal>
+    <PropertyVal Name="HasTitleBar">True</PropertyVal>
+    <PropertyVal Name="HasFullScreenButton">False</PropertyVal>
+    <PropertyVal Name="HasMinimizeButton">True</PropertyVal>
+    <PropertyVal Name="HasMaximizeButton">True</PropertyVal>
+    <PropertyVal Name="HasCloseButton">True</PropertyVal>
+    <PropertyVal Name="Title">Reactor Preferences</PropertyVal>
+    <PropertyVal Name="Type">0</PropertyVal>
+    <PropertyVal Name="MaximumHeight">196</PropertyVal>
+    <PropertyVal Name="MaximumWidth">1920</PropertyVal>
+    <PropertyVal Name="MinimumHeight">196</PropertyVal>
+    <PropertyVal Name="MinimumWidth">390</PropertyVal>
+    <PropertyVal Name="Height">196</PropertyVal>
+    <PropertyVal Name="Width">390</PropertyVal>
+    <ViewBehavior>
+      <ViewProperty>
+        <ObjName>Name</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>ID</PropertyGroup>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Interfaces</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>ID</PropertyGroup>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Super</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>ID</PropertyGroup>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Width</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>600</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Height</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>400</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MinimumWidth</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>64</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MinimumHeight</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>64</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MaximumWidth</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>32000</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MaximumHeight</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>32000</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Type</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>0</PropertyValue>
+        <ItemType>Types</ItemType>
+        <EditorType>Enum</EditorType>
+        <Enumeration>
+          <ItemDef>0 - Document</ItemDef>
+          <ItemDef>1 - Movable Modal</ItemDef>
+          <ItemDef>2 - Modal Dialog</ItemDef>
+          <ItemDef>3 - Floating Window</ItemDef>
+          <ItemDef>4 - Plain Box</ItemDef>
+          <ItemDef>5 - Shadowed Box</ItemDef>
+          <ItemDef>6 - Rounded Window</ItemDef>
+          <ItemDef>7 - Global Floating Window</ItemDef>
+          <ItemDef>8 - Sheet Window</ItemDef>
+          <ItemDef>9 - Modeless Dialog</ItemDef>
+        </Enumeration>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Title</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>Untitled</PropertyValue>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasCloseButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasMaximizeButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasMinimizeButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasFullScreenButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasTitleBar</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Resizeable</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Composite</ObjName>
+        <PropertyGroup>OS X (Carbon)</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MacProcID</ObjName>
+        <PropertyGroup>OS X (Carbon)</PropertyGroup>
+        <PropertyValue>0</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>FullScreen</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>DefaultLocation</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>2</PropertyValue>
+        <ItemType>Locations</ItemType>
+        <EditorType>Enum</EditorType>
+        <Enumeration>
+          <ItemDef>0 - Default</ItemDef>
+          <ItemDef>1 - Parent Window</ItemDef>
+          <ItemDef>2 - Main Screen</ItemDef>
+          <ItemDef>3 - Parent Window Screen</ItemDef>
+          <ItemDef>4 - Stagger</ItemDef>
+        </Enumeration>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Visible</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>ImplicitInstance</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Window Behavior</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasBackgroundColor</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Background</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>BackgroundColor</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Background</PropertyGroup>
+        <PropertyValue>&amp;cFFFFFF</PropertyValue>
+        <ItemType>ColorGroup</ItemType>
+        <EditorType>ColorGroup</EditorType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Backdrop</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Background</PropertyGroup>
+        <ItemType>Picture</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MenuBar</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Menus</PropertyGroup>
+        <ItemType>DesktopMenuBar</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MenuBarVisible</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Deprecated</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+    </ViewBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopCheckBox</Superclass>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopTextField</Superclass>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopLabel</Superclass>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopLabel</Superclass>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopTextField</Superclass>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopSegmentedButton</Superclass>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>544251903</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed(segmentIndex As Integer)</SourceLine>
+          <SourceLine>If segmentIndex = 0 Then</SourceLine>
+          <SourceLine>// Home</SourceLine>
+          <SourceLine>ReactorPathTextField.Visible = False</SourceLine>
+          <SourceLine>ElseIf segmentIndex = 1 Then</SourceLine>
+          <SourceLine>// Resolve Prefs</SourceLine>
+          <SourceLine>ReactorPathTextField.Visible = False</SourceLine>
+          <SourceLine>ElseIf segmentIndex = 2 Then</SourceLine>
+          <SourceLine>// Fusion Prefs</SourceLine>
+          <SourceLine>ReactorPathTextField.Visible = False</SourceLine>
+          <SourceLine>ElseIf segmentIndex = 3 Then</SourceLine>
+          <SourceLine>// Custom</SourceLine>
+          <SourceLine>ReactorPathTextField.Visible = True</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>// Home</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>Opening</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>231106559</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Opening()</SourceLine>
+          <SourceLine>If me.SelectedSegmentIndex = 3 Then</SourceLine>
+          <SourceLine>// Custom</SourceLine>
+          <SourceLine>ReactorPathTextField.Visible = True</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>ReactorPathTextField.Visible = False</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopSeparator</Superclass>
+    </ControlBehavior>
+    <Control>
+      <ControlClass>DesktopCheckBox</ControlClass>
+      <ItemName>DesktopCheckBox</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Caption">Mark Atoms as "New" for</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">20</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">NewAtomsCheckBox</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopCheckBox</PropertyVal>
+      <PropertyVal Name="TabIndex">0</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">154</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Value">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="VisualState">1</PropertyVal>
+      <PropertyVal Name="Width">184</PropertyVal>
+      <ControlIndex>0</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1566107647</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopTextField</ControlClass>
+      <ItemName>DesktopTextField</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
+      <PropertyVal Name="AllowSpellChecking">False</PropertyVal>
+      <PropertyVal Name="AllowTabs">False</PropertyVal>
+      <PropertyVal Name="BackgroundColor">&amp;hFFFFFF</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Format"/>
+      <PropertyVal Name="HasBorder">True</PropertyVal>
+      <PropertyVal Name="Height">22</PropertyVal>
+      <PropertyVal Name="Hint"/>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">203</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="MaximumCharactersAllowed">0</PropertyVal>
+      <PropertyVal Name="Name">NewAtomsDaysTextField1</PropertyVal>
+      <PropertyVal Name="Password">False</PropertyVal>
+      <PropertyVal Name="ReadOnly">False</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopTextField</PropertyVal>
+      <PropertyVal Name="TabIndex">1</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Text">7</PropertyVal>
+      <PropertyVal Name="TextAlignment">0</PropertyVal>
+      <PropertyVal Name="TextColor">&amp;h000000</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">154</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="ValidationMask"/>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">49</PropertyVal>
+      <ControlIndex>1</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1503823871</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopLabel</ControlClass>
+      <ItemName>DesktopLabel</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">264</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Multiline">False</PropertyVal>
+      <PropertyVal Name="Name">DaysLabel</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Selectable">False</PropertyVal>
+      <PropertyVal Name="Super">DesktopLabel</PropertyVal>
+      <PropertyVal Name="TabIndex">2</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Text">Days</PropertyVal>
+      <PropertyVal Name="TextAlignment">0</PropertyVal>
+      <PropertyVal Name="TextColor">&amp;h000000</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">154</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">53</PropertyVal>
+      <ControlIndex>2</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1973268479</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopLabel</ControlClass>
+      <ItemName>DesktopLabel</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">20</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Multiline">False</PropertyVal>
+      <PropertyVal Name="Name">ReactorPathLabel</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Selectable">False</PropertyVal>
+      <PropertyVal Name="Super">DesktopLabel</PropertyVal>
+      <PropertyVal Name="TabIndex">3</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Text">Reactor Path:</PropertyVal>
+      <PropertyVal Name="TextAlignment">0</PropertyVal>
+      <PropertyVal Name="TextColor">&amp;h000000</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">20</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">89</PropertyVal>
+      <ControlIndex>3</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1329981439</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopTextField</ControlClass>
+      <ItemName>DesktopTextField</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
+      <PropertyVal Name="AllowSpellChecking">False</PropertyVal>
+      <PropertyVal Name="AllowTabs">False</PropertyVal>
+      <PropertyVal Name="BackgroundColor">&amp;hFFFFFF</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Format"/>
+      <PropertyVal Name="HasBorder">True</PropertyVal>
+      <PropertyVal Name="Height">22</PropertyVal>
+      <PropertyVal Name="Hint"/>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">20</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="MaximumCharactersAllowed">0</PropertyVal>
+      <PropertyVal Name="Name">ReactorPathTextField</PropertyVal>
+      <PropertyVal Name="Password">False</PropertyVal>
+      <PropertyVal Name="ReadOnly">False</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopTextField</PropertyVal>
+      <PropertyVal Name="TabIndex">4</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Text"/>
+      <PropertyVal Name="TextAlignment">0</PropertyVal>
+      <PropertyVal Name="TextColor">&amp;h000000</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">87</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="ValidationMask"/>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">350</PropertyVal>
+      <ControlIndex>4</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1591193599</PartID>
+    </Control>
+    <DesktopSegmentedButton>
+      <ControlClass>DesktopSegmentedButton</ControlClass>
+      <ItemName>DesktopSegmentedButton</ItemName>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Height">24</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Left">20</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
+      <PropertyVal Name="Name">PathSegmentedButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Segments">
+        <Hex bytes="65">486F6D650A0A547275650D5265736F6C76652050726566730A0A46616C73650D467573696F6E2050726566730A0A46616C73650D437573746F6D0A0A46616C7365</Hex>
+      </PropertyVal>
+      <PropertyVal Name="SelectionStyle">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopSegmentedButton</PropertyVal>
+      <PropertyVal Name="TabIndex">6</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">False</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">52</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">350</PropertyVal>
+      <ControlIndex>5</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1319022591</PartID>
+    </DesktopSegmentedButton>
+    <Control>
+      <ControlClass>DesktopSeparator</ControlClass>
+      <ItemName>DesktopSeparator</ItemName>
+      <PropertyVal Name="Active">False</PropertyVal>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowTabStop">True</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialParent"/>
+      <PropertyVal Name="Left">20</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">Separator1</PropertyVal>
+      <PropertyVal Name="PanelIndex">0</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopSeparator</PropertyVal>
+      <PropertyVal Name="TabIndex">7</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">122</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">350</PropertyVal>
+      <PropertyVal Name="_mIndex">0</PropertyVal>
+      <PropertyVal Name="_mInitialParent"/>
+      <PropertyVal Name="_mName"/>
+      <PropertyVal Name="_mPanelIndex">0</PropertyVal>
+      <ControlIndex>6</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>760029183</PartID>
     </Control>
   </block>
   <block type="DesktopWindow" ID="960294911">
@@ -2990,7 +3621,7 @@
         <SourceLine>Quit_Message_Dialog.CancelButton.Visible = True                </SourceLine>
         <SourceLine>Quit_Message_Dialog.Message = "Do you want to quit Reactor?"</SourceLine>
         <SourceLine/>
-        <SourceLine>// Hande the result</SourceLine>
+        <SourceLine>// Handle the result</SourceLine>
         <SourceLine>Var Quit_Message_Dialog_Button As MessageDialogButton             </SourceLine>
         <SourceLine/>
         <SourceLine>// Display the dialog    </SourceLine>
@@ -3248,6 +3879,60 @@
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function ToolsConnectReactortoFusion() As Boolean</SourceLine>
         <SourceLine>ConnectDialogWindow.Show</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>FilePreferences</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1037123583</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function FilePreferences() As Boolean</SourceLine>
+        <SourceLine>PreferencesWindow.Show</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ToolsImportLegacyReactorAtoms</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>341176319</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ToolsImportLegacyReactorAtoms() As Boolean</SourceLine>
+        <SourceLine>// Create the MessageDialog object</SourceLine>
+        <SourceLine>Var Atom_Import_Dialog As New MessageDialog</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Display warning icon</SourceLine>
+        <SourceLine>Atom_Import_Dialog.IconType = MessageDialog.IconTypes.Caution </SourceLine>
+        <SourceLine>Atom_Import_Dialog.Message = "Do you want to import atom packages from a previous Reactor installation?"</SourceLine>
+        <SourceLine/>
+        <SourceLine>Atom_Import_Dialog.ActionButton.Caption = "Import Resolve Free/Studio Atoms"</SourceLine>
+        <SourceLine>Atom_Import_Dialog.AlternateActionButton.Caption = "Import Fusion Studio Atoms"</SourceLine>
+        <SourceLine>Atom_Import_Dialog.AlternateActionButton.Visible = True</SourceLine>
+        <SourceLine>Atom_Import_Dialog.CancelButton.Visible = True                </SourceLine>
+        <SourceLine/>
+        <SourceLine>// Handle the result</SourceLine>
+        <SourceLine>Var Atom_Import_Dialog_Button As MessageDialogButton             </SourceLine>
+        <SourceLine/>
+        <SourceLine>// Display the dialog    </SourceLine>
+        <SourceLine>Atom_Import_Dialog_Button  = Atom_Import_Dialog.ShowModal</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Determine which button was pressed.</SourceLine>
+        <SourceLine>Select Case Atom_Import_Dialog_Button              </SourceLine>
+        <SourceLine>Case Atom_Import_Dialog.ActionButton</SourceLine>
+        <SourceLine>// Resolve Free/Studio Host</SourceLine>
+        <SourceLine>AtomImportLegacyReactor("Resolve")</SourceLine>
+        <SourceLine>Case Atom_Import_Dialog.AlternateActionButton</SourceLine>
+        <SourceLine>// Fusion Studio Host</SourceLine>
+        <SourceLine>AtomImportLegacyReactor("Fusion")</SourceLine>
+        <SourceLine>Case Atom_Import_Dialog.CancelButton</SourceLine>
+        <SourceLine>// User pressed "Cancel"</SourceLine>
+        <SourceLine>End Select</SourceLine>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
       </ItemSource>
@@ -4533,6 +5218,7 @@
         <SourceLine/>
         <SourceLine>// Normalize the file slashes to Unix style</SourceLine>
         <SourceLine>Path = Path.ReplaceAll("\", "/")</SourceLine>
+        <SourceLine/>
         <SourceLine>// De-duplicate any doubled up slashesh</SourceLine>
         <SourceLine>Path = Path.ReplaceAll("//", "/")</SourceLine>
         <SourceLine/>
@@ -5025,6 +5711,81 @@
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
       <ItemParams>RefAtomID As String</ItemParams>
+      <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>AtomImportLegacyReactor</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>262891519</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub AtomImportLegacyReactor(Host As String)</SourceLine>
+        <SourceLine>// Choose what folder to scan</SourceLine>
+        <SourceLine>Var LegacyReactorFolder As FolderItem</SourceLine>
+        <SourceLine>If Host = "Resolve" Then</SourceLine>
+        <SourceLine>// Resolve Free/Studio</SourceLine>
+        <SourceLine>If TargetWindows Then</SourceLine>
+        <SourceLine>LegacyReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor").Child("Deploy").Child("Atoms").Child("Reactor")</SourceLine>
+        <SourceLine>// C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Reactor\</SourceLine>
+        <SourceLine>ElseIf TargetMacOS Then</SourceLine>
+        <SourceLine>LegacyReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor").Child("Deploy").Child("Atoms").Child("Reactor")</SourceLine>
+        <SourceLine>// /Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Reactor/</SourceLine>
+        <SourceLine>ElseIf TargetLinux Then</SourceLine>
+        <SourceLine>LegacyReactorFolder = SpecialFolder.Variable.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor").Child("Deploy").Child("Atoms").Child("Reactor")</SourceLine>
+        <SourceLine>// /var/BlackmagicDesign/DaVinci Resolve/Fusion/Reactor/</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>ElseIf Host =  "Fusion" Then</SourceLine>
+        <SourceLine>// Fusion Studio</SourceLine>
+        <SourceLine>If TargetWindows Then</SourceLine>
+        <SourceLine>LegacyReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("Fusion").Child("Reactor").Child("Deploy").Child("Atoms").Child("Reactor")</SourceLine>
+        <SourceLine>// C:\ProgramData\Blackmagic Design\Fusion\Reactor\</SourceLine>
+        <SourceLine>ElseIf TargetMacOS Then</SourceLine>
+        <SourceLine>LegacyReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("Fusion").Child("Reactor").Child("Deploy").Child("Atoms").Child("Reactor")</SourceLine>
+        <SourceLine>// /Library/Application Support/Blackmagic Design/Fusion/Reactor/</SourceLine>
+        <SourceLine>ElseIf TargetLinux Then</SourceLine>
+        <SourceLine>LegacyReactorFolder = SpecialFolder.Variable.Child("Blackmagic Design").Child("Fusion").Child("Reactor").Child("Deploy").Child("Atoms").Child("Reactor")</SourceLine>
+        <SourceLine>// /var/BlackmagicDesign/Fusion/Reactor/</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Process the legacy Reactor folder content</SourceLine>
+        <SourceLine>If LegacyReactorFolder.Exists and LegacyReactorFolder.IsFolder and  LegacyReactorFolder.IsReadable Then</SourceLine>
+        <SourceLine>For Each file As FolderItem In LegacyReactorFolder.Children</SourceLine>
+        <SourceLine>If file.Visible = True and file.Extension = "atom" Then</SourceLine>
+        <SourceLine>Var re As New RegEx</SourceLine>
+        <SourceLine>re.SearchPattern = "[.]atom$"</SourceLine>
+        <SourceLine>re.ReplacementPattern = ""</SourceLine>
+        <SourceLine>re.Options.ReplaceAllMatches = True</SourceLine>
+        <SourceLine>Var destName As String = re.Replace(file.Name)</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Scan for .atom files in this folder</SourceLine>
+        <SourceLine>App.DownloadList().Add(destName)</SourceLine>
+        <SourceLine>// MessageBox(destName)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// De-duplicate array entries</SourceLine>
+        <SourceLine>App.DownloadList.Sort</SourceLine>
+        <SourceLine>For i As Integer = App.DownloadList.Ubound - 1 DownTo 0</SourceLine>
+        <SourceLine>if App.DownloadList(i) = App.DownloadList(i + 1) Then App.DownloadList.Remove(i)</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Switch to the download view mode</SourceLine>
+        <SourceLine>RepoPopupMenu.SelectRowWithText("Downloading")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Show the newly added packages in the "Downloading" view mode</SourceLine>
+        <SourceLine>AtomsRefresh()</SourceLine>
+        <SourceLine/>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>Host As String</ItemParams>
       <ItemResult/>
     </Method>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
@@ -6484,6 +7245,32 @@
       </MenuItem>
       <MenuItem>
         <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>UntitledSeparator2</ItemName>
+        <ItemText>-</ItemText>
+        <ItemIndex>1</ItemIndex>
+        <ItemShortcut/>
+        <MenuAutoEnable>1</MenuAutoEnable>
+        <TextEncoding>134217984</TextEncoding>
+        <MenuItemVisible>1</MenuItemVisible>
+        <ItemFlags>0</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+      </MenuItem>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
+        <ItemName>FilePreferences</ItemName>
+        <ItemText>Preferences...</ItemText>
+        <ItemIndex>-2147483648</ItemIndex>
+        <ItemShortcut>Cmd+,</ItemShortcut>
+        <MenuShortcut>,</MenuShortcut>
+        <MenuShortcutModifier>1</MenuShortcutModifier>
+        <MenuAutoEnable>1</MenuAutoEnable>
+        <TextEncoding>134217984</TextEncoding>
+        <MenuItemVisible>0</MenuItemVisible>
+        <ItemFlags>0</ItemFlags>
+        <Superclass>DesktopMenuItem</Superclass>
+      </MenuItem>
+      <MenuItem>
+        <ItemSpecialMenu>0</ItemSpecialMenu>
         <ItemName>ToolsItem</ItemName>
         <ItemText>Tools</ItemText>
         <ItemIndex>-2147483648</ItemIndex>
@@ -6495,8 +7282,8 @@
         <Superclass>DesktopMenuItem</Superclass>
         <MenuItem>
           <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ShowReactorItem</ItemName>
-          <ItemText>Show Reactor Folder</ItemText>
+          <ItemName>ToolsConnectReactortoFusion</ItemName>
+          <ItemText>Connect Reactor to Fusion</ItemText>
           <ItemIndex>-2147483648</ItemIndex>
           <ItemShortcut/>
           <MenuAutoEnable>1</MenuAutoEnable>
@@ -6507,8 +7294,8 @@
         </MenuItem>
         <MenuItem>
           <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ToolsConnectReactortoFusion</ItemName>
-          <ItemText>Connect Reactor to Fusion</ItemText>
+          <ItemName>ToolsImportLegacyReactorAtoms</ItemName>
+          <ItemText>Import Legacy Reactor Atoms</ItemText>
           <ItemIndex>-2147483648</ItemIndex>
           <ItemShortcut/>
           <MenuAutoEnable>1</MenuAutoEnable>
@@ -6531,8 +7318,8 @@
         </MenuItem>
         <MenuItem>
           <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ToolsShowDocsFolder</ItemName>
-          <ItemText>Show Docs Folder</ItemText>
+          <ItemName>ShowReactorItem</ItemName>
+          <ItemText>Show Reactor Folder</ItemText>
           <ItemIndex>-2147483648</ItemIndex>
           <ItemShortcut/>
           <MenuAutoEnable>1</MenuAutoEnable>
@@ -6555,8 +7342,8 @@
         </MenuItem>
         <MenuItem>
           <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ToolsShowTemplatesFolder</ItemName>
-          <ItemText>Show Templates Folder</ItemText>
+          <ItemName>ToolsShowDocsFolder</ItemName>
+          <ItemText>Show Docs Folder</ItemText>
           <ItemIndex>-2147483648</ItemIndex>
           <ItemShortcut/>
           <MenuAutoEnable>1</MenuAutoEnable>
@@ -6569,6 +7356,18 @@
           <ItemSpecialMenu>0</ItemSpecialMenu>
           <ItemName>UntitledSeparator1</ItemName>
           <ItemText>-</ItemText>
+          <ItemIndex>0</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ToolsShowTemplatesFolder</ItemName>
+          <ItemText>Show Templates Folder</ItemText>
           <ItemIndex>-2147483648</ItemIndex>
           <ItemShortcut/>
           <MenuAutoEnable>1</MenuAutoEnable>
@@ -6617,7 +7416,7 @@
           <ItemSpecialMenu>0</ItemSpecialMenu>
           <ItemName>UntitledSeparator2</ItemName>
           <ItemText>-</ItemText>
-          <ItemIndex>-2147483648</ItemIndex>
+          <ItemIndex>0</ItemIndex>
           <ItemShortcut/>
           <MenuAutoEnable>1</MenuAutoEnable>
           <TextEncoding>134217984</TextEncoding>
@@ -6760,9 +7559,9 @@
       </MenuItem>
       <MenuItem>
         <ItemSpecialMenu>0</ItemSpecialMenu>
-        <ItemName>UntitledSeparator</ItemName>
+        <ItemName>UntitledSeparator1</ItemName>
         <ItemText>-</ItemText>
-        <ItemIndex>-2147483648</ItemIndex>
+        <ItemIndex>1</ItemIndex>
         <ItemShortcut/>
         <MenuAutoEnable>1</MenuAutoEnable>
         <TextEncoding>134217984</TextEncoding>
@@ -7589,16 +8388,21 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1920" height="1006"/>
+        <Rect left="0" top="25" width="1913" height="1006"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
-        <EditorCount>1</EditorCount>
+        <EditorCount>2</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>AboutWindow.Controls.AboutLabel3</EditorLocation>
+          <EditorLocation/>
           <EditorPath/>
-          <EditingPartID>296974335</EditingPartID>
+          <EditorPath/>
+        </Editor>
+        <Editor>
+          <EditorIndex>1</EditorIndex>
+          <EditorLocation/>
+          <EditorPath/>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
