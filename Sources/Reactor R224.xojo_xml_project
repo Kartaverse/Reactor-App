@@ -7,7 +7,7 @@
     <MinorVersion>0</MinorVersion>
     <SubVersion>0</SubVersion>
     <Release>0</Release>
-    <NonRelease>8</NonRelease>
+    <NonRelease>9</NonRelease>
     <Region/>
     <ShortVersion/>
     <LongVersion>Copyright © 2017-2025 We Suck Less</LongVersion>
@@ -1377,7 +1377,7 @@
       <PropertyVal Name="TabIndex">4</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">Version 4 Beta 8 - 2025-08-17</PropertyVal>
+      <PropertyVal Name="Text">Version 4 Beta 9 - 2025-08-18</PropertyVal>
       <PropertyVal Name="TextAlignment">2</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
       <PropertyVal Name="Tooltip"/>
@@ -5270,6 +5270,11 @@
         <SourceLine>Var AtomDeploy As JSONItem = Atom.Value("Deploy")</SourceLine>
         <SourceLine>HTML = "&lt;p&gt;Installed Files:&lt;ul&gt;" + EndOfLine</SourceLine>
         <SourceLine/>
+        <SourceLine/>
+        <SourceLine>//&lt;li&gt; + str(file) + "&lt;/a&gt;&lt;/li&gt;\</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var baseURL As String = "https://gitlab.com/WeSuckLess/Reactor/-/blob/master/Atoms/"</SourceLine>
+        <SourceLine/>
         <SourceLine>// Deploy files</SourceLine>
         <SourceLine>Try</SourceLine>
         <SourceLine>If AtomDeploy.Keys &lt;&gt; Nil Then</SourceLine>
@@ -5277,14 +5282,14 @@
         <SourceLine>if k &lt;&gt; "Mac" and k &lt;&gt; "Windows" and k &lt;&gt; "Linux" Then</SourceLine>
         <SourceLine>// Common Files</SourceLine>
         <SourceLine>Var DeployVariant As Variant = AtomDeploy.Value(k)</SourceLine>
-        <SourceLine>HTML = HTML + "&lt;li&gt;&amp;nbsp;&amp;nbsp;" + DeployVariant.StringValue + "&lt;/li&gt;" + EndOfLine</SourceLine>
+        <SourceLine>HTML = HTML +"&lt;li&gt;&amp;nbsp;&amp;nbsp;&lt;a style=""color: #C7C7C7; text-decoration: underline;"" href=""" + baseURL + AtomID + "/" + DeployVariant.StringValue + "?ref_type=heads""&gt;" + DeployVariant.StringValue + "&lt;/a&gt;&lt;/li&gt;" + EndOfLine</SourceLine>
         <SourceLine>ElseIf k = "Mac" and TargetMacOS Then</SourceLine>
         <SourceLine>// macOS Files</SourceLine>
         <SourceLine>Var AtomDeployOS As JSONItem = AtomDeploy.Value(k)</SourceLine>
         <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
         <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
         <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
-        <SourceLine>HTML = HTML + "&lt;li&gt;&amp;nbsp;&amp;nbsp;" + DeployOSVariant.StringValue + "&lt;/li&gt;" + EndOfLine</SourceLine>
+        <SourceLine>HTML = HTML +"&lt;li&gt;&amp;nbsp;&amp;nbsp;&lt;a style=""color: #C7C7C7; text-decoration: underline;"" href=""" + baseURL + AtomID + "/Mac/" + DeployOSVariant.StringValue + "?ref_type=heads""&gt;" + DeployOSVariant.StringValue + "&lt;/a&gt;&lt;/li&gt;" + EndOfLine</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>ElseIf k = "Windows" and TargetWindows Then</SourceLine>
@@ -5293,7 +5298,7 @@
         <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
         <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
         <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
-        <SourceLine>HTML = HTML + "&lt;li&gt;&amp;nbsp;&amp;nbsp;" + DeployOSVariant.StringValue + "&lt;/li&gt;" + EndOfLine</SourceLine>
+        <SourceLine>HTML = HTML +"&lt;li&gt;&amp;nbsp;&amp;nbsp;&lt;a style=""color: #C7C7C7; text-decoration: underline;"" href=""" + baseURL + AtomID + "/Windows/" + DeployOSVariant.StringValue + "?ref_type=heads""&gt;" + DeployOSVariant.StringValue + "&lt;/a&gt;&lt;/li&gt;" + EndOfLine</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>ElseIf k = "Linux" and TargetLinux Then</SourceLine>
@@ -5302,7 +5307,7 @@
         <SourceLine>If AtomDeployOS.Keys &lt;&gt; Nil Then</SourceLine>
         <SourceLine>For Each j As String In AtomDeployOS.Keys</SourceLine>
         <SourceLine>Var DeployOSVariant As Variant = AtomDeployOS.Value(j)</SourceLine>
-        <SourceLine>HTML = HTML + "&lt;li&gt;&amp;nbsp;&amp;nbsp;" + DeployOSVariant.StringValue + "&lt;/li&gt;" + EndOfLine</SourceLine>
+        <SourceLine>HTML = HTML +"&lt;li&gt;&amp;nbsp;&amp;nbsp;&lt;a style=""color: #C7C7C7; text-decoration: underline;"" href=""" + baseURL + AtomID + "/Linux/" + DeployOSVariant.StringValue + "?ref_type=heads""&gt;" + DeployOSVariant.StringValue + "&lt;/a&gt;&lt;/li&gt;" + EndOfLine</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
@@ -5340,13 +5345,8 @@
         <SourceLine>If Atom.HasKey("Dependencies") Then</SourceLine>
         <SourceLine>Var DependencyList As JSONItem = Atom.Value("Dependencies")</SourceLine>
         <SourceLine> HTML = "&lt;p&gt;Dependencies:&lt;ul&gt;" + EndOfLine</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Dependencies files</SourceLine>
+        <SourceLine>// Dependency files</SourceLine>
         <SourceLine>Try</SourceLine>
-        <SourceLine>Var DependenciesCount As Integer = DependencyList.Keys.Count</SourceLine>
-        <SourceLine>System.Debuglog("[Dependencies Count] " + DependenciesCount.ToString())</SourceLine>
-        <SourceLine>// MessageBox(VarType(DependencyList).ToString)</SourceLine>
-        <SourceLine>// Type 9 = Object</SourceLine>
         <SourceLine>If DependencyList.Keys &lt;&gt; Nil Then</SourceLine>
         <SourceLine>For Each k As String In DependencyList.Keys</SourceLine>
         <SourceLine/>
@@ -8392,17 +8392,12 @@
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
-        <EditorCount>2</EditorCount>
+        <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation/>
+          <EditorLocation>AboutWindow.Controls.AboutLabel3</EditorLocation>
           <EditorPath/>
-          <EditorPath/>
-        </Editor>
-        <Editor>
-          <EditorIndex>1</EditorIndex>
-          <EditorLocation/>
-          <EditorPath/>
+          <EditingPartID>296974335</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
