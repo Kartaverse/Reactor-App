@@ -167,9 +167,6 @@
         <SourceLine>Sub Opening()</SourceLine>
         <SourceLine>App.AllowAutoQuit = True</SourceLine>
         <SourceLine/>
-        <SourceLine>// Enable Gamepad support</SourceLine>
-        <SourceLine>App.GamepadSupport = 1</SourceLine>
-        <SourceLine/>
         <SourceLine>App.Header = "&lt;html&gt; " +_ </SourceLine>
         <SourceLine>"&lt;head&gt; " +_ </SourceLine>
         <SourceLine>"&lt;meta name=""qrichtext"" content=""1"" /&gt; " +_ </SourceLine>
@@ -229,6 +226,61 @@
         <SourceLine>App.DeployTemplatesFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Templates"))</SourceLine>
         <SourceLine>App.JSONFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("JSON"))</SourceLine>
         <SourceLine>App.TemporaryAtomFolder = App.CreateNewFolder(SpecialFolder.Temporary.Child("Reactor"))</SourceLine>
+        <SourceLine/>
+        <SourceLine/>
+        <SourceLine>// Preferences</SourceLine>
+        <SourceLine>Var programName As String = App.ExecutableFile.Name + ".json"</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Create the prefs folder</SourceLine>
+        <SourceLine>Var prefsFolder As FolderItem = SpecialFolder.ApplicationData.Child("Reactor")</SourceLine>
+        <SourceLine>If Not prefsFolder.Exists Then</SourceLine>
+        <SourceLine>prefsFolder.CreateFolder</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Read the Window_Prefs.json file from the Moonshot prefs folder</SourceLine>
+        <SourceLine>Var prefsFile As FolderItem = prefsFolder.Child(programName)</SourceLine>
+        <SourceLine>If prefsFile &lt;&gt; Nil And prefsFile.Exists Then</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>// Create the file pointer</SourceLine>
+        <SourceLine>Var fileStream As TextInputStream = TextInputStream.Open(prefsFile)</SourceLine>
+        <SourceLine>If fileStream &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>// Read the full text file in one block</SourceLine>
+        <SourceLine>Var textData As String = fileStream.ReadAll</SourceLine>
+        <SourceLine>// MessageBox(textData)</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>// Create a new JSON object hierarchy</SourceLine>
+        <SourceLine>Var json As New JSONItem(textData)</SourceLine>
+        <SourceLine>json.Compact = False</SourceLine>
+        <SourceLine>Var Val As String</SourceLine>
+        <SourceLine/>
+        <SourceLine>If json.HasKey("GamepadSupport") Then</SourceLine>
+        <SourceLine>Val = json.Value("GamepadSupport")</SourceLine>
+        <SourceLine>App.GamepadSupport = Val.ToInteger</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// MessageBox(json.ToString)</SourceLine>
+        <SourceLine>Catch e As JSONException</SourceLine>
+        <SourceLine>// Fallback Resolution</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch e As IOException</SourceLine>
+        <SourceLine>// Handle IO error</SourceLine>
+        <SourceLine>App.GamepadSupport = 0</SourceLine>
+        <SourceLine>Catch e As JSONException</SourceLine>
+        <SourceLine>// Fallback </SourceLine>
+        <SourceLine>App.GamepadSupport = 0</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>// Fallback</SourceLine>
+        <SourceLine>App.GamepadSupport = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Control the gamepad Input timer</SourceLine>
+        <SourceLine>If App.GamepadSupport = 1 Then</SourceLine>
+        <SourceLine>ReactorWindow.InputDevicesTimer.Enabled = True</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>ReactorWindow.InputDevicesTimer.Enabled = False</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
@@ -1350,7 +1402,7 @@
       </ItemSource>
     </HookInstance>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
-    <PropertyVal Name="MenuBar"/>
+    <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
     <PropertyVal Name="BackgroundColor">&amp;cFFFFFF</PropertyVal>
     <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
@@ -1897,17 +1949,17 @@
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>// Gamepad support</SourceLine>
-        <SourceLine>If Self.GamepadSupportCheckBox.VisualState = DesktopCheckBox.VisualStates.Checked Then</SourceLine>
-        <SourceLine>App.GamepadSupport = 1</SourceLine>
-        <SourceLine>Else</SourceLine>
-        <SourceLine>App.GamepadSupport = 0</SourceLine>
+        <SourceLine>If App.GamepadSupport = 1 Then</SourceLine>
+        <SourceLine>Self.GamepadSupportCheckBox.VisualState = DesktopCheckBox.VisualStates.Checked</SourceLine>
+        <SourceLine>ElseIf App.GamepadSupport = 0 Then</SourceLine>
+        <SourceLine>Self.GamepadSupportCheckBox.VisualState = DesktopCheckBox.VisualStates.Unchecked</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
     </HookInstance>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
-    <PropertyVal Name="MenuBar"/>
+    <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
     <PropertyVal Name="BackgroundColor">&amp;cFFFFFF</PropertyVal>
     <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
@@ -1917,19 +1969,19 @@
     <PropertyVal Name="FullScreen">False</PropertyVal>
     <PropertyVal Name="MacProcID">0</PropertyVal>
     <PropertyVal Name="Composite">False</PropertyVal>
-    <PropertyVal Name="Resizeable">True</PropertyVal>
+    <PropertyVal Name="Resizeable">False</PropertyVal>
     <PropertyVal Name="HasTitleBar">True</PropertyVal>
     <PropertyVal Name="HasFullScreenButton">False</PropertyVal>
-    <PropertyVal Name="HasMinimizeButton">True</PropertyVal>
-    <PropertyVal Name="HasMaximizeButton">True</PropertyVal>
+    <PropertyVal Name="HasMinimizeButton">False</PropertyVal>
+    <PropertyVal Name="HasMaximizeButton">False</PropertyVal>
     <PropertyVal Name="HasCloseButton">True</PropertyVal>
     <PropertyVal Name="Title">Reactor Preferences</PropertyVal>
     <PropertyVal Name="Type">0</PropertyVal>
-    <PropertyVal Name="MaximumHeight">196</PropertyVal>
-    <PropertyVal Name="MaximumWidth">1920</PropertyVal>
-    <PropertyVal Name="MinimumHeight">196</PropertyVal>
+    <PropertyVal Name="MaximumHeight">228</PropertyVal>
+    <PropertyVal Name="MaximumWidth">390</PropertyVal>
+    <PropertyVal Name="MinimumHeight">228</PropertyVal>
     <PropertyVal Name="MinimumWidth">390</PropertyVal>
-    <PropertyVal Name="Height">300</PropertyVal>
+    <PropertyVal Name="Height">228</PropertyVal>
     <PropertyVal Name="Width">390</PropertyVal>
     <ViewBehavior>
       <ViewProperty>
@@ -2222,8 +2274,10 @@
           <SourceLine>// Gamepad support</SourceLine>
           <SourceLine>If Me.VisualState = DesktopCheckBox.VisualStates.Checked Then</SourceLine>
           <SourceLine>App.GamepadSupport = 1</SourceLine>
+          <SourceLine>ReactorWindow.InputDevicesTimer.Enabled = True</SourceLine>
           <SourceLine>Else</SourceLine>
           <SourceLine>App.GamepadSupport = 0</SourceLine>
+          <SourceLine>ReactorWindow.InputDevicesTimer.Enabled = False</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
@@ -3830,10 +3884,8 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Action()</SourceLine>
+          <SourceLine>If App.GamepadSupport = 1 Then</SourceLine>
           <SourceLine>Try</SourceLine>
-          <SourceLine>// Clear old entries</SourceLine>
-          <SourceLine>InputDevicesWindow.InputListBox.RemoveAllRows()</SourceLine>
-          <SourceLine/>
           <SourceLine>Var mManager As GameInputManager = New GameInputManager</SourceLine>
           <SourceLine>Var gCount As Integer = mManager.DeviceCount</SourceLine>
           <SourceLine>Var device As GameInputDevice</SourceLine>
@@ -3844,20 +3896,36 @@
           <SourceLine>device = mManager.Device(deviceID)</SourceLine>
           <SourceLine>If mManager.Device(deviceID) &lt;&gt; Nil Then</SourceLine>
           <SourceLine>deviceName =  mManager.Device(deviceID).Name</SourceLine>
+          <SourceLine>//MessageBox(deviceName)</SourceLine>
+          <SourceLine>//System.Debuglog("""" + deviceName + """")</SourceLine>
           <SourceLine/>
           <SourceLine>// Supported devices:</SourceLine>
           <SourceLine>// DualSense Wireless Controller</SourceLine>
           <SourceLine>// SpaceMouse Enterprise</SourceLine>
           <SourceLine>// Kinesis JoyStick Controller</SourceLine>
-          <SourceLine/>
-          <SourceLine>if deviceName = "DualSense Wireless Controller" Then</SourceLine>
-          <SourceLine>// If InputDevicesWindow.DevicePopupMenu.SelectedRowText = deviceName Then</SourceLine>
+          <SourceLine>If deviceName = "Kinesis JoyStick Controller " Then</SourceLine>
           <SourceLine>For i = 0 To device.ElementCount - 1</SourceLine>
           <SourceLine>Var mButton As GameInputElement = device.Element(i)</SourceLine>
           <SourceLine>If mButton &lt;&gt; Nil Then</SourceLine>
           <SourceLine>Var mButtonName As String = mButton.Name</SourceLine>
           <SourceLine>Var mButtonState As String =  mButton.Value.ToString</SourceLine>
-          <SourceLine>InputDevicesWindow.InputListBox.AddRow(mButtonName, mButtonState)</SourceLine>
+          <SourceLine>//MessageBox(mButtonName + " | " + mButtonState)</SourceLine>
+          <SourceLine>If mButtonName = "Button #1" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// Left Button</SourceLine>
+          <SourceLine>Quit()</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Button #3" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// Right Button</SourceLine>
+          <SourceLine>ReactorWindow.Show</SourceLine>
+          <SourceLine>LicenseWindow.Close</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>ElseIf deviceName = "DualSense Wireless Controller" Then</SourceLine>
+          <SourceLine>For i = 0 To device.ElementCount - 1</SourceLine>
+          <SourceLine>Var mButton As GameInputElement = device.Element(i)</SourceLine>
+          <SourceLine>If mButton &lt;&gt; Nil Then</SourceLine>
+          <SourceLine>Var mButtonName As String = mButton.Name</SourceLine>
+          <SourceLine>Var mButtonState As String =  mButton.Value.ToString</SourceLine>
           <SourceLine>// Look into the analog joysticks for adjustable speed control</SourceLine>
           <SourceLine>If mButtonName = "Button #1" and mButtonState = "1" Then</SourceLine>
           <SourceLine>// Square Button = Cancel</SourceLine>
@@ -3875,6 +3943,7 @@
           <SourceLine>Catch e As RuntimeException</SourceLine>
           <SourceLine>System.DebugLog("Warning... USB Down"  + EndOfLine + EndOfLine + e.Message)</SourceLine>
           <SourceLine>End Try</SourceLine>
+          <SourceLine>End If</SourceLine>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -4142,6 +4211,75 @@
         <SourceLine>// Me.Height = DesktopDisplay.DisplayAt(0).AvailableHeight - 28</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
+        <SourceLine>Var programName As String = App.ExecutableFile.Name + ".json"</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Create the prefs folder</SourceLine>
+        <SourceLine>Var prefsFolder As FolderItem = SpecialFolder.ApplicationData.Child("Reactor")</SourceLine>
+        <SourceLine>If Not prefsFolder.Exists Then</SourceLine>
+        <SourceLine>prefsFolder.CreateFolder</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Read the Window_Prefs.json file from the Moonshot prefs folder</SourceLine>
+        <SourceLine>Var prefsFile As FolderItem = prefsFolder.Child(programName)</SourceLine>
+        <SourceLine>If prefsFile &lt;&gt; Nil And prefsFile.Exists Then</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>// Create the file pointer</SourceLine>
+        <SourceLine>Var fileStream As TextInputStream = TextInputStream.Open(prefsFile)</SourceLine>
+        <SourceLine>If fileStream &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>// Read the full text file in one block</SourceLine>
+        <SourceLine>Var textData As String = fileStream.ReadAll</SourceLine>
+        <SourceLine>// MessageBox(textData)</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>// Create a new JSON object hierarchy</SourceLine>
+        <SourceLine>Var json As New JSONItem(textData)</SourceLine>
+        <SourceLine>json.Compact = False</SourceLine>
+        <SourceLine>Var Val As String</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Load the JSON values as the Window position</SourceLine>
+        <SourceLine>If json.HasKey("MainWindow") Then</SourceLine>
+        <SourceLine>Var jsonWindow As JSONItem = json.Value("MainWindow")</SourceLine>
+        <SourceLine/>
+        <SourceLine>If jsonWindow.HasKey("Top") Then</SourceLine>
+        <SourceLine>Val = jsonWindow.Value("Top")</SourceLine>
+        <SourceLine>Me.Top = Val.ToInteger</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>If jsonWindow.HasKey("Left") Then</SourceLine>
+        <SourceLine>Val = jsonWindow.Value("Left")</SourceLine>
+        <SourceLine>Me.Left = Val.ToInteger</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>If jsonWindow.HasKey("Width") Then</SourceLine>
+        <SourceLine>Val = jsonWindow.Value("Width")</SourceLine>
+        <SourceLine>Me.Width = Val.ToInteger</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>If jsonWindow.HasKey("Height") Then</SourceLine>
+        <SourceLine>Val = jsonWindow.Value("Height")</SourceLine>
+        <SourceLine>Me.Height = Val.ToInteger</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>// MessageBox(json.ToString)</SourceLine>
+        <SourceLine>Catch e As JSONException</SourceLine>
+        <SourceLine>// Fallback Resolution</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch e As IOException</SourceLine>
+        <SourceLine>// Handle IO error</SourceLine>
+        <SourceLine>Catch e As JSONException</SourceLine>
+        <SourceLine>// Fallback</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>// Fallback</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Control the gamepad Input timer</SourceLine>
+        <SourceLine>If App.GamepadSupport = 1 Then</SourceLine>
+        <SourceLine>InputDevicesTimer.Enabled = True</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>InputDevicesTimer.Enabled = False</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
         <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
         <SourceLine>CreateReactorFolders()</SourceLine>
         <SourceLine/>
@@ -4206,6 +4344,60 @@
         <SourceLine>End Select</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </HookInstance>
+    <HookInstance>
+      <ItemName>Closing</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1416810495</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub Closing()</SourceLine>
+        <SourceLine>Var programName As String = App.ExecutableFile.Name + ".json"</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Create the prefs folder</SourceLine>
+        <SourceLine>Var prefsFolder As FolderItem = SpecialFolder.ApplicationData.Child("Reactor")</SourceLine>
+        <SourceLine>If Not prefsFolder.Exists Then</SourceLine>
+        <SourceLine>prefsFolder.CreateFolder</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>prefsFolder.Open()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Read the Window_Prefs.json file from the Moonshot prefs folder</SourceLine>
+        <SourceLine>Var prefsFile As FolderItem = prefsFolder.Child(programName)</SourceLine>
+        <SourceLine>If prefsFile &lt;&gt; Nil And prefsFolder.Exists Then</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>// Create the file pointer</SourceLine>
+        <SourceLine>Var fileStream As TextOutputStream = TextOutputStream.Create(prefsFile)</SourceLine>
+        <SourceLine>If fileStream &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>// Create a new JSON object hierarchy</SourceLine>
+        <SourceLine>Var json As New JSONItem</SourceLine>
+        <SourceLine>json.Compact = False</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Window Size</SourceLine>
+        <SourceLine>Var jsonWindow As New JSONItem</SourceLine>
+        <SourceLine>jsonWindow.Value("Top") = Self.Top</SourceLine>
+        <SourceLine>jsonWindow.Value("Left") = Self.Left</SourceLine>
+        <SourceLine>jsonWindow.Value("Width") = Self.Width</SourceLine>
+        <SourceLine>jsonWindow.Value("Height") = Self.Height</SourceLine>
+        <SourceLine>json.Value("MainWindow") = jsonWindow</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Preferences</SourceLine>
+        <SourceLine>json.Value("GamepadSupport") = App.GamepadSupport</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Write the data to disk</SourceLine>
+        <SourceLine>fileStream.WriteLine(json.ToString)</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Close the filepointer</SourceLine>
+        <SourceLine>fileStream.Close</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch e As IOException</SourceLine>
+        <SourceLine>// Handle error</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
       </ItemSource>
     </HookInstance>
     <MenuHandler>
@@ -5496,7 +5688,7 @@
         <SourceLine>App.DownloadAtomID = ""</SourceLine>
         <SourceLine>App.DownloadName = ""</SourceLine>
         <SourceLine>App.DownloadFolderItem = JSONFile</SourceLine>
-        <SourceLine>App.Atoms = New JSONItem(RSocket.SendSync("GET", url, 5))</SourceLine>
+        <SourceLine>App.Atoms = New JSONItem(RSocket.SendSync("GET", url, 15))</SourceLine>
         <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " " + "100% "</SourceLine>
         <SourceLine/>
         <SourceLine>Var options As New JSONOptions</SourceLine>
@@ -7255,10 +7447,8 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Action()</SourceLine>
+          <SourceLine>If App.GamepadSupport = 1 Then</SourceLine>
           <SourceLine>Try</SourceLine>
-          <SourceLine>// Clear old entries</SourceLine>
-          <SourceLine>InputDevicesWindow.InputListBox.RemoveAllRows()</SourceLine>
-          <SourceLine/>
           <SourceLine>Var mManager As GameInputManager = New GameInputManager</SourceLine>
           <SourceLine>Var gCount As Integer = mManager.DeviceCount</SourceLine>
           <SourceLine>Var device As GameInputDevice</SourceLine>
@@ -7275,14 +7465,110 @@
           <SourceLine>// SpaceMouse Enterprise</SourceLine>
           <SourceLine>// Kinesis JoyStick Controller</SourceLine>
           <SourceLine/>
-          <SourceLine>If deviceName = "DualSense Wireless Controller" Then</SourceLine>
-          <SourceLine>// If InputDevicesWindow.DevicePopupMenu.SelectedRowText = deviceName Then</SourceLine>
+          <SourceLine>If deviceName = "Kinesis JoyStick Controller " Then</SourceLine>
           <SourceLine>For i = 0 To device.ElementCount - 1</SourceLine>
           <SourceLine>Var mButton As GameInputElement = device.Element(i)</SourceLine>
           <SourceLine>If mButton &lt;&gt; Nil Then</SourceLine>
           <SourceLine>Var mButtonName As String = mButton.Name</SourceLine>
           <SourceLine>Var mButtonState As String =  mButton.Value.ToString</SourceLine>
-          <SourceLine>InputDevicesWindow.InputListBox.AddRow(mButtonName, mButtonState)</SourceLine>
+          <SourceLine>Var row as Integer = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>If mButtonName = "Button #1" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// Left Button = Atom List Up</SourceLine>
+          <SourceLine>If AtomsListBox.RowCount - 1 &gt;= 0 Then</SourceLine>
+          <SourceLine>If AtomsListBox.SelectedRowIndex = -1 Then</SourceLine>
+          <SourceLine>// If nothing is selected select the first row</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If AtomsListBox.SelectedRowIndex = 0 Then</SourceLine>
+          <SourceLine>// Roll the selection around from the top to the bottom</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = AtomsListBox.RowCount - 1</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>ElseIf AtomsListBox.SelectedRowIndex &gt;= 1 Then</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = AtomsListBox.SelectedRowIndex - 1</SourceLine>
+          <SourceLine>If AtomsListBox.ScrollPosition &gt; 0 Then</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.ScrollPosition - 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Button #2" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// Centre Button = Atom Install</SourceLine>
+          <SourceLine>If AtomsListbox.RowCount - 1 &gt;= 0 Then</SourceLine>
+          <SourceLine>If row &gt;= 0 Then</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = AtomsListbox.CellTagAt(row, 1).IntegerValue</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+          <SourceLine>If Atom &lt;&gt; Nil Then</SourceLine>
+          <SourceLine>Var AtomID As String = Atom.Value("ID")</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Is the atom installed already</SourceLine>
+          <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
+          <SourceLine/>
+          <SourceLine>If InstallState = False Then</SourceLine>
+          <SourceLine>AtomsListBox.CellTagAt(row, 0) = DesktopCheckbox.VisualStates.Indeterminate</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = AtomsListBox.CellTagAt(row, 0)</SourceLine>
+          <SourceLine>For c As Integer = 0 to AtomsListBox.ColumnCount - 1</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(row, c)</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>AtomDownloadQueue(AtomID, Atom)</SourceLine>
+          <SourceLine>ElseIf InstallState = True Then</SourceLine>
+          <SourceLine>AtomsListBox.CellTagAt(row, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = AtomsListBox.CellTagAt(row, 0)</SourceLine>
+          <SourceLine>For c As Integer = 0 to AtomsListBox.ColumnCount - 1</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(row, c)</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>AtomRemoveByAtomID(AtomID)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Cleanup Atom View</SourceLine>
+          <SourceLine>If RepoPopupMenu.SelectedRowIndex = 1 or  RepoPopupMenu.SelectedRowIndex = 7 Then</SourceLine>
+          <SourceLine>// Applies to Install or Download views</SourceLine>
+          <SourceLine>Var rowPrevious As Integer = row</SourceLine>
+          <SourceLine>Var ScrollPositionPrevious As Integer = AtomsListBox.ScrollPosition</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomsRefresh()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Keep Selection point</SourceLine>
+          <SourceLine>If AtomsListBox.SelectedRowIndex = -1 Then</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = AtomsListBox.RowCount - 1 </SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If rowPrevious &lt;= AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = rowPrevious</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If ScrollPositionPrevious &lt;= AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = ScrollPositionPrevious</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Button #3" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// Right Button = Atom List Down</SourceLine>
+          <SourceLine>If AtomsListBox.RowCount - 1 &gt;= 0 Then</SourceLine>
+          <SourceLine>If AtomsListBox.SelectedRowIndex = -1 Then</SourceLine>
+          <SourceLine>// If nothing is selected select the first row</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If AtomsListBox.SelectedRowIndex = AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>// Roll the selection around from the bottom to the top</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>ElseIf AtomsListBox.SelectedRowIndex &lt;= AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = AtomsListBox.SelectedRowIndex + 1</SourceLine>
+          <SourceLine>If AtomsListBox.ScrollPosition &lt;= AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.ScrollPosition + 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>ElseIf deviceName = "DualSense Wireless Controller" Then</SourceLine>
+          <SourceLine>For i = 0 To device.ElementCount - 1</SourceLine>
+          <SourceLine>Var mButton As GameInputElement = device.Element(i)</SourceLine>
+          <SourceLine>If mButton &lt;&gt; Nil Then</SourceLine>
+          <SourceLine>Var mButtonName As String = mButton.Name</SourceLine>
+          <SourceLine>Var mButtonState As String =  mButton.Value.ToString</SourceLine>
           <SourceLine>Var row as Integer = AtomsListBox.SelectedRowIndex </SourceLine>
           <SourceLine>// Look into the analog joysticks for adjustable speed control</SourceLine>
           <SourceLine>If mButtonName = "Button #1" and mButtonState = "1" Then</SourceLine>
@@ -7513,6 +7799,19 @@
           <SourceLine>AtomsListBox.SelectedRowIndex = SelectedOffset</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Z-Rotation" Then</SourceLine>
+          <SourceLine>// Left Joystick Y-axis = Atom List Select Next Item = Up/Down</SourceLine>
+          <SourceLine>// Allow up and down with proportial scrolling speed</SourceLine>
+          <SourceLine>If AtomsListBox.RowCount - 1 &gt;= 0 Then</SourceLine>
+          <SourceLine>If mButtonState.Val &lt; (127 - 16) or mButtonState.Val &gt; (127 + 16) Then</SourceLine>
+          <SourceLine>// Webpage scroll distance in pixels (+/- 128 pixel offset control range)</SourceLine>
+          <SourceLine>Dim Scroll_Pixels As Integer =  mButtonState.Val - 127</SourceLine>
+          <SourceLine>Dim Javascript_Code As String = "window.scrollBy(0, " + Str(Scroll_Pixels) + ");"</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Execute the JavaScript code snippet</SourceLine>
+          <SourceLine>DescriptionHTMLViewer.ExecuteJavaScript(Javascript_Code)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
           <SourceLine>ElseIf mButtonName = "Hatswitch" and mButtonState = "0" Then</SourceLine>
           <SourceLine>// Hatswitch Up = Atom List Select Next Item = Up</SourceLine>
           <SourceLine>If AtomsListBox.RowCount - 1 &gt;= 0 Then</SourceLine>
@@ -7560,6 +7859,7 @@
           <SourceLine>Catch e As RuntimeException</SourceLine>
           <SourceLine>System.DebugLog("Warning... USB Down"  + EndOfLine + EndOfLine + e.Message)</SourceLine>
           <SourceLine>End Try</SourceLine>
+          <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
@@ -8173,7 +8473,7 @@
         <MenuShortcutModifier>1</MenuShortcutModifier>
         <MenuAutoEnable>1</MenuAutoEnable>
         <TextEncoding>134217984</TextEncoding>
-        <MenuItemVisible>0</MenuItemVisible>
+        <MenuItemVisible>1</MenuItemVisible>
         <ItemFlags>0</ItemFlags>
         <Superclass>DesktopMenuItem</Superclass>
       </MenuItem>
@@ -9291,7 +9591,6 @@
       </ImageSpecification>
     </ImageRepresentation>
   </block>
-  <block type="ProjectItem" ID="708030463"/>
   <block type="UIState" ID="0">
     <WarningPreferences>
       <ItemName>5</ItemName>
@@ -9311,23 +9610,16 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1614" height="1006"/>
+        <Rect left="0" top="25" width="1581" height="1006"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
-        <EditorCount>2</EditorCount>
+        <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>PreferencesWindow.Opening</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.InputDevicesTimer.Action</EditorLocation>
           <EditorPath/>
-          <EditingPartID>241967103</EditingPartID>
-          <EditorPath/>
-        </Editor>
-        <Editor>
-          <EditorIndex>1</EditorIndex>
-          <EditorLocation>Reactor</EditorLocation>
-          <EditorPath/>
-          <EditingPartID>708030463</EditingPartID>
+          <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
