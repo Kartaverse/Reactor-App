@@ -167,6 +167,9 @@
         <SourceLine>Sub Opening()</SourceLine>
         <SourceLine>App.AllowAutoQuit = True</SourceLine>
         <SourceLine/>
+        <SourceLine>// Enable Gamepad support</SourceLine>
+        <SourceLine>App.GamepadSupport = 1</SourceLine>
+        <SourceLine/>
         <SourceLine>App.Header = "&lt;html&gt; " +_ </SourceLine>
         <SourceLine>"&lt;head&gt; " +_ </SourceLine>
         <SourceLine>"&lt;meta name=""qrichtext"" content=""1"" /&gt; " +_ </SourceLine>
@@ -701,6 +704,21 @@
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
     </Property>
+    <Property>
+      <ItemName>GamepadSupport</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>686544895</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>GamepadSupport As Integer</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>GamepadSupport As Integer</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <ViewBehavior>
       <ViewProperty>
@@ -846,6 +864,11 @@
         <ItemType>String</ItemType>
         <EditorType>MultiLineEditor</EditorType>
       </ViewProperty>
+      <ViewProperty>
+        <ObjName>GamepadSupport</ObjName>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
     </ViewBehavior>
     <Constant>
       <ItemName>kFileQuitShortcut</ItemName>
@@ -902,6 +925,404 @@
         <ItemDef>&amp;Delete</ItemDef>
       </ConstantInstance>
     </Constant>
+  </block>
+  <block type="DesktopWindow" ID="534319103">
+    <ObjName>InputDevicesWindow</ObjName>
+    <ObjContainerID>0</ObjContainerID>
+    <IsClass>1</IsClass>
+    <Superclass>DesktopWindow</Superclass>
+    <ItemFlags>1</ItemFlags>
+    <IsInterface>0</IsInterface>
+    <Compatibility/>
+    <PropertyVal Name="MenuBarVisible">False</PropertyVal>
+    <PropertyVal Name="MenuBar">1221494783</PropertyVal>
+    <PropertyVal Name="Backdrop">0</PropertyVal>
+    <PropertyVal Name="BackgroundColor">&amp;cFFFFFF</PropertyVal>
+    <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
+    <PropertyVal Name="ImplicitInstance">True</PropertyVal>
+    <PropertyVal Name="Visible">False</PropertyVal>
+    <PropertyVal Name="DefaultLocation">2</PropertyVal>
+    <PropertyVal Name="FullScreen">False</PropertyVal>
+    <PropertyVal Name="MacProcID">0</PropertyVal>
+    <PropertyVal Name="Composite">False</PropertyVal>
+    <PropertyVal Name="Resizeable">True</PropertyVal>
+    <PropertyVal Name="HasTitleBar">True</PropertyVal>
+    <PropertyVal Name="HasFullScreenButton">False</PropertyVal>
+    <PropertyVal Name="HasMinimizeButton">True</PropertyVal>
+    <PropertyVal Name="HasMaximizeButton">True</PropertyVal>
+    <PropertyVal Name="HasCloseButton">True</PropertyVal>
+    <PropertyVal Name="Title">Input Devices</PropertyVal>
+    <PropertyVal Name="Type">0</PropertyVal>
+    <PropertyVal Name="MaximumHeight">600</PropertyVal>
+    <PropertyVal Name="MaximumWidth">350</PropertyVal>
+    <PropertyVal Name="MinimumHeight">400</PropertyVal>
+    <PropertyVal Name="MinimumWidth">350</PropertyVal>
+    <PropertyVal Name="Height">500</PropertyVal>
+    <PropertyVal Name="Width">350</PropertyVal>
+    <ViewBehavior>
+      <ViewProperty>
+        <ObjName>Name</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>ID</PropertyGroup>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Interfaces</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>ID</PropertyGroup>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Super</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>ID</PropertyGroup>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Width</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>600</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Height</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>400</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MinimumWidth</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>64</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MinimumHeight</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>64</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MaximumWidth</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>32000</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MaximumHeight</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Size</PropertyGroup>
+        <PropertyValue>32000</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Type</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>0</PropertyValue>
+        <ItemType>Types</ItemType>
+        <EditorType>Enum</EditorType>
+        <Enumeration>
+          <ItemDef>0 - Document</ItemDef>
+          <ItemDef>1 - Movable Modal</ItemDef>
+          <ItemDef>2 - Modal Dialog</ItemDef>
+          <ItemDef>3 - Floating Window</ItemDef>
+          <ItemDef>4 - Plain Box</ItemDef>
+          <ItemDef>5 - Shadowed Box</ItemDef>
+          <ItemDef>6 - Rounded Window</ItemDef>
+          <ItemDef>7 - Global Floating Window</ItemDef>
+          <ItemDef>8 - Sheet Window</ItemDef>
+          <ItemDef>9 - Modeless Dialog</ItemDef>
+        </Enumeration>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Title</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>Untitled</PropertyValue>
+        <ItemType>String</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasCloseButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasMaximizeButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasMinimizeButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasFullScreenButton</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasTitleBar</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Resizeable</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Frame</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Composite</ObjName>
+        <PropertyGroup>OS X (Carbon)</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MacProcID</ObjName>
+        <PropertyGroup>OS X (Carbon)</PropertyGroup>
+        <PropertyValue>0</PropertyValue>
+        <ItemType>Integer</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>FullScreen</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>DefaultLocation</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>2</PropertyValue>
+        <ItemType>Locations</ItemType>
+        <EditorType>Enum</EditorType>
+        <Enumeration>
+          <ItemDef>0 - Default</ItemDef>
+          <ItemDef>1 - Parent Window</ItemDef>
+          <ItemDef>2 - Main Screen</ItemDef>
+          <ItemDef>3 - Parent Window Screen</ItemDef>
+          <ItemDef>4 - Stagger</ItemDef>
+        </Enumeration>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Visible</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>ImplicitInstance</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Window Behavior</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>HasBackgroundColor</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Background</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>BackgroundColor</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Background</PropertyGroup>
+        <PropertyValue>&amp;cFFFFFF</PropertyValue>
+        <ItemType>ColorGroup</ItemType>
+        <EditorType>ColorGroup</EditorType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>Backdrop</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Background</PropertyGroup>
+        <ItemType>Picture</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MenuBar</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Menus</PropertyGroup>
+        <ItemType>DesktopMenuBar</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>MenuBarVisible</ObjName>
+        <Visible>1</Visible>
+        <PropertyGroup>Deprecated</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+    </ViewBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopListBox</Superclass>
+      <HookInstance>
+        <ItemName>Opening</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>562038783</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Opening()</SourceLine>
+          <SourceLine>'Me.AllowExpandableRows = True</SourceLine>
+          <SourceLine>'Me.ColumnSortTypeAt(0) = DesktopListBox.SortTypes.Sortable</SourceLine>
+          <SourceLine>'Me.ColumnSortDirectionAt(0) = DesktopListBox.SortDirections.Ascending</SourceLine>
+          <SourceLine>'Me.SortingColumn = 0</SourceLine>
+          <SourceLine>'Me.HeadingIndex = 0</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopPopupMenu</Superclass>
+      <HookInstance>
+        <ItemName>Opening</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1349132287</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Opening()</SourceLine>
+          <SourceLine>'Try</SourceLine>
+          <SourceLine>'// Clear old entries</SourceLine>
+          <SourceLine>'Me.RemoveAllRows()</SourceLine>
+          <SourceLine>'</SourceLine>
+          <SourceLine>'Var mManager As GameInputManager = New GameInputManager</SourceLine>
+          <SourceLine>'Var gCount As Integer = mManager.DeviceCount</SourceLine>
+          <SourceLine>'Var device As GameInputDevice</SourceLine>
+          <SourceLine>'Var deviceID As Integer = 0</SourceLine>
+          <SourceLine>'Var deviceName As String = ""</SourceLine>
+          <SourceLine>'Var i as Integer = 0</SourceLine>
+          <SourceLine>'For deviceID = 0 To gCount - 1</SourceLine>
+          <SourceLine>'device = mManager.Device(deviceID)</SourceLine>
+          <SourceLine>'If mManager.Device(deviceID) &lt;&gt; Nil Then</SourceLine>
+          <SourceLine>'deviceName =  mManager.Device(deviceID).Name</SourceLine>
+          <SourceLine>'If deviceName &lt;&gt; "" Then</SourceLine>
+          <SourceLine>'Me.AddRow(deviceName)</SourceLine>
+          <SourceLine>'End If</SourceLine>
+          <SourceLine>'End If</SourceLine>
+          <SourceLine>'Next</SourceLine>
+          <SourceLine>'</SourceLine>
+          <SourceLine>'Me.SelectRowWithText("DualSense Wireless Controller")</SourceLine>
+          <SourceLine>'Catch e As RuntimeException</SourceLine>
+          <SourceLine>'System.DebugLog("Warning... USB Down"  + EndOfLine + EndOfLine + e.Message)</SourceLine>
+          <SourceLine>'End Try</SourceLine>
+          <SourceLine>'</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <Control>
+      <ControlClass>DesktopListBox</ControlClass>
+      <ItemName>DesktopListBox</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowAutoHideScrollbars">True</PropertyVal>
+      <PropertyVal Name="AllowExpandableRows">False</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
+      <PropertyVal Name="AllowResizableColumns">False</PropertyVal>
+      <PropertyVal Name="AllowRowDragging">False</PropertyVal>
+      <PropertyVal Name="AllowRowReordering">False</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="ColumnCount">2</PropertyVal>
+      <PropertyVal Name="ColumnWidths">70%,*</PropertyVal>
+      <PropertyVal Name="DefaultRowHeight">-1</PropertyVal>
+      <PropertyVal Name="DropIndicatorVisible">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="GridLineStyle">0</PropertyVal>
+      <PropertyVal Name="HasBorder">True</PropertyVal>
+      <PropertyVal Name="HasHeader">True</PropertyVal>
+      <PropertyVal Name="HasHorizontalScrollbar">False</PropertyVal>
+      <PropertyVal Name="HasVerticalScrollbar">True</PropertyVal>
+      <PropertyVal Name="HeadingIndex">-1</PropertyVal>
+      <PropertyVal Name="Height">490</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialValue">
+        <Hex bytes="11">496E707574095374617465</Hex>
+      </PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">0</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">InputListBox</PropertyVal>
+      <PropertyVal Name="RequiresSelection">False</PropertyVal>
+      <PropertyVal Name="RowSelectionType">0</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopListBox</PropertyVal>
+      <PropertyVal Name="TabIndex">0</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">20</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">351</PropertyVal>
+      <PropertyVal Name="_ScrollOffset">0</PropertyVal>
+      <PropertyVal Name="_ScrollWidth">-1</PropertyVal>
+      <ControlIndex>0</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>2080329727</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopPopupMenu</ControlClass>
+      <ItemName>DesktopPopupMenu</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialValue"/>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">0</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">DevicePopupMenu</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="SelectedRowIndex">-1</PropertyVal>
+      <PropertyVal Name="Super">DesktopPopupMenu</PropertyVal>
+      <PropertyVal Name="TabIndex">1</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">0</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">352</PropertyVal>
+      <ControlIndex>1</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>665806847</PartID>
+    </Control>
   </block>
   <block type="DesktopWindow" ID="296974335">
     <ObjName>AboutWindow</ObjName>
@@ -1377,7 +1798,7 @@
       <PropertyVal Name="TabIndex">4</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">Version 4 Beta 9 - 2025-08-18</PropertyVal>
+      <PropertyVal Name="Text">Version 4 Beta 11 - 2025-08-19</PropertyVal>
       <PropertyVal Name="TextAlignment">2</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
       <PropertyVal Name="Tooltip"/>
@@ -1475,6 +1896,13 @@
         <SourceLine>Me.Left = ReactorWindow.Left + (ReactorWindow.Width / 2) - (Me.Width / 2)</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
+        <SourceLine>// Gamepad support</SourceLine>
+        <SourceLine>If Self.GamepadSupportCheckBox.VisualState = DesktopCheckBox.VisualStates.Checked Then</SourceLine>
+        <SourceLine>App.GamepadSupport = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>App.GamepadSupport = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
     </HookInstance>
@@ -1501,7 +1929,7 @@
     <PropertyVal Name="MaximumWidth">1920</PropertyVal>
     <PropertyVal Name="MinimumHeight">196</PropertyVal>
     <PropertyVal Name="MinimumWidth">390</PropertyVal>
-    <PropertyVal Name="Height">196</PropertyVal>
+    <PropertyVal Name="Height">300</PropertyVal>
     <PropertyVal Name="Width">390</PropertyVal>
     <ViewBehavior>
       <ViewProperty>
@@ -1781,6 +2209,27 @@
     <ControlBehavior>
       <Superclass>DesktopSeparator</Superclass>
     </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopCheckBox</Superclass>
+      <HookInstance>
+        <ItemName>ValueChanged</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>507199487</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub ValueChanged()</SourceLine>
+          <SourceLine>// Gamepad support</SourceLine>
+          <SourceLine>If Me.VisualState = DesktopCheckBox.VisualStates.Checked Then</SourceLine>
+          <SourceLine>App.GamepadSupport = 1</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>App.GamepadSupport = 0</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
     <Control>
       <ControlClass>DesktopCheckBox</ControlClass>
       <ItemName>DesktopCheckBox</ItemName>
@@ -1806,7 +2255,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">154</PropertyVal>
+      <PropertyVal Name="Top">186</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Value">False</PropertyVal>
@@ -1854,7 +2303,7 @@
       <PropertyVal Name="TextAlignment">0</PropertyVal>
       <PropertyVal Name="TextColor">&amp;h000000</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">154</PropertyVal>
+      <PropertyVal Name="Top">186</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="ValidationMask"/>
@@ -1893,7 +2342,7 @@
       <PropertyVal Name="TextAlignment">0</PropertyVal>
       <PropertyVal Name="TextColor">&amp;h000000</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">154</PropertyVal>
+      <PropertyVal Name="Top">186</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -2051,6 +2500,42 @@
       <ControlIndex>6</ControlIndex>
       <Locked>0</Locked>
       <PartID>760029183</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopCheckBox</ControlClass>
+      <ItemName>DesktopCheckBox</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Caption">USB and Bluetooth Gamepad Support</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">20</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">False</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">GamepadSupportCheckBox</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopCheckBox</PropertyVal>
+      <PropertyVal Name="TabIndex">8</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">154</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Value">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="VisualState">0</PropertyVal>
+      <PropertyVal Name="Width">261</PropertyVal>
+      <ControlIndex>7</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>384022527</PartID>
     </Control>
   </block>
   <block type="DesktopWindow" ID="960294911">
@@ -3335,6 +3820,65 @@
         </ItemSource>
       </HookInstance>
     </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>Timer</Superclass>
+      <HookInstance>
+        <ItemName>Action</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>235296767</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Action()</SourceLine>
+          <SourceLine>Try</SourceLine>
+          <SourceLine>// Clear old entries</SourceLine>
+          <SourceLine>InputDevicesWindow.InputListBox.RemoveAllRows()</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var mManager As GameInputManager = New GameInputManager</SourceLine>
+          <SourceLine>Var gCount As Integer = mManager.DeviceCount</SourceLine>
+          <SourceLine>Var device As GameInputDevice</SourceLine>
+          <SourceLine>Var deviceID As Integer = 0</SourceLine>
+          <SourceLine>Var deviceName As String = ""</SourceLine>
+          <SourceLine>Var i as Integer = 0</SourceLine>
+          <SourceLine>For deviceID = 0 To gCount - 1</SourceLine>
+          <SourceLine>device = mManager.Device(deviceID)</SourceLine>
+          <SourceLine>If mManager.Device(deviceID) &lt;&gt; Nil Then</SourceLine>
+          <SourceLine>deviceName =  mManager.Device(deviceID).Name</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Supported devices:</SourceLine>
+          <SourceLine>// DualSense Wireless Controller</SourceLine>
+          <SourceLine>// SpaceMouse Enterprise</SourceLine>
+          <SourceLine>// Kinesis JoyStick Controller</SourceLine>
+          <SourceLine/>
+          <SourceLine>if deviceName = "DualSense Wireless Controller" Then</SourceLine>
+          <SourceLine>// If InputDevicesWindow.DevicePopupMenu.SelectedRowText = deviceName Then</SourceLine>
+          <SourceLine>For i = 0 To device.ElementCount - 1</SourceLine>
+          <SourceLine>Var mButton As GameInputElement = device.Element(i)</SourceLine>
+          <SourceLine>If mButton &lt;&gt; Nil Then</SourceLine>
+          <SourceLine>Var mButtonName As String = mButton.Name</SourceLine>
+          <SourceLine>Var mButtonState As String =  mButton.Value.ToString</SourceLine>
+          <SourceLine>InputDevicesWindow.InputListBox.AddRow(mButtonName, mButtonState)</SourceLine>
+          <SourceLine>// Look into the analog joysticks for adjustable speed control</SourceLine>
+          <SourceLine>If mButtonName = "Button #1" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// Square Button = Cancel</SourceLine>
+          <SourceLine>Quit()</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Button #2" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// X botton to toggle License Agree</SourceLine>
+          <SourceLine>ReactorWindow.Show</SourceLine>
+          <SourceLine>LicenseWindow.Close</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>Catch e As RuntimeException</SourceLine>
+          <SourceLine>System.DebugLog("Warning... USB Down"  + EndOfLine + EndOfLine + e.Message)</SourceLine>
+          <SourceLine>End Try</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
     <Control>
       <ControlClass>DesktopLabel</ControlClass>
       <ItemName>DesktopLabel</ItemName>
@@ -3554,6 +4098,21 @@
       <ControlIndex>5</ControlIndex>
       <Locked>0</Locked>
       <PartID>1455753215</PartID>
+    </Control>
+    <Control>
+      <ControlClass>Timer</ControlClass>
+      <ItemName>Timer</ItemName>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Name">InputDevicesTimer</PropertyVal>
+      <PropertyVal Name="Period">33</PropertyVal>
+      <PropertyVal Name="RunMode">2</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">Timer</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <ControlIndex>6</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>454094847</PartID>
     </Control>
   </block>
   <block type="DesktopWindow" ID="338128895">
@@ -3933,6 +4492,19 @@
         <SourceLine>Case Atom_Import_Dialog.CancelButton</SourceLine>
         <SourceLine>// User pressed "Cancel"</SourceLine>
         <SourceLine>End Select</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ToolsRefreshAtomList</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>2100330495</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ToolsRefreshAtomList() As Boolean</SourceLine>
+        <SourceLine>AtomsRefresh()</SourceLine>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
       </ItemSource>
@@ -6673,6 +7245,327 @@
         </ItemSource>
       </HookInstance>
     </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>Timer</Superclass>
+      <HookInstance>
+        <ItemName>Action</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>375087103</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Action()</SourceLine>
+          <SourceLine>Try</SourceLine>
+          <SourceLine>// Clear old entries</SourceLine>
+          <SourceLine>InputDevicesWindow.InputListBox.RemoveAllRows()</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var mManager As GameInputManager = New GameInputManager</SourceLine>
+          <SourceLine>Var gCount As Integer = mManager.DeviceCount</SourceLine>
+          <SourceLine>Var device As GameInputDevice</SourceLine>
+          <SourceLine>Var deviceID As Integer = 0</SourceLine>
+          <SourceLine>Var deviceName As String = ""</SourceLine>
+          <SourceLine>Var i as Integer = 0</SourceLine>
+          <SourceLine>For deviceID = 0 To gCount - 1</SourceLine>
+          <SourceLine>device = mManager.Device(deviceID)</SourceLine>
+          <SourceLine>If mManager.Device(deviceID) &lt;&gt; Nil Then</SourceLine>
+          <SourceLine>deviceName =  mManager.Device(deviceID).Name</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Supported devices:</SourceLine>
+          <SourceLine>// DualSense Wireless Controller</SourceLine>
+          <SourceLine>// SpaceMouse Enterprise</SourceLine>
+          <SourceLine>// Kinesis JoyStick Controller</SourceLine>
+          <SourceLine/>
+          <SourceLine>If deviceName = "DualSense Wireless Controller" Then</SourceLine>
+          <SourceLine>// If InputDevicesWindow.DevicePopupMenu.SelectedRowText = deviceName Then</SourceLine>
+          <SourceLine>For i = 0 To device.ElementCount - 1</SourceLine>
+          <SourceLine>Var mButton As GameInputElement = device.Element(i)</SourceLine>
+          <SourceLine>If mButton &lt;&gt; Nil Then</SourceLine>
+          <SourceLine>Var mButtonName As String = mButton.Name</SourceLine>
+          <SourceLine>Var mButtonState As String =  mButton.Value.ToString</SourceLine>
+          <SourceLine>InputDevicesWindow.InputListBox.AddRow(mButtonName, mButtonState)</SourceLine>
+          <SourceLine>Var row as Integer = AtomsListBox.SelectedRowIndex </SourceLine>
+          <SourceLine>// Look into the analog joysticks for adjustable speed control</SourceLine>
+          <SourceLine>If mButtonName = "Button #1" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// Square Button = Cancel</SourceLine>
+          <SourceLine>AtomDownloadCancel()</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Button #2" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// X = Install/Uninstall</SourceLine>
+          <SourceLine>If AtomsListbox.RowCount - 1 &gt;= 0 Then</SourceLine>
+          <SourceLine>If row &gt;= 0 Then</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = AtomsListbox.CellTagAt(row, 1).IntegerValue</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+          <SourceLine>If Atom &lt;&gt; Nil Then</SourceLine>
+          <SourceLine>Var AtomID As String = Atom.Value("ID")</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Is the atom installed already</SourceLine>
+          <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
+          <SourceLine/>
+          <SourceLine>If InstallState = False Then</SourceLine>
+          <SourceLine>AtomsListBox.CellTagAt(row, 0) = DesktopCheckbox.VisualStates.Indeterminate</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = AtomsListBox.CellTagAt(row, 0)</SourceLine>
+          <SourceLine>For c As Integer = 0 to AtomsListBox.ColumnCount - 1</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(row, c)</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>AtomDownloadQueue(AtomID, Atom)</SourceLine>
+          <SourceLine>ElseIf InstallState = True Then</SourceLine>
+          <SourceLine>AtomsListBox.CellTagAt(row, 0) = DesktopCheckbox.VisualStates.Unchecked</SourceLine>
+          <SourceLine>AtomsListBox.CellCheckBoxStateAt(row, 0) = AtomsListBox.CellTagAt(row, 0)</SourceLine>
+          <SourceLine>For c As Integer = 0 to AtomsListBox.ColumnCount - 1</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(row, c)</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>AtomRemoveByAtomID(AtomID)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Cleanup Atom View</SourceLine>
+          <SourceLine>If RepoPopupMenu.SelectedRowIndex = 1 or  RepoPopupMenu.SelectedRowIndex = 7 Then</SourceLine>
+          <SourceLine>// Applies to Install or Download views</SourceLine>
+          <SourceLine>Var rowPrevious As Integer = row</SourceLine>
+          <SourceLine>Var ScrollPositionPrevious As Integer = AtomsListBox.ScrollPosition</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomsRefresh()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Keep Selection point</SourceLine>
+          <SourceLine>If AtomsListBox.SelectedRowIndex = -1 Then</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = AtomsListBox.RowCount - 1 </SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If rowPrevious &lt;= AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = rowPrevious</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If ScrollPositionPrevious &lt;= AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = ScrollPositionPrevious</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Button #3" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// Circle = Refresh View</SourceLine>
+          <SourceLine>Var rowPrevious As Integer = row</SourceLine>
+          <SourceLine>Var ScrollPositionPrevious As Integer = AtomsListBox.ScrollPosition</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomsRefresh()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Keep Selection point</SourceLine>
+          <SourceLine>If rowPrevious &lt;= AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = rowPrevious</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If ScrollPositionPrevious &lt;= AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = ScrollPositionPrevious</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Button #4" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// Triangle = About Reactor</SourceLine>
+          <SourceLine>If AboutWindow.Visible = False Then</SourceLine>
+          <SourceLine>AboutWindow.Show</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>AboutWindow.Hide</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Button #5" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// L1 = Change Category Down</SourceLine>
+          <SourceLine>If CategoryListBox.RowCount - 1 &gt;= 0 Then</SourceLine>
+          <SourceLine>If CategoryListBox.SelectedRowIndex = -1 Then</SourceLine>
+          <SourceLine>// If nothing is selected select the first row</SourceLine>
+          <SourceLine>CategoryListBox.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>CategoryListBox.ScrollPosition = CategoryListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If CategoryListBox.SelectedRowIndex = 0 Then</SourceLine>
+          <SourceLine>// Roll the selection around from the top to the bottom</SourceLine>
+          <SourceLine>CategoryListBox.SelectedRowIndex = CategoryListBox.RowCount - 1</SourceLine>
+          <SourceLine>CategoryListBox.ScrollPosition = CategoryListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>ElseIf CategoryListBox.SelectedRowIndex &gt;= 1 Then</SourceLine>
+          <SourceLine>CategoryListBox.SelectedRowIndex = CategoryListBox.SelectedRowIndex - 1</SourceLine>
+          <SourceLine>If CategoryListBox.ScrollPosition &gt; 0 Then</SourceLine>
+          <SourceLine>CategoryListBox.ScrollPosition = CategoryListBox.ScrollPosition - 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If AtomsListBox.SelectedRowIndex = -1 Then</SourceLine>
+          <SourceLine>If AtomsListBox.RowCount - 1 &gt;= 0 Then</SourceLine>
+          <SourceLine>// If nothing is selected select the first row</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Button #7" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// L2 = Change Category Up</SourceLine>
+          <SourceLine>If CategoryListBox.RowCount - 1 &gt;= 0 Then</SourceLine>
+          <SourceLine>If CategoryListBox.SelectedRowIndex = -1 Then</SourceLine>
+          <SourceLine>// If nothing is selected select the first row</SourceLine>
+          <SourceLine>CategoryListBox.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>CategoryListBox.ScrollPosition = CategoryListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If CategoryListBox.SelectedRowIndex = CategoryListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>// Roll the selection around from the bottom to the top</SourceLine>
+          <SourceLine>CategoryListBox.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>CategoryListBox.ScrollPosition = CategoryListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>ElseIf CategoryListBox.SelectedRowIndex &lt;= CategoryListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>CategoryListBox.SelectedRowIndex = CategoryListBox.SelectedRowIndex + 1</SourceLine>
+          <SourceLine>If CategoryListBox.ScrollPosition &lt;= CategoryListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>CategoryListBox.ScrollPosition = CategoryListBox.ScrollPosition + 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If AtomsListBox.SelectedRowIndex = -1 Then</SourceLine>
+          <SourceLine>// If nothing is selected select the first row</SourceLine>
+          <SourceLine>If AtomsListBox.RowCount - 1 &gt;= 0 Then</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Button #8" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// R2</SourceLine>
+          <SourceLine>// Switch view mode</SourceLine>
+          <SourceLine>Select Case RepoPopupMenu.SelectedRowIndex</SourceLine>
+          <SourceLine>Case 0</SourceLine>
+          <SourceLine>// All</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 1</SourceLine>
+          <SourceLine>Case 1</SourceLine>
+          <SourceLine>// Installed</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 5</SourceLine>
+          <SourceLine>Case 2</SourceLine>
+          <SourceLine>// Donate</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>Case 3</SourceLine>
+          <SourceLine>// New</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>Case 4</SourceLine>
+          <SourceLine>// Update</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>Case 5</SourceLine>
+          <SourceLine>// Dependencies</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 7</SourceLine>
+          <SourceLine>Case 6</SourceLine>
+          <SourceLine>// Incompatible</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>Case 7</SourceLine>
+          <SourceLine>// Downloading</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>End Select</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Button #6" and mButtonState = "1" Then</SourceLine>
+          <SourceLine>// R1</SourceLine>
+          <SourceLine>// Switch view mode</SourceLine>
+          <SourceLine>Select Case RepoPopupMenu.SelectedRowIndex</SourceLine>
+          <SourceLine>Case 0</SourceLine>
+          <SourceLine>// All</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 7</SourceLine>
+          <SourceLine>Case 1</SourceLine>
+          <SourceLine>// Installed</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>Case 2</SourceLine>
+          <SourceLine>// Donate</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>Case 3</SourceLine>
+          <SourceLine>// New</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>Case 4</SourceLine>
+          <SourceLine>// Update</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>Case 5</SourceLine>
+          <SourceLine>// Dependencies</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 1</SourceLine>
+          <SourceLine>Case 6</SourceLine>
+          <SourceLine>// Incompatible</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>Case 7</SourceLine>
+          <SourceLine>// Downloading</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 5 </SourceLine>
+          <SourceLine>End Select</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Y-Axis" Then</SourceLine>
+          <SourceLine>// Left Joystick Y-axis = Atom List Select Next Item = Up/Down</SourceLine>
+          <SourceLine>// Allow up and down with proportial scrolling speed</SourceLine>
+          <SourceLine>If AtomsListBox.RowCount - 1 &gt;= 0 Then</SourceLine>
+          <SourceLine>If mButtonState.Val &lt; (127 - 16) or mButtonState.Val &gt; (127 + 16) Then</SourceLine>
+          <SourceLine>// Scale the 0-255 value into a floating point -0.5 to 0.5 input range</SourceLine>
+          <SourceLine>Var ScrollFloat As Double = mButtonState.Val</SourceLine>
+          <SourceLine>ScrollFloat = ScrollFloat / 255</SourceLine>
+          <SourceLine>ScrollFloat = ScrollFloat - 0.5</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Accelerate scrolling at the far ends of the range control</SourceLine>
+          <SourceLine>Var ScrollRate As Double = 2</SourceLine>
+          <SourceLine>If mButtonState.Val &lt; 2 or mButtonState.Val &gt; 253 Then</SourceLine>
+          <SourceLine>ScrollRate = 30</SourceLine>
+          <SourceLine>elseif mButtonState.Val &lt; 32 or mButtonState.Val &gt; 223 Then</SourceLine>
+          <SourceLine>ScrollRate = 8</SourceLine>
+          <SourceLine>elseif mButtonState.Val &lt; 64 or mButtonState.Val &gt; 191 Then</SourceLine>
+          <SourceLine>ScrollRate = 5</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Apply the speed factors</SourceLine>
+          <SourceLine>ScrollFloat = ScrollFloat * ScrollRate</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Clamp Values</SourceLine>
+          <SourceLine>Var ScrollInteger As Integer = AtomsListBox.ScrollPosition + ScrollFloat</SourceLine>
+          <SourceLine>If ScrollInteger &lt;= 0 Then</SourceLine>
+          <SourceLine>ScrollInteger = 0</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If ScrollInteger &gt;= AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>ScrollInteger = AtomsListBox.RowCount - 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var SelectedOffset As Integer = (AtomsListBox.SelectedRowIndex - AtomsListBox.ScrollPosition) + ScrollInteger</SourceLine>
+          <SourceLine>If SelectedOffset &lt;= 0 Then</SourceLine>
+          <SourceLine>SelectedOffset = 0</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If SelectedOffset &gt;= AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>SelectedOffset = AtomsListBox.RowCount - 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>// Left analog joystick</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = ScrollInteger</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = SelectedOffset</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf mButtonName = "Hatswitch" and mButtonState = "0" Then</SourceLine>
+          <SourceLine>// Hatswitch Up = Atom List Select Next Item = Up</SourceLine>
+          <SourceLine>If AtomsListBox.RowCount - 1 &gt;= 0 Then</SourceLine>
+          <SourceLine>If AtomsListBox.SelectedRowIndex = -1 Then</SourceLine>
+          <SourceLine>// If nothing is selected select the first row</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If AtomsListBox.SelectedRowIndex = 0 Then</SourceLine>
+          <SourceLine>// Roll the selection around from the top to the bottom</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = AtomsListBox.RowCount - 1</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>ElseIf AtomsListBox.SelectedRowIndex &gt;= 1 Then</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = AtomsListBox.SelectedRowIndex - 1</SourceLine>
+          <SourceLine>If AtomsListBox.ScrollPosition &gt; 0 Then</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.ScrollPosition - 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>Elseif mButtonName = "Hatswitch" and mButtonState = "4" Then</SourceLine>
+          <SourceLine>// Hatswitch Down = Atom List Select Next Item = Down</SourceLine>
+          <SourceLine>If AtomsListBox.RowCount - 1 &gt;= 0 Then</SourceLine>
+          <SourceLine>If AtomsListBox.SelectedRowIndex = -1 Then</SourceLine>
+          <SourceLine>// If nothing is selected select the first row</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>If AtomsListBox.SelectedRowIndex = AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>// Roll the selection around from the bottom to the top</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>ElseIf AtomsListBox.SelectedRowIndex &lt;= AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>AtomsListBox.SelectedRowIndex = AtomsListBox.SelectedRowIndex + 1</SourceLine>
+          <SourceLine>If AtomsListBox.ScrollPosition &lt;= AtomsListBox.RowCount - 1 Then</SourceLine>
+          <SourceLine>AtomsListBox.ScrollPosition = AtomsListBox.ScrollPosition + 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>Catch e As RuntimeException</SourceLine>
+          <SourceLine>System.DebugLog("Warning... USB Down"  + EndOfLine + EndOfLine + e.Message)</SourceLine>
+          <SourceLine>End Try</SourceLine>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
     <Control>
       <ControlClass>DesktopListBox</ControlClass>
       <ItemName>DesktopListBox</ItemName>
@@ -7216,6 +8109,21 @@
       <Locked>0</Locked>
       <PartID>1757388799</PartID>
     </Control>
+    <Control>
+      <ControlClass>Timer</ControlClass>
+      <ItemName>Timer</ItemName>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Name">InputDevicesTimer</PropertyVal>
+      <PropertyVal Name="Period">50</PropertyVal>
+      <PropertyVal Name="RunMode">2</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">Timer</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <ControlIndex>15</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1491859455</PartID>
+    </Control>
   </block>
   <block type="Menu" ID="1789632511">
     <ObjName>MenuBar1</ObjName>
@@ -7298,6 +8206,20 @@
           <ItemText>Import Legacy Reactor Atoms</ItemText>
           <ItemIndex>-2147483648</ItemIndex>
           <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ToolsRefreshAtomList</ItemName>
+          <ItemText>Refresh Atom List</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut>Cmd+R</ItemShortcut>
+          <MenuShortcut>R</MenuShortcut>
+          <MenuShortcutModifier>1</MenuShortcutModifier>
           <MenuAutoEnable>1</MenuAutoEnable>
           <TextEncoding>134217984</TextEncoding>
           <MenuItemVisible>1</MenuItemVisible>
@@ -8369,6 +9291,7 @@
       </ImageSpecification>
     </ImageRepresentation>
   </block>
+  <block type="ProjectItem" ID="708030463"/>
   <block type="UIState" ID="0">
     <WarningPreferences>
       <ItemName>5</ItemName>
@@ -8388,16 +9311,23 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1913" height="1006"/>
+        <Rect left="0" top="25" width="1614" height="1006"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
-        <EditorCount>1</EditorCount>
+        <EditorCount>2</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>AboutWindow.Controls.AboutLabel3</EditorLocation>
+          <EditorLocation>PreferencesWindow.Opening</EditorLocation>
           <EditorPath/>
-          <EditingPartID>296974335</EditingPartID>
+          <EditingPartID>241967103</EditingPartID>
+          <EditorPath/>
+        </Editor>
+        <Editor>
+          <EditorIndex>1</EditorIndex>
+          <EditorLocation>Reactor</EditorLocation>
+          <EditorPath/>
+          <EditingPartID>708030463</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
