@@ -167,6 +167,9 @@
         <SourceLine>Sub Opening()</SourceLine>
         <SourceLine>App.AllowAutoQuit = True</SourceLine>
         <SourceLine/>
+        <SourceLine>// Load JSON Preferences</SourceLine>
+        <SourceLine>LoadSettings()</SourceLine>
+        <SourceLine/>
         <SourceLine>App.Header = "&lt;html&gt; " +_ </SourceLine>
         <SourceLine>"&lt;head&gt; " +_ </SourceLine>
         <SourceLine>"&lt;meta name=""qrichtext"" content=""1"" /&gt; " +_ </SourceLine>
@@ -183,60 +186,26 @@
         <SourceLine>"&lt;body&gt; "</SourceLine>
         <SourceLine>App.Footer = "&lt;/body&gt;&lt;/html&gt;"</SourceLine>
         <SourceLine/>
-        <SourceLine/>
-        <SourceLine>'Var App.ReactorFolder As FolderItem</SourceLine>
-        <SourceLine>'</SourceLine>
-        <SourceLine>'// Home</SourceLine>
-        <SourceLine>'App.ReactorFolder = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
-        <SourceLine>'// $HOME/Reactor/</SourceLine>
-        <SourceLine>'</SourceLine>
-        <SourceLine>'// Fusion Studio</SourceLine>
-        <SourceLine>'If TargetWindows Then</SourceLine>
-        <SourceLine>'App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("Fusion").Child("Reactor")</SourceLine>
-        <SourceLine>'// C:\ProgramData\Blackmagic Design\Fusion\Reactor\</SourceLine>
-        <SourceLine>'ElseIf TargetMacOS Then</SourceLine>
-        <SourceLine>'App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("Fusion").Child("Reactor")</SourceLine>
-        <SourceLine>'// /Library/Application Support/Blackmagic Design/Fusion/Reactor/</SourceLine>
-        <SourceLine>'ElseIf TargetLinux Then</SourceLine>
-        <SourceLine>'App.ReactorFolder = SpecialFolder.Variable.Child("Blackmagic Design").Child("Fusion").Child("Reactor")</SourceLine>
-        <SourceLine>'// /var/BlackmagicDesign/Fusion/Reactor/</SourceLine>
-        <SourceLine>'End If</SourceLine>
-        <SourceLine>'</SourceLine>
-        <SourceLine>'// Resolve Studio</SourceLine>
-        <SourceLine>'If TargetWindows Then</SourceLine>
-        <SourceLine>'App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor")</SourceLine>
-        <SourceLine>'// C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Reactor\</SourceLine>
-        <SourceLine>'ElseIf TargetMacOS Then</SourceLine>
-        <SourceLine>'App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor")</SourceLine>
-        <SourceLine>'// /Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Reactor/</SourceLine>
-        <SourceLine>'ElseIf TargetLinux Then</SourceLine>
-        <SourceLine>'App.ReactorFolder = SpecialFolder.Variable.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor")</SourceLine>
-        <SourceLine>'// /var/BlackmagicDesign/DaVinci Resolve/Fusion/Reactor/</SourceLine>
-        <SourceLine>'End If</SourceLine>
-        <SourceLine/>
-        <SourceLine>App.ReactorFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor"))</SourceLine>
-        <SourceLine>App.AtomsFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Atoms"))</SourceLine>
-        <SourceLine>App.AtomzFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Atomz"))</SourceLine>
-        <SourceLine>App.AtomsReactorFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Atoms").Child("Reactor"))</SourceLine>
-        <SourceLine>App.DeployFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Deploy"))</SourceLine>
-        <SourceLine>App.DeployAtomsFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Atoms"))</SourceLine>
-        <SourceLine>App.DeployAtomsReactorFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Atoms").Child("Reactor"))</SourceLine>
-        <SourceLine>App.DeployJSONFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("JSON"))</SourceLine>
-        <SourceLine>App.DeployJSONReactorFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("JSON").Child("Reactor"))</SourceLine>
-        <SourceLine>App.DeployTemplatesFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Templates"))</SourceLine>
-        <SourceLine>App.JSONFolder = App.CreateNewFolder(SpecialFolder.UserHome.Child("Reactor").Child("JSON"))</SourceLine>
+        <SourceLine>App.ReactorFolder = App.CreateNewFolder(App.ReactorFolder)</SourceLine>
+        <SourceLine>App.AtomsFolder = App.CreateNewFolder(App.ReactorFolder.Child("Atoms"))</SourceLine>
+        <SourceLine>App.AtomzFolder = App.CreateNewFolder(App.ReactorFolder.Child("Atomz"))</SourceLine>
+        <SourceLine>App.AtomsReactorFolder = App.CreateNewFolder(App.ReactorFolder.Child("Atoms").Child("Reactor"))</SourceLine>
+        <SourceLine>App.DeployFolder = App.CreateNewFolder(App.ReactorFolder.Child("Deploy"))</SourceLine>
+        <SourceLine>App.DeployAtomsFolder = App.CreateNewFolder(App.ReactorFolder.Child("Deploy").Child("Atoms"))</SourceLine>
+        <SourceLine>App.DeployAtomsReactorFolder = App.CreateNewFolder(App.ReactorFolder.Child("Deploy").Child("Atoms").Child("Reactor"))</SourceLine>
+        <SourceLine>App.DeployJSONFolder = App.CreateNewFolder(App.ReactorFolder.Child("Deploy").Child("JSON"))</SourceLine>
+        <SourceLine>App.DeployJSONReactorFolder = App.CreateNewFolder(App.ReactorFolder.Child("Deploy").Child("JSON").Child("Reactor"))</SourceLine>
+        <SourceLine>App.DeployTemplatesFolder = App.CreateNewFolder(App.ReactorFolder.Child("Deploy").Child("Templates"))</SourceLine>
+        <SourceLine>App.JSONFolder = App.CreateNewFolder(App.ReactorFolder.Child("JSON"))</SourceLine>
         <SourceLine>App.TemporaryAtomFolder = App.CreateNewFolder(SpecialFolder.Temporary.Child("Reactor"))</SourceLine>
         <SourceLine/>
         <SourceLine>// Create other folders</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Bin"))</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Comps"))</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Docs"))</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Fuses"))</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Macros"))</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Plugins"))</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Load JSON Preferences</SourceLine>
-        <SourceLine>LoadSettings()</SourceLine>
+        <SourceLine>App.CreateNewFolderNoReturn(App.ReactorFolder.Child("Deploy").Child("Bin"))</SourceLine>
+        <SourceLine>App.CreateNewFolderNoReturn(App.ReactorFolder.Child("Deploy").Child("Comps"))</SourceLine>
+        <SourceLine>App.CreateNewFolderNoReturn(App.ReactorFolder.Child("Deploy").Child("Docs"))</SourceLine>
+        <SourceLine>App.CreateNewFolderNoReturn(App.ReactorFolder.Child("Deploy").Child("Fuses"))</SourceLine>
+        <SourceLine>App.CreateNewFolderNoReturn(App.ReactorFolder.Child("Deploy").Child("Macros"))</SourceLine>
+        <SourceLine>App.CreateNewFolderNoReturn(App.ReactorFolder.Child("Deploy").Child("Plugins"))</SourceLine>
         <SourceLine/>
         <SourceLine>// Control the gamepad Input timer</SourceLine>
         <SourceLine>If App.GamepadSupport = 1 Then</SourceLine>
@@ -385,9 +354,9 @@
         <SourceLine>Var json As New JSONItem</SourceLine>
         <SourceLine>json.Compact = False</SourceLine>
         <SourceLine/>
-        <SourceLine>// Reactor install folder</SourceLine>
+        <SourceLine>// Reactor Standalone Files Location</SourceLine>
         <SourceLine>App.ReactorFolder = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
-        <SourceLine>Var ReactorInstallPathMap As String = SpecialFolder.UserHome.Child("Reactor").NativePath</SourceLine>
+        <SourceLine>Var ReactorInstallPathMap As String = App.ReactorFolder.NativePath</SourceLine>
         <SourceLine>If ReactorInstallPathMap.Right(1) &lt;&gt; "/" or ReactorInstallPathMap.Right(1) &lt;&gt; "\" Then</SourceLine>
         <SourceLine>// Add the trailing slash</SourceLine>
         <SourceLine>If TargetWindows Then</SourceLine>
@@ -404,7 +373,7 @@
         <SourceLine>Var jsonReposCore As New JSONItem</SourceLine>
         <SourceLine>jsonReposCore.Value("Name") = "Reactor"</SourceLine>
         <SourceLine>jsonReposCore.Value("Protocol") = "GitLab"</SourceLine>
-        <SourceLine>jsonReposCore.Value("JSONFile") = "Reactor.json"</SourceLine>
+        <SourceLine>jsonReposCore.Value("LocalFile") = "Reactor.json"</SourceLine>
         <SourceLine>jsonReposCore.Value("BaseURL") = "https://gitlab.com/WeSuckLess/Reactor/-/blob/master/Atoms/"</SourceLine>
         <SourceLine>jsonReposCore.Value("URL") = "https://gitlab.com/WeSuckLess/Reactor/-/raw/master/JSON/Reactor.json?ref_type=heads"</SourceLine>
         <SourceLine>jsonReposCore.Value("ZIPFilePrefix") = "Reactor-master-Atoms-"</SourceLine>
@@ -486,7 +455,7 @@
         <SourceLine>Var jsonReposCore As New JSONItem</SourceLine>
         <SourceLine>jsonReposCore.Value("Name") = "Reactor"</SourceLine>
         <SourceLine>jsonReposCore.Value("Protocol") = "GitLab"</SourceLine>
-        <SourceLine>jsonReposCore.Value("JSONFile") = "Reactor.json"</SourceLine>
+        <SourceLine>jsonReposCore.Value("LocalFile") = "Reactor.json"</SourceLine>
         <SourceLine>jsonReposCore.Value("BaseURL") = "https://gitlab.com/WeSuckLess/Reactor/-/blob/master/Atoms/"</SourceLine>
         <SourceLine>jsonReposCore.Value("URL") = "https://gitlab.com/WeSuckLess/Reactor/-/raw/master/JSON/Reactor.json?ref_type=heads"</SourceLine>
         <SourceLine>jsonReposCore.Value("ZIPFilePrefix") = "Reactor-master-Atoms-"</SourceLine>
@@ -603,6 +572,7 @@
         <SourceLine>Else</SourceLine>
         <SourceLine>// Fallback to using the home folder</SourceLine>
         <SourceLine>App.ReactorFolder = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+        <SourceLine>System.DebugLog("[Settings Read] No ReactorInstallPathMap entry found.")</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Catch e As IOException</SourceLine>
         <SourceLine>// Handle IO error</SourceLine>
@@ -3166,14 +3136,13 @@
           <SourceLine>ConnectDialogWindow.Close</SourceLine>
           <SourceLine/>
           <SourceLine>// Path where Reactor downloads are saved</SourceLine>
-          <SourceLine>Var ReactorInstallDirectory As String = SpecialFolder.UserHome.Child("Reactor").NativePath</SourceLine>
-          <SourceLine/>
+          <SourceLine>Var ReactorInstallPathMap As String = App.ReactorFolder.NativePath</SourceLine>
           <SourceLine>If TargetWindows Then</SourceLine>
           <SourceLine>// Windows Slash Direction - Already has a trailing slash by default</SourceLine>
-          <SourceLine>//ReactorInstallDirectory = ReactorInstallDirectory + "\"</SourceLine>
+          <SourceLine>ReactorInstallPathMap = ReactorInstallPathMap + "\"</SourceLine>
           <SourceLine>Else</SourceLine>
           <SourceLine>// MacOS/Linux Slash Direction</SourceLine>
-          <SourceLine>ReactorInstallDirectory = ReactorInstallDirectory + "/"</SourceLine>
+          <SourceLine>ReactorInstallPathMap = ReactorInstallPathMap + "/"</SourceLine>
           <SourceLine>End</SourceLine>
           <SourceLine/>
           <SourceLine>// File to be saved</SourceLine>
@@ -3196,7 +3165,7 @@
           <SourceLine>"print('[Connect Reactor to Fusion]')" + EndOfLine +_ </SourceLine>
           <SourceLine>"" + EndOfLine +_ </SourceLine>
           <SourceLine>"-- Set the customized Reactor PathMap" + EndOfLine +_ </SourceLine>
-          <SourceLine>"local reactor_root = app:MapPath([[" + ReactorInstallDirectory + "]])" + EndOfLine +_ </SourceLine>
+          <SourceLine>"local reactor_root = app:MapPath([[" + ReactorInstallPathMap + "]])" + EndOfLine +_ </SourceLine>
           <SourceLine>"app:SetPrefs([[Global.Paths.Map.Reactor:]], reactor_root)" + EndOfLine +_ </SourceLine>
           <SourceLine>"local userpath = app:GetPrefs([[Global.Paths.Map.UserPaths:]])" + EndOfLine +_ </SourceLine>
           <SourceLine>"if not userpath:find([[Reactor:Deploy]]) then" + EndOfLine +_ </SourceLine>
@@ -3227,7 +3196,7 @@
           <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>// Show the desktop folder</SourceLine>
-          <SourceLine>//SpecialFolder.Desktop.Launch</SourceLine>
+          <SourceLine>// SpecialFolder.Desktop.Launch</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
@@ -4635,7 +4604,7 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function ShowReactorItem() As Boolean</SourceLine>
-        <SourceLine>Var ReactorFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+        <SourceLine>Var ReactorFolder As FolderItem = App.ReactorFolder</SourceLine>
         <SourceLine>ReactorFolder.Launch</SourceLine>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
@@ -4649,7 +4618,7 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function ToolsShowDocsFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorDocsFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Docs")</SourceLine>
+        <SourceLine>Var ReactorDocsFolder As FolderItem = App.ReactorFolder.Child("Deploy").Child("Docs")</SourceLine>
         <SourceLine>ReactorDocsFolder.Launch</SourceLine>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
@@ -4663,7 +4632,7 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function ToolsShowCompsFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorCompsFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Comps")</SourceLine>
+        <SourceLine>Var ReactorCompsFolder As FolderItem = App.ReactorFolder.Child("Deploy").Child("Comps")</SourceLine>
         <SourceLine>ReactorCompsFolder.Launch</SourceLine>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
@@ -4677,7 +4646,7 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function ToolsShowFusesFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorFusesFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Fuses")</SourceLine>
+        <SourceLine>Var ReactorFusesFolder As FolderItem = App.ReactorFolder.Child("Deploy").Child("Fuses")</SourceLine>
         <SourceLine>ReactorFusesFolder.Launch</SourceLine>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
@@ -4691,7 +4660,7 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function ToolsShowMacrosFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorMacrosFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Macros")</SourceLine>
+        <SourceLine>Var ReactorMacrosFolder As FolderItem = App.ReactorFolder.Child("Deploy").Child("Macros")</SourceLine>
         <SourceLine>ReactorMacrosFolder.Launch</SourceLine>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
@@ -4705,7 +4674,7 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function ToolsShowPluginsFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorPluginsFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Plugins")</SourceLine>
+        <SourceLine>Var ReactorPluginsFolder As FolderItem = App.ReactorFolder.Child("Deploy").Child("Plugins")</SourceLine>
         <SourceLine>ReactorPluginsFolder.Launch</SourceLine>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
@@ -4719,7 +4688,7 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function ToolsShowTemplatesFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorTemplatesFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Templates")</SourceLine>
+        <SourceLine>Var ReactorTemplatesFolder As FolderItem = App.ReactorFolder.Child("Deploy").Child("Templates")</SourceLine>
         <SourceLine>ReactorTemplatesFolder.Launch</SourceLine>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
@@ -4733,7 +4702,7 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function ToolsShowBinFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorBinFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").Child("Bin")</SourceLine>
+        <SourceLine>Var ReactorBinFolder As FolderItem = App.ReactorFolder.Child("Deploy").Child("Bin")</SourceLine>
         <SourceLine>ReactorBinFolder.Launch</SourceLine>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
@@ -4812,7 +4781,7 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function ToolsShowAtomzFolder() As Boolean</SourceLine>
-        <SourceLine>Var ReactorAtomzFolder As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Atomz")</SourceLine>
+        <SourceLine>Var ReactorAtomzFolder As FolderItem = App.ReactorFolder.Child("Atomz")</SourceLine>
         <SourceLine>ReactorAtomzFolder.Launch</SourceLine>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
@@ -5919,8 +5888,8 @@
         <SourceLine>url = jsonReposCore.Value("URL")</SourceLine>
         <SourceLine>// MessageBox(url)</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>If jsonReposCore.HasKey("JSONFile") Then</SourceLine>
-        <SourceLine>filename = jsonReposCore.Value("JSONFile")</SourceLine>
+        <SourceLine>If jsonReposCore.HasKey("LocalFile") Then</SourceLine>
+        <SourceLine>filename = jsonReposCore.Value("LocalFile")</SourceLine>
         <SourceLine>// MessageBox(filename)</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
@@ -7203,8 +7172,7 @@
           <SourceLine>DownloadStatsLabel.Text = SelectedAtom + ".zip Selected"</SourceLine>
           <SourceLine/>
           <SourceLine>Var HTML As String = App.Header + AtomDescription + HTMLDonation(Atom) +  HTMLDependencies(Atom) + HTMLDeployFilesList(Atom) + App.Footer</SourceLine>
-          <SourceLine>//HTML = HTML.ReplaceAll("Reactor:", SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
-          <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
+          <SourceLine>Var DeployHTMLFile As FolderItem = App.ReactorFolder.Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
           <SourceLine/>
           <SourceLine>DescriptionHTMLViewer.LoadPage(HTML, DeployHTMLFile)</SourceLine>
           <SourceLine>End</SourceLine>
@@ -7233,8 +7201,8 @@
           <SourceLine>System.Debuglog("[Atom Description] " + SelectedAtom)</SourceLine>
           <SourceLine/>
           <SourceLine>Var HTML As String = App.Header + AtomDescription + HTMLDonation(Atom) +  HTMLDependencies(Atom) + HTMLDeployFilesList(Atom) + App.Footer</SourceLine>
-          <SourceLine>//HTML = HTML.ReplaceAll("Reactor:", SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
-          <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
+          <SourceLine>//HTML = HTML.ReplaceAll("Reactor:", App.ReactorFolder.Child("Deploy").NativePath)</SourceLine>
+          <SourceLine>Var DeployHTMLFile As FolderItem = App.ReactorFolder.Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
           <SourceLine/>
           <SourceLine>DescriptionHTMLViewer.LoadPage(HTML, DeployHTMLFile)</SourceLine>
           <SourceLine>End</SourceLine>
@@ -7347,8 +7315,8 @@
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Opening()</SourceLine>
           <SourceLine>Var HTML As String = App.Header + App.Footer</SourceLine>
-          <SourceLine>//HTML = HTML.ReplaceAll("Reactor:", SpecialFolder.UserHome.Child("Reactor").Child("Deploy").NativePath)</SourceLine>
-          <SourceLine>Var DeployHTMLFile As FolderItem = SpecialFolder.UserHome.Child("Reactor").Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
+          <SourceLine>//HTML = HTML.ReplaceAll("Reactor:", App.ReactorFolder.Child("Deploy").NativePath)</SourceLine>
+          <SourceLine>Var DeployHTMLFile As FolderItem = App.ReactorFolder.Child("Deploy").TemporaryFile.Child("index.html")</SourceLine>
           <SourceLine>DescriptionHTMLViewer.LoadPage(HTML, DeployHTMLFile)</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
@@ -9900,14 +9868,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="1" top="25" width="1883" height="951"/>
+        <Rect left="0" top="25" width="1739" height="951"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>App.SaveSettings</EditorLocation>
+          <EditorLocation>App.LoadSettings</EditorLocation>
           <EditorPath/>
           <EditingPartID>1350840319</EditingPartID>
           <EditorPath/>
