@@ -170,50 +170,6 @@
         <SourceLine>// Load JSON Preferences</SourceLine>
         <SourceLine>LoadSettings()</SourceLine>
         <SourceLine/>
-        <SourceLine>App.Header = "&lt;html&gt; " +_ </SourceLine>
-        <SourceLine>"&lt;head&gt; " +_ </SourceLine>
-        <SourceLine>"&lt;meta name=""qrichtext"" content=""1"" /&gt; " +_ </SourceLine>
-        <SourceLine>"&lt;style type=""text/css""&gt; " +_ </SourceLine>
-        <SourceLine>"body {font-family: Arial, Helvetica, sans-serif; font-size:12px; font-weight:400; font-style:normal; background-color: #282828; color: #C7C7C7} " +_ </SourceLine>
-        <SourceLine>"p, li { font-family: Arial, Helvetica, sans-serif; white-space: pre-wrap; } " +_ </SourceLine>
-        <SourceLine>"p { margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; } " +_ </SourceLine>
-        <SourceLine>"h1 {font-size:xx-large; font-weight:600;} " +_ </SourceLine>
-        <SourceLine>"h2 {font-size:x-large; font-weight:600;} " +_ </SourceLine>
-        <SourceLine>"h3 {font-size:large; font-weight:600;} " +_ </SourceLine>
-        <SourceLine>"a {color: #98A6DD;} " +_ </SourceLine>
-        <SourceLine>"&lt;/style&gt; " +_ </SourceLine>
-        <SourceLine>"&lt;/head&gt; " +_ </SourceLine>
-        <SourceLine>"&lt;body&gt; "</SourceLine>
-        <SourceLine>App.Footer = "&lt;/body&gt;&lt;/html&gt;"</SourceLine>
-        <SourceLine/>
-        <SourceLine>App.ReactorFolder = App.CreateNewFolder(App.ReactorFolder)</SourceLine>
-        <SourceLine>App.AtomsFolder = App.CreateNewFolder(App.ReactorFolder.Child("Atoms"))</SourceLine>
-        <SourceLine>App.AtomzFolder = App.CreateNewFolder(App.ReactorFolder.Child("Atomz"))</SourceLine>
-        <SourceLine>App.AtomsReactorFolder = App.CreateNewFolder(App.ReactorFolder.Child("Atoms").Child("Reactor"))</SourceLine>
-        <SourceLine>App.DeployFolder = App.CreateNewFolder(App.ReactorFolder.Child("Deploy"))</SourceLine>
-        <SourceLine>App.DeployAtomsFolder = App.CreateNewFolder(App.ReactorFolder.Child("Deploy").Child("Atoms"))</SourceLine>
-        <SourceLine>App.DeployAtomsReactorFolder = App.CreateNewFolder(App.ReactorFolder.Child("Deploy").Child("Atoms").Child("Reactor"))</SourceLine>
-        <SourceLine>App.DeployJSONFolder = App.CreateNewFolder(App.ReactorFolder.Child("Deploy").Child("JSON"))</SourceLine>
-        <SourceLine>App.DeployJSONReactorFolder = App.CreateNewFolder(App.ReactorFolder.Child("Deploy").Child("JSON").Child("Reactor"))</SourceLine>
-        <SourceLine>App.DeployTemplatesFolder = App.CreateNewFolder(App.ReactorFolder.Child("Deploy").Child("Templates"))</SourceLine>
-        <SourceLine>App.JSONFolder = App.CreateNewFolder(App.ReactorFolder.Child("JSON"))</SourceLine>
-        <SourceLine>App.TemporaryAtomFolder = App.CreateNewFolder(SpecialFolder.Temporary.Child("Reactor"))</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Create other folders</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.ReactorFolder.Child("Deploy").Child("Bin"))</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.ReactorFolder.Child("Deploy").Child("Comps"))</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.ReactorFolder.Child("Deploy").Child("Docs"))</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.ReactorFolder.Child("Deploy").Child("Fuses"))</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.ReactorFolder.Child("Deploy").Child("Macros"))</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.ReactorFolder.Child("Deploy").Child("Plugins"))</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Control the gamepad Input timer</SourceLine>
-        <SourceLine>If App.GamepadSupport = 1 Then</SourceLine>
-        <SourceLine>ReactorWindow.InputDevicesTimer.Enabled = True</SourceLine>
-        <SourceLine>Else</SourceLine>
-        <SourceLine>ReactorWindow.InputDevicesTimer.Enabled = False</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
     </HookInstance>
@@ -307,10 +263,11 @@
         <SourceLine>Function CreateNewFolder(folder As FolderItem) As FolderItem</SourceLine>
         <SourceLine>// Create a new folder if required</SourceLine>
         <SourceLine>If folder &lt;&gt; Nil And Not folder.Exists Then</SourceLine>
-        <SourceLine>folder.CreateFolder</SourceLine>
+        <SourceLine>App.CreateSubFolders(folder)</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>return folder</SourceLine>
+        <SourceLine/>
         <SourceLine>End Function</SourceLine>
       </ItemSource>
       <TextEncoding>134217984</TextEncoding>
@@ -329,9 +286,11 @@
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Sub CreateNewFolderNoReturn(folder As FolderItem)</SourceLine>
         <SourceLine>// Create a new folder if required</SourceLine>
+        <SourceLine>Try</SourceLine>
         <SourceLine>If folder &lt;&gt; Nil And Not folder.Exists Then</SourceLine>
-        <SourceLine>folder.CreateFolder</SourceLine>
+        <SourceLine>App.CreateSubFolders(folder)</SourceLine>
         <SourceLine>End If</SourceLine>
+        <SourceLine>End Try</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
@@ -472,8 +431,9 @@
         <SourceLine>// Close the filepointer</SourceLine>
         <SourceLine>fileStream.Close</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Catch e As IOException</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
         <SourceLine>// Handle error</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
         <SourceLine>End Try</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
@@ -525,7 +485,7 @@
         <SourceLine>// MessageBox(json.ToString)</SourceLine>
         <SourceLine>System.DebugLog("[Settings Read]")</SourceLine>
         <SourceLine>System.DebugLog(json.ToString)</SourceLine>
-        <SourceLine>Catch e As JSONException</SourceLine>
+        <SourceLine>Catch error As JSONException</SourceLine>
         <SourceLine>// Fallback Resolution</SourceLine>
         <SourceLine>CreateDefaultSettings()</SourceLine>
         <SourceLine>End Try</SourceLine>
@@ -533,11 +493,12 @@
         <SourceLine>// Fallback</SourceLine>
         <SourceLine>CreateDefaultSettings()</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Catch e As IOException</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
         <SourceLine>// Handle IO error</SourceLine>
         <SourceLine>CreateDefaultSettings()</SourceLine>
         <SourceLine>App.GamepadSupport = 0</SourceLine>
-        <SourceLine>Catch e As JSONException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>Catch error As JSONException</SourceLine>
         <SourceLine>// Fallback </SourceLine>
         <SourceLine>CreateDefaultSettings()</SourceLine>
         <SourceLine>App.GamepadSupport = 0</SourceLine>
@@ -568,15 +529,59 @@
         <SourceLine>App.ReactorFolder =  ReactorFolderItem </SourceLine>
         <SourceLine/>
         <SourceLine>// Create the intermediate sub-directories for the Reactor folder</SourceLine>
-        <SourceLine>CreateParentSubFolders(ReactorFolderItem)</SourceLine>
+        <SourceLine>App.CreateSubFolders(ReactorFolderItem)</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>// Fallback to using the home folder</SourceLine>
         <SourceLine>App.ReactorFolder = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Create the intermediate sub-directories for the Reactor folder</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.ReactorFolder)</SourceLine>
+        <SourceLine/>
         <SourceLine>System.DebugLog("[Settings Read] No ReactorInstallPathMap entry found.")</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Catch e As IOException</SourceLine>
-        <SourceLine>// Handle IO error</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
         <SourceLine>End Try</SourceLine>
+        <SourceLine/>
+        <SourceLine>App.Header = "&lt;html&gt; " +_ </SourceLine>
+        <SourceLine>"&lt;head&gt; " +_ </SourceLine>
+        <SourceLine>"&lt;meta name=""qrichtext"" content=""1"" /&gt; " +_ </SourceLine>
+        <SourceLine>"&lt;style type=""text/css""&gt; " +_ </SourceLine>
+        <SourceLine>"body {font-family: Arial, Helvetica, sans-serif; font-size:12px; font-weight:400; font-style:normal; background-color: #282828; color: #C7C7C7} " +_ </SourceLine>
+        <SourceLine>"p, li { font-family: Arial, Helvetica, sans-serif; white-space: pre-wrap; } " +_ </SourceLine>
+        <SourceLine>"p { margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; } " +_ </SourceLine>
+        <SourceLine>"h1 {font-size:xx-large; font-weight:600;} " +_ </SourceLine>
+        <SourceLine>"h2 {font-size:x-large; font-weight:600;} " +_ </SourceLine>
+        <SourceLine>"h3 {font-size:large; font-weight:600;} " +_ </SourceLine>
+        <SourceLine>"a {color: #98A6DD;} " +_ </SourceLine>
+        <SourceLine>"&lt;/style&gt; " +_ </SourceLine>
+        <SourceLine>"&lt;/head&gt; " +_ </SourceLine>
+        <SourceLine>"&lt;body&gt; "</SourceLine>
+        <SourceLine>App.Footer = "&lt;/body&gt;&lt;/html&gt;"</SourceLine>
+        <SourceLine/>
+        <SourceLine>App.ReactorFolder = App.ReactorFolder</SourceLine>
+        <SourceLine>App.AtomsFolder = App.ReactorFolder.Child("Atoms")</SourceLine>
+        <SourceLine>App.AtomzFolder = App.ReactorFolder.Child("Atomz")</SourceLine>
+        <SourceLine>App.AtomsReactorFolder =App.ReactorFolder.Child("Atoms").Child("Reactor")</SourceLine>
+        <SourceLine>App.DeployFolder = App.ReactorFolder.Child("Deploy")</SourceLine>
+        <SourceLine>App.DeployAtomsFolder =App.ReactorFolder.Child("Deploy").Child("Atoms")</SourceLine>
+        <SourceLine>App.DeployAtomsReactorFolder = App.ReactorFolder.Child("Deploy").Child("Atoms").Child("Reactor")</SourceLine>
+        <SourceLine>App.DeployJSONFolder = App.ReactorFolder.Child("Deploy").Child("JSON")</SourceLine>
+        <SourceLine>App.DeployJSONReactorFolder = App.ReactorFolder.Child("Deploy").Child("JSON").Child("Reactor")</SourceLine>
+        <SourceLine>App.DeployTemplatesFolder = App.ReactorFolder.Child("Deploy").Child("Templates")</SourceLine>
+        <SourceLine>App.JSONFolder = App.ReactorFolder.Child("JSON")</SourceLine>
+        <SourceLine>App.TemporaryAtomFolder = SpecialFolder.Temporary.Child("Reactor")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
+        <SourceLine>App.CreateReactorFolders()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Control the gamepad Input timer</SourceLine>
+        <SourceLine>If App.GamepadSupport = 1 Then</SourceLine>
+        <SourceLine>ReactorWindow.InputDevicesTimer.Enabled = True</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>ReactorWindow.InputDevicesTimer.Enabled = False</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
       <TextEncoding>134217984</TextEncoding>
@@ -595,8 +600,100 @@
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Sub CreateParentSubFolders(Path_FolderItem As FolderItem)</SourceLine>
         <SourceLine>// CreateParentSubFolders - Accepts a file based filepath and creates the intermediate sub-folders</SourceLine>
-        <SourceLine/>
+        <SourceLine>If Path_FolderItem &lt;&gt; Nil Then</SourceLine>
         <SourceLine>Var Path As String = Path_FolderItem.Parent.NativePath</SourceLine>
+        <SourceLine>If Path &lt;&gt; "" Then</SourceLine>
+        <SourceLine>// Var Path As String = "/Users/vfx/Reactor/Deploy/Atoms/Reactor/"</SourceLine>
+        <SourceLine>// System.DebugLog(Path)</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Normalize the file slashes to Unix style</SourceLine>
+        <SourceLine>Path = Path.ReplaceAll("\", "/")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// De-duplicate any doubled up slashesh</SourceLine>
+        <SourceLine>Path = Path.ReplaceAll("//", "/")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Use Unix style slashes when building filepath strings</SourceLine>
+        <SourceLine>Var Separator As String = "/"</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var New_Path As String = ""</SourceLine>
+        <SourceLine>Var Path_Segments() As String = Path.Split(Separator)</SourceLine>
+        <SourceLine>For Each p As String In Path_Segments</SourceLine>
+        <SourceLine>// Check for empty segments</SourceLine>
+        <SourceLine>If p &lt;&gt; "" Then</SourceLine>
+        <SourceLine>// Append the sub-folders starting at the base directory</SourceLine>
+        <SourceLine>New_Path = New_Path + Separator + p</SourceLine>
+        <SourceLine>Var FileDest As FolderItem =  New FolderItem(New_Path)</SourceLine>
+        <SourceLine>If not FileDest.Exists Then</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>FileDest.CreateFolder()</SourceLine>
+        <SourceLine>//System.DebugLog("""" + FileDest.NativePath + """" + EndOfLine)</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams>Path_FolderItem As FolderItem</ItemParams>
+      <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>CreateReactorFolders</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>492617727</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub CreateReactorFolders()</SourceLine>
+        <SourceLine>// Remake the working directories if they were deleted</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.ReactorFolder)</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.AtomsFolder)</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.AtomzFolder)</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.AtomsReactorFolder)</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.DeployFolder)</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.DeployAtomsFolder)</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.DeployAtomsReactorFolder)</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.DeployJSONFolder)</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.DeployJSONReactorFolder)</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.DeployTemplatesFolder)</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.JSONFolder)</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.TemporaryAtomFolder)</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.ReactorFolder.Child("Deploy").Child("Bin"))</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.ReactorFolder.Child("Deploy").Child("Comps"))</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.ReactorFolder.Child("Deploy").Child("Docs"))</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.ReactorFolder.Child("Deploy").Child("Fuses"))</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.ReactorFolder.Child("Deploy").Child("Macros"))</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.ReactorFolder.Child("Deploy").Child("Plugins"))</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams/>
+      <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>CreateSubFolders</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>470210559</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub CreateSubFolders(Path_FolderItem As FolderItem)</SourceLine>
+        <SourceLine>// CreateParentSubFolders - Accepts a file based filepath and creates the intermediate sub-folders</SourceLine>
+        <SourceLine>If Path_FolderItem &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>Var Path As String = Path_FolderItem.Parent.NativePath</SourceLine>
+        <SourceLine>If Path &lt;&gt; "" Then</SourceLine>
         <SourceLine>// Var Path As String = "/Users/vfx/Reactor/Deploy/Atoms/Reactor/"</SourceLine>
         <SourceLine>// System.DebugLog(Path)</SourceLine>
         <SourceLine/>
@@ -628,8 +725,17 @@
         <SourceLine>End If</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine/>
+        <SourceLine>// Create the final folder</SourceLine>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>If not Path_FolderItem.Exists Then</SourceLine>
+        <SourceLine>Path_FolderItem.CreateFolder()</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine/>
-        <SourceLine>//Return Path_FolderItem</SourceLine>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
       <TextEncoding>134217984</TextEncoding>
@@ -1512,31 +1618,6 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Opening()</SourceLine>
-          <SourceLine>'Try</SourceLine>
-          <SourceLine>'// Clear old entries</SourceLine>
-          <SourceLine>'Me.RemoveAllRows()</SourceLine>
-          <SourceLine>'</SourceLine>
-          <SourceLine>'Var mManager As GameInputManager = New GameInputManager</SourceLine>
-          <SourceLine>'Var gCount As Integer = mManager.DeviceCount</SourceLine>
-          <SourceLine>'Var device As GameInputDevice</SourceLine>
-          <SourceLine>'Var deviceID As Integer = 0</SourceLine>
-          <SourceLine>'Var deviceName As String = ""</SourceLine>
-          <SourceLine>'Var i as Integer = 0</SourceLine>
-          <SourceLine>'For deviceID = 0 To gCount - 1</SourceLine>
-          <SourceLine>'device = mManager.Device(deviceID)</SourceLine>
-          <SourceLine>'If mManager.Device(deviceID) &lt;&gt; Nil Then</SourceLine>
-          <SourceLine>'deviceName =  mManager.Device(deviceID).Name</SourceLine>
-          <SourceLine>'If deviceName &lt;&gt; "" Then</SourceLine>
-          <SourceLine>'Me.AddRow(deviceName)</SourceLine>
-          <SourceLine>'End If</SourceLine>
-          <SourceLine>'End If</SourceLine>
-          <SourceLine>'Next</SourceLine>
-          <SourceLine>'</SourceLine>
-          <SourceLine>'Me.SelectRowWithText("DualSense Wireless Controller")</SourceLine>
-          <SourceLine>'Catch e As RuntimeException</SourceLine>
-          <SourceLine>'System.DebugLog("Warning... USB Down"  + EndOfLine + EndOfLine + e.Message)</SourceLine>
-          <SourceLine>'End Try</SourceLine>
-          <SourceLine>'</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
@@ -2200,6 +2281,10 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Sub Opening()</SourceLine>
+        <SourceLine>// Turn the download queue off</SourceLine>
+        <SourceLine>ReactorWindow.QueueTimer.RunMode = Timer.RunModes.Off</SourceLine>
+        <SourceLine>ReactorWindow.AtomDownloadCancel()</SourceLine>
+        <SourceLine/>
         <SourceLine>// Window sizing</SourceLine>
         <SourceLine>If ReactorWindow.Visible = True Then</SourceLine>
         <SourceLine>Me.Top = DesktopDisplay.DisplayAt(0).AvailableTop + 28 + (ReactorWindow.Height / 2) - (Me.Height / 2)</SourceLine>
@@ -2216,6 +2301,20 @@
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
     </HookInstance>
+    <HookInstance>
+      <ItemName>Closing</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>60852223</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub Closing()</SourceLine>
+        <SourceLine>// Turn the download queue back on</SourceLine>
+        <SourceLine>ReactorWindow.QueueTimer.RunMode = Timer.RunModes.Multiple</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+    </HookInstance>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
@@ -2227,7 +2326,7 @@
     <PropertyVal Name="FullScreen">False</PropertyVal>
     <PropertyVal Name="MacProcID">0</PropertyVal>
     <PropertyVal Name="Composite">False</PropertyVal>
-    <PropertyVal Name="Resizeable">False</PropertyVal>
+    <PropertyVal Name="Resizeable">True</PropertyVal>
     <PropertyVal Name="HasTitleBar">True</PropertyVal>
     <PropertyVal Name="HasFullScreenButton">False</PropertyVal>
     <PropertyVal Name="HasMinimizeButton">False</PropertyVal>
@@ -2235,12 +2334,12 @@
     <PropertyVal Name="HasCloseButton">True</PropertyVal>
     <PropertyVal Name="Title">Reactor Preferences</PropertyVal>
     <PropertyVal Name="Type">0</PropertyVal>
-    <PropertyVal Name="MaximumHeight">220</PropertyVal>
-    <PropertyVal Name="MaximumWidth">390</PropertyVal>
-    <PropertyVal Name="MinimumHeight">220</PropertyVal>
+    <PropertyVal Name="MaximumHeight">250</PropertyVal>
+    <PropertyVal Name="MaximumWidth">1920</PropertyVal>
+    <PropertyVal Name="MinimumHeight">250</PropertyVal>
     <PropertyVal Name="MinimumWidth">390</PropertyVal>
-    <PropertyVal Name="Height">220</PropertyVal>
-    <PropertyVal Name="Width">390</PropertyVal>
+    <PropertyVal Name="Height">250</PropertyVal>
+    <PropertyVal Name="Width">600</PropertyVal>
     <ViewBehavior>
       <ViewProperty>
         <ObjName>Name</ObjName>
@@ -2479,20 +2578,86 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Pressed(segmentIndex As Integer)</SourceLine>
-          <SourceLine>If segmentIndex = 0 Then</SourceLine>
+          <SourceLine>'If segmentIndex = 0 Then</SourceLine>
+          <SourceLine>'// Home</SourceLine>
+          <SourceLine>'ReactorPathTextField.Visible = False</SourceLine>
+          <SourceLine>'ElseIf segmentIndex = 1 Then</SourceLine>
+          <SourceLine>'// Resolve Prefs</SourceLine>
+          <SourceLine>'ReactorPathTextField.Visible = False</SourceLine>
+          <SourceLine>'ElseIf segmentIndex = 2 Then</SourceLine>
+          <SourceLine>'// Fusion Prefs</SourceLine>
+          <SourceLine>'ReactorPathTextField.Visible = False</SourceLine>
+          <SourceLine>'ElseIf segmentIndex = 3 Then</SourceLine>
+          <SourceLine>'// Custom</SourceLine>
+          <SourceLine>'ReactorPathTextField.Visible = True</SourceLine>
+          <SourceLine>'Else</SourceLine>
+          <SourceLine>'// Home</SourceLine>
+          <SourceLine>'End If</SourceLine>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine>// Custom Install Path</SourceLine>
+          <SourceLine>Var prevReactorFolder As Folderitem = App.ReactorFolder</SourceLine>
+          <SourceLine>If PathMapSegmentedButton.SelectedSegmentIndex = 0 Then</SourceLine>
           <SourceLine>// Home</SourceLine>
-          <SourceLine>ReactorPathTextField.Visible = False</SourceLine>
-          <SourceLine>ElseIf segmentIndex = 1 Then</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+          <SourceLine>ElseIf PathMapSegmentedButton.SelectedSegmentIndex = 1 Then</SourceLine>
           <SourceLine>// Resolve Prefs</SourceLine>
-          <SourceLine>ReactorPathTextField.Visible = False</SourceLine>
-          <SourceLine>ElseIf segmentIndex = 2 Then</SourceLine>
+          <SourceLine>If TargetWindows Then</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor")</SourceLine>
+          <SourceLine>// C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Reactor\</SourceLine>
+          <SourceLine>ElseIf TargetMacOS Then</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor")</SourceLine>
+          <SourceLine>// /Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Reactor/</SourceLine>
+          <SourceLine>ElseIf TargetLinux Then</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.Variable.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor")</SourceLine>
+          <SourceLine>// /var/BlackmagicDesign/DaVinci Resolve/Fusion/Reactor/</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf PathMapSegmentedButton.SelectedSegmentIndex = 2 Then</SourceLine>
           <SourceLine>// Fusion Prefs</SourceLine>
-          <SourceLine>ReactorPathTextField.Visible = False</SourceLine>
-          <SourceLine>ElseIf segmentIndex = 3 Then</SourceLine>
+          <SourceLine>If TargetWindows Then</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("Fusion").Child("Reactor")</SourceLine>
+          <SourceLine>// C:\ProgramData\Blackmagic Design\Fusion\Reactor\</SourceLine>
+          <SourceLine>ElseIf TargetMacOS Then</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("Fusion").Child("Reactor")</SourceLine>
+          <SourceLine>// /Library/Application Support/Blackmagic Design/Fusion/Reactor/</SourceLine>
+          <SourceLine>ElseIf TargetLinux Then</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.Variable.Child("Blackmagic Design").Child("Fusion").Child("Reactor")</SourceLine>
+          <SourceLine>// /var/BlackmagicDesign/Fusion/Reactor/</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf PathMapSegmentedButton.SelectedSegmentIndex = 3 Then</SourceLine>
           <SourceLine>// Custom</SourceLine>
-          <SourceLine>ReactorPathTextField.Visible = True</SourceLine>
+          <SourceLine>App.ReactorFolder = New FolderItem(ReactorPathTextField.Text)</SourceLine>
           <SourceLine>Else</SourceLine>
           <SourceLine>// Home</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the GUI Text String</SourceLine>
+          <SourceLine>Var ReactorInstallPathMap As String = App.ReactorFolder.NativePath</SourceLine>
+          <SourceLine>If ReactorInstallPathMap.Right(1) &lt;&gt; "/" or ReactorInstallPathMap.Right(1) &lt;&gt; "\" Then</SourceLine>
+          <SourceLine>// Add the trailing slash</SourceLine>
+          <SourceLine>If TargetWindows Then</SourceLine>
+          <SourceLine>ReactorPathTextField.Text = ReactorInstallPathMap + "\"</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>ReactorPathTextField.Text = ReactorInstallPathMap + "/"</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Refresh things on a Reactor folder path change</SourceLine>
+          <SourceLine>If prevReactorFolder.NativePath &lt;&gt; App.ReactorFolder.NativePath Then</SourceLine>
+          <SourceLine>// Create the intermediate sub-directories for the Reactor folder</SourceLine>
+          <SourceLine>App.CreateSubFolders(App.ReactorFolder)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the prefs</SourceLine>
+          <SourceLine>App.SaveSettings()</SourceLine>
+          <SourceLine>App.LoadSettings()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Download the Reactor.json file</SourceLine>
+          <SourceLine>ReactorWindow.JSONDownload()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the listboxes</SourceLine>
+          <SourceLine>ReactorWindow.CategoryRefresh()</SourceLine>
+          <SourceLine>ReactorWindow.AtomsRefresh()</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
@@ -2506,11 +2671,83 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Opening()</SourceLine>
-          <SourceLine>If me.SelectedSegmentIndex = 3 Then</SourceLine>
-          <SourceLine>// Custom</SourceLine>
-          <SourceLine>ReactorPathTextField.Visible = True</SourceLine>
+          <SourceLine>'If me.SelectedSegmentIndex = 3 Then</SourceLine>
+          <SourceLine>'// Custom</SourceLine>
+          <SourceLine>'ReactorPathTextField.Visible = True</SourceLine>
+          <SourceLine>'Else</SourceLine>
+          <SourceLine>'ReactorPathTextField.Visible = False</SourceLine>
+          <SourceLine>'End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var SegmentMatched As Integer = 0</SourceLine>
+          <SourceLine>Var prevReactorFolder As Folderitem = App.ReactorFolder</SourceLine>
+          <SourceLine>If prevReactorFolder.NativePath = SpecialFolder.UserHome.Child("Reactor").NativePath Then</SourceLine>
+          <SourceLine>// Home</SourceLine>
+          <SourceLine>PathMapSegmentedButton.SelectedSegmentIndex = 0</SourceLine>
+          <SourceLine>SegmentMatched = 1</SourceLine>
           <SourceLine>Else</SourceLine>
-          <SourceLine>ReactorPathTextField.Visible = False</SourceLine>
+          <SourceLine>If TargetWindows Then</SourceLine>
+          <SourceLine>If prevReactorFolder.NativePath = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor").NativePath Then</SourceLine>
+          <SourceLine>// C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Reactor\</SourceLine>
+          <SourceLine>PathMapSegmentedButton.SelectedSegmentIndex = 1</SourceLine>
+          <SourceLine>SegmentMatched = 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf TargetMacOS Then</SourceLine>
+          <SourceLine>If prevReactorFolder.NativePath = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor").NativePath Then</SourceLine>
+          <SourceLine>// /Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Reactor/</SourceLine>
+          <SourceLine>PathMapSegmentedButton.SelectedSegmentIndex = 1</SourceLine>
+          <SourceLine>SegmentMatched = 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf TargetLinux Then</SourceLine>
+          <SourceLine>If prevReactorFolder.NativePath = SpecialFolder.Variable.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor").NativePath Then</SourceLine>
+          <SourceLine>// /var/BlackmagicDesign/DaVinci Resolve/Fusion/Reactor/</SourceLine>
+          <SourceLine>PathMapSegmentedButton.SelectedSegmentIndex = 1</SourceLine>
+          <SourceLine>SegmentMatched = 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Fusion Prefs</SourceLine>
+          <SourceLine>If TargetWindows Then</SourceLine>
+          <SourceLine>If prevReactorFolder.NativePath = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("Fusion").Child("Reactor").NativePath Then</SourceLine>
+          <SourceLine>// C:\ProgramData\Blackmagic Design\Fusion\Reactor\</SourceLine>
+          <SourceLine>PathMapSegmentedButton.SelectedSegmentIndex = 2 </SourceLine>
+          <SourceLine>SegmentMatched = 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf TargetMacOS Then</SourceLine>
+          <SourceLine>If prevReactorFolder.NativePath = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("Fusion").Child("Reactor").NativePath Then</SourceLine>
+          <SourceLine>// /Library/Application Support/Blackmagic Design/Fusion/Reactor/</SourceLine>
+          <SourceLine>PathMapSegmentedButton.SelectedSegmentIndex = 2</SourceLine>
+          <SourceLine>SegmentMatched = 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf TargetLinux Then</SourceLine>
+          <SourceLine>If prevReactorFolder.NativePath = SpecialFolder.Variable.Child("Blackmagic Design").Child("Fusion").Child("Reactor").NativePath Then</SourceLine>
+          <SourceLine>// /var/BlackmagicDesign/Fusion/Reactor/</SourceLine>
+          <SourceLine>PathMapSegmentedButton.SelectedSegmentIndex = 2</SourceLine>
+          <SourceLine>SegmentMatched = 1</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Custom File Path</SourceLine>
+          <SourceLine>If SegmentMatched = 0 Then</SourceLine>
+          <SourceLine>PathMapSegmentedButton.SelectedSegmentIndex = 3</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the GUI Text String</SourceLine>
+          <SourceLine>Var ReactorInstallPathMap As String = App.ReactorFolder.NativePath</SourceLine>
+          <SourceLine>If ReactorInstallPathMap.Right(1) &lt;&gt; "/" or ReactorInstallPathMap.Right(1) &lt;&gt; "\" Then</SourceLine>
+          <SourceLine>// Add the trailing slash</SourceLine>
+          <SourceLine>If TargetWindows Then</SourceLine>
+          <SourceLine>ReactorPathTextField.Text = ReactorInstallPathMap + "\"</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>ReactorPathTextField.Text = ReactorInstallPathMap + "/"</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine>// Refresh things on a Reactor folder path change</SourceLine>
+          <SourceLine>If prevReactorFolder.NativePath &lt;&gt; App.ReactorFolder.NativePath Then</SourceLine>
+          <SourceLine>// Create the intermediate sub-directories for the Reactor folder</SourceLine>
+          <SourceLine>App.CreateSubFolders(App.ReactorFolder)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
@@ -2538,6 +2775,96 @@
           <SourceLine>App.GamepadSupport = 0</SourceLine>
           <SourceLine>ReactorWindow.InputDevicesTimer.Enabled = False</SourceLine>
           <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopButton</Superclass>
+      <HookInstance>
+        <ItemName>Pressed</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>2016927743</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine>// Gamepad support</SourceLine>
+          <SourceLine>If GamepadSupportCheckbox.VisualState = DesktopCheckBox.VisualStates.Checked Then</SourceLine>
+          <SourceLine>App.GamepadSupport = 1</SourceLine>
+          <SourceLine>ReactorWindow.InputDevicesTimer.Enabled = True</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>App.GamepadSupport = 0</SourceLine>
+          <SourceLine>ReactorWindow.InputDevicesTimer.Enabled = False</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Custom Install Path</SourceLine>
+          <SourceLine>Var prevReactorFolder As Folderitem = App.ReactorFolder</SourceLine>
+          <SourceLine>If PathMapSegmentedButton.SelectedSegmentIndex = 0 Then</SourceLine>
+          <SourceLine>// Home</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+          <SourceLine>ElseIf PathMapSegmentedButton.SelectedSegmentIndex = 1 Then</SourceLine>
+          <SourceLine>// Resolve Prefs</SourceLine>
+          <SourceLine>If TargetWindows Then</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor")</SourceLine>
+          <SourceLine>// C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Reactor\</SourceLine>
+          <SourceLine>ElseIf TargetMacOS Then</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor")</SourceLine>
+          <SourceLine>// /Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Reactor/</SourceLine>
+          <SourceLine>ElseIf TargetLinux Then</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.Variable.Child("Blackmagic Design").Child("DaVinci Resolve").Child("Fusion").Child("Reactor")</SourceLine>
+          <SourceLine>// /var/BlackmagicDesign/DaVinci Resolve/Fusion/Reactor/</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf PathMapSegmentedButton.SelectedSegmentIndex = 2 Then</SourceLine>
+          <SourceLine>// Fusion Prefs</SourceLine>
+          <SourceLine>If TargetWindows Then</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("Fusion").Child("Reactor")</SourceLine>
+          <SourceLine>// C:\ProgramData\Blackmagic Design\Fusion\Reactor\</SourceLine>
+          <SourceLine>ElseIf TargetMacOS Then</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.SharedApplicationData.Child("Blackmagic Design").Child("Fusion").Child("Reactor")</SourceLine>
+          <SourceLine>// /Library/Application Support/Blackmagic Design/Fusion/Reactor/</SourceLine>
+          <SourceLine>ElseIf TargetLinux Then</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.Variable.Child("Blackmagic Design").Child("Fusion").Child("Reactor")</SourceLine>
+          <SourceLine>// /var/BlackmagicDesign/Fusion/Reactor/</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>ElseIf PathMapSegmentedButton.SelectedSegmentIndex = 3 Then</SourceLine>
+          <SourceLine>// Custom</SourceLine>
+          <SourceLine>App.ReactorFolder = New FolderItem(ReactorPathTextField.Text)</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>// Home</SourceLine>
+          <SourceLine>App.ReactorFolder = SpecialFolder.UserHome.Child("Reactor")</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the GUI Text String</SourceLine>
+          <SourceLine>Var ReactorInstallPathMap As String = App.ReactorFolder.NativePath</SourceLine>
+          <SourceLine>If ReactorInstallPathMap.Right(1) &lt;&gt; "/" or ReactorInstallPathMap.Right(1) &lt;&gt; "\" Then</SourceLine>
+          <SourceLine>// Add the trailing slash</SourceLine>
+          <SourceLine>If TargetWindows Then</SourceLine>
+          <SourceLine>ReactorPathTextField.Text = ReactorInstallPathMap + "\"</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>ReactorPathTextField.Text = ReactorInstallPathMap + "/"</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Refresh things on a Reactor folder path change</SourceLine>
+          <SourceLine>If prevReactorFolder.NativePath &lt;&gt; App.ReactorFolder.NativePath Then</SourceLine>
+          <SourceLine>// Create the intermediate sub-directories for the Reactor folder</SourceLine>
+          <SourceLine>App.CreateSubFolders(App.ReactorFolder)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the prefs</SourceLine>
+          <SourceLine>App.SaveSettings()</SourceLine>
+          <SourceLine>App.LoadSettings()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Download the Reactor.json file</SourceLine>
+          <SourceLine>ReactorWindow.JSONDownload()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the listboxes</SourceLine>
+          <SourceLine>ReactorWindow.CategoryRefresh()</SourceLine>
+          <SourceLine>ReactorWindow.AtomsRefresh()</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>PreferencesWindow.Hide()</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
@@ -2689,7 +3016,7 @@
       <PropertyVal Name="TabIndex">3</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">Reactor Path: (WIP Feature)</PropertyVal>
+      <PropertyVal Name="Text">Reactor Install PathMap:</PropertyVal>
       <PropertyVal Name="TextAlignment">0</PropertyVal>
       <PropertyVal Name="TextColor">&amp;h000000</PropertyVal>
       <PropertyVal Name="Tooltip"/>
@@ -2697,7 +3024,7 @@
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">184</PropertyVal>
+      <PropertyVal Name="Width">153</PropertyVal>
       <ControlIndex>3</ControlIndex>
       <Locked>0</Locked>
       <PartID>1329981439</PartID>
@@ -2711,7 +3038,7 @@
       <PropertyVal Name="AllowTabs">False</PropertyVal>
       <PropertyVal Name="BackgroundColor">&amp;hFFFFFF</PropertyVal>
       <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Enabled">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
       <PropertyVal Name="FontName">System</PropertyVal>
       <PropertyVal Name="FontSize">0.0</PropertyVal>
       <PropertyVal Name="FontUnit">0</PropertyVal>
@@ -2744,7 +3071,7 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="ValidationMask"/>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">350</PropertyVal>
+      <PropertyVal Name="Width">560</PropertyVal>
       <ControlIndex>4</ControlIndex>
       <Locked>0</Locked>
       <PartID>1591193599</PartID>
@@ -2752,7 +3079,7 @@
     <DesktopSegmentedButton>
       <ControlClass>DesktopSegmentedButton</ControlClass>
       <ItemName>DesktopSegmentedButton</ItemName>
-      <PropertyVal Name="Enabled">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
       <PropertyVal Name="Height">24</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="Left">20</PropertyVal>
@@ -2761,7 +3088,7 @@
       <PropertyVal Name="LockRight">True</PropertyVal>
       <PropertyVal Name="LockTop">True</PropertyVal>
       <PropertyVal Name="MacButtonStyle">0</PropertyVal>
-      <PropertyVal Name="Name">PathSegmentedButton</PropertyVal>
+      <PropertyVal Name="Name">PathMapSegmentedButton</PropertyVal>
       <PropertyVal Name="Scope">0</PropertyVal>
       <PropertyVal Name="Segments">
         <Hex bytes="65">486F6D650A0A547275650D5265736F6C76652050726566730A0A46616C73650D467573696F6E2050726566730A0A46616C73650D437573746F6D0A0A46616C7365</Hex>
@@ -2775,7 +3102,7 @@
       <PropertyVal Name="Top">140</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">350</PropertyVal>
+      <PropertyVal Name="Width">560</PropertyVal>
       <ControlIndex>5</ControlIndex>
       <Locked>0</Locked>
       <PartID>1319022591</PartID>
@@ -2805,7 +3132,7 @@
       <PropertyVal Name="Top">86</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">350</PropertyVal>
+      <PropertyVal Name="Width">560</PropertyVal>
       <PropertyVal Name="_mIndex">0</PropertyVal>
       <PropertyVal Name="_mInitialParent"/>
       <PropertyVal Name="_mName"/>
@@ -2849,6 +3176,43 @@
       <ControlIndex>7</ControlIndex>
       <Locked>0</Locked>
       <PartID>384022527</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopButton</ControlClass>
+      <ItemName>DesktopButton</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Cancel">False</PropertyVal>
+      <PropertyVal Name="Caption">Save</PropertyVal>
+      <PropertyVal Name="Default">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">System</PropertyVal>
+      <PropertyVal Name="FontSize">0.0</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">500</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
+      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
+      <PropertyVal Name="Name">SaveButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopButton</PropertyVal>
+      <PropertyVal Name="TabIndex">9</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">210</PropertyVal>
+      <PropertyVal Name="Transparent">False</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">80</PropertyVal>
+      <ControlIndex>8</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>947382271</PartID>
     </Control>
   </block>
   <block type="DesktopWindow" ID="960294911">
@@ -4198,8 +4562,8 @@
           <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Next</SourceLine>
-          <SourceLine>Catch e As RuntimeException</SourceLine>
-          <SourceLine>System.DebugLog("Warning... USB Down"  + EndOfLine + EndOfLine + e.Message)</SourceLine>
+          <SourceLine>Catch error As RuntimeException</SourceLine>
+          <SourceLine>System.DebugLog("Warning... USB Down"  + EndOfLine + EndOfLine + error.Message)</SourceLine>
           <SourceLine>End Try</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>End Sub</SourceLine>
@@ -4506,7 +4870,10 @@
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
-        <SourceLine>CreateReactorFolders()</SourceLine>
+        <SourceLine>App.CreateReactorFolders()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Turn the download queue on</SourceLine>
+        <SourceLine>ReactorWindow.QueueTimer.RunMode = Timer.RunModes.Multiple</SourceLine>
         <SourceLine/>
         <SourceLine>// Download the Reactor.json file</SourceLine>
         <SourceLine>JSONDownload()</SourceLine>
@@ -4519,7 +4886,8 @@
         <SourceLine>DownloadStatsLabel.Text = ""</SourceLine>
         <SourceLine>DownloadProgress.Value = 0</SourceLine>
         <SourceLine>DownloadProgress.Visible = False</SourceLine>
-        <SourceLine>//CancelButton.Visible = False</SourceLine>
+        <SourceLine>// CancelButton.Visible = False</SourceLine>
+        <SourceLine/>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
@@ -5561,7 +5929,7 @@
         <SourceLine>// UnZip the downloaded atomz package</SourceLine>
         <SourceLine>If App.DownloadFolderItem &lt;&gt; Nil and App.DownloadFolderItem.exists Then</SourceLine>
         <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
-        <SourceLine>CreateReactorFolders()</SourceLine>
+        <SourceLine>App.CreateReactorFolders()</SourceLine>
         <SourceLine/>
         <SourceLine>// Expand the archive</SourceLine>
         <SourceLine>Try</SourceLine>
@@ -5632,8 +6000,8 @@
         <SourceLine>tos.Close</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Catch e As IOException</SourceLine>
-        <SourceLine>// Handle error</SourceLine>
+        <SourceLine>Catch error As IOException</SourceLine>
+        <SourceLine>MessageBox(error.Message)</SourceLine>
         <SourceLine>End Try</SourceLine>
         <SourceLine/>
         <SourceLine>// Debug: Open the newly saved JSON encoded atom in the default editor</SourceLine>
@@ -5857,111 +6225,6 @@
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Sub</SourceLine>
-      </ItemSource>
-      <TextEncoding>134217984</TextEncoding>
-      <AliasName/>
-      <ItemFlags>0</ItemFlags>
-      <IsShared>0</IsShared>
-      <ItemParams/>
-      <ItemResult/>
-    </Method>
-    <Method>
-      <ItemName>JSONDownload</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>213145599</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Sub JSONDownload()</SourceLine>
-        <SourceLine>// Download the JSON file</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Load the Reactor.json _Core Repo URL</SourceLine>
-        <SourceLine>Var url As String = ""</SourceLine>
-        <SourceLine>Var filename As String = ""</SourceLine>
-        <SourceLine>If App.Settings &lt;&gt; Nil and App.Settings.HasKey("Repos") Then</SourceLine>
-        <SourceLine>Var jsonRepos As JSONItem = App.Settings.Value("Repos")</SourceLine>
-        <SourceLine>If jsonRepos.HasKey("_Core") Then</SourceLine>
-        <SourceLine>Var jsonReposCore As JSONItem =  jsonRepos.Value("_Core")</SourceLine>
-        <SourceLine>If jsonReposCore.HasKey("URL") Then</SourceLine>
-        <SourceLine>url = jsonReposCore.Value("URL")</SourceLine>
-        <SourceLine>// MessageBox(url)</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>If jsonReposCore.HasKey("LocalFile") Then</SourceLine>
-        <SourceLine>filename = jsonReposCore.Value("LocalFile")</SourceLine>
-        <SourceLine>// MessageBox(filename)</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>// Fallback URL</SourceLine>
-        <SourceLine>If url = "" Then</SourceLine>
-        <SourceLine>url = "https://gitlab.com/WeSuckLess/Reactor/-/raw/master/JSON/Reactor.json?ref_type=heads"</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>If filename = "" Then</SourceLine>
-        <SourceLine>filename = "Reactor.json"</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine/>
-        <SourceLine>Var JSONFile As FolderItem = App.CreateNewFolder(App.JSONFolder).Child(filename)</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
-        <SourceLine>CreateReactorFolders()</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Socket header data</SourceLine>
-        <SourceLine>RSocket.ClearRequestHeaders</SourceLine>
-        <SourceLine>RSocket.RequestHeader("User-Agent") = "Xojo"</SourceLine>
-        <SourceLine>RSocket.AllowCertificateValidation = false</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Show a label with the Reactor.json filename</SourceLine>
-        <SourceLine>App.DownloadFilename = filename</SourceLine>
-        <SourceLine>App.DownloadAtomID = ""</SourceLine>
-        <SourceLine>App.DownloadName = ""</SourceLine>
-        <SourceLine>App.DownloadFolderItem = JSONFile</SourceLine>
-        <SourceLine>App.Atoms = New JSONItem(RSocket.SendSync("GET", url, 15))</SourceLine>
-        <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " " + "100% "</SourceLine>
-        <SourceLine/>
-        <SourceLine>Var options As New JSONOptions</SourceLine>
-        <SourceLine>options.Compact = False</SourceLine>
-        <SourceLine>options.IndentSpacing = 4</SourceLine>
-        <SourceLine/>
-        <SourceLine>Var tos As TextOutputStream</SourceLine>
-        <SourceLine>If JSONFile &lt;&gt; Nil Then</SourceLine>
-        <SourceLine>tos = TextOutputStream.Create(JSONFile)</SourceLine>
-        <SourceLine>If tos &lt;&gt; Nil and App.Atoms &lt;&gt; Nil Then</SourceLine>
-        <SourceLine>tos.Write(App.Atoms.ToString(options))</SourceLine>
-        <SourceLine>tos.Close</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Sub</SourceLine>
-      </ItemSource>
-      <TextEncoding>134217984</TextEncoding>
-      <AliasName/>
-      <ItemFlags>0</ItemFlags>
-      <IsShared>0</IsShared>
-      <ItemParams/>
-      <ItemResult/>
-    </Method>
-    <Method>
-      <ItemName>CreateReactorFolders</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>670963711</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Sub CreateReactorFolders()</SourceLine>
-        <SourceLine>// Remake the working directories if they were deleted</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.ReactorFolder)</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.AtomsFolder)</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.AtomsReactorFolder)</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.AtomzFolder)</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.DeployAtomsFolder)</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.DeployAtomsReactorFolder)</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.DeployFolder)</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.DeployJSONFolder)</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.DeployJSONReactorFolder)</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.JSONFolder)</SourceLine>
-        <SourceLine>App.CreateNewFolderNoReturn(App.TemporaryAtomFolder)</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
@@ -6785,7 +7048,7 @@
         <SourceLine>End If</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Catch e As NilObjectException</SourceLine>
+        <SourceLine>Catch error As NilObjectException</SourceLine>
         <SourceLine>// Fallback Resolution</SourceLine>
         <SourceLine>End Try</SourceLine>
         <SourceLine/>
@@ -6809,6 +7072,86 @@
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
       <ItemParams>Host As String</ItemParams>
+      <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>JSONDownload</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>348532735</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub JSONDownload()</SourceLine>
+        <SourceLine>// Download the JSON file</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Load the Reactor.json _Core Repo URL</SourceLine>
+        <SourceLine>Var url As String = ""</SourceLine>
+        <SourceLine>Var filename As String = ""</SourceLine>
+        <SourceLine>If App.Settings &lt;&gt; Nil and App.Settings.HasKey("Repos") Then</SourceLine>
+        <SourceLine>Var jsonRepos As JSONItem = App.Settings.Value("Repos")</SourceLine>
+        <SourceLine>If jsonRepos.HasKey("_Core") Then</SourceLine>
+        <SourceLine>Var jsonReposCore As JSONItem =  jsonRepos.Value("_Core")</SourceLine>
+        <SourceLine>If jsonReposCore.HasKey("URL") Then</SourceLine>
+        <SourceLine>url = jsonReposCore.Value("URL")</SourceLine>
+        <SourceLine>// MessageBox(url)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If jsonReposCore.HasKey("LocalFile") Then</SourceLine>
+        <SourceLine>filename = jsonReposCore.Value("LocalFile")</SourceLine>
+        <SourceLine>// MessageBox(filename)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>// Fallback URL</SourceLine>
+        <SourceLine>If url = "" Then</SourceLine>
+        <SourceLine>url = "https://gitlab.com/WeSuckLess/Reactor/-/raw/master/JSON/Reactor.json?ref_type=heads"</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>If filename = "" Then</SourceLine>
+        <SourceLine>filename = "Reactor.json"</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>App.CreateSubFolders(App.JSONFolder)</SourceLine>
+        <SourceLine>Var JSONFile As FolderItem = App.CreateNewFolder(App.JSONFolder).Child(filename)</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
+        <SourceLine>App.CreateReactorFolders()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Socket header data</SourceLine>
+        <SourceLine>RSocket.ClearRequestHeaders</SourceLine>
+        <SourceLine>RSocket.RequestHeader("User-Agent") = "Xojo"</SourceLine>
+        <SourceLine>RSocket.AllowCertificateValidation = false</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Show a label with the Reactor.json filename</SourceLine>
+        <SourceLine>App.DownloadFilename = filename</SourceLine>
+        <SourceLine>App.DownloadAtomID = ""</SourceLine>
+        <SourceLine>App.DownloadName = ""</SourceLine>
+        <SourceLine>App.DownloadFolderItem = JSONFile</SourceLine>
+        <SourceLine>App.Atoms = New JSONItem(RSocket.SendSync("GET", url, 15))</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + " " + "100% "</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var options As New JSONOptions</SourceLine>
+        <SourceLine>options.Compact = False</SourceLine>
+        <SourceLine>options.IndentSpacing = 4</SourceLine>
+        <SourceLine/>
+        <SourceLine>Var tos As TextOutputStream</SourceLine>
+        <SourceLine>If JSONFile &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>tos = TextOutputStream.Create(JSONFile)</SourceLine>
+        <SourceLine>If tos &lt;&gt; Nil and App.Atoms &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>tos.Write(App.Atoms.ToString(options))</SourceLine>
+        <SourceLine>tos.Close</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>DownloadStatsLabel.Text = ""</SourceLine>
+        <SourceLine>DownloadProgress.Value = 0</SourceLine>
+        <SourceLine>DownloadProgress.Visible = False</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams/>
       <ItemResult/>
     </Method>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
@@ -7634,7 +7977,7 @@
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Action()</SourceLine>
           <SourceLine>// Rebuild the Reactor folder hiearchy</SourceLine>
-          <SourceLine>CreateReactorFolders()</SourceLine>
+          <SourceLine>App.CreateReactorFolders()</SourceLine>
           <SourceLine/>
           <SourceLine>// Check if a download slot is open</SourceLine>
           <SourceLine>If App.DownloadList.Count = 0 Then</SourceLine>
@@ -7678,10 +8021,14 @@
           <SourceLine>Next</SourceLine>
           <SourceLine/>
           <SourceLine>RSocket.Send("GET", ZipFileURL, AtomzFile)</SourceLine>
-          <SourceLine>Catch e As UnsupportedOperationException</SourceLine>
-          <SourceLine>System.DebugLog(e.Message + EndOfLine + " [Error] " + e.ErrorNumber.ToText)</SourceLine>
-          <SourceLine>Catch e As RuntimeException</SourceLine>
-          <SourceLine>System.DebugLog(e.Message + EndOfLine + " [Error] " + e.ErrorNumber.ToText)</SourceLine>
+          <SourceLine>Catch error As UnsupportedOperationException</SourceLine>
+          <SourceLine>System.DebugLog(error.Message + EndOfLine + " [Error] " + error.ErrorNumber.ToText)</SourceLine>
+          <SourceLine>Catch error As RuntimeException</SourceLine>
+          <SourceLine>System.DebugLog(error.Message + EndOfLine + " [Error] " + error.ErrorNumber.ToText)</SourceLine>
+          <SourceLine>Catch error As IOException</SourceLine>
+          <SourceLine>System.DebugLog(error.Message + EndOfLine + " [Error] " + error.ErrorNumber.ToText)</SourceLine>
+          <SourceLine>Catch error As Xojo.IO.IOException</SourceLine>
+          <SourceLine>System.DebugLog(error.Message + EndOfLine + " [Error] " + error.ErrorNumber.ToText)</SourceLine>
           <SourceLine>End Try</SourceLine>
           <SourceLine/>
           <SourceLine>Exit For k //Break out of the loop</SourceLine>
@@ -8114,8 +8461,8 @@
           <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Next</SourceLine>
-          <SourceLine>Catch e As RuntimeException</SourceLine>
-          <SourceLine>System.DebugLog("Warning... USB Down"  + EndOfLine + EndOfLine + e.Message)</SourceLine>
+          <SourceLine>Catch error As RuntimeException</SourceLine>
+          <SourceLine>System.DebugLog("Warning... USB Down"  + EndOfLine + EndOfLine + error.Message)</SourceLine>
           <SourceLine>End Try</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
@@ -8659,7 +9006,7 @@
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="Name">QueueTimer</PropertyVal>
       <PropertyVal Name="Period">1000</PropertyVal>
-      <PropertyVal Name="RunMode">2</PropertyVal>
+      <PropertyVal Name="RunMode">0</PropertyVal>
       <PropertyVal Name="Scope">0</PropertyVal>
       <PropertyVal Name="Super">Timer</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
@@ -9868,16 +10215,16 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1739" height="951"/>
+        <Rect left="2" top="25" width="1920" height="954"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>App.LoadSettings</EditorLocation>
+          <EditorLocation>PreferencesWindow.Controls.SaveButton</EditorLocation>
           <EditorPath/>
-          <EditingPartID>1350840319</EditingPartID>
+          <EditingPartID>241967103</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
