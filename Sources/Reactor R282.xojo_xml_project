@@ -7,7 +7,7 @@
     <MinorVersion>0</MinorVersion>
     <SubVersion>0</SubVersion>
     <Release>0</Release>
-    <NonRelease>15</NonRelease>
+    <NonRelease>16</NonRelease>
     <Region/>
     <ShortVersion/>
     <LongVersion>Copyright © 2017-2025 We Suck Less</LongVersion>
@@ -18,7 +18,7 @@
     <DefaultLanguage>0</DefaultLanguage>
     <CurrentLanguage>0</CurrentLanguage>
     <DefaultEncoding>0</DefaultEncoding>
-    <BuildFlags>2320</BuildFlags>
+    <BuildFlags>6400</BuildFlags>
     <UseBuildsFolder>1</UseBuildsFolder>
     <WebApp>0</WebApp>
     <Icon>
@@ -131,6 +131,7 @@
     <HiDPI>1</HiDPI>
     <DarkMode>1</DarkMode>
     <BuildLinuxX86Name>Reactor</BuildLinuxX86Name>
+    <BuildCarbonExecutableFormat>1</BuildCarbonExecutableFormat>
     <DebuggerCommandLine/>
     <LinuxArchitecture>1</LinuxArchitecture>
     <MacArchitecture>4</MacArchitecture>
@@ -688,6 +689,7 @@
         <SourceLine>App.CreateSubFolders(App.TemporaryAtomFolder)</SourceLine>
         <SourceLine>App.CreateSubFolders(App.ReactorFolder.Child("Deploy").Child("Bin"))</SourceLine>
         <SourceLine>App.CreateSubFolders(App.ReactorFolder.Child("Deploy").Child("Comps"))</SourceLine>
+        <SourceLine>App.CreateSubFolders(App.ReactorFolder.Child("Deploy").Child("Config"))</SourceLine>
         <SourceLine>App.CreateSubFolders(App.ReactorFolder.Child("Deploy").Child("Docs"))</SourceLine>
         <SourceLine>App.CreateSubFolders(App.ReactorFolder.Child("Deploy").Child("Fuses"))</SourceLine>
         <SourceLine>App.CreateSubFolders(App.ReactorFolder.Child("Deploy").Child("Macros"))</SourceLine>
@@ -5381,15 +5383,30 @@
       </ItemSource>
     </MenuHandler>
     <MenuHandler>
-      <ItemName>ToolsExportAtomzList</ItemName>
+      <ItemName>ToolsSaveAtomzList</ItemName>
       <Compatibility/>
       <Visible>1</Visible>
       <PartID>1680807935</PartID>
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ToolsExportAtomzList() As Boolean</SourceLine>
-        <SourceLine>// Export an atoms list file to disk</SourceLine>
-        <SourceLine>ExportAtomzList()</SourceLine>
+        <SourceLine>Function ToolsSaveAtomzList() As Boolean</SourceLine>
+        <SourceLine>// Save an atoms list file to disk</SourceLine>
+        <SourceLine>SaveAtomzList()</SourceLine>
+        <SourceLine/>
+        <SourceLine/>
+        <SourceLine>End Function</SourceLine>
+      </ItemSource>
+    </MenuHandler>
+    <MenuHandler>
+      <ItemName>ToolsShowConfigFolder</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>142184447</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Function ToolsShowConfigFolder() As Boolean</SourceLine>
+        <SourceLine>Var ReactorConfigFolder As FolderItem = App.ReactorFolder.Child("Deploy").Child("Config")</SourceLine>
+        <SourceLine>ReactorConfigFolder.Launch</SourceLine>
         <SourceLine/>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
@@ -7330,14 +7347,14 @@
       <ItemResult/>
     </Method>
     <Method>
-      <ItemName>ExportAtomzList</ItemName>
+      <ItemName>SaveAtomzList</ItemName>
       <Compatibility/>
       <Visible>1</Visible>
       <PartID>1130035199</PartID>
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Sub ExportAtomzList()</SourceLine>
-        <SourceLine>// Export an atoms list file to disk</SourceLine>
+        <SourceLine>Sub SaveAtomzList()</SourceLine>
+        <SourceLine>// Save an atoms list file to disk</SourceLine>
         <SourceLine>Var ReactorAtomzListFile As FolderItem = App.ReactorFolder.Child("Atomz").Child("Atom Packages.lst")</SourceLine>
         <SourceLine/>
         <SourceLine>Try</SourceLine>
@@ -8291,7 +8308,6 @@
           <SourceLine/>
           <SourceLine>// Supported devices:</SourceLine>
           <SourceLine>// DualSense Wireless Controller</SourceLine>
-          <SourceLine>// SpaceMouse Enterprise</SourceLine>
           <SourceLine>// Kinesis JoyStick Controller</SourceLine>
           <SourceLine/>
           <SourceLine>If deviceName = "Kinesis JoyStick Controller " Then</SourceLine>
@@ -8475,7 +8491,7 @@
           <SourceLine>AboutWindow.Hide</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>ElseIf mButtonName = "Button #5" and mButtonState = "1" Then</SourceLine>
-          <SourceLine>// L1 = Change Category Down</SourceLine>
+          <SourceLine>// L1 = Change Category Up</SourceLine>
           <SourceLine>If CategoryListBox.RowCount - 1 &gt;= 0 Then</SourceLine>
           <SourceLine>If CategoryListBox.SelectedRowIndex = -1 Then</SourceLine>
           <SourceLine>// If nothing is selected select the first row</SourceLine>
@@ -8501,7 +8517,7 @@
           <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>ElseIf mButtonName = "Button #7" and mButtonState = "1" Then</SourceLine>
-          <SourceLine>// L2 = Change Category Up</SourceLine>
+          <SourceLine>// L2 = Change Category Down</SourceLine>
           <SourceLine>If CategoryListBox.RowCount - 1 &gt;= 0 Then</SourceLine>
           <SourceLine>If CategoryListBox.SelectedRowIndex = -1 Then</SourceLine>
           <SourceLine>// If nothing is selected select the first row</SourceLine>
@@ -8527,27 +8543,26 @@
           <SourceLine>End If</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>ElseIf mButtonName = "Button #8" and mButtonState = "1" Then</SourceLine>
-          <SourceLine>// R2</SourceLine>
-          <SourceLine>// Switch view mode</SourceLine>
+          <SourceLine>// R2 = Repo view mode down</SourceLine>
           <SourceLine>Select Case RepoPopupMenu.SelectedRowIndex</SourceLine>
           <SourceLine>Case 0</SourceLine>
           <SourceLine>// All</SourceLine>
-          <SourceLine>RepoPopupMenu.SelectedRowIndex = 2</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 1</SourceLine>
           <SourceLine>Case 1</SourceLine>
           <SourceLine>// Update</SourceLine>
-          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 2</SourceLine>
           <SourceLine>Case 2</SourceLine>
           <SourceLine>// Installed</SourceLine>
-          <SourceLine>RepoPopupMenu.SelectedRowIndex = 5</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 3</SourceLine>
           <SourceLine>Case 3</SourceLine>
           <SourceLine>// Uninstalled</SourceLine>
-          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 4</SourceLine>
           <SourceLine>Case 4</SourceLine>
           <SourceLine>// Donate</SourceLine>
-          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 5</SourceLine>
           <SourceLine>Case 5</SourceLine>
           <SourceLine>// New</SourceLine>
-          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 6</SourceLine>
           <SourceLine>Case 6</SourceLine>
           <SourceLine>// Dependencies</SourceLine>
           <SourceLine>RepoPopupMenu.SelectedRowIndex = 8</SourceLine>
@@ -8559,8 +8574,7 @@
           <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
           <SourceLine>End Select</SourceLine>
           <SourceLine>ElseIf mButtonName = "Button #6" and mButtonState = "1" Then</SourceLine>
-          <SourceLine>// R1</SourceLine>
-          <SourceLine>// Switch view mode</SourceLine>
+          <SourceLine>// R1 = Repo view mode up</SourceLine>
           <SourceLine>Select Case RepoPopupMenu.SelectedRowIndex</SourceLine>
           <SourceLine>Case 0</SourceLine>
           <SourceLine>// All</SourceLine>
@@ -8570,25 +8584,25 @@
           <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
           <SourceLine>Case 2</SourceLine>
           <SourceLine>// Installed</SourceLine>
-          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 1</SourceLine>
           <SourceLine>Case 3</SourceLine>
           <SourceLine>// Uninstalled</SourceLine>
-          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 2</SourceLine>
           <SourceLine>Case 4</SourceLine>
           <SourceLine>// Donate</SourceLine>
-          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 3</SourceLine>
           <SourceLine>Case 5</SourceLine>
           <SourceLine>// New</SourceLine>
-          <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 4</SourceLine>
           <SourceLine>Case 6</SourceLine>
           <SourceLine>// Dependencies</SourceLine>
-          <SourceLine>RepoPopupMenu.SelectedRowIndex = 2</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 5</SourceLine>
           <SourceLine>Case 7</SourceLine>
           <SourceLine>// Incompatible</SourceLine>
           <SourceLine>RepoPopupMenu.SelectedRowIndex = 0</SourceLine>
           <SourceLine>Case 8</SourceLine>
           <SourceLine>// Downloading</SourceLine>
-          <SourceLine>RepoPopupMenu.SelectedRowIndex = 5</SourceLine>
+          <SourceLine>RepoPopupMenu.SelectedRowIndex = 6</SourceLine>
           <SourceLine>End Select</SourceLine>
           <SourceLine>ElseIf mButtonName = "Y-Axis" Then</SourceLine>
           <SourceLine>// Left Joystick Y-axis = Atom List Select Next Item = Up/Down</SourceLine>
@@ -9423,6 +9437,18 @@
         </MenuItem>
         <MenuItem>
           <ItemSpecialMenu>0</ItemSpecialMenu>
+          <ItemName>ToolsShowConfigFolder</ItemName>
+          <ItemText>Show Config Folder</ItemText>
+          <ItemIndex>-2147483648</ItemIndex>
+          <ItemShortcut/>
+          <MenuAutoEnable>1</MenuAutoEnable>
+          <TextEncoding>134217984</TextEncoding>
+          <MenuItemVisible>1</MenuItemVisible>
+          <ItemFlags>0</ItemFlags>
+          <Superclass>DesktopMenuItem</Superclass>
+        </MenuItem>
+        <MenuItem>
+          <ItemSpecialMenu>0</ItemSpecialMenu>
           <ItemName>ToolsShowTemplatesFolder</ItemName>
           <ItemText>Show Templates Folder</ItemText>
           <ItemIndex>-2147483648</ItemIndex>
@@ -9543,8 +9569,8 @@
         </MenuItem>
         <MenuItem>
           <ItemSpecialMenu>0</ItemSpecialMenu>
-          <ItemName>ToolsExportAtomzList</ItemName>
-          <ItemText>Export Atomz List (.lst) File</ItemText>
+          <ItemName>ToolsSaveAtomzList</ItemName>
+          <ItemText>Save Atomz List (.lst) File</ItemText>
           <ItemIndex>-2147483648</ItemIndex>
           <ItemShortcut>Cmd+S</ItemShortcut>
           <MenuShortcut>S</MenuShortcut>
@@ -10483,16 +10509,16 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1868" height="989"/>
+        <Rect left="0" top="25" width="1866" height="989"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.ExportAtomzList</EditorLocation>
+          <EditorLocation>Build Automation.Mac OS X.Plist Layout</EditorLocation>
           <EditorPath/>
-          <EditingPartID>338128895</EditingPartID>
+          <EditingPartID>1698770943</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
