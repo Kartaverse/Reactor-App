@@ -324,6 +324,9 @@
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
+        <SourceLine>// Reactor License Accepted</SourceLine>
+        <SourceLine>json.Value("LicenseAccepted") = False</SourceLine>
+        <SourceLine/>
         <SourceLine>// Gamepad support for Playstation Dualshock controller</SourceLine>
         <SourceLine>json.Value("GamepadSupport") = 0</SourceLine>
         <SourceLine/>
@@ -393,6 +396,9 @@
         <SourceLine>jsonWindow.Value("Width") = ReactorWindow.Width</SourceLine>
         <SourceLine>jsonWindow.Value("Height") = ReactorWindow.Height</SourceLine>
         <SourceLine>json.Value("MainWindow") = jsonWindow</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Reactor License Accepted</SourceLine>
+        <SourceLine>json.Value("LicenseAccepted") = App.LicenseAccepted</SourceLine>
         <SourceLine/>
         <SourceLine>// Gamepad support for Playstation Dualshock controller</SourceLine>
         <SourceLine>json.Value("GamepadSupport") = App.GamepadSupport</SourceLine>
@@ -520,6 +526,12 @@
         <SourceLine>// Check if the settings exist</SourceLine>
         <SourceLine>If App.Settings = Nil Then</SourceLine>
         <SourceLine>CreateDefaultSettings()</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Reactor License Accepted</SourceLine>
+        <SourceLine>If App.Settings &lt;&gt; Nil and App.Settings.HasKey("LicenseAccepted") Then</SourceLine>
+        <SourceLine>Var Val As String = App.Settings.Value("LicenseAccepted")</SourceLine>
+        <SourceLine>App.LicenseAccepted = Val.ToBoolean</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>// Gamepad support</SourceLine>
@@ -1303,6 +1315,21 @@
       </ItemSource>
       <TextEncoding>134217984</TextEncoding>
       <ItemDeclaration>MarkAsNew As Boolean</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
+    <Property>
+      <ItemName>LicenseAccepted</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1513668607</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>LicenseAccepted As Boolean = False</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>LicenseAccepted As Boolean = False</ItemDeclaration>
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
     </Property>
@@ -4400,6 +4427,10 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Sub Opening()</SourceLine>
+        <SourceLine>If App.LicenseAccepted = True Then</SourceLine>
+        <SourceLine>ReactorWindow.Show</SourceLine>
+        <SourceLine>LicenseWindow.Close</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
@@ -4677,6 +4708,8 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine>App.LicenseAccepted = True</SourceLine>
+          <SourceLine/>
           <SourceLine>ReactorWindow.Show</SourceLine>
           <SourceLine>LicenseWindow.Close</SourceLine>
           <SourceLine/>
@@ -4694,6 +4727,8 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Pressed()</SourceLine>
+          <SourceLine>App.LicenseAccepted = False</SourceLine>
+          <SourceLine/>
           <SourceLine>Quit()</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
@@ -10695,9 +10730,9 @@
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>LicenseWindow</EditorLocation>
+          <EditorLocation>App.LicenseAccepted</EditorLocation>
           <EditorPath/>
-          <EditingPartID>2046642175</EditingPartID>
+          <EditingPartID>1350840319</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
