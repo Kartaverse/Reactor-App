@@ -18,7 +18,7 @@
     <DefaultLanguage>0</DefaultLanguage>
     <CurrentLanguage>0</CurrentLanguage>
     <DefaultEncoding>0</DefaultEncoding>
-    <BuildFlags>2320</BuildFlags>
+    <BuildFlags>6400</BuildFlags>
     <UseBuildsFolder>1</UseBuildsFolder>
     <WebApp>0</WebApp>
     <Icon>
@@ -131,6 +131,7 @@
     <HiDPI>1</HiDPI>
     <DarkMode>1</DarkMode>
     <BuildLinuxX86Name>Reactor</BuildLinuxX86Name>
+    <BuildCarbonExecutableFormat>1</BuildCarbonExecutableFormat>
     <DebuggerCommandLine/>
     <LinuxArchitecture>1</LinuxArchitecture>
     <MacArchitecture>4</MacArchitecture>
@@ -224,8 +225,8 @@
         <SourceLine>ReactorWindow.DownloadStatsLabel.Text = Tokens</SourceLine>
         <SourceLine>System.DebugLog("[Reactor URL] """ + Tokens + """")</SourceLine>
         <SourceLine/>
-        <SourceLine>// Switch to the download view mode</SourceLine>
-        <SourceLine>ReactorWindow.ShowRadioGroupIndex(0)</SourceLine>
+        <SourceLine>// Switch to the any state view mode</SourceLine>
+        <SourceLine>ReactorWindow.StateListBox.SelectedRowIndex = 0</SourceLine>
         <SourceLine/>
         <SourceLine>// Clear out the search text field</SourceLine>
         <SourceLine>ReactorWindow.AtomSearchField.Text = ""</SourceLine>
@@ -6198,29 +6199,29 @@
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>Var AtomVisible As Integer = 0</SourceLine>
-        <SourceLine>Select Case ShowRadioGroupSelectedIndex()</SourceLine>
+        <SourceLine>Select Case StateListBox.SelectedRowIndex</SourceLine>
         <SourceLine>Case 0</SourceLine>
         <SourceLine>// All</SourceLine>
         <SourceLine>if AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 1</SourceLine>
-        <SourceLine>// Update</SourceLine>
-        <SourceLine>If AtomUpdated = True and AtomDisabled = False Then</SourceLine>
-        <SourceLine>AtomVisible = 1</SourceLine>
-        <SourceLine>Else</SourceLine>
-        <SourceLine>AtomVisible = 0</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>Case 2</SourceLine>
         <SourceLine>// Installed</SourceLine>
         <SourceLine>If InstallState = True Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 3</SourceLine>
+        <SourceLine>Case 2</SourceLine>
         <SourceLine>// Uninstalled</SourceLine>
         <SourceLine>If InstallState = False Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 3</SourceLine>
+        <SourceLine>// Dependencies</SourceLine>
+        <SourceLine>If App.DependencyList.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
@@ -6233,22 +6234,22 @@
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 5</SourceLine>
+        <SourceLine>// Incompatible</SourceLine>
+        <SourceLine>If AtomDisabled = True Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 6</SourceLine>
         <SourceLine>// New</SourceLine>
         <SourceLine>If App.MarkAsNew = True and App.NewForDays &gt;= DaysElapsed Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 6</SourceLine>
-        <SourceLine>// Dependencies</SourceLine>
-        <SourceLine>If App.DependencyList.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
-        <SourceLine>AtomVisible = 1</SourceLine>
-        <SourceLine>Else</SourceLine>
-        <SourceLine>AtomVisible = 0</SourceLine>
-        <SourceLine>End If</SourceLine>
         <SourceLine>Case 7</SourceLine>
-        <SourceLine>// Incompatible</SourceLine>
-        <SourceLine>If AtomDisabled = True Then</SourceLine>
+        <SourceLine>// Update</SourceLine>
+        <SourceLine>If AtomUpdated = True and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
@@ -6360,29 +6361,29 @@
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>Var AtomVisible As Integer = 0</SourceLine>
-        <SourceLine>Select Case ShowRadioGroupSelectedIndex()</SourceLine>
+        <SourceLine>Select Case StateListBox.SelectedRowIndex</SourceLine>
         <SourceLine>Case 0</SourceLine>
         <SourceLine>// All</SourceLine>
         <SourceLine>if AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 1</SourceLine>
-        <SourceLine>// Update</SourceLine>
-        <SourceLine>If AtomUpdated = True and AtomDisabled = False Then</SourceLine>
-        <SourceLine>AtomVisible = 1</SourceLine>
-        <SourceLine>Else</SourceLine>
-        <SourceLine>AtomVisible = 0</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>Case 2</SourceLine>
         <SourceLine>// Installed</SourceLine>
         <SourceLine>If InstallState = True Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 3</SourceLine>
+        <SourceLine>Case 2</SourceLine>
         <SourceLine>// Uninstalled</SourceLine>
         <SourceLine>If InstallState = False Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 3</SourceLine>
+        <SourceLine>// Dependencies</SourceLine>
+        <SourceLine>If App.DependencyList.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
@@ -6395,22 +6396,22 @@
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Case 5</SourceLine>
+        <SourceLine>// Incompatible</SourceLine>
+        <SourceLine>If AtomDisabled = True Then</SourceLine>
+        <SourceLine>AtomVisible = 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>AtomVisible = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Case 6</SourceLine>
         <SourceLine>// New</SourceLine>
         <SourceLine>If App.MarkAsNew = True and App.NewForDays &gt;= DaysElapsed Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine>Case 6</SourceLine>
-        <SourceLine>// Dependencies</SourceLine>
-        <SourceLine>If App.DependencyList.IndexOf(AtomID) &lt;&gt; -1 Then</SourceLine>
-        <SourceLine>AtomVisible = 1</SourceLine>
-        <SourceLine>Else</SourceLine>
-        <SourceLine>AtomVisible = 0</SourceLine>
-        <SourceLine>End If</SourceLine>
         <SourceLine>Case 7</SourceLine>
-        <SourceLine>// Incompatible</SourceLine>
-        <SourceLine>If AtomDisabled = True Then</SourceLine>
+        <SourceLine>// Update</SourceLine>
+        <SourceLine>If AtomUpdated = True and AtomDisabled = False Then</SourceLine>
         <SourceLine>AtomVisible = 1</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>AtomVisible = 0</SourceLine>
@@ -8098,7 +8099,7 @@
         <SourceLine>Next</SourceLine>
         <SourceLine/>
         <SourceLine>// Switch to the download view mode</SourceLine>
-        <SourceLine>ShowRadioGroupIndex(8)</SourceLine>
+        <SourceLine>StateListBox.SelectedRowIndex = 8</SourceLine>
         <SourceLine/>
         <SourceLine>// Clear out the search text field</SourceLine>
         <SourceLine>AtomSearchField.Text = ""</SourceLine>
@@ -8251,292 +8252,6 @@
       <ItemResult/>
     </Method>
     <Method>
-      <ItemName>ShowRadioGroupSelectedIndex</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>227014655</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ShowRadioGroupSelectedIndex() As Integer</SourceLine>
-        <SourceLine>Var SelectedIndex As Integer = -1</SourceLine>
-        <SourceLine>// All Filters</SourceLine>
-        <SourceLine>SelectedIndex = 0</SourceLine>
-        <SourceLine/>
-        <SourceLine>'If RadioButtonClass1.Value = True Then</SourceLine>
-        <SourceLine>'SelectedIndex = 0</SourceLine>
-        <SourceLine>'//RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>'ElseIf RadioButtonClass2.Value = True Then</SourceLine>
-        <SourceLine>'SelectedIndex = 1</SourceLine>
-        <SourceLine>'RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>'//RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>'ElseIf RadioButtonClass3.Value = True Then</SourceLine>
-        <SourceLine>'SelectedIndex = 2</SourceLine>
-        <SourceLine>'RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>'//RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>'ElseIf RadioButtonClass4.Value = True Then</SourceLine>
-        <SourceLine>'SelectedIndex = 3</SourceLine>
-        <SourceLine>'RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>'//RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>'ElseIf RadioButtonClass5.Value = True Then</SourceLine>
-        <SourceLine>'SelectedIndex = 4</SourceLine>
-        <SourceLine>'RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>'//RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>'ElseIf RadioButtonClass6.Value = True Then</SourceLine>
-        <SourceLine>'SelectedIndex = 5</SourceLine>
-        <SourceLine>'RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>'//RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>'ElseIf RadioButtonClass7.Value = True Then</SourceLine>
-        <SourceLine>'SelectedIndex = 6</SourceLine>
-        <SourceLine>'RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>'//RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>'ElseIf RadioButtonClass8.Value = True Then</SourceLine>
-        <SourceLine>'SelectedIndex = 7</SourceLine>
-        <SourceLine>'RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>'//RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>'ElseIf RadioButtonClass9.Value = True Then</SourceLine>
-        <SourceLine>'SelectedIndex = 8</SourceLine>
-        <SourceLine>'RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>'RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>'//RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>'End If</SourceLine>
-        <SourceLine/>
-        <SourceLine>Return SelectedIndex</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-      <TextEncoding>134217984</TextEncoding>
-      <AliasName/>
-      <ItemFlags>0</ItemFlags>
-      <IsShared>0</IsShared>
-      <ItemParams/>
-      <ItemResult>Integer</ItemResult>
-    </Method>
-    <Method>
-      <ItemName>ShowRadioGroupIndex</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>798474239</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Sub ShowRadioGroupIndex(Index As Integer)</SourceLine>
-        <SourceLine/>
-        <SourceLine>// If Index = -1 Then</SourceLine>
-        <SourceLine>// RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>// ElseIf Index = 0 Then</SourceLine>
-        <SourceLine>// RadioButtonClass1.Value = True</SourceLine>
-        <SourceLine>// RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>// ElseIf Index = 1 Then</SourceLine>
-        <SourceLine>// RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass2.Value = True</SourceLine>
-        <SourceLine>// RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>// ElseIf Index = 2 Then</SourceLine>
-        <SourceLine>// RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass3.Value = True</SourceLine>
-        <SourceLine>// RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>// ElseIf Index = 3 Then</SourceLine>
-        <SourceLine>// RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass4.Value = True</SourceLine>
-        <SourceLine>// RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>// ElseIf Index = 4 Then</SourceLine>
-        <SourceLine>// RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass5.Value = True</SourceLine>
-        <SourceLine>// RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>// ElseIf Index = 5 Then</SourceLine>
-        <SourceLine>// RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass6.Value = True</SourceLine>
-        <SourceLine>// RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>// ElseIf Index = 6 Then</SourceLine>
-        <SourceLine>// RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass7.Value = True</SourceLine>
-        <SourceLine>// RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>// ElseIf Index = 7 Then</SourceLine>
-        <SourceLine>// RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass8.Value = True</SourceLine>
-        <SourceLine>// RadioButtonClass9.Value = False</SourceLine>
-        <SourceLine>// ElseIf Index = 8 Then</SourceLine>
-        <SourceLine>// RadioButtonClass1.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass2.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass3.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass4.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass5.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass6.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass7.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass8.Value = False</SourceLine>
-        <SourceLine>// RadioButtonClass9.Value = True</SourceLine>
-        <SourceLine>// End If</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Sub</SourceLine>
-      </ItemSource>
-      <TextEncoding>134217984</TextEncoding>
-      <AliasName/>
-      <ItemFlags>0</ItemFlags>
-      <IsShared>0</IsShared>
-      <ItemParams>Index As Integer</ItemParams>
-      <ItemResult/>
-    </Method>
-    <Method>
-      <ItemName>ShowRadioGroupSelectedIndexCaption</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>1660473343</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Function ShowRadioGroupSelectedIndexCaption() As String</SourceLine>
-        <SourceLine>Var Caption As String = ""</SourceLine>
-        <SourceLine>Caption = "Any Category"</SourceLine>
-        <SourceLine>// </SourceLine>
-        <SourceLine>// If RadioButtonClass1.Value = True Then</SourceLine>
-        <SourceLine>// Caption = "Any Category"</SourceLine>
-        <SourceLine>// ElseIf RadioButtonClass2.Value = True Then</SourceLine>
-        <SourceLine>// Caption = "Update"</SourceLine>
-        <SourceLine>// ElseIf RadioButtonClass3.Value = True Then</SourceLine>
-        <SourceLine>// Caption = "Installed"</SourceLine>
-        <SourceLine>// ElseIf RadioButtonClass4.Value = True Then</SourceLine>
-        <SourceLine>// Caption = "Uninstalled"</SourceLine>
-        <SourceLine>// ElseIf RadioButtonClass5.Value = True Then</SourceLine>
-        <SourceLine>// Caption = "Donate"</SourceLine>
-        <SourceLine>// ElseIf RadioButtonClass6.Value = True Then</SourceLine>
-        <SourceLine>// Caption = "New"</SourceLine>
-        <SourceLine>// ElseIf RadioButtonClass7.Value = True Then</SourceLine>
-        <SourceLine>// Caption = "Dependencies"</SourceLine>
-        <SourceLine>// ElseIf RadioButtonClass8.Value = True Then</SourceLine>
-        <SourceLine>// Caption = "Incompatible"</SourceLine>
-        <SourceLine>// ElseIf RadioButtonClass9.Value = True Then</SourceLine>
-        <SourceLine>// Caption = "Downloading"</SourceLine>
-        <SourceLine>// End If</SourceLine>
-        <SourceLine/>
-        <SourceLine>Return Caption</SourceLine>
-        <SourceLine/>
-        <SourceLine>End Function</SourceLine>
-      </ItemSource>
-      <TextEncoding>134217984</TextEncoding>
-      <AliasName/>
-      <ItemFlags>0</ItemFlags>
-      <IsShared>0</IsShared>
-      <ItemParams/>
-      <ItemResult>String</ItemResult>
-    </Method>
-    <Method>
       <ItemName>LoadAtomzList</ItemName>
       <Compatibility/>
       <Visible>1</Visible>
@@ -8607,7 +8322,7 @@
         <SourceLine>Next</SourceLine>
         <SourceLine/>
         <SourceLine>// Switch to the download view mode</SourceLine>
-        <SourceLine>ShowRadioGroupIndex(8)</SourceLine>
+        <SourceLine>StateListBox.SelectedRowIndex = 8</SourceLine>
         <SourceLine/>
         <SourceLine>// Clear out the search text field</SourceLine>
         <SourceLine>AtomSearchField.Text = ""</SourceLine>
@@ -9755,7 +9470,7 @@
           <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>// Cleanup Atom View</SourceLine>
-          <SourceLine>If ShowRadioGroupSelectedIndex() = 1 or  ShowRadioGroupSelectedIndex() = 7 Then</SourceLine>
+          <SourceLine>If StateListBox.SelectedRowText = "Installed" or StateListBox.SelectedRowText = "Downloading" Then</SourceLine>
           <SourceLine>// Applies to Install or Download views</SourceLine>
           <SourceLine>Var rowPrevious As Integer = row</SourceLine>
           <SourceLine>Var ScrollPositionPrevious As Integer = AtomsListBox.ScrollPosition</SourceLine>
@@ -9838,7 +9553,7 @@
           <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>// Cleanup Atom View</SourceLine>
-          <SourceLine>If ShowRadioGroupSelectedIndex() = 1 or  ShowRadioGroupSelectedIndex() = 7 Then</SourceLine>
+          <SourceLine>If StateListBox.SelectedRowText = "Installed" or StateListBox.SelectedRowText = "Downloading" Then</SourceLine>
           <SourceLine>// Applies to Install or Download views</SourceLine>
           <SourceLine>Var rowPrevious As Integer = row</SourceLine>
           <SourceLine>Var ScrollPositionPrevious As Integer = AtomsListBox.ScrollPosition</SourceLine>
@@ -9932,65 +9647,65 @@
           <SourceLine>End If</SourceLine>
           <SourceLine>ElseIf mButtonName = "Button #8" and mButtonState = "1" Then</SourceLine>
           <SourceLine>// R2 = Repo view mode down</SourceLine>
-          <SourceLine>Select Case ShowRadioGroupSelectedIndex()</SourceLine>
+          <SourceLine>Select Case StateListBox.SelectedRowIndex</SourceLine>
           <SourceLine>Case 0</SourceLine>
           <SourceLine>// All</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(1)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 1</SourceLine>
           <SourceLine>Case 1</SourceLine>
           <SourceLine>// Update</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(2)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 2</SourceLine>
           <SourceLine>Case 2</SourceLine>
           <SourceLine>// Installed</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(3)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 3</SourceLine>
           <SourceLine>Case 3</SourceLine>
           <SourceLine>// Uninstalled</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(4)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 4</SourceLine>
           <SourceLine>Case 4</SourceLine>
           <SourceLine>// Donate</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(5)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 5</SourceLine>
           <SourceLine>Case 5</SourceLine>
           <SourceLine>// New</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(6)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 6</SourceLine>
           <SourceLine>Case 6</SourceLine>
           <SourceLine>// Dependencies</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(8)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 8</SourceLine>
           <SourceLine>Case 7</SourceLine>
           <SourceLine>// Incompatible</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(0)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 0</SourceLine>
           <SourceLine>Case 8</SourceLine>
           <SourceLine>// Downloading</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(0)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 0</SourceLine>
           <SourceLine>End Select</SourceLine>
           <SourceLine>ElseIf mButtonName = "Button #6" and mButtonState = "1" Then</SourceLine>
           <SourceLine>// R1 = Repo view mode up</SourceLine>
-          <SourceLine>Select Case ShowRadioGroupSelectedIndex()</SourceLine>
+          <SourceLine>Select Case StateListBox.SelectedRowIndex</SourceLine>
           <SourceLine>Case 0</SourceLine>
           <SourceLine>// All</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(8)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 8</SourceLine>
           <SourceLine>Case 1</SourceLine>
           <SourceLine>// Update</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(0)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 0</SourceLine>
           <SourceLine>Case 2</SourceLine>
           <SourceLine>// Installed</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(1)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 1</SourceLine>
           <SourceLine>Case 3</SourceLine>
           <SourceLine>// Uninstalled</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(2)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 2</SourceLine>
           <SourceLine>Case 4</SourceLine>
           <SourceLine>// Donate</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(3)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 3</SourceLine>
           <SourceLine>Case 5</SourceLine>
           <SourceLine>// New</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(4)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 4</SourceLine>
           <SourceLine>Case 6</SourceLine>
           <SourceLine>// Dependencies</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(5)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 5</SourceLine>
           <SourceLine>Case 7</SourceLine>
           <SourceLine>// Incompatible</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(0)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 0</SourceLine>
           <SourceLine>Case 8</SourceLine>
           <SourceLine>// Downloading</SourceLine>
-          <SourceLine>ShowRadioGroupIndex(6)</SourceLine>
+          <SourceLine>StateListBox.SelectedRowIndex = 6</SourceLine>
           <SourceLine>End Select</SourceLine>
           <SourceLine>ElseIf mButtonName = "Y-Axis" Then</SourceLine>
           <SourceLine>// Left Joystick Y-axis = Atom List Select Next Item = Up/Down</SourceLine>
@@ -10158,6 +9873,8 @@
           <SourceLine>Me.CellBoldAt(row, 0) = False</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Next</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomsRefresh()</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
@@ -14686,16 +14403,15 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1920" height="954"/>
+        <Rect left="166" top="27" width="1684" height="992"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>App.LoadSettings</EditorLocation>
+          <EditorLocation/>
           <EditorPath/>
-          <EditingPartID>1350840319</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
