@@ -1542,6 +1542,21 @@
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
     </Property>
+    <Property>
+      <ItemName>JSONCategoryCount</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1606215679</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>JSONCategoryCount As JSONItem</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>JSONCategoryCount As JSONItem</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <ViewBehavior>
       <ViewProperty>
@@ -7406,7 +7421,15 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Function FileRefreshAtomList() As Boolean</SourceLine>
+        <SourceLine>// Update the number next to the state rows</SourceLine>
+        <SourceLine>RefreshStateCount()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Update the number next to the category rows</SourceLine>
+        <SourceLine>RefreshCategoryCount()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Rebuild the atoms list</SourceLine>
         <SourceLine>RefreshAtoms()</SourceLine>
+        <SourceLine/>
         <SourceLine/>
         <SourceLine>End Function</SourceLine>
       </ItemSource>
@@ -8042,6 +8065,13 @@
         <SourceLine>Next</SourceLine>
         <SourceLine>App.DownloadList.Sort</SourceLine>
         <SourceLine/>
+        <SourceLine>// Update the number next to the state rows</SourceLine>
+        <SourceLine>RefreshStateCount()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Update the number next to the category rows</SourceLine>
+        <SourceLine>RefreshCategoryCount()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Rebuild the atoms list</SourceLine>
         <SourceLine>RefreshAtoms()</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
@@ -9576,6 +9606,12 @@
         <SourceLine>CategoryListbox.SelectedRowIndex = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
+        <SourceLine>// Update the number next to the state rows</SourceLine>
+        <SourceLine>RefreshStateCount()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Update the number next to the category rows</SourceLine>
+        <SourceLine>RefreshCategoryCount()</SourceLine>
+        <SourceLine/>
         <SourceLine>// Show the newly added packages in the "Downloading" view mode</SourceLine>
         <SourceLine>RefreshAtoms()</SourceLine>
         <SourceLine/>
@@ -9799,6 +9835,12 @@
         <SourceLine>CategoryListbox.SelectedRowIndex = 0</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
+        <SourceLine>// Update the number next to the state rows</SourceLine>
+        <SourceLine>RefreshStateCount()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Update the number next to the category rows</SourceLine>
+        <SourceLine>RefreshCategoryCount()</SourceLine>
+        <SourceLine/>
         <SourceLine>// Show the newly added packages in the "Downloading" view mode</SourceLine>
         <SourceLine>RefreshAtoms()</SourceLine>
         <SourceLine>Case LST_Load_Dialog.AlternateActionButton</SourceLine>
@@ -9853,6 +9895,83 @@
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
         <SourceLine>Sub RefreshState()</SourceLine>
+        <SourceLine>// Update the number next to the state rows</SourceLine>
+        <SourceLine>RefreshStateCount()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Update the number next to the category rows</SourceLine>
+        <SourceLine>RefreshCategoryCount()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Clear the old content</SourceLine>
+        <SourceLine>StateListBox.RemoveAllRows()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Fill the listbox with content</SourceLine>
+        <SourceLine>Var StateArray() As String</SourceLine>
+        <SourceLine>StateArray = Array("Any State", "Installed", "Uninstalled", "Dependencies", "Donate", "Incompatible", "New", "Update", "Downloading")</SourceLine>
+        <SourceLine>For row As Integer = StateArray.Count -1 DownTo 0</SourceLine>
+        <SourceLine>StateListBox.AddRowAt(StateListBox.LastAddedRowIndex, StateArray(row))</SourceLine>
+        <SourceLine>StateListBox.CellAlignmentOffsetAt(StateListBox.LastAddedRowIndex, 0) = 10</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Reset the state selection to "Any State"</SourceLine>
+        <SourceLine>If StateListBox.RowCount &gt;= 1 Then</SourceLine>
+        <SourceLine>StateListBox.SelectedRowIndex = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams/>
+      <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>RefreshApp</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>641886207</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub RefreshApp()</SourceLine>
+        <SourceLine>AppListBox.RemoveAllRows()</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Fill the listbox with content</SourceLine>
+        <SourceLine>Var AppArray() As String</SourceLine>
+        <SourceLine>AppArray = Array("Any App", "Resolve/Fusion", "LightWave")</SourceLine>
+        <SourceLine>For row As Integer = AppArray.Count -1 DownTo 0</SourceLine>
+        <SourceLine>AppListBox.AddRowAt(AppListBox.LastAddedRowIndex, AppArray(row))</SourceLine>
+        <SourceLine>AppListBox.CellAlignmentOffsetAt(AppListBox.LastAddedRowIndex, 0) = 10</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Reset the state selection to Any State</SourceLine>
+        <SourceLine>If AppListBox.RowCount &gt;= 1 Then</SourceLine>
+        <SourceLine>// Pre-Select "Resolve/Fusion" by default</SourceLine>
+        <SourceLine>AppListBox.SelectedRowIndex = 1</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Pre-Select "Any App" by default</SourceLine>
+        <SourceLine>// AppListBox.SelectedRowIndex = 0</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>End Sub</SourceLine>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <AliasName/>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+      <ItemParams/>
+      <ItemResult/>
+    </Method>
+    <Method>
+      <ItemName>RefreshStateCount</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>2080360447</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>Sub RefreshStateCount()</SourceLine>
+        <SourceLine>// Update the number next to the state rows</SourceLine>
+        <SourceLine/>
         <SourceLine>// Create a new JSON object hierarchy</SourceLine>
         <SourceLine>App.JSONStateCount = New JSONItem()</SourceLine>
         <SourceLine>App.JSONStateCount.Compact = False</SourceLine>
@@ -9919,21 +10038,11 @@
         <SourceLine>App.JSONStateCount.Value("Downloading") = DownloadingCount</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
-        <SourceLine>// Clear the old content</SourceLine>
-        <SourceLine>StateListBox.RemoveAllRows()</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Fill the listbox with content</SourceLine>
-        <SourceLine>Var StateArray() As String</SourceLine>
-        <SourceLine>StateArray = Array("Any State", "Installed", "Uninstalled", "Dependencies", "Donate", "Incompatible", "New", "Update", "Downloading")</SourceLine>
-        <SourceLine>For row As Integer = StateArray.Count -1 DownTo 0</SourceLine>
-        <SourceLine>StateListBox.AddRowAt(StateListBox.LastAddedRowIndex, StateArray(row))</SourceLine>
-        <SourceLine>StateListBox.CellAlignmentOffsetAt(StateListBox.LastAddedRowIndex, 0) = 10</SourceLine>
+        <SourceLine>// Refresh the cell contents to update the number count</SourceLine>
+        <SourceLine>For row As Integer = StateListBox.RowCount -1 DownTo 0</SourceLine>
+        <SourceLine>StateListBox.RefreshCell(row, 0)</SourceLine>
         <SourceLine>Next</SourceLine>
         <SourceLine/>
-        <SourceLine>// Reset the state selection to "Any State"</SourceLine>
-        <SourceLine>If StateListBox.RowCount &gt;= 1 Then</SourceLine>
-        <SourceLine>StateListBox.SelectedRowIndex = 0</SourceLine>
-        <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
@@ -9945,31 +10054,48 @@
       <ItemResult/>
     </Method>
     <Method>
-      <ItemName>RefreshApp</ItemName>
+      <ItemName>RefreshCategoryCount</ItemName>
       <Compatibility/>
       <Visible>1</Visible>
-      <PartID>641886207</PartID>
+      <PartID>394299391</PartID>
       <ItemSource>
         <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Sub RefreshApp()</SourceLine>
-        <SourceLine>AppListBox.RemoveAllRows()</SourceLine>
+        <SourceLine>Sub RefreshCategoryCount()</SourceLine>
+        <SourceLine>// Update the number next to the category rows</SourceLine>
+        <SourceLine>Var row As Integer</SourceLine>
         <SourceLine/>
-        <SourceLine>// Fill the listbox with content</SourceLine>
-        <SourceLine>Var AppArray() As String</SourceLine>
-        <SourceLine>AppArray = Array("Any App", "Resolve/Fusion", "LightWave")</SourceLine>
-        <SourceLine>For row As Integer = AppArray.Count -1 DownTo 0</SourceLine>
-        <SourceLine>AppListBox.AddRowAt(AppListBox.LastAddedRowIndex, AppArray(row))</SourceLine>
-        <SourceLine>AppListBox.CellAlignmentOffsetAt(AppListBox.LastAddedRowIndex, 0) = 10</SourceLine>
+        <SourceLine>// Create a new JSON object hierarchy</SourceLine>
+        <SourceLine>App.JSONCategoryCount = New JSONItem()</SourceLine>
+        <SourceLine>App.JSONCategoryCount.Compact = False</SourceLine>
+        <SourceLine/>
+        <SourceLine>If App.Atoms &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>Var AtomCount As Integer = App.Atoms.Keys.Count</SourceLine>
+        <SourceLine>App.JSONCategoryCount.Value("Any Category") = AtomCount</SourceLine>
+        <SourceLine/>
+        <SourceLine>For Each k As String In App.Atoms.Keys</SourceLine>
+        <SourceLine>Var Atom As JSONItem = App.Atoms.Value(k)</SourceLine>
+        <SourceLine>Var AtomCategory As String = Atom.Value("Category")</SourceLine>
+        <SourceLine>Var AtomCategoryArray() As String</SourceLine>
+        <SourceLine>AtomCategoryArray = AtomCategory.Split("/")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Scan through the Category segments</SourceLine>
+        <SourceLine>Var ExcludeItem as Boolean = False</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Create a stub entry with an initial value</SourceLine>
+        <SourceLine>If App.JSONCategoryCount.HasKey(AtomCategoryArray(0)) Then </SourceLine>
+        <SourceLine>App.JSONCategoryCount.Value(AtomCategoryArray(0)) = App.JSONCategoryCount.Value(AtomCategoryArray(0))  + 1</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>App.JSONCategoryCount.Value(AtomCategoryArray(0)) = 0</SourceLine>
+        <SourceLine>End if</SourceLine>
         <SourceLine>Next</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Reset the state selection to Any State</SourceLine>
-        <SourceLine>If AppListBox.RowCount &gt;= 1 Then</SourceLine>
-        <SourceLine>// Pre-Select "Resolve/Fusion" by default</SourceLine>
-        <SourceLine>AppListBox.SelectedRowIndex = 1</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Pre-Select "Any App" by default</SourceLine>
-        <SourceLine>// AppListBox.SelectedRowIndex = 0</SourceLine>
         <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>System.DebugLog(App.JSONCategoryCount.ToString())</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Refresh the cell contents to update the number count</SourceLine>
+        <SourceLine>For row = CategoryListBox.RowCount -1 DownTo 0</SourceLine>
+        <SourceLine>CategoryListBox.RefreshCell(row, 0)</SourceLine>
+        <SourceLine>Next</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
       </ItemSource>
@@ -10259,6 +10385,13 @@
           <SourceLine>End If</SourceLine>
           <SourceLine>Next</SourceLine>
           <SourceLine/>
+          <SourceLine>// Update the number next to the state rows</SourceLine>
+          <SourceLine>RefreshStateCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the category rows</SourceLine>
+          <SourceLine>RefreshCategoryCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
           <SourceLine>RefreshAtoms()</SourceLine>
           <SourceLine/>
           <SourceLine>// Push the input focus to the atom description views</SourceLine>
@@ -10294,6 +10427,9 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Function PaintCellText(g as Graphics, row as Integer, column as Integer, x as Integer, y as Integer) As Boolean</SourceLine>
+          <SourceLine>// Clear the canvas</SourceLine>
+          <SourceLine>g.ClearRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine/>
           <SourceLine>// JustCropIt ListBox Grey BG</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
           <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
@@ -10302,7 +10438,115 @@
           <SourceLine>g.DrawingColor = Color.RGB(21, 21, 21)</SourceLine>
           <SourceLine>g.DrawLine(g.Width - 1, 0, g.Width - 1, g.Height)</SourceLine>
           <SourceLine/>
+          <SourceLine>// Item Count Number</SourceLine>
+          <SourceLine>Var ItemCount As Integer = 0</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Var StateRow As Integer = StateListbox.SelectedRowIndex</SourceLine>
+          <SourceLine>// Var CategoryRow As Integer = CategoryListbox.SelectedRowIndex</SourceLine>
+          <SourceLine>// If CategoryRow &gt;= 0 Then</SourceLine>
+          <SourceLine>// Var SelectedCategory As String = SateListbox.CellTextAt(CategoryRow, 0)</SourceLine>
+          <SourceLine>// Select Case SelectedCategory</SourceLine>
+          <SourceLine>// Case "Any Category"</SourceLine>
+          <SourceLine>// // JustCropIt Medium Light Grey</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(80, 80, 80)</SourceLine>
+          <SourceLine>// ItemCount = App.JSONCategoryCount.Value("Any Category")</SourceLine>
+          <SourceLine>// // Draw the package count number</SourceLine>
+          <SourceLine>// If ItemCount &gt; 0 Then</SourceLine>
+          <SourceLine>// g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>// End If</SourceLine>
+          <SourceLine>// Case "Installed"</SourceLine>
+          <SourceLine>// // JustCropIt Medium Light Grey</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(80, 80, 80)</SourceLine>
+          <SourceLine>// // Draw the package count number</SourceLine>
+          <SourceLine>// ItemCount = App.JSONCategoryCount.Value("Installed")</SourceLine>
+          <SourceLine>// If ItemCount &gt; 0 Then</SourceLine>
+          <SourceLine>// g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>// End If</SourceLine>
+          <SourceLine>// Case "Uninstalled"</SourceLine>
+          <SourceLine>// // JustCropIt Medium Light Grey</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(80, 80, 80)</SourceLine>
+          <SourceLine>// </SourceLine>
+          <SourceLine>// // Draw the package count number</SourceLine>
+          <SourceLine>// ItemCount = App.JSONCategoryCount.Value("Uninstalled")</SourceLine>
+          <SourceLine>// If ItemCount &gt; 0 Then</SourceLine>
+          <SourceLine>// g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>// End If</SourceLine>
+          <SourceLine>// Case "Dependencies"</SourceLine>
+          <SourceLine>// // JustCropIt Medium Light Grey</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(80, 80, 80)</SourceLine>
+          <SourceLine>// </SourceLine>
+          <SourceLine>// // Draw the package count number</SourceLine>
+          <SourceLine>// ItemCount = App.JSONCategoryCount.Value("Dependencies")</SourceLine>
+          <SourceLine>// If ItemCount &gt; 0 Then</SourceLine>
+          <SourceLine>// g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>// End If</SourceLine>
+          <SourceLine>// Case "Donate"</SourceLine>
+          <SourceLine>// // JustCropIt Medium Light Grey</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(80, 80, 80)</SourceLine>
+          <SourceLine>// </SourceLine>
+          <SourceLine>// // Draw the package count number</SourceLine>
+          <SourceLine>// ItemCount = App.JSONCategoryCount.Value("Donate")</SourceLine>
+          <SourceLine>// If ItemCount &gt; 0 Then</SourceLine>
+          <SourceLine>// g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>// End If</SourceLine>
+          <SourceLine>// Case "Incompatible"</SourceLine>
+          <SourceLine>// // JustCropIt Neon Pink</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(251, 60, 107)</SourceLine>
+          <SourceLine>// // Draw the package count number</SourceLine>
+          <SourceLine>// ItemCount = App.JSONCategoryCount.Value("Incompatible")</SourceLine>
+          <SourceLine>// If ItemCount &gt; 0 Then</SourceLine>
+          <SourceLine>// g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>// End If</SourceLine>
+          <SourceLine>// Case "New"</SourceLine>
+          <SourceLine>// // JustCropIt Neon Green</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(154, 233, 60)</SourceLine>
+          <SourceLine>// </SourceLine>
+          <SourceLine>// // Draw the package count number</SourceLine>
+          <SourceLine>// ItemCount = App.JSONCategoryCount.Value("New")</SourceLine>
+          <SourceLine>// If ItemCount &gt; 0 Then</SourceLine>
+          <SourceLine>// g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>// End If</SourceLine>
+          <SourceLine>// Case "Update"</SourceLine>
+          <SourceLine>// // JustCropIt Purple</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(193,135, 248)</SourceLine>
+          <SourceLine>// </SourceLine>
+          <SourceLine>// // Draw the package count number</SourceLine>
+          <SourceLine>// ItemCount = App.JSONCategoryCount.Value("Update")</SourceLine>
+          <SourceLine>// If ItemCount &gt; 0 Then</SourceLine>
+          <SourceLine>// g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>// End If</SourceLine>
+          <SourceLine>// Case "Downloading"</SourceLine>
+          <SourceLine>// // JustCropIt Cyan</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(119, 227, 252)</SourceLine>
+          <SourceLine>// </SourceLine>
+          <SourceLine>// // Draw the package count number</SourceLine>
+          <SourceLine>// ItemCount = App.JSONCategoryCount.Value("Downloading")</SourceLine>
+          <SourceLine>// If ItemCount &gt; 0 Then</SourceLine>
+          <SourceLine>// g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>// End If</SourceLine>
+          <SourceLine>// Else</SourceLine>
+          <SourceLine>// // JustCropIt Medium Light Grey</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(80, 80, 80)</SourceLine>
+          <SourceLine>// End Select</SourceLine>
+          <SourceLine>// End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Draw the package count number</SourceLine>
+          <SourceLine>If row &gt;= 0 Then</SourceLine>
+          <SourceLine>Var RowText As String = Me.CellTextAt(row, 0)</SourceLine>
+          <SourceLine>If App.JSONCategoryCount &lt;&gt; Nil and App.JSONCategoryCount.HasKey(RowText) Then</SourceLine>
+          <SourceLine>// JustCropIt Medium Light Grey</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(80, 80, 80)</SourceLine>
+          <SourceLine>ItemCount = App.JSONCategoryCount.Value(RowText)</SourceLine>
+          <SourceLine>If ItemCount &gt;= 0 Then</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
           <SourceLine>If Me.SelectedRowIndex = row Then</SourceLine>
+          <SourceLine>// Enable Bold Text</SourceLine>
+          <SourceLine>g.Bold = True</SourceLine>
+          <SourceLine/>
           <SourceLine>If color.IsDarkMode Then</SourceLine>
           <SourceLine>// JustCropIt Yellow</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(251, 206, 30)</SourceLine>
@@ -10313,6 +10557,9 @@
           <SourceLine>// g.DrawingColor = Color.RGB(155, 155, 155)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Else</SourceLine>
+          <SourceLine>// Disable Bold Text</SourceLine>
+          <SourceLine>g.Bold = False</SourceLine>
+          <SourceLine/>
           <SourceLine>// JustCropIt Light Grey</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(155, 155, 155)</SourceLine>
           <SourceLine>End If</SourceLine>
@@ -10732,10 +10979,14 @@
           <SourceLine>// Should live search be enabled?</SourceLine>
           <SourceLine>If App.LiveSearch = True Then</SourceLine>
           <SourceLine>Me.AddRecentItem(Me.Text)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
           <SourceLine>RefreshAtoms()</SourceLine>
           <SourceLine>Elseif App.LiveSearch = False and Me.Text = "" Then</SourceLine>
           <SourceLine>// The SearchField Clear button was pressed</SourceLine>
           <SourceLine>SearchButton.Enabled = False</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
           <SourceLine>RefreshAtoms()</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
@@ -10750,10 +11001,9 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine>// Enter was pressed after typing search text</SourceLine>
-          <SourceLine>// MessageBox(Me.Text)</SourceLine>
-          <SourceLine/>
           <SourceLine>Me.AddRecentItem(Me.Text)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
           <SourceLine>RefreshAtoms()</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
@@ -10795,6 +11045,13 @@
           <SourceLine>End If</SourceLine>
           <SourceLine>Next</SourceLine>
           <SourceLine/>
+          <SourceLine>// Update the number next to the state rows</SourceLine>
+          <SourceLine>RefreshStateCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the category rows</SourceLine>
+          <SourceLine>RefreshCategoryCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
           <SourceLine>RefreshAtoms()</SourceLine>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
@@ -10837,6 +11094,13 @@
           <SourceLine>Next</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
+          <SourceLine>// Update the number next to the state rows</SourceLine>
+          <SourceLine>RefreshStateCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the category rows</SourceLine>
+          <SourceLine>RefreshCategoryCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
           <SourceLine>RefreshAtoms()</SourceLine>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
@@ -10883,6 +11147,13 @@
           <SourceLine>End If</SourceLine>
           <SourceLine>Next</SourceLine>
           <SourceLine/>
+          <SourceLine>// Update the number next to the state rows</SourceLine>
+          <SourceLine>RefreshStateCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the category rows</SourceLine>
+          <SourceLine>RefreshCategoryCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
           <SourceLine>RefreshAtoms()</SourceLine>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
@@ -11079,6 +11350,13 @@
           <SourceLine>Var rowPrevious As Integer = row</SourceLine>
           <SourceLine>Var ScrollPositionPrevious As Integer = AtomsListBox.ScrollPosition</SourceLine>
           <SourceLine/>
+          <SourceLine>// Update the number next to the state rows</SourceLine>
+          <SourceLine>RefreshStateCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the category rows</SourceLine>
+          <SourceLine>RefreshCategoryCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
           <SourceLine>RefreshAtoms()</SourceLine>
           <SourceLine/>
           <SourceLine>// Keep Selection point</SourceLine>
@@ -11162,6 +11440,13 @@
           <SourceLine>Var rowPrevious As Integer = row</SourceLine>
           <SourceLine>Var ScrollPositionPrevious As Integer = AtomsListBox.ScrollPosition</SourceLine>
           <SourceLine/>
+          <SourceLine>// Update the number next to the state rows</SourceLine>
+          <SourceLine>RefreshStateCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the category rows</SourceLine>
+          <SourceLine>RefreshCategoryCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
           <SourceLine>RefreshAtoms()</SourceLine>
           <SourceLine/>
           <SourceLine>// Keep Selection point</SourceLine>
@@ -11181,6 +11466,7 @@
           <SourceLine>Var rowPrevious As Integer = row</SourceLine>
           <SourceLine>Var ScrollPositionPrevious As Integer = AtomsListBox.ScrollPosition</SourceLine>
           <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
           <SourceLine>RefreshAtoms()</SourceLine>
           <SourceLine/>
           <SourceLine>// Keep Selection point</SourceLine>
@@ -11453,6 +11739,8 @@
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub Pressed()</SourceLine>
           <SourceLine>AtomSearchField.AddRecentItem(AtomSearchField.Text)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
           <SourceLine>RefreshAtoms()</SourceLine>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
@@ -11475,14 +11763,21 @@
           <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>// Row selection bold highlight</SourceLine>
-          <SourceLine>For row As Integer = Me.RowCount -1 DownTo 0</SourceLine>
-          <SourceLine>if Me.SelectedRowIndex = row Then</SourceLine>
-          <SourceLine>Me.CellBoldAt(row, 0) = True</SourceLine>
-          <SourceLine>Else</SourceLine>
-          <SourceLine>Me.CellBoldAt(row, 0) = False</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine>Next</SourceLine>
+          <SourceLine>// For row As Integer = Me.RowCount -1 DownTo 0</SourceLine>
+          <SourceLine>// if Me.SelectedRowIndex = row Then</SourceLine>
+          <SourceLine>// Me.CellBoldAt(row, 0) = True</SourceLine>
+          <SourceLine>// Else</SourceLine>
+          <SourceLine>// Me.CellBoldAt(row, 0) = False</SourceLine>
+          <SourceLine>// End If</SourceLine>
+          <SourceLine>// Next</SourceLine>
           <SourceLine/>
+          <SourceLine>// Update the number next to the state rows</SourceLine>
+          <SourceLine>RefreshStateCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the category rows</SourceLine>
+          <SourceLine>RefreshCategoryCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
           <SourceLine>RefreshAtoms()</SourceLine>
           <SourceLine/>
           <SourceLine>// Push the input focus to the atom description views</SourceLine>
@@ -11499,6 +11794,9 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Function PaintCellBackground(g As Graphics, row As Integer, column As Integer) As Boolean</SourceLine>
+          <SourceLine>// Clear the canvas</SourceLine>
+          <SourceLine>g.ClearRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine/>
           <SourceLine>// JustCropIt ListBox Grey BG</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
           <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
@@ -11520,6 +11818,9 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Function PaintCellText(g as Graphics, row as Integer, column as Integer, x as Integer, y as Integer) As Boolean</SourceLine>
+          <SourceLine>// Clear the canvas</SourceLine>
+          <SourceLine>g.ClearRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine/>
           <SourceLine>// JustCropIt ListBox Grey BG</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
           <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
@@ -11530,6 +11831,9 @@
           <SourceLine>g.DrawingColor = Color.RGB(21, 21, 21)</SourceLine>
           <SourceLine>g.DrawLine(g.Width - 1, 0, g.Width - 1, g.Height)</SourceLine>
           <SourceLine/>
+          <SourceLine>// Disable Bold Text for the item count</SourceLine>
+          <SourceLine>g.Bold = False</SourceLine>
+          <SourceLine/>
           <SourceLine>// Item Count Number</SourceLine>
           <SourceLine>Var ItemCount As Integer = 0</SourceLine>
           <SourceLine>Select Case Me.CellTextAt(row, 0)</SourceLine>
@@ -11539,7 +11843,7 @@
           <SourceLine>ItemCount = App.JSONStateCount.Value("Any State")</SourceLine>
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Installed"</SourceLine>
           <SourceLine>// JustCropIt Medium Light Grey</SourceLine>
@@ -11547,7 +11851,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Installed")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Uninstalled"</SourceLine>
           <SourceLine>// JustCropIt Medium Light Grey</SourceLine>
@@ -11556,7 +11860,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Uninstalled")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Dependencies"</SourceLine>
           <SourceLine>// JustCropIt Medium Light Grey</SourceLine>
@@ -11565,7 +11869,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Dependencies")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Donate"</SourceLine>
           <SourceLine>// JustCropIt Medium Light Grey</SourceLine>
@@ -11574,7 +11878,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Donate")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Incompatible"</SourceLine>
           <SourceLine>// JustCropIt Neon Pink</SourceLine>
@@ -11582,7 +11886,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Incompatible")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "New"</SourceLine>
           <SourceLine>// JustCropIt Neon Green</SourceLine>
@@ -11591,7 +11895,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("New")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Update"</SourceLine>
           <SourceLine>// JustCropIt Purple</SourceLine>
@@ -11600,7 +11904,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Update")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Downloading"</SourceLine>
           <SourceLine>// JustCropIt Cyan</SourceLine>
@@ -11609,18 +11913,20 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Downloading")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Else</SourceLine>
           <SourceLine>// JustCropIt Medium Light Grey</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(80, 80, 80)</SourceLine>
           <SourceLine>End Select</SourceLine>
-          <SourceLine>// End If</SourceLine>
           <SourceLine/>
           <SourceLine>// State Text</SourceLine>
           <SourceLine>If column = 0 Then</SourceLine>
           <SourceLine>// First column with State name label</SourceLine>
           <SourceLine>If Me.SelectedRowIndex = row Then</SourceLine>
+          <SourceLine>// Enable Bold Text</SourceLine>
+          <SourceLine>g.Bold = True</SourceLine>
+          <SourceLine/>
           <SourceLine>If color.IsDarkMode Then</SourceLine>
           <SourceLine>// JustCropIt Yellow</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(251, 206, 30)</SourceLine>
@@ -11631,6 +11937,9 @@
           <SourceLine>// g.DrawingColor = Color.RGB(155, 155, 155)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Else</SourceLine>
+          <SourceLine>// Disable Bold Text</SourceLine>
+          <SourceLine>g.Bold = False</SourceLine>
+          <SourceLine/>
           <SourceLine>// JustCropIt Light Grey</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(155, 155, 155)</SourceLine>
           <SourceLine>End If</SourceLine>
@@ -11642,6 +11951,8 @@
           <SourceLine>Var scale As Double = 0.45</SourceLine>
           <SourceLine>g.DrawPicture(Hexagon_Icon, 2, g.Height * 0.3, g.Height * scale, g.Height * scale, 0, 0, Hexagon_Icon.Width, Hexagon_Icon.Height)</SourceLine>
           <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine/>
           <SourceLine/>
           <SourceLine>End Function</SourceLine>
         </ItemSource>
@@ -11694,6 +12005,13 @@
           <SourceLine>End If</SourceLine>
           <SourceLine>Next</SourceLine>
           <SourceLine/>
+          <SourceLine>// Update the number next to the state rows</SourceLine>
+          <SourceLine>RefreshStateCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the category rows</SourceLine>
+          <SourceLine>RefreshCategoryCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
           <SourceLine>RefreshAtoms()</SourceLine>
           <SourceLine/>
           <SourceLine>// Push the input focus to the atom description views</SourceLine>
@@ -17020,6 +17338,7 @@
       </ImageSpecification>
     </ImageRepresentation>
   </block>
+  <block type="ProjectItem" ID="1043755007"/>
   <block type="UIState" ID="0">
     <WarningPreferences>
       <ItemName>5</ItemName>
@@ -17039,19 +17358,26 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1745" height="996"/>
+        <Rect left="5" top="25" width="1915" height="996"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
-        <EditorCount>1</EditorCount>
+        <EditorCount>2</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.Controls.StateListBox</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.CategoryListBox.PaintCellText</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
         </Editor>
-        <SelectedTab>0</SelectedTab>
+        <Editor>
+          <EditorIndex>1</EditorIndex>
+          <EditorLocation>Reactor</EditorLocation>
+          <EditorPath/>
+          <EditingPartID>1043755007</EditingPartID>
+          <EditorPath/>
+        </Editor>
+        <SelectedTab>1</SelectedTab>
       </Editors>
     </StudioWindowState>
   </block>
