@@ -9907,6 +9907,7 @@
         <SourceLine>UpdateCount = UpdateCount + 1</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Next</SourceLine>
+        <SourceLine/>
         <SourceLine>App.JSONStateCount.Value("Any State") = AtomCount - IncompatibleCount</SourceLine>
         <SourceLine>App.JSONStateCount.Value("Installed") = InstalledCount</SourceLine>
         <SourceLine>App.JSONStateCount.Value("Uninstalled") = UninstalledCount</SourceLine>
@@ -11502,9 +11503,12 @@
           <SourceLine>g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
           <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
           <SourceLine/>
+          <SourceLine>// If column = 1 Then</SourceLine>
           <SourceLine>// JustCropIt Dark Grey Outline Stroke</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(21, 21, 21)</SourceLine>
           <SourceLine>g.DrawLine(g.Width - 1, 0, g.Width - 1, g.Height)</SourceLine>
+          <SourceLine>// End If</SourceLine>
+          <SourceLine/>
           <SourceLine>End Function</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -11520,6 +11524,8 @@
           <SourceLine>g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
           <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
           <SourceLine/>
+          <SourceLine>// State package count</SourceLine>
+          <SourceLine>// If column = 1 Then</SourceLine>
           <SourceLine>// JustCropIt Dark Grey Outline Stroke</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(21, 21, 21)</SourceLine>
           <SourceLine>g.DrawLine(g.Width - 1, 0, g.Width - 1, g.Height)</SourceLine>
@@ -11533,7 +11539,7 @@
           <SourceLine>ItemCount = App.JSONStateCount.Value("Any State")</SourceLine>
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Installed"</SourceLine>
           <SourceLine>// JustCropIt Medium Light Grey</SourceLine>
@@ -11541,7 +11547,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Installed")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Uninstalled"</SourceLine>
           <SourceLine>// JustCropIt Medium Light Grey</SourceLine>
@@ -11550,7 +11556,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Uninstalled")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Dependencies"</SourceLine>
           <SourceLine>// JustCropIt Medium Light Grey</SourceLine>
@@ -11559,7 +11565,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Dependencies")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Donate"</SourceLine>
           <SourceLine>// JustCropIt Medium Light Grey</SourceLine>
@@ -11568,7 +11574,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Donate")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Incompatible"</SourceLine>
           <SourceLine>// JustCropIt Neon Pink</SourceLine>
@@ -11576,7 +11582,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Incompatible")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "New"</SourceLine>
           <SourceLine>// JustCropIt Neon Green</SourceLine>
@@ -11585,7 +11591,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("New")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Update"</SourceLine>
           <SourceLine>// JustCropIt Purple</SourceLine>
@@ -11594,7 +11600,7 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Update")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Case "Downloading"</SourceLine>
           <SourceLine>// JustCropIt Cyan</SourceLine>
@@ -11603,13 +11609,15 @@
           <SourceLine>// Draw the package count number</SourceLine>
           <SourceLine>ItemCount = App.JSONStateCount.Value("Downloading")</SourceLine>
           <SourceLine>If ItemCount &gt; 0 Then</SourceLine>
-          <SourceLine>g.DrawText(ItemCount.ToString(), g.width - 30, y, g.width, True)</SourceLine>
+          <SourceLine>g.DrawText(ItemCount.ToString(), 0, y, g.width, True)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Else</SourceLine>
           <SourceLine>// JustCropIt Medium Light Grey</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(80, 80, 80)</SourceLine>
           <SourceLine>End Select</SourceLine>
+          <SourceLine>// End If</SourceLine>
           <SourceLine/>
+          <SourceLine>// State Text</SourceLine>
           <SourceLine>If column = 0 Then</SourceLine>
           <SourceLine>// First column with State name label</SourceLine>
           <SourceLine>If Me.SelectedRowIndex = row Then</SourceLine>
@@ -17031,14 +17039,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1776" height="970"/>
+        <Rect left="0" top="25" width="1745" height="996"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.RefreshState</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.StateListBox</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
