@@ -168,7 +168,7 @@
         <SourceLine>App.AllowAutoQuit = True</SourceLine>
         <SourceLine/>
         <SourceLine>// Force the dark mode setting</SourceLine>
-        <SourceLine>System.EnvironmentVariable("XOJO_WIN32_DARKMODE_DISABLED") = "True"</SourceLine>
+        <SourceLine>// System.EnvironmentVariable("XOJO_WIN32_DARKMODE_DISABLED") = "True"</SourceLine>
         <SourceLine/>
         <SourceLine>// Load JSON Preferences</SourceLine>
         <SourceLine>LoadSettings()</SourceLine>
@@ -1993,8 +1993,8 @@
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">654329855</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
-    <PropertyVal Name="BackgroundColor">&amp;cFFFFFF</PropertyVal>
-    <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
+    <PropertyVal Name="BackgroundColor">&amp;c2C2C2C00</PropertyVal>
+    <PropertyVal Name="HasBackgroundColor">True</PropertyVal>
     <PropertyVal Name="ImplicitInstance">True</PropertyVal>
     <PropertyVal Name="Visible">False</PropertyVal>
     <PropertyVal Name="DefaultLocation">2</PropertyVal>
@@ -2324,8 +2324,10 @@
           <SourceLine>// JustCropIt Yellow</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>Else</SourceLine>
+          <SourceLine>// JustCropIt Yellow</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>// JustCropIt Light Grey</SourceLine>
-          <SourceLine>g.DrawingColor = Color.RGB(155, 155, 155)</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(155, 155, 155)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Else</SourceLine>
           <SourceLine>// JustCropIt Light Grey</SourceLine>
@@ -2769,8 +2771,8 @@
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">164741119</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
-    <PropertyVal Name="BackgroundColor">&amp;c28282E00</PropertyVal>
-    <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
+    <PropertyVal Name="BackgroundColor">&amp;c2C2C2C00</PropertyVal>
+    <PropertyVal Name="HasBackgroundColor">True</PropertyVal>
     <PropertyVal Name="ImplicitInstance">True</PropertyVal>
     <PropertyVal Name="Visible">False</PropertyVal>
     <PropertyVal Name="DefaultLocation">2</PropertyVal>
@@ -3218,7 +3220,7 @@
       <PropertyVal Name="TabIndex">4</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">Version 4 Beta 23 - 2025-09-05</PropertyVal>
+      <PropertyVal Name="Text">Version 4 Beta 23 - 2025-09-06</PropertyVal>
       <PropertyVal Name="TextAlignment">2</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c9B9B9B00</PropertyVal>
       <PropertyVal Name="Tooltip"/>
@@ -3485,8 +3487,8 @@
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">158457855</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
-    <PropertyVal Name="BackgroundColor">&amp;c28282E00</PropertyVal>
-    <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
+    <PropertyVal Name="BackgroundColor">&amp;c2C2C2C00</PropertyVal>
+    <PropertyVal Name="HasBackgroundColor">True</PropertyVal>
     <PropertyVal Name="ImplicitInstance">True</PropertyVal>
     <PropertyVal Name="Visible">False</PropertyVal>
     <PropertyVal Name="DefaultLocation">2</PropertyVal>
@@ -4600,8 +4602,8 @@
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">255940607</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
-    <PropertyVal Name="BackgroundColor">&amp;c28282E00</PropertyVal>
-    <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
+    <PropertyVal Name="BackgroundColor">&amp;c2C2C2C00</PropertyVal>
+    <PropertyVal Name="HasBackgroundColor">True</PropertyVal>
     <PropertyVal Name="ImplicitInstance">True</PropertyVal>
     <PropertyVal Name="Visible">False</PropertyVal>
     <PropertyVal Name="DefaultLocation">2</PropertyVal>
@@ -5280,8 +5282,8 @@
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">255940607</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
-    <PropertyVal Name="BackgroundColor">&amp;c28282E00</PropertyVal>
-    <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
+    <PropertyVal Name="BackgroundColor">&amp;c2C2C2C00</PropertyVal>
+    <PropertyVal Name="HasBackgroundColor">True</PropertyVal>
     <PropertyVal Name="ImplicitInstance">True</PropertyVal>
     <PropertyVal Name="Visible">False</PropertyVal>
     <PropertyVal Name="DefaultLocation">2</PropertyVal>
@@ -6350,8 +6352,8 @@
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">494839807</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
-    <PropertyVal Name="BackgroundColor">&amp;c28282E00</PropertyVal>
-    <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
+    <PropertyVal Name="BackgroundColor">&amp;c2C2C2C00</PropertyVal>
+    <PropertyVal Name="HasBackgroundColor">True</PropertyVal>
     <PropertyVal Name="ImplicitInstance">True</PropertyVal>
     <PropertyVal Name="Visible">True</PropertyVal>
     <PropertyVal Name="DefaultLocation">2</PropertyVal>
@@ -9898,8 +9900,8 @@
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
-    <PropertyVal Name="BackgroundColor">&amp;c28282E00</PropertyVal>
-    <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
+    <PropertyVal Name="BackgroundColor">&amp;c1D1D1D00</PropertyVal>
+    <PropertyVal Name="HasBackgroundColor">True</PropertyVal>
     <PropertyVal Name="ImplicitInstance">True</PropertyVal>
     <PropertyVal Name="Visible">False</PropertyVal>
     <PropertyVal Name="DefaultLocation">2</PropertyVal>
@@ -10195,6 +10197,9 @@
           <SourceLine>g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
           <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
           <SourceLine/>
+          <SourceLine>// JustCropIt Dark Grey Outline Stroke</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(21, 21, 21)</SourceLine>
+          <SourceLine>g.DrawLine(g.Width - 1, 0, g.Width - 1, g.Height)</SourceLine>
           <SourceLine>End Function</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -10207,16 +10212,22 @@
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Function PaintCellText(g as Graphics, row as Integer, column as Integer, x as Integer, y as Integer) As Boolean</SourceLine>
           <SourceLine>// JustCropIt ListBox Grey BG</SourceLine>
-          <SourceLine>// g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
-          <SourceLine>// g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
+          <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// JustCropIt Dark Grey Outline Stroke</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(21, 21, 21)</SourceLine>
+          <SourceLine>g.DrawLine(g.Width - 1, 0, g.Width - 1, g.Height)</SourceLine>
           <SourceLine/>
           <SourceLine>If Me.SelectedRowIndex = row Then</SourceLine>
           <SourceLine>If color.IsDarkMode Then</SourceLine>
           <SourceLine>// JustCropIt Yellow</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>Else</SourceLine>
+          <SourceLine>// JustCropIt Yellow</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>// JustCropIt Light Grey</SourceLine>
-          <SourceLine>g.DrawingColor = Color.RGB(155, 155, 155)</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(155, 155, 155)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Else</SourceLine>
           <SourceLine>// JustCropIt Light Grey</SourceLine>
@@ -10235,8 +10246,10 @@
           <SourceLine>// JustCropIt Yellow</SourceLine>
           <SourceLine>o.FillColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>Else</SourceLine>
+          <SourceLine>// JustCropIt Yellow</SourceLine>
+          <SourceLine>o.FillColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>// JustCropIt Light Grey</SourceLine>
-          <SourceLine>o.FillColor = Color.RGB(155, 155, 155)</SourceLine>
+          <SourceLine>// o.FillColor = Color.RGB(155, 155, 155)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>g.DrawObject(o, o.Width, o.Height)</SourceLine>
           <SourceLine>End If</SourceLine>
@@ -10424,6 +10437,14 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Function PaintHeaderContent(g As Graphics, column As Integer) As Boolean</SourceLine>
+          <SourceLine>// JustCropIt ListBox Header Grey BG</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(42, 42, 42)</SourceLine>
+          <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// JustCropIt Dark Grey Outline Stroke</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(21, 21, 21)</SourceLine>
+          <SourceLine>g.DrawLine(g.Width - 1, 0, g.Width - 1, g.Height)</SourceLine>
+          <SourceLine/>
           <SourceLine>// Column selection bold highlight</SourceLine>
           <SourceLine>If Me.HeadingIndex = column Then</SourceLine>
           <SourceLine>g.Bold = True</SourceLine>
@@ -10431,10 +10452,10 @@
           <SourceLine>// JustCropIt Yellow</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>Else</SourceLine>
-          <SourceLine>// JustCropIt Light Grey</SourceLine>
-          <SourceLine>//g.DrawingColor = Color.RGB(96, 96, 96)</SourceLine>
+          <SourceLine>// JustCropIt Yellow</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>// JustCropIt Medium Grey Text</SourceLine>
-          <SourceLine>g.DrawingColor = Color.RGB(151, 151, 151)</SourceLine>
+          <SourceLine>//g.DrawingColor = Color.RGB(151, 151, 151)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Var y as Double = (g.Height - g.TextHeight) / 2 + g.FontAscent</SourceLine>
           <SourceLine>Var x As Double = g.width - 10</SourceLine>
@@ -10451,7 +10472,6 @@
           <SourceLine>var y as double = (g.Height - g.TextHeight) / 2 + g.FontAscent</SourceLine>
           <SourceLine>g.DrawText(me.HeaderAt(column), 5, y, g.width -10, True)</SourceLine>
           <SourceLine>End If</SourceLine>
-          <SourceLine/>
           <SourceLine/>
           <SourceLine>Return True</SourceLine>
           <SourceLine/>
@@ -11412,6 +11432,9 @@
           <SourceLine>g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
           <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
           <SourceLine/>
+          <SourceLine>// JustCropIt Dark Grey Outline Stroke</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(21, 21, 21)</SourceLine>
+          <SourceLine>g.DrawLine(g.Width - 1, 0, g.Width - 1, g.Height)</SourceLine>
           <SourceLine>End Function</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -11424,8 +11447,12 @@
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Function PaintCellText(g as Graphics, row as Integer, column as Integer, x as Integer, y as Integer) As Boolean</SourceLine>
           <SourceLine>// JustCropIt ListBox Grey BG</SourceLine>
-          <SourceLine>// g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
-          <SourceLine>// g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
+          <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// JustCropIt Dark Grey Outline Stroke</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(21, 21, 21)</SourceLine>
+          <SourceLine>g.DrawLine(g.Width - 1, 0, g.Width - 1, g.Height)</SourceLine>
           <SourceLine/>
           <SourceLine>// Item Count Number</SourceLine>
           <SourceLine>Select Case Me.CellTextAt(row, 0)</SourceLine>
@@ -11456,8 +11483,10 @@
           <SourceLine>// JustCropIt Yellow</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>Else</SourceLine>
+          <SourceLine>// JustCropIt Yellow</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>// JustCropIt Light Grey</SourceLine>
-          <SourceLine>g.DrawingColor = Color.RGB(155, 155, 155)</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(155, 155, 155)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Else</SourceLine>
           <SourceLine>// JustCropIt Light Grey</SourceLine>
@@ -11477,8 +11506,10 @@
           <SourceLine>// JustCropIt Yellow</SourceLine>
           <SourceLine>o.FillColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>Else</SourceLine>
+          <SourceLine>// JustCropIt Yellow</SourceLine>
+          <SourceLine>o.FillColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>// JustCropIt Light Grey</SourceLine>
-          <SourceLine>o.FillColor = Color.RGB(155, 155, 155)</SourceLine>
+          <SourceLine>// o.FillColor = Color.RGB(155, 155, 155)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>g.DrawObject(o, o.Width, o.Height)</SourceLine>
           <SourceLine>End If</SourceLine>
@@ -11551,6 +11582,16 @@
           <SourceLine>g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
           <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
           <SourceLine/>
+          <SourceLine>// JustCropIt Dark Grey Outline Stroke</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(21, 21, 21)</SourceLine>
+          <SourceLine>g.DrawLine(g.Width - 1, 0, g.Width - 1, g.Height)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Top Row Horizontal Stroke</SourceLine>
+          <SourceLine>If row = 0 Then</SourceLine>
+          <SourceLine>// JustCropIt Dark Grey Outline Stroke</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(21, 21, 21)</SourceLine>
+          <SourceLine>g.DrawLine(0, 0 , g.Width, 0)</SourceLine>
+          <SourceLine>End If</SourceLine>
           <SourceLine>End Function</SourceLine>
         </ItemSource>
       </HookInstance>
@@ -11563,16 +11604,29 @@
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Function PaintCellText(g as Graphics, row as Integer, column as Integer, x as Integer, y as Integer) As Boolean</SourceLine>
           <SourceLine>// JustCropIt ListBox Grey BG</SourceLine>
-          <SourceLine>// g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
-          <SourceLine>// g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(30, 30, 30)</SourceLine>
+          <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// JustCropIt Dark Grey Outline Stroke</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(21, 21, 21)</SourceLine>
+          <SourceLine>g.DrawLine(g.Width - 1, 0, g.Width - 1, g.Height)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Top Row Horizontal Stroke</SourceLine>
+          <SourceLine>If row = 0 Then</SourceLine>
+          <SourceLine>// JustCropIt Dark Grey Outline Stroke</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(21, 21, 21)</SourceLine>
+          <SourceLine>g.DrawLine(0, 0 , g.Width, 0)</SourceLine>
+          <SourceLine>End If</SourceLine>
           <SourceLine/>
           <SourceLine>If Me.SelectedRowIndex = row Then</SourceLine>
           <SourceLine>If color.IsDarkMode Then</SourceLine>
           <SourceLine>// JustCropIt Yellow</SourceLine>
           <SourceLine>g.DrawingColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>Else</SourceLine>
+          <SourceLine>// JustCropIt Yellow</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>// JustCropIt Light Grey</SourceLine>
-          <SourceLine>g.DrawingColor = Color.RGB(155, 155, 155)</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(155, 155, 155)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>Else</SourceLine>
           <SourceLine>// JustCropIt Light Grey</SourceLine>
@@ -11591,8 +11645,10 @@
           <SourceLine>// JustCropIt Yellow</SourceLine>
           <SourceLine>o.FillColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>Else</SourceLine>
+          <SourceLine>// JustCropIt Yellow</SourceLine>
+          <SourceLine>o.FillColor = Color.RGB(251, 206, 30)</SourceLine>
           <SourceLine>// JustCropIt Light Grey</SourceLine>
-          <SourceLine>o.FillColor = Color.RGB(155, 155, 155)</SourceLine>
+          <SourceLine>//o.FillColor = Color.RGB(155, 155, 155)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>g.DrawObject(o, o.Width, o.Height)</SourceLine>
           <SourceLine>End If</SourceLine>
@@ -11612,8 +11668,8 @@
       <PropertyVal Name="AllowRowDragging">False</PropertyVal>
       <PropertyVal Name="AllowRowReordering">False</PropertyVal>
       <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="ColumnCount">2</PropertyVal>
-      <PropertyVal Name="ColumnWidths">80%, 30%</PropertyVal>
+      <PropertyVal Name="ColumnCount">1</PropertyVal>
+      <PropertyVal Name="ColumnWidths"/>
       <PropertyVal Name="DefaultRowHeight">-1</PropertyVal>
       <PropertyVal Name="DropIndicatorVisible">False</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
@@ -11621,7 +11677,7 @@
       <PropertyVal Name="FontSize">0.0</PropertyVal>
       <PropertyVal Name="FontUnit">0</PropertyVal>
       <PropertyVal Name="GridLineStyle">0</PropertyVal>
-      <PropertyVal Name="HasBorder">True</PropertyVal>
+      <PropertyVal Name="HasBorder">False</PropertyVal>
       <PropertyVal Name="HasHeader">False</PropertyVal>
       <PropertyVal Name="HasHorizontalScrollbar">False</PropertyVal>
       <PropertyVal Name="HasVerticalScrollbar">True</PropertyVal>
@@ -12180,7 +12236,7 @@
       <PropertyVal Name="FontSize">0.0</PropertyVal>
       <PropertyVal Name="FontUnit">0</PropertyVal>
       <PropertyVal Name="GridLineStyle">0</PropertyVal>
-      <PropertyVal Name="HasBorder">True</PropertyVal>
+      <PropertyVal Name="HasBorder">False</PropertyVal>
       <PropertyVal Name="HasHeader">False</PropertyVal>
       <PropertyVal Name="HasHorizontalScrollbar">False</PropertyVal>
       <PropertyVal Name="HasVerticalScrollbar">False</PropertyVal>
@@ -12300,7 +12356,7 @@
       <PropertyVal Name="FontSize">0.0</PropertyVal>
       <PropertyVal Name="FontUnit">0</PropertyVal>
       <PropertyVal Name="GridLineStyle">0</PropertyVal>
-      <PropertyVal Name="HasBorder">True</PropertyVal>
+      <PropertyVal Name="HasBorder">False</PropertyVal>
       <PropertyVal Name="HasHeader">False</PropertyVal>
       <PropertyVal Name="HasHorizontalScrollbar">False</PropertyVal>
       <PropertyVal Name="HasVerticalScrollbar">False</PropertyVal>
@@ -16742,14 +16798,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="0" top="25" width="1522" height="957"/>
+        <Rect left="0" top="30" width="1627" height="996"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.Controls.StateListBox.PaintCellText</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.AppListBox.PaintCellBackground</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
