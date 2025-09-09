@@ -1640,6 +1640,21 @@
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
     </Property>
+    <Property>
+      <ItemName>HighlightsIndex</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1971871743</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>HighlightsIndex As Integer = 1</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>HighlightsIndex As Integer = 1</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <ViewBehavior>
       <ViewProperty>
@@ -10336,6 +10351,9 @@
         <SourceLine>i = App.Highlights.Count</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
+        <SourceLine>// Track the active Highlights page</SourceLine>
+        <SourceLine>App.HighlightsIndex = i</SourceLine>
+        <SourceLine/>
         <SourceLine>// Toggle the bullet icon visibility</SourceLine>
         <SourceLine>If App.Highlights.Count = 0 Then</SourceLine>
         <SourceLine>HighlightTopBulletCanvas1.Visible = False</SourceLine>
@@ -12643,12 +12661,6 @@
     </ControlBehavior>
     <ControlBehavior>
       <Superclass>DesktopCanvas</Superclass>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopCanvas</Superclass>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopCanvas</Superclass>
       <HookInstance>
         <ItemName>MouseDown</ItemName>
         <Compatibility/>
@@ -12658,6 +12670,70 @@
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Function MouseDown(x As Integer, y As Integer) As Boolean</SourceLine>
           <SourceLine>RefreshHighlights(1)</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopCanvas</Superclass>
+      <HookInstance>
+        <ItemName>MouseDown</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>817496063</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function MouseDown(x As Integer, y As Integer) As Boolean</SourceLine>
+          <SourceLine>// Go to the next highlights page</SourceLine>
+          <SourceLine>Var highBound As Integer = App.Highlights.Count</SourceLine>
+          <SourceLine>Var Index As Integer = App.HighlightsIndex</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Page flip to the right</SourceLine>
+          <SourceLine>Index = Index + 1</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Handle edge bounds looping</SourceLine>
+          <SourceLine>If Index &gt; highBound Then</SourceLine>
+          <SourceLine>Index = 1</SourceLine>
+          <SourceLine>ElseIf Index &lt;= 0 Then</SourceLine>
+          <SourceLine>Index = highBound</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Move to the next page</SourceLine>
+          <SourceLine>RefreshHighlights(Index)</SourceLine>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopCanvas</Superclass>
+      <HookInstance>
+        <ItemName>MouseDown</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>584632319</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function MouseDown(x As Integer, y As Integer) As Boolean</SourceLine>
+          <SourceLine>// Go to the next highlights page</SourceLine>
+          <SourceLine>Var highBound As Integer = App.Highlights.Count</SourceLine>
+          <SourceLine>Var Index As Integer  = App.HighlightsIndex</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Page flip to the right</SourceLine>
+          <SourceLine>Index = Index - 1</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Handle edge bounds looping</SourceLine>
+          <SourceLine>If Index &gt; highBound Then</SourceLine>
+          <SourceLine>Index = 1</SourceLine>
+          <SourceLine>ElseIf Index &lt;= 0 Then</SourceLine>
+          <SourceLine>Index = highBound</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Move to the next page</SourceLine>
+          <SourceLine>RefreshHighlights(Index)</SourceLine>
+          <SourceLine/>
           <SourceLine/>
           <SourceLine>End Function</SourceLine>
         </ItemSource>
@@ -13811,6 +13887,38 @@
       <ItemName>DesktopCanvas</ItemName>
       <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
       <PropertyVal Name="AllowFocus">False</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">False</PropertyVal>
+      <PropertyVal Name="AllowTabs">False</PropertyVal>
+      <PropertyVal Name="Backdrop">1207783423</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Height">7</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialParent">HighlightTopBGCanvas</PropertyVal>
+      <PropertyVal Name="Left">1247</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">HighlightTopBulletCanvas1</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
+      <PropertyVal Name="TabIndex">2</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip">Go to the next page</PropertyVal>
+      <PropertyVal Name="Top">29</PropertyVal>
+      <PropertyVal Name="Transparent">True</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">6</PropertyVal>
+      <ControlIndex>27</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>513804287</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopCanvas</ControlClass>
+      <ItemName>DesktopCanvas</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowFocus">False</PropertyVal>
       <PropertyVal Name="AllowFocusRing">True</PropertyVal>
       <PropertyVal Name="AllowTabs">False</PropertyVal>
       <PropertyVal Name="Backdrop">1970325503</PropertyVal>
@@ -13834,7 +13942,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">40</PropertyVal>
-      <ControlIndex>27</ControlIndex>
+      <ControlIndex>28</ControlIndex>
       <Locked>0</Locked>
       <PartID>610891775</PartID>
     </Control>
@@ -13866,41 +13974,9 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">40</PropertyVal>
-      <ControlIndex>28</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>2097180671</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopCanvas</ControlClass>
-      <ItemName>DesktopCanvas</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="AllowFocus">False</PropertyVal>
-      <PropertyVal Name="AllowFocusRing">False</PropertyVal>
-      <PropertyVal Name="AllowTabs">False</PropertyVal>
-      <PropertyVal Name="Backdrop">1207783423</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="Height">7</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="InitialParent">HighlightTopBGCanvas</PropertyVal>
-      <PropertyVal Name="Left">1247</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">False</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="Name">HighlightTopBulletCanvas1</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
-      <PropertyVal Name="TabIndex">2</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip">Go to the next page</PropertyVal>
-      <PropertyVal Name="Top">29</PropertyVal>
-      <PropertyVal Name="Transparent">True</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">6</PropertyVal>
       <ControlIndex>29</ControlIndex>
       <Locked>0</Locked>
-      <PartID>513804287</PartID>
+      <PartID>2097180671</PartID>
     </Control>
     <Control>
       <ControlClass>DesktopLabel</ControlClass>
@@ -13915,7 +13991,7 @@
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightTopBGCanvas</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">1146</PropertyVal>
+      <PropertyVal Name="Left">1184</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -13936,7 +14012,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">256</PropertyVal>
+      <PropertyVal Name="Width">173</PropertyVal>
       <ControlIndex>30</ControlIndex>
       <Locked>0</Locked>
       <PartID>1462093823</PartID>
@@ -19921,12 +19997,12 @@
         </Editor>
         <Editor>
           <EditorIndex>1</EditorIndex>
-          <EditorLocation>ReactorWindow.RefreshHighlights</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.HighlightTopLeftCanvas.MouseDown</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
         </Editor>
-        <SelectedTab>1</SelectedTab>
+        <SelectedTab>0</SelectedTab>
       </Editors>
     </StudioWindowState>
   </block>
