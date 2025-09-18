@@ -1,0 +1,25 @@
+{
+  "short_name": "Reactor Standalone",
+  "name": "Reactor is a package manager for Blackmagic Resolve/Fusion, and LightWave. Reactor streamlines the installation of 3rd party content through the use of Atom packages that are synced automatically with a Git repository. Now with 4x the magic!",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#ADADAD",
+  "background_color": "#282828"
+}
