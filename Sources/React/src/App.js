@@ -1,80 +1,49 @@
 import React, { useState } from 'react';
 import {
   Box,
+  Typography,
   List,
   ListItem,
   ListItemText,
   Divider,
-  Typography,
-  Container,
+  Collapse,
   Grid,
-  Collapse
+  IconButton,
+  AppBar,
+  Toolbar,
+  Button
 } from '@mui/material';
 import {
-  Folder as FolderIcon,
   PlayArrow as PlayArrowIcon,
   Stop as StopIcon,
   ExpandLess,
-  ExpandMore
+  ExpandMore,
+  ChevronLeft,
+  ChevronRight
 } from '@mui/icons-material';
 
-// Sample data - replace with your actual data
-const categoryData = [
-  {
-    id: 'repo1',
-    name: 'Repository 1',
-    type: 'repository',
-    icon: 'folder'
-  },
-  {
-    id: 'repo2',
-    name: 'Repository 2',
-    type: 'repository',
-    icon: 'folder'
-  },
-  {
-    id: 'active',
-    name: 'Active',
-    type: 'state'
-  },
-  {
-    id: 'inactive',
-    name: 'Inactive',
-    type: 'state'
-  },
-  {
-    id: 'category1',
-    name: 'Category 1',
-    type: 'category',
-    children: [
-      {
-        id: 'subcat1',
-        name: 'Subcategory 1',
-        type: 'subcategory'
-      },
-      {
-        id: 'subcat2',
-        name: 'Subcategory 2',
-        type: 'subcategory'
-      }
-    ]
-  },
-  {
-    id: 'category2',
-    name: 'Category 2',
-    type: 'category',
-    children: [
-      {
-        id: 'subcat3',
-        name: 'Subcategory 3',
-        type: 'subcategory'
-      }
-    ]
-  }
+// Mock data for repositories
+const repositoryData = [
+  { id: 1, name: 'Active', type: 'repo' },
+  { id: 2, name: 'Inactive', type: 'repo' }
 ];
 
-function LeftDockPanel() {
-  const [selectedItem, setSelectedItem] = useState(null);
+// Mock data for categories
+const categoryData = [
+  { id: 1, name: 'Category 1', type: 'category', children: [
+    { id: 11, name: 'Subcategory 1.1', type: 'subcategory' },
+    { id: 12, name: 'Subcategory 1.2', type: 'subcategory' }
+  ]},
+  { id: 2, name: 'Category 2', type: 'category', children: [
+    { id: 21, name: 'Subcategory 2.1', type: 'subcategory' },
+    { id: 22, name: 'Subcategory 2.2', type: 'subcategory' }
+  ]},
+  { id: 3, name: 'Category 3', type: 'category' }
+];
+
+// Left Panel Component
+function LeftPanel() {
+  const [selectedItem, setSelectedItem] = useState(1);
   const [openCategories, setOpenCategories] = useState({});
 
   const handleItemClick = (id) => {
@@ -91,14 +60,14 @@ function LeftDockPanel() {
   return (
     <Box sx={{ 
       width: 250, 
-      height: '100vh', 
-      bgcolor: '#1a1a1a', 
+      bgcolor: '#1e1e1e', 
+      color: 'white',
       display: 'flex',
       flexDirection: 'column',
-      borderRight: '1px solid #4a4a4a'
+      height: '100%'
     }}>
-      {/* Repositories Section */}
-      <Box sx={{ p: 1, flex: 1, overflowY: 'auto' }}>
+      {/* Repository Section */}
+      <Box sx={{ p: 1, borderBottom: '1px solid #4a4a4a' }}>
         <Typography 
           variant="subtitle2" 
           sx={{ 
@@ -113,69 +82,28 @@ function LeftDockPanel() {
         </Typography>
         <Divider sx={{ bgcolor: '#4a4a4a', my: 0.5 }} />
         <List dense>
-          {categoryData
-            .filter(item => item.type === 'repository')
-            .map(item => (
-              <ListItem 
-                key={item.id}
-                button
-                onClick={() => handleItemClick(item.id)}
-                sx={{ 
-                  color: selectedItem === item.id ? '#F9D129' : '#A9A8A9',
-                  '&:hover': { backgroundColor: 'rgba(249, 209, 41, 0.1)' },
-                  pl: 2
-                }}
-              >
-                <FolderIcon sx={{ mr: 1, fontSize: 16 }} />
-                <ListItemText primary={item.name} sx={{ fontSize: '0.8rem' }} />
-              </ListItem>
-            ))}
+          {repositoryData.map(item => (
+            <ListItem 
+              key={item.id}
+              button
+              onClick={() => handleItemClick(item.id)}
+              sx={{ 
+                color: selectedItem === item.id ? '#F9D129' : '#A9A8A9',
+                '&:hover': { backgroundColor: 'rgba(249, 209, 41, 0.1)' },
+                pl: 2,
+                py: 0.5
+              }}
+            >
+              {item.name === 'Active' ? (
+                <PlayArrowIcon sx={{ mr: 1, fontSize: 16 }} />
+              ) : (
+                <StopIcon sx={{ mr: 1, fontSize: 16 }} />
+              )}
+              <ListItemText primary={item.name} sx={{ fontSize: '0.8rem' }} />
+            </ListItem>
+          ))}
         </List>
       </Box>
-
-      <Divider sx={{ bgcolor: '#4a4a4a' }} />
-
-      {/* States Section */}
-      <Box sx={{ p: 1, flex: 1, overflowY: 'auto' }}>
-        <Typography 
-          variant="subtitle2" 
-          sx={{ 
-            color: '#F9D129', 
-            px: 1, 
-            py: 0.5,
-            fontSize: '0.8rem',
-            textTransform: 'uppercase'
-          }}
-        >
-          States
-        </Typography>
-        <Divider sx={{ bgcolor: '#4a4a4a', my: 0.5 }} />
-        <List dense>
-          {categoryData
-            .filter(item => item.type === 'state')
-            .map(item => (
-              <ListItem 
-                key={item.id}
-                button
-                onClick={() => handleItemClick(item.id)}
-                sx={{ 
-                  color: selectedItem === item.id ? '#F9D129' : '#A9A8A9',
-                  '&:hover': { backgroundColor: 'rgba(249, 209, 41, 0.1)' },
-                  pl: 2
-                }}
-              >
-                {item.name === 'Active' ? (
-                  <PlayArrowIcon sx={{ mr: 1, fontSize: 16 }} />
-                ) : (
-                  <StopIcon sx={{ mr: 1, fontSize: 16 }} />
-                )}
-                <ListItemText primary={item.name} sx={{ fontSize: '0.8rem' }} />
-              </ListItem>
-            ))}
-        </List>
-      </Box>
-
-      <Divider sx={{ bgcolor: '#4a4a4a' }} />
 
       {/* Category Section with Collapsible Items */}
       <Box sx={{ p: 1, flex: 1, overflowY: 'auto' }}>
@@ -203,7 +131,8 @@ function LeftDockPanel() {
                   sx={{ 
                     color: selectedItem === item.id ? '#F9D129' : '#A9A8A9',
                     '&:hover': { backgroundColor: 'rgba(249, 209, 41, 0.1)' },
-                    pl: 2
+                    pl: 2,
+                    py: 0.5
                   }}
                 >
                   <ListItemText primary={item.name} sx={{ fontSize: '0.8rem' }} />
@@ -223,7 +152,8 @@ function LeftDockPanel() {
                           sx={{ 
                             color: selectedItem === child.id ? '#F9D129' : '#A9A8A9',
                             '&:hover': { backgroundColor: 'rgba(249, 209, 41, 0.1)' },
-                            pl: 4
+                            pl: 4,
+                            py: 0.5
                           }}
                         >
                           <ListItemText primary={child.name} sx={{ fontSize: '0.7rem' }} />
@@ -240,149 +170,299 @@ function LeftDockPanel() {
   );
 }
 
-function TopBar() {
+// Right Panel Component
+function RightPanel({ open = true }) {
+  if (!open) return null;
+
   return (
     <Box sx={{ 
-      bgcolor: '#2a2a2a', 
-      p: 2, 
-      borderRadius: 1, 
-      mb: 3,
+      width: 300, 
+      bgcolor: '#1e1e1e', 
+      color: 'white',
       display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center'
+      flexDirection: 'column',
+      borderLeft: '1px solid #4a4a4a'
     }}>
-      <Typography variant="h6" sx={{ color: '#F9D129' }}>
-        Top Bar Content
+      <Typography 
+        variant="subtitle2" 
+        sx={{ 
+          color: '#F9D129', 
+          px: 2, 
+          py: 1,
+          fontSize: '0.8rem',
+          textTransform: 'uppercase'
+        }}
+      >
+        Right Panel
       </Typography>
+      <Divider sx={{ bgcolor: '#4a4a4a', my: 0.5 }} />
+      <Box sx={{ p: 2, flex: 1, overflowY: 'auto' }}>
+        <Typography variant="body2" sx={{ color: '#A9A8A9', mb: 2 }}>
+          This is the right panel content area.
+        </Typography>
+        <Box sx={{ 
+          bgcolor: '#2d2d2d', 
+          p: 2, 
+          borderRadius: 1,
+          mb: 2 
+        }}>
+          <Typography variant="caption" sx={{ color: '#F9D129' }}>
+            Panel Content
+          </Typography>
+          <Typography variant="body2" sx={{ color: '#A9A8A9', mt: 1 }}>
+            Additional information and controls can go here.
+          </Typography>
+        </Box>
+      </Box>
     </Box>
   );
 }
 
+// Top Bar Component
+function TopBar() {
+  const [rightPanelOpen, setRightPanelOpen] = useState(true);
+
+  const toggleRightPanel = () => {
+    setRightPanelOpen(!rightPanelOpen);
+  };
+
+  return (
+    <AppBar 
+      position="static" 
+      sx={{ 
+        bgcolor: '#1e1e1e', 
+        height: 50,
+        boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+      }}
+    >
+      <Toolbar sx={{ p: 0, height: '100%' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              color: '#F9D129', 
+              ml: 2,
+              fontSize: '1.2rem'
+            }}
+          >
+            App Title
+          </Typography>
+        </Box>
+        
+        <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
+          <IconButton 
+            onClick={toggleRightPanel}
+            sx={{ 
+              color: '#A9A8A9',
+              '&:hover': { backgroundColor: 'rgba(249, 209, 41, 0.1)' }
+            }}
+          >
+            {rightPanelOpen ? <ChevronLeft /> : <ChevronRight />}
+          </IconButton>
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+}
+
+// Search Panel Component
 function SearchPanel() {
   return (
     <Box sx={{ 
-      bgcolor: '#2a2a2a', 
+      bgcolor: '#2d2d2d', 
       p: 2, 
-      borderRadius: 1,
-      height: '100%'
+      borderBottom: '1px solid #4a4a4a',
+      display: 'flex',
+      alignItems: 'center'
     }}>
-      <Typography variant="h6" sx={{ color: '#F9D129', mb: 2 }}>
-        Search Panel
+      <Typography variant="body2" sx={{ color: '#A9A8A9', mr: 2 }}>
+        Search:
       </Typography>
-      <Box sx={{ bgcolor: '#3a3a3a', p: 2, borderRadius: 1 }}>
-        <Typography variant="body2" sx={{ color: '#A9A8A9' }}>
-          Search functionality would go here
-        </Typography>
+      <Box sx={{ flex: 1, maxWidth: 400 }}>
+        <input 
+          type="text" 
+          placeholder="Search repositories..."
+          style={{
+            width: '100%',
+            padding: '8px 12px',
+            borderRadius: '4px',
+            border: '1px solid #4a4a4a',
+            backgroundColor: '#3d3d3d',
+            color: 'white'
+          }}
+        />
       </Box>
     </Box>
   );
 }
 
-function MainPanel() {
-  return (
-    <Box sx={{ 
-      bgcolor: '#2a2a2a', 
-      p: 2, 
-      borderRadius: 1,
-      height: '100%'
-    }}>
-      <Typography variant="h6" sx={{ color: '#F9D129', mb: 2 }}>
-        Main Panel
-      </Typography>
-      <Box sx={{ bgcolor: '#3a3a3a', p: 2, borderRadius: 1 }}>
-        <Typography variant="body2" sx={{ color: '#A9A8A9' }}>
-          Main content area
-        </Typography>
-      </Box>
-    </Box>
-  );
-}
-
+// List Panel Component
 function ListPanel() {
   return (
     <Box sx={{ 
-      bgcolor: '#2a2a2a', 
-      p: 2, 
+      bgcolor: '#2d2d2d', 
       borderRadius: 1,
-      height: '100%'
+      p: 2,
+      height: '100%',
+      border: '1px solid #4a4a4a'
     }}>
-      <Typography variant="h6" sx={{ color: '#F9D129', mb: 2 }}>
-        List Panel
+      <Typography 
+        variant="subtitle2" 
+        sx={{ 
+          color: '#F9D129', 
+          mb: 2,
+          fontSize: '0.9rem'
+        }}
+      >
+        List Panel Content
       </Typography>
-      <Box sx={{ bgcolor: '#3a3a3a', p: 2, borderRadius: 1 }}>
-        <Typography variant="body2" sx={{ color: '#A9A8A9' }}>
-          List content would go here
+      <Box sx={{ 
+        bgcolor: '#3d3d3d', 
+        p: 2, 
+        borderRadius: 1,
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        <Typography variant="body2" sx={{ color: '#A9A8A9', mb: 2 }}>
+          This panel displays a list of items.
         </Typography>
+        <Box sx={{ 
+          flex: 1, 
+          overflowY: 'auto',
+          bgcolor: '#4d4d4d',
+          borderRadius: 1,
+          p: 2
+        }}>
+          <Typography variant="caption" sx={{ color: '#F9D129' }}>
+            List Items
+          </Typography>
+          <List sx={{ p: 0 }}>
+            {[1, 2, 3, 4, 5].map((item) => (
+              <ListItem key={item} sx={{ p: 1, borderBottom: '1px solid #5a5a5a' }}>
+                <ListItemText 
+                  primary={`Item ${item}`} 
+                  secondary="Description for item"
+                  sx={{ color: '#A9A8A9' }}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
       </Box>
     </Box>
   );
 }
 
+// Details Panel Component (formerly MainPanel)
 function DetailsPanel() {
   return (
     <Box sx={{ 
-      bgcolor: '#2a2a2a', 
-      p: 2, 
+      bgcolor: '#2d2d2d', 
       borderRadius: 1,
-      height: '100%'
+      p: 2,
+      height: '100%',
+      border: '1px solid #4a4a4a'
     }}>
-      <Typography variant="h6" sx={{ color: '#F9D129', mb: 2 }}>
-        Details Panel
+      <Typography 
+        variant="subtitle2" 
+        sx={{ 
+          color: '#F9D129', 
+          mb: 2,
+          fontSize: '0.9rem'
+        }}
+      >
+        Details Panel Content
       </Typography>
-      <Box sx={{ bgcolor: '#3a3a3a', p: 2, borderRadius: 1 }}>
-        <Typography variant="body2" sx={{ color: '#A9A8A9' }}>
-          Details content would go here
+      <Box sx={{ 
+        bgcolor: '#3d3d3d', 
+        p: 2, 
+        borderRadius: 1,
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        <Typography variant="body2" sx={{ color: '#A9A8A9', mb: 2 }}>
+          This panel displays detailed information.
         </Typography>
+        <Box sx={{ 
+          flex: 1, 
+          overflowY: 'auto',
+          bgcolor: '#4d4d4d',
+          borderRadius: 1,
+          p: 2
+        }}>
+          <Typography variant="caption" sx={{ color: '#F9D129' }}>
+            Details
+          </Typography>
+          <Typography variant="body2" sx={{ color: '#A9A8A9', mt: 1 }}>
+            Detailed information about the selected item would appear here.
+          </Typography>
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="body2" sx={{ color: '#A9A8A9' }}>
+              <strong>Properties:</strong>
+            </Typography>
+            <List sx={{ p: 0 }}>
+              {['Property 1', 'Property 2', 'Property 3'].map((prop) => (
+                <ListItem key={prop} sx={{ p: 1 }}>
+                  <ListItemText 
+                    primary={prop} 
+                    sx={{ color: '#A9A8A9' }}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
 }
 
+// Main App Component
 function App() {
+  const [rightPanelOpen, setRightPanelOpen] = useState(true);
+
+  const toggleRightPanel = () => {
+    setRightPanelOpen(!rightPanelOpen);
+  };
+
   return (
-    <Box sx={{ display: 'flex', height: '100vh' }}>
-      {/* Left Docked Panel */}
-      <LeftDockPanel />
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <TopBar />
       
-      {/* Main Content Area */}
-      <Box sx={{ 
-        flexGrow: 1, 
-        ml: 250, // Width of docked panel
-        height: '100vh',
-        overflow: 'auto'
-      }}>
-        <Container maxWidth="lg" sx={{ py: 4 }}>
-          <Box sx={{ mb: 4 }}>
-            <Typography variant="h4" component="h1" sx={{ color: '#F9D129' }}>
-              Application Title
-            </Typography>
+      <Box sx={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+        <LeftPanel />
+        
+        <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
+          <SearchPanel />
+          
+          {/* Top Center - List Panel */}
+          <Box sx={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            p: 2,
+            flex: 1
+          }}>
+            <Box sx={{ width: '100%', maxWidth: 800 }}>
+              <ListPanel />
+            </Box>
           </Box>
           
-          {/* Top Bar */}
-          <TopBar />
-          
-          <Grid container spacing={3}>
-            {/* Search Panel */}
-            <Grid item xs={12} md={4}>
-              <SearchPanel />
-            </Grid>
-            
-            {/* Main Panel */}
-            <Grid item xs={12} md={8}>
-              <MainPanel />
-            </Grid>
-            
-            {/* List Panel */}
-            <Grid item xs={12}>
-              <ListPanel />
-            </Grid>
-            
-            {/* Details Panel */}
-            <Grid item xs={12}>
+          {/* Bottom Center - Details Panel */}
+          <Box sx={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            p: 2,
+            flex: 1
+          }}>
+            <Box sx={{ width: '100%', maxWidth: 800 }}>
               <DetailsPanel />
-            </Grid>
-          </Grid>
-        </Container>
+            </Box>
+          </Box>
+        </Box>
+        
+        {rightPanelOpen && <RightPanel />}
       </Box>
     </Box>
   );
