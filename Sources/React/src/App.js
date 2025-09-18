@@ -1,468 +1,364 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Box,
+  AppBar,
+  Toolbar,
   Typography,
+  Button,
+  Drawer,
   List,
   ListItem,
   ListItemText,
   Divider,
-  Collapse,
-  Grid,
   IconButton,
-  AppBar,
-  Toolbar,
-  Button
+  Paper,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody
 } from '@mui/material';
-import {
-  PlayArrow as PlayArrowIcon,
-  Stop as StopIcon,
-  ExpandLess,
-  ExpandMore,
-  ChevronLeft,
-  ChevronRight
-} from '@mui/icons-material';
+import { styled } from '@mui/material/styles';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-// Mock data for repositories
-const repositoryData = [
-  { id: 1, name: 'Active', type: 'repo' },
-  { id: 2, name: 'Inactive', type: 'repo' }
-];
+// ListPanel Component
+function ListPanel() {
+  const checkboxes = [
+    "Checkbox=On.png",
+    "Checkbox=Checkbox=Downloading.png",
+    "Checkbox=In Progress.png",
+    "Checkbox=Off.png",
+  ];
 
-// Mock data for categories
-const categoryData = [
-  { id: 1, name: 'Category 1', type: 'category', children: [
-    { id: 11, name: 'Subcategory 1.1', type: 'subcategory' },
-    { id: 12, name: 'Subcategory 1.2', type: 'subcategory' }
-  ]},
-  { id: 2, name: 'Category 2', type: 'category', children: [
-    { id: 21, name: 'Subcategory 2.1', type: 'subcategory' },
-    { id: 22, name: 'Subcategory 2.2', type: 'subcategory' }
-  ]},
-  { id: 3, name: 'Category 3', type: 'category' }
-];
+  function createData(install, name, category, version, author, date, status, donation, id) {
+    return { install, name, category, version, author, date, status, donation, id };
+  }
 
-// Left Panel Component
-function LeftPanel() {
-  const [selectedItem, setSelectedItem] = useState(1);
-  const [openCategories, setOpenCategories] = useState({});
+  const [rows, setRows] = useState([
+    createData("Checkbox=On.png",'KickAss ShaderZ', 'Shaders', '1.21', 'Andromeda Girl', '2023-04-14', 'Installed', 'No', "com.wesuckless.KickAssShaderZ"),
+    createData("Checkbox=On.png",'KickAss ShaderZ Menus', 'Shaders', '1.21', 'Andromeda Girl', '2023-04-14', 'Installed', 'No', "com.wesuckless.KickAssShaderZ.Menus"),
+    createData("Checkbox=On.png", 'Shadertoys', 'Shaders', '2.0', 'JiPi', '2024-07-15', 'Installed', 'No', "com.JiPi.Shadertoys"),
+  ]);
 
-  const handleItemClick = (id) => {
-    setSelectedItem(id);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+
+  const handleSort = (key) => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
   };
 
-  const handleCategoryClick = (id) => {
-    setOpenCategories(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
-  };
+  const sortedRows = useMemo(() => {
+    if (!sortConfig.key) return rows;
+
+    return [...rows].sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key]) {
+        return sortConfig.direction === 'asc' ? -1 : 1;
+      }
+      if (a[sortConfig.key] > b[sortConfig.key]) {
+        return sortConfig.direction === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
+  }, [rows, sortConfig]);
 
   return (
-    <Box sx={{ 
-      width: 250, 
-      bgcolor: '#1e1e1e', 
-      color: 'white',
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%'
-    }}>
-      {/* Repository Section */}
-      <Box sx={{ p: 1, borderBottom: '1px solid #4a4a4a' }}>
-        <Typography 
-          variant="subtitle2" 
-          sx={{ 
-            color: '#F9D129', 
-            px: 1, 
-            py: 0.5,
-            fontSize: '0.8rem',
-            textTransform: 'uppercase'
-          }}
-        >
-          Repositories
-        </Typography>
-        <Divider sx={{ bgcolor: '#4a4a4a', my: 0.5 }} />
-        <List dense>
-          {repositoryData.map(item => (
-            <ListItem 
-              key={item.id}
-              button
-              onClick={() => handleItemClick(item.id)}
-              sx={{ 
-                color: selectedItem === item.id ? '#F9D129' : '#A9A8A9',
-                '&:hover': { backgroundColor: 'rgba(249, 209, 41, 0.1)' },
-                pl: 2,
-                py: 0.5
+    <TableContainer component={Paper}>
+      <Table sx={{ height: '50%', minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow sx={{ backgroundColor: '#373838' }}>
+            <TableCell align="left"></TableCell>
+            <TableCell
+              align="left"
+              sx={{ color: '#F9D129', cursor: 'pointer' }}
+              onClick={() => handleSort('name')}
+            >
+              <Box display="flex" alignItems="center">
+                Name
+                {sortConfig.key === 'name' && (
+                  <Box ml={1}>
+                    {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                  </Box>
+                )}
+              </Box>
+            </TableCell>
+            <TableCell
+              align="left"
+              sx={{ color: '#F9D129', cursor: 'pointer' }}
+              onClick={() => handleSort('category')}
+            >
+              <Box display="flex" alignItems="center">
+                Category
+                {sortConfig.key === 'category' && (
+                  <Box ml={1}>
+                    {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                  </Box>
+                )}
+              </Box>
+            </TableCell>
+            <TableCell
+              align="left"
+              sx={{ color: '#F9D129', cursor: 'pointer' }}
+              onClick={() => handleSort('version')}
+            >
+              <Box display="flex" alignItems="center">
+                Version
+                {sortConfig.key === 'version' && (
+                  <Box ml={1}>
+                    {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                  </Box>
+                )}
+              </Box>
+            </TableCell>
+            <TableCell
+              align="left"
+              sx={{ color: '#F9D129', cursor: 'pointer' }}
+              onClick={() => handleSort('author')}
+            >
+              <Box display="flex" alignItems="center">
+                Author
+                {sortConfig.key === 'author' && (
+                  <Box ml={1}>
+                    {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                  </Box>
+                )}
+              </Box>
+            </TableCell>
+            <TableCell
+              align="left"
+              sx={{ color: '#F9D129', cursor: 'pointer' }}
+              onClick={() => handleSort('date')}
+            >
+              <Box display="flex" alignItems="center">
+                Date
+                {sortConfig.key === 'date' && (
+                  <Box ml={1}>
+                    {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                  </Box>
+                )}
+              </Box>
+            </TableCell>
+            <TableCell
+              align="left"
+              sx={{ color: '#F9D129', cursor: 'pointer' }}
+              onClick={() => handleSort('status')}
+            >
+              <Box display="flex" alignItems="center">
+                Status
+                {sortConfig.key === 'status' && (
+                  <Box ml={1}>
+                    {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                  </Box>
+                )}
+              </Box>
+            </TableCell>
+            <TableCell
+              align="center"
+              sx={{ color: '#F9D129', cursor: 'pointer' }}
+              onClick={() => handleSort('donation')}
+            >
+              <Box display="flex" alignItems="center">
+                Donation
+                {sortConfig.key === 'donation' && (
+                  <Box ml={1}>
+                    {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                  </Box>
+                )}
+              </Box>
+            </TableCell>
+            <TableCell
+              align="right"
+              sx={{ color: '#F9D129', cursor: 'pointer' }}
+              onClick={() => handleSort('id')}
+            >
+              <Box display="flex" alignItems="center">
+                ID
+                {sortConfig.key === 'id' && (
+                  <Box ml={1}>
+                    {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                  </Box>
+                )}
+              </Box>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {sortedRows.map((row) => (
+            <TableRow
+              key={row.id}
+              sx={{
+                '&:last-child td, &:last-child th': { border: 0 },
+                backgroundColor: sortedRows.indexOf(row) % 2 === 0 ? '#2D2D2E' : '#373636',
+                '& .MuiTableCell-root': {
+                  color: '#A9A8A9'
+                }
               }}
             >
-              {item.name === 'Active' ? (
-                <PlayArrowIcon sx={{ mr: 1, fontSize: 16 }} />
-              ) : (
-                <StopIcon sx={{ mr: 1, fontSize: 16 }} />
-              )}
-              <ListItemText primary={item.name} sx={{ fontSize: '0.8rem' }} />
-            </ListItem>
+              <TableCell align="left">
+                <img src={row.install} alt={`Status: ${row.status}`} />
+              </TableCell>
+              <TableCell align="left">{row.name}</TableCell>
+              <TableCell align="left">{row.category}</TableCell>
+              <TableCell align="left">{row.version}</TableCell>
+              <TableCell align="left">{row.author}</TableCell>
+              <TableCell align="left">{row.date}</TableCell>
+              <TableCell align="left">{row.status}</TableCell>
+              <TableCell align="left">{row.donation ? 'Yes' : 'No'}</TableCell>
+              <TableCell align="left">{row.id}</TableCell>
+            </TableRow>
           ))}
-        </List>
-      </Box>
-
-      {/* Category Section with Collapsible Items */}
-      <Box sx={{ p: 1, flex: 1, overflowY: 'auto' }}>
-        <Typography 
-          variant="subtitle2" 
-          sx={{ 
-            color: '#F9D129', 
-            px: 1, 
-            py: 0.5,
-            fontSize: '0.8rem',
-            textTransform: 'uppercase'
-          }}
-        >
-          Categories
-        </Typography>
-        <Divider sx={{ bgcolor: '#4a4a4a', my: 0.5 }} />
-        <List dense>
-          {categoryData
-            .filter(item => item.type === 'category')
-            .map(item => (
-              <React.Fragment key={item.id}>
-                <ListItem 
-                  button
-                  onClick={() => handleCategoryClick(item.id)}
-                  sx={{ 
-                    color: selectedItem === item.id ? '#F9D129' : '#A9A8A9',
-                    '&:hover': { backgroundColor: 'rgba(249, 209, 41, 0.1)' },
-                    pl: 2,
-                    py: 0.5
-                  }}
-                >
-                  <ListItemText primary={item.name} sx={{ fontSize: '0.8rem' }} />
-                  {item.children ? (
-                    openCategories[item.id] ? <ExpandLess /> : <ExpandMore />
-                  ) : null}
-                </ListItem>
-                
-                {item.children && (
-                  <Collapse in={openCategories[item.id]} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      {item.children.map(child => (
-                        <ListItem 
-                          key={child.id}
-                          button
-                          onClick={() => handleItemClick(child.id)}
-                          sx={{ 
-                            color: selectedItem === child.id ? '#F9D129' : '#A9A8A9',
-                            '&:hover': { backgroundColor: 'rgba(249, 209, 41, 0.1)' },
-                            pl: 4,
-                            py: 0.5
-                          }}
-                        >
-                          <ListItemText primary={child.name} sx={{ fontSize: '0.7rem' }} />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Collapse>
-                )}
-              </React.Fragment>
-            ))}
-        </List>
-      </Box>
-    </Box>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 
-// Right Panel Component
-function RightPanel({ open = true }) {
-  if (!open) return null;
-
-  return (
-    <Box sx={{ 
-      width: 300, 
-      bgcolor: '#1e1e1e', 
-      color: 'white',
-      display: 'flex',
-      flexDirection: 'column',
-      borderLeft: '1px solid #4a4a4a'
-    }}>
-      <Typography 
-        variant="subtitle2" 
-        sx={{ 
-          color: '#F9D129', 
-          px: 2, 
-          py: 1,
-          fontSize: '0.8rem',
-          textTransform: 'uppercase'
-        }}
-      >
-        Right Panel
-      </Typography>
-      <Divider sx={{ bgcolor: '#4a4a4a', my: 0.5 }} />
-      <Box sx={{ p: 2, flex: 1, overflowY: 'auto' }}>
-        <Typography variant="body2" sx={{ color: '#A9A8A9', mb: 2 }}>
-          This is the right panel content area.
-        </Typography>
-        <Box sx={{ 
-          bgcolor: '#2d2d2d', 
-          p: 2, 
-          borderRadius: 1,
-          mb: 2 
-        }}>
-          <Typography variant="caption" sx={{ color: '#F9D129' }}>
-            Panel Content
-          </Typography>
-          <Typography variant="body2" sx={{ color: '#A9A8A9', mt: 1 }}>
-            Additional information and controls can go here.
-          </Typography>
-        </Box>
-      </Box>
-    </Box>
-  );
-}
-
-// Top Bar Component
-function TopBar() {
-  const [rightPanelOpen, setRightPanelOpen] = useState(true);
-
-  const toggleRightPanel = () => {
-    setRightPanelOpen(!rightPanelOpen);
-  };
-
-  return (
-    <AppBar 
-      position="static" 
-      sx={{ 
-        bgcolor: '#1e1e1e', 
-        height: 50,
-        boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-      }}
-    >
-      <Toolbar sx={{ p: 0, height: '100%' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-          <Typography 
-            variant="h6" 
-            sx={{ 
-              color: '#F9D129', 
-              ml: 2,
-              fontSize: '1.2rem'
-            }}
-          >
-            App Title
-          </Typography>
-        </Box>
-        
-        <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
-          <IconButton 
-            onClick={toggleRightPanel}
-            sx={{ 
-              color: '#A9A8A9',
-              '&:hover': { backgroundColor: 'rgba(249, 209, 41, 0.1)' }
-            }}
-          >
-            {rightPanelOpen ? <ChevronLeft /> : <ChevronRight />}
-          </IconButton>
-        </Box>
-      </Toolbar>
-    </AppBar>
-  );
-}
-
-// Search Panel Component
-function SearchPanel() {
-  return (
-    <Box sx={{ 
-      bgcolor: '#2d2d2d', 
-      p: 2, 
-      borderBottom: '1px solid #4a4a4a',
-      display: 'flex',
-      alignItems: 'center'
-    }}>
-      <Typography variant="body2" sx={{ color: '#A9A8A9', mr: 2 }}>
-        Search:
-      </Typography>
-      <Box sx={{ flex: 1, maxWidth: 400 }}>
-        <input 
-          type="text" 
-          placeholder="Search repositories..."
-          style={{
-            width: '100%',
-            padding: '8px 12px',
-            borderRadius: '4px',
-            border: '1px solid #4a4a4a',
-            backgroundColor: '#3d3d3d',
-            color: 'white'
-          }}
-        />
-      </Box>
-    </Box>
-  );
-}
-
-// List Panel Component
-function ListPanel() {
-  return (
-    <Box sx={{ 
-      bgcolor: '#2d2d2d', 
-      borderRadius: 1,
-      p: 2,
-      height: '100%',
-      border: '1px solid #4a4a4a'
-    }}>
-      <Typography 
-        variant="subtitle2" 
-        sx={{ 
-          color: '#F9D129', 
-          mb: 2,
-          fontSize: '0.9rem'
-        }}
-      >
-        List Panel Content
-      </Typography>
-      <Box sx={{ 
-        bgcolor: '#3d3d3d', 
-        p: 2, 
-        borderRadius: 1,
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
-        <Typography variant="body2" sx={{ color: '#A9A8A9', mb: 2 }}>
-          This panel displays a list of items.
-        </Typography>
-        <Box sx={{ 
-          flex: 1, 
-          overflowY: 'auto',
-          bgcolor: '#4d4d4d',
-          borderRadius: 1,
-          p: 2
-        }}>
-          <Typography variant="caption" sx={{ color: '#F9D129' }}>
-            List Items
-          </Typography>
-          <List sx={{ p: 0 }}>
-            {[1, 2, 3, 4, 5].map((item) => (
-              <ListItem key={item} sx={{ p: 1, borderBottom: '1px solid #5a5a5a' }}>
-                <ListItemText 
-                  primary={`Item ${item}`} 
-                  secondary="Description for item"
-                  sx={{ color: '#A9A8A9' }}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Box>
-    </Box>
-  );
-}
-
-// Details Panel Component (formerly MainPanel)
+// Other components remain the same as in your original code
 function DetailsPanel() {
   return (
     <Box sx={{ 
-      bgcolor: '#2d2d2d', 
-      borderRadius: 1,
-      p: 2,
-      height: '100%',
-      border: '1px solid #4a4a4a'
+      p: 2, 
+      backgroundColor: '#373838',
+      borderRadius: '4px',
+      height: '100%'
     }}>
-      <Typography 
-        variant="subtitle2" 
-        sx={{ 
-          color: '#F9D129', 
-          mb: 2,
-          fontSize: '0.9rem'
-        }}
-      >
-        Details Panel Content
+      <Typography variant="h6" sx={{ color: '#F9D129' }}>
+        Details Panel
       </Typography>
-      <Box sx={{ 
-        bgcolor: '#3d3d3d', 
-        p: 2, 
-        borderRadius: 1,
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
-        <Typography variant="body2" sx={{ color: '#A9A8A9', mb: 2 }}>
-          This panel displays detailed information.
-        </Typography>
-        <Box sx={{ 
-          flex: 1, 
-          overflowY: 'auto',
-          bgcolor: '#4d4d4d',
-          borderRadius: 1,
-          p: 2
-        }}>
-          <Typography variant="caption" sx={{ color: '#F9D129' }}>
-            Details
-          </Typography>
-          <Typography variant="body2" sx={{ color: '#A9A8A9', mt: 1 }}>
-            Detailed information about the selected item would appear here.
-          </Typography>
-          <Box sx={{ mt: 2 }}>
-            <Typography variant="body2" sx={{ color: '#A9A8A9' }}>
-              <strong>Properties:</strong>
-            </Typography>
-            <List sx={{ p: 0 }}>
-              {['Property 1', 'Property 2', 'Property 3'].map((prop) => (
-                <ListItem key={prop} sx={{ p: 1 }}>
-                  <ListItemText 
-                    primary={prop} 
-                    sx={{ color: '#A9A8A9' }}
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-        </Box>
-      </Box>
+      <Typography variant="body1" sx={{ color: '#A9A8A9' }}>
+        This is where detailed information about the selected item would appear.
+      </Typography>
     </Box>
   );
 }
 
-// Main App Component
+function RightPanel() {
+  return (
+    <Box sx={{ 
+      width: 300, 
+      backgroundColor: '#2D2D2E',
+      p: 2,
+      height: '100%',
+      borderLeft: '1px solid #444'
+    }}>
+      <Typography variant="h6" sx={{ color: '#F9D129' }}>
+        Right Panel
+      </Typography>
+      <Typography variant="body1" sx={{ color: '#A9A8A9' }}>
+        This is the right panel content. You can add additional controls or information here.
+      </Typography>
+    </Box>
+  );
+}
+
 function App() {
+  const [leftPanelOpen, setLeftPanelOpen] = useState(true);
   const [rightPanelOpen, setRightPanelOpen] = useState(true);
 
-  const toggleRightPanel = () => {
-    setRightPanelOpen(!rightPanelOpen);
-  };
-
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <TopBar />
-      
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      height: '100vh',
+      backgroundColor: '#1e1e1e'
+    }}>
+      {/* Top Bar */}
+      <AppBar position="static" sx={{ backgroundColor: '#2D2D2E' }}>
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#F9D129' }}>
+            App Title
+          </Typography>
+          <IconButton
+            color="inherit"
+            onClick={() => setRightPanelOpen(!rightPanelOpen)}
+          >
+            {rightPanelOpen ? <ChevronLeftIcon /> : <MenuIcon />}
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      {/* Main Content */}
       <Box sx={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-        <LeftPanel />
-        
-        <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
-          <SearchPanel />
-          
-          {/* Top Center - List Panel */}
+        {/* Left Panel */}
+        {leftPanelOpen && (
           <Box sx={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
+            width: 250, 
+            backgroundColor: '#2D2D2E',
             p: 2,
-            flex: 1
+            borderRight: '1px solid #444'
           }}>
-            <Box sx={{ width: '100%', maxWidth: 800 }}>
+            <Typography variant="h6" sx={{ color: '#F9D129' }}>
+              Repositories
+            </Typography>
+            <List>
+              <ListItem button>
+                <ListItemText primary="Repository 1" />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary="Repository 2" />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary="Repository 3" />
+              </ListItem>
+            </List>
+            <Divider />
+            <Typography variant="h6" sx={{ color: '#F9D129', mt: 2 }}>
+              Categories
+            </Typography>
+            <List>
+              <ListItem button>
+                <ListItemText primary="Shaders" />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary="Mods" />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary="Tools" />
+              </ListItem>
+            </List>
+          </Box>
+        )}
+
+        {/* Center Content */}
+        <Box sx={{ 
+          flex: 1, 
+          display: 'flex', 
+          flexDirection: 'column',
+          p: 2,
+          overflow: 'auto'
+        }}>
+          <Box sx={{ 
+            flex: 1, 
+            mb: 2,
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            <Typography variant="h6" sx={{ color: '#F9D129', mb: 1 }}>
+              List Panel
+            </Typography>
+            <Box sx={{ flex: 1, overflow: 'auto' }}>
               <ListPanel />
             </Box>
           </Box>
           
-          {/* Bottom Center - Details Panel */}
+          {/* Details Panel */}
           <Box sx={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            p: 2,
-            flex: 1
+            flex: 1, 
+            height: '50%',
+            mb: 2
           }}>
-            <Box sx={{ width: '100%', maxWidth: 800 }}>
-              <DetailsPanel />
-            </Box>
+            <DetailsPanel />
           </Box>
         </Box>
-        
-        {rightPanelOpen && <RightPanel />}
+
+        {/* Right Panel */}
+        {rightPanelOpen && (
+          <RightPanel />
+        )}
       </Box>
     </Box>
   );
