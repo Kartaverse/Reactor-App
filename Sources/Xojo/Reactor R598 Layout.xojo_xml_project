@@ -237,11 +237,8 @@
         <SourceLine/>
         <SourceLine>// Reactor.json data processed</SourceLine>
         <SourceLine>ReactorWindow.DownloadStatsLabel.Text = ""</SourceLine>
-        <SourceLine>// ReactorWindow.DownloadProgress.Value = 0</SourceLine>
-        <SourceLine>// ReactorWindow.DownloadProgress.Visible = False</SourceLine>
         <SourceLine>ReactorWindow.ColorProgressBar.Visible = False</SourceLine>
         <SourceLine>ReactorWindow.ClearDownloadQueueButtonState = "Inactive"</SourceLine>
-        <SourceLine>// ReactorWindow.TimerColorProgressBar.Enabled = False</SourceLine>
         <SourceLine>ReactorWindow.ColorProgressBar.Refresh(False)</SourceLine>
         <SourceLine/>
         <SourceLine>End Sub</SourceLine>
@@ -1743,6 +1740,21 @@
       </ItemSource>
       <TextEncoding>134217984</TextEncoding>
       <ItemDeclaration>HighlightsIndex As Integer = 1</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
+    <Property>
+      <ItemName>HighlightsImages()</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1270321151</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>HighlightsImages() As Picture</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>HighlightsImages() As Picture</ItemDeclaration>
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
     </Property>
@@ -10823,11 +10835,8 @@
         <SourceLine>End Try</SourceLine>
         <SourceLine/>
         <SourceLine>DownloadStatsLabel.Text = ""</SourceLine>
-        <SourceLine>// DownloadProgress.Value = 0</SourceLine>
-        <SourceLine>// DownloadProgress.Visible = False</SourceLine>
         <SourceLine>ReactorWindow.ColorProgressBar.Visible = False</SourceLine>
         <SourceLine>ReactorWindow.ClearDownloadQueueButtonState = "Inactive"</SourceLine>
-        <SourceLine>// ReactorWindow.TimerColorProgressBar.Enabled = False</SourceLine>
         <SourceLine>ReactorWindow.ColorProgressBar.Refresh(False)</SourceLine>
         <SourceLine/>
         <SourceLine>// -----------------------------------------</SourceLine>
@@ -10887,6 +10896,50 @@
         <SourceLine>tos.Close</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Pre-download the highlights images into an array</SourceLine>
+        <SourceLine>If App.Highlights &lt;&gt; Nil Then</SourceLine>
+        <SourceLine>Var highBound As Integer = App.Highlights.Count</SourceLine>
+        <SourceLine>Var Index As Integer = App.HighlightsIndex</SourceLine>
+        <SourceLine>For i As Integer = 1 to highBound</SourceLine>
+        <SourceLine>// Fill in the data fields</SourceLine>
+        <SourceLine>Var HighlightItem As JSONItem = App.Highlights.Value(i.ToString)</SourceLine>
+        <SourceLine>// Load the image element</SourceLine>
+        <SourceLine>If HighlightItem.HasKey("ImageURL") Then</SourceLine>
+        <SourceLine>url = HighlightItem.Value("ImageURL")</SourceLine>
+        <SourceLine/>
+        <SourceLine>// Socket header data</SourceLine>
+        <SourceLine>RSocket.ClearRequestHeaders</SourceLine>
+        <SourceLine>RSocket.RequestHeader("User-Agent") = "Xojo"</SourceLine>
+        <SourceLine>RSocket.AllowCertificateValidation = false</SourceLine>
+        <SourceLine/>
+        <SourceLine>Try</SourceLine>
+        <SourceLine>Var Response As MemoryBlock = RSocket.SendSync("GET", url, 15)</SourceLine>
+        <SourceLine>If RSocket.HTTPStatusCode = 200 Then</SourceLine>
+        <SourceLine>// Image loaded OK</SourceLine>
+        <SourceLine>Dim ImageThumbnail As Picture = Picture.FromData(Response)</SourceLine>
+        <SourceLine>App.HighlightsImages.Add(ImageThumbnail)</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = "Highlight Image Downloaded"</SourceLine>
+        <SourceLine>Else</SourceLine>
+        <SourceLine>// Fallback image</SourceLine>
+        <SourceLine>App.HighlightsImages.Add(SnazzyPatternFlip)</SourceLine>
+        <SourceLine>System.DebugLog("Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode))</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = "Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Exception error As OutOfBoundsException</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = "Highlight Image Error: " + error.Message</SourceLine>
+        <SourceLine>Exception error As UnsupportedOperationException</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = "Highlight Image Network Error: " + error.Message</SourceLine>
+        <SourceLine>Exception error As NetworkException</SourceLine>
+        <SourceLine>System.DebugLog("Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode)) + error.Message</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = "Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode) + error.Message</SourceLine>
+        <SourceLine>End Try</SourceLine>
+        <SourceLine>ReactorWindow.ColorProgressBar.Visible = False</SourceLine>
+        <SourceLine>ReactorWindow.ClearDownloadQueueButtonState = "Inactive"</SourceLine>
+        <SourceLine>ReactorWindow.ColorProgressBar.Refresh(False)</SourceLine>
+        <SourceLine>End If</SourceLine>
+        <SourceLine>Next</SourceLine>
+        <SourceLine>End If</SourceLine>
         <SourceLine>Exception error As NetworkException</SourceLine>
         <SourceLine>// Handle IO error</SourceLine>
         <SourceLine>DownloadStatsLabel.Text = error.Message</SourceLine>
@@ -10913,11 +10966,8 @@
         <SourceLine>End Try</SourceLine>
         <SourceLine/>
         <SourceLine>DownloadStatsLabel.Text = ""</SourceLine>
-        <SourceLine>// DownloadProgress.Value = 0</SourceLine>
-        <SourceLine>// DownloadProgress.Visible = False</SourceLine>
         <SourceLine>ReactorWindow.ColorProgressBar.Visible = False</SourceLine>
         <SourceLine>ReactorWindow.ClearDownloadQueueButtonState = "Inactive"</SourceLine>
-        <SourceLine>// ReactorWindow.TimerColorProgressBar.Enabled = False</SourceLine>
         <SourceLine>ReactorWindow.ColorProgressBar.Refresh(False)</SourceLine>
         <SourceLine>Exception error As JSONException</SourceLine>
         <SourceLine>// Handle IO error</SourceLine>
@@ -11478,6 +11528,7 @@
         <SourceLine/>
         <SourceLine>// Fill in the data fields</SourceLine>
         <SourceLine>If App.Highlights &lt;&gt; Nil and i &gt;= 1 Then</SourceLine>
+        <SourceLine/>
         <SourceLine>Try</SourceLine>
         <SourceLine>Var HighlightItem As JSONItem = App.Highlights.Value(i.ToString)</SourceLine>
         <SourceLine>If HighlightItem &lt;&gt; Nil Then</SourceLine>
@@ -11548,47 +11599,22 @@
         <SourceLine>End If</SourceLine>
         <SourceLine/>
         <SourceLine>// Load the image element</SourceLine>
-        <SourceLine>If HighlightItem.HasKey("ImageURL") Then</SourceLine>
-        <SourceLine>Var url As String = HighlightItem.Value("ImageURL")</SourceLine>
-        <SourceLine/>
-        <SourceLine>// Socket header data</SourceLine>
-        <SourceLine>RSocket.ClearRequestHeaders</SourceLine>
-        <SourceLine>RSocket.RequestHeader("User-Agent") = "Xojo"</SourceLine>
-        <SourceLine>RSocket.AllowCertificateValidation = false</SourceLine>
-        <SourceLine/>
-        <SourceLine>Try</SourceLine>
-        <SourceLine>Var Response As MemoryBlock = RSocket.SendSync("GET", url, 15)</SourceLine>
-        <SourceLine>If RSocket.HTTPStatusCode = 200 Then</SourceLine>
-        <SourceLine>// Image loaded OK</SourceLine>
-        <SourceLine>Dim ImageThumbnail As Picture = Picture.FromData(Response)</SourceLine>
-        <SourceLine>HighlightThumbnailCanvas.Backdrop = ImageThumbnail</SourceLine>
-        <SourceLine>DownloadStatsLabel.Text = "Highlight Image Downloaded"</SourceLine>
-        <SourceLine>Else</SourceLine>
-        <SourceLine>// Fallback image</SourceLine>
-        <SourceLine>HighlightThumbnailCanvas.Backdrop = SnazzyPatternFlip</SourceLine>
-        <SourceLine>System.DebugLog("Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode))</SourceLine>
-        <SourceLine>DownloadStatsLabel.Text = "Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode)</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine>Exception error As UnsupportedOperationException</SourceLine>
-        <SourceLine>DownloadStatsLabel.Text = "Highlight Image Network Error: " + error.Message</SourceLine>
-        <SourceLine>Exception error As NetworkException</SourceLine>
-        <SourceLine>System.DebugLog("Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode)) + error.Message</SourceLine>
-        <SourceLine>DownloadStatsLabel.Text = "Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode) + error.Message</SourceLine>
-        <SourceLine>End Try</SourceLine>
-        <SourceLine>ReactorWindow.ColorProgressBar.Visible = False</SourceLine>
-        <SourceLine>ReactorWindow.ClearDownloadQueueButtonState = "Inactive"</SourceLine>
-        <SourceLine>// ReactorWindow.TimerColorProgressBar.Enabled = False</SourceLine>
-        <SourceLine>ReactorWindow.ColorProgressBar.Refresh(False)</SourceLine>
+        <SourceLine>If App.HighlightsImages.Count &gt;= i - 1 Then</SourceLine>
+        <SourceLine>HighlightThumbnailCanvas.Backdrop = App.HighlightsImages(i - 1)</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>Catch error As IOException</SourceLine>
-        <SourceLine>//</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = error.Message</SourceLine>
+        <SourceLine>Exception error As NetworkException</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = error.Message</SourceLine>
         <SourceLine>Catch error As UnsupportedFormatException</SourceLine>
-        <SourceLine>//</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = error.Message</SourceLine>
         <SourceLine>Catch error As JSONException</SourceLine>
-        <SourceLine>//</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = error.Message</SourceLine>
         <SourceLine>Catch error As KeyNotFoundException</SourceLine>
-        <SourceLine>//</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = error.Message</SourceLine>
+        <SourceLine>Exception error As OutOfBoundsException</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = error.Message</SourceLine>
         <SourceLine>End Try</SourceLine>
         <SourceLine>Else</SourceLine>
         <SourceLine>// No content found</SourceLine>
@@ -11624,7 +11650,6 @@
         <SourceLine>Try</SourceLine>
         <SourceLine>Var HighlightItem As JSONItem = App.Highlights.Value(j.ToString)</SourceLine>
         <SourceLine>If HighlightItem &lt;&gt; Nil Then</SourceLine>
-        <SourceLine/>
         <SourceLine>// Validate the elements exist</SourceLine>
         <SourceLine>If HighlightItem.HasKey("Title") Then</SourceLine>
         <SourceLine>Var Title As String = HighlightItem.Value("Title")</SourceLine>
@@ -11632,18 +11657,22 @@
         <SourceLine>Else</SourceLine>
         <SourceLine>TitleLabel.Text = ""</SourceLine>
         <SourceLine>End If</SourceLine>
-        <SourceLine/>
         <SourceLine>End If</SourceLine>
         <SourceLine>Catch error As IOException</SourceLine>
         <SourceLine>System.DebugLog(error.Message)</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = error.Message</SourceLine>
         <SourceLine>Catch error As UnsupportedFormatException</SourceLine>
         <SourceLine>System.DebugLog(error.Message)</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = error.Message</SourceLine>
         <SourceLine>Catch error As JSONException</SourceLine>
         <SourceLine>System.DebugLog(error.Message)</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = error.Message</SourceLine>
         <SourceLine>Catch error As KeyNotFoundException</SourceLine>
         <SourceLine>System.DebugLog(error.Message)</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = error.Message</SourceLine>
         <SourceLine>Catch error As UnsupportedOperationException</SourceLine>
         <SourceLine>System.DebugLog(error.Message)</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = error.Message</SourceLine>
         <SourceLine>End Try</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine/>
@@ -11997,8 +12026,8 @@
     <PropertyVal Name="MaximumWidth">3840</PropertyVal>
     <PropertyVal Name="MinimumHeight">680</PropertyVal>
     <PropertyVal Name="MinimumWidth">1400</PropertyVal>
-    <PropertyVal Name="Height">680</PropertyVal>
-    <PropertyVal Name="Width">1400</PropertyVal>
+    <PropertyVal Name="Height">768</PropertyVal>
+    <PropertyVal Name="Width">1356</PropertyVal>
     <ViewBehavior>
       <ViewProperty>
         <ObjName>Name</ObjName>
@@ -13059,12 +13088,7 @@
           <SourceLine/>
           <SourceLine>// Clear the item after clearing the queue contents</SourceLine>
           <SourceLine>App.DownloadAtomID = ""</SourceLine>
-          <SourceLine>App.DownloadName = ""</SourceLine>
-          <SourceLine>// DownloadProgress.Value = 0</SourceLine>
-          <SourceLine>// DownloadProgress.Visible = False</SourceLine>
-          <SourceLine>ReactorWindow.ColorProgressBar.Visible = False</SourceLine>
           <SourceLine>ReactorWindow.ClearDownloadQueueButtonState = "Inactive"</SourceLine>
-          <SourceLine>// ReactorWindow.TimerColorProgressBar.Enabled = False</SourceLine>
           <SourceLine>ReactorWindow.ColorProgressBar.Refresh(False)</SourceLine>
           <SourceLine>// CancelButton.Visible = False</SourceLine>
           <SourceLine>// DownloadStatsLabel.Text = ""</SourceLine>
@@ -14353,15 +14377,6 @@
     </ControlBehavior>
     <ControlBehavior>
       <Superclass>DesktopCanvas</Superclass>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopLabel</Superclass>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopLabel</Superclass>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopCanvas</Superclass>
       <HookInstance>
         <ItemName>MouseDown</ItemName>
         <Compatibility/>
@@ -14375,6 +14390,15 @@
           <SourceLine>End Function</SourceLine>
         </ItemSource>
       </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopLabel</Superclass>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopCanvas</Superclass>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopLabel</Superclass>
     </ControlBehavior>
     <ControlBehavior>
       <Superclass>DesktopLabel</Superclass>
@@ -15580,10 +15604,10 @@
       <PropertyVal Name="AllowTabs">False</PropertyVal>
       <PropertyVal Name="Backdrop">153370623</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="Height">256</PropertyVal>
+      <PropertyVal Name="Height">262</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent"/>
-      <PropertyVal Name="Left">1144</PropertyVal>
+      <PropertyVal Name="Left">1101</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -15595,7 +15619,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">423</PropertyVal>
+      <PropertyVal Name="Top">502</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
@@ -15615,7 +15639,7 @@
       <PropertyVal Name="Height">23</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightSnazzyPatternCanvas</PropertyVal>
-      <PropertyVal Name="Left">1144</PropertyVal>
+      <PropertyVal Name="Left">1101</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -15626,7 +15650,7 @@
       <PropertyVal Name="TabIndex">0</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">657</PropertyVal>
+      <PropertyVal Name="Top">742</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
@@ -15646,7 +15670,7 @@
       <PropertyVal Name="Height">22</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightSnazzyPatternCanvas</PropertyVal>
-      <PropertyVal Name="Left">1144</PropertyVal>
+      <PropertyVal Name="Left">1101</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -15658,7 +15682,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">View discussions</PropertyVal>
-      <PropertyVal Name="Top">466</PropertyVal>
+      <PropertyVal Name="Top">551</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
@@ -15678,7 +15702,7 @@
       <PropertyVal Name="Height">14</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">ShowDiscussCanvas</PropertyVal>
-      <PropertyVal Name="Left">1157</PropertyVal>
+      <PropertyVal Name="Left">1115</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -15690,7 +15714,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">469</PropertyVal>
+      <PropertyVal Name="Top">556</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">14</PropertyVal>
@@ -15711,7 +15735,7 @@
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">ShowDiscussCanvas</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">1175</PropertyVal>
+      <PropertyVal Name="Left">1132</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -15728,7 +15752,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c95959300</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">469</PropertyVal>
+      <PropertyVal Name="Top">554</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -15750,7 +15774,7 @@
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">ShowDiscussCanvas</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">1227</PropertyVal>
+      <PropertyVal Name="Left">1184</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -15767,7 +15791,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c52525600</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">469</PropertyVal>
+      <PropertyVal Name="Top">554</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -15788,7 +15812,7 @@
       <PropertyVal Name="Height">22</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightSnazzyPatternCanvas</PropertyVal>
-      <PropertyVal Name="Left">1144</PropertyVal>
+      <PropertyVal Name="Left">1101</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -15800,7 +15824,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">Show related info</PropertyVal>
-      <PropertyVal Name="Top">443</PropertyVal>
+      <PropertyVal Name="Top">528</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
@@ -15820,7 +15844,7 @@
       <PropertyVal Name="Height">14</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">ShowRelatedCanvas</PropertyVal>
-      <PropertyVal Name="Left">1157</PropertyVal>
+      <PropertyVal Name="Left">1115</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -15832,7 +15856,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">447</PropertyVal>
+      <PropertyVal Name="Top">534</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">14</PropertyVal>
@@ -15853,7 +15877,7 @@
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">ShowRelatedCanvas</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">1175</PropertyVal>
+      <PropertyVal Name="Left">1132</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -15870,7 +15894,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c95959300</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">447</PropertyVal>
+      <PropertyVal Name="Top">532</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -15891,7 +15915,7 @@
       <PropertyVal Name="Height">22</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightSnazzyPatternCanvas</PropertyVal>
-      <PropertyVal Name="Left">1144</PropertyVal>
+      <PropertyVal Name="Left">1101</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -15903,7 +15927,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">Show atom package</PropertyVal>
-      <PropertyVal Name="Top">424</PropertyVal>
+      <PropertyVal Name="Top">509</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
@@ -15923,7 +15947,7 @@
       <PropertyVal Name="Height">14</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">ShowAtomCanvas</PropertyVal>
-      <PropertyVal Name="Left">1156</PropertyVal>
+      <PropertyVal Name="Left">1114</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -15935,7 +15959,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">427</PropertyVal>
+      <PropertyVal Name="Top">514</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">14</PropertyVal>
@@ -15956,7 +15980,7 @@
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">ShowAtomCanvas</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">1212</PropertyVal>
+      <PropertyVal Name="Left">1169</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -15973,7 +15997,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;cFFFFFF00</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">427</PropertyVal>
+      <PropertyVal Name="Top">512</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -15995,7 +16019,7 @@
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">ShowAtomCanvas</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">1174</PropertyVal>
+      <PropertyVal Name="Left">1131</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16012,7 +16036,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c95959300</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">427</PropertyVal>
+      <PropertyVal Name="Top">512</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -16046,7 +16070,7 @@
       <PropertyVal Name="HasHorizontalScrollbar">False</PropertyVal>
       <PropertyVal Name="HasVerticalScrollbar">True</PropertyVal>
       <PropertyVal Name="HeadingIndex">-1</PropertyVal>
-      <PropertyVal Name="Height">354</PropertyVal>
+      <PropertyVal Name="Height">442</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialValue"/>
       <PropertyVal Name="Italic">False</PropertyVal>
@@ -16068,7 +16092,7 @@
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">180</PropertyVal>
+      <PropertyVal Name="Width">192</PropertyVal>
       <PropertyVal Name="_ScrollOffset">0</PropertyVal>
       <PropertyVal Name="_ScrollWidth">-1</PropertyVal>
       <ControlIndex>13</ControlIndex>
@@ -16087,7 +16111,7 @@
       <PropertyVal Name="AllowRowReordering">False</PropertyVal>
       <PropertyVal Name="Bold">False</PropertyVal>
       <PropertyVal Name="ColumnCount">9</PropertyVal>
-      <PropertyVal Name="ColumnWidths">22,300,170,62,140,90,90,70,375</PropertyVal>
+      <PropertyVal Name="ColumnWidths">26,235,170,52,140,90,90,70,375</PropertyVal>
       <PropertyVal Name="DefaultRowHeight">20</PropertyVal>
       <PropertyVal Name="DropIndicatorVisible">False</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
@@ -16100,13 +16124,13 @@
       <PropertyVal Name="HasHorizontalScrollbar">False</PropertyVal>
       <PropertyVal Name="HasVerticalScrollbar">True</PropertyVal>
       <PropertyVal Name="HeadingIndex">-1</PropertyVal>
-      <PropertyVal Name="Height">363</PropertyVal>
+      <PropertyVal Name="Height">396</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialValue">
         <Hex bytes="54">20094E616D650943617465676F72790956657273696F6E09417574686F7209446174650953746174757309446F6E6174696F6E094944</Hex>
       </PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">180</PropertyVal>
+      <PropertyVal Name="Left">192</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">True</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16120,11 +16144,11 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">The list panel shows the atom packages that are available for installation based upon your active filters</PropertyVal>
-      <PropertyVal Name="Top">44</PropertyVal>
+      <PropertyVal Name="Top">47</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">964</PropertyVal>
+      <PropertyVal Name="Width">908</PropertyVal>
       <PropertyVal Name="_ScrollOffset">0</PropertyVal>
       <PropertyVal Name="_ScrollWidth">-1</PropertyVal>
       <ControlIndex>14</ControlIndex>
@@ -16136,10 +16160,10 @@
       <ItemName>DesktopHTMLViewer</ItemName>
       <PropertyVal Name="AutoDeactivate">True</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="Height">223</PropertyVal>
+      <PropertyVal Name="Height">260</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent"/>
-      <PropertyVal Name="Left">180</PropertyVal>
+      <PropertyVal Name="Left">192</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">True</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16152,9 +16176,9 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">The detail panel shows information about an atom package</PropertyVal>
-      <PropertyVal Name="Top">404</PropertyVal>
+      <PropertyVal Name="Top">442</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">964</PropertyVal>
+      <PropertyVal Name="Width">907</PropertyVal>
       <ControlIndex>15</ControlIndex>
       <Locked>0</Locked>
       <PartID>211204095</PartID>
@@ -16186,7 +16210,7 @@
       <PropertyVal Name="Height">20</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">20</PropertyVal>
+      <PropertyVal Name="Left">17</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">True</PropertyVal>
       <PropertyVal Name="LockRight">False</PropertyVal>
@@ -16203,11 +16227,11 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c83838300</PropertyVal>
       <PropertyVal Name="Tooltip">The info bar shows information about the current task</PropertyVal>
-      <PropertyVal Name="Top">661</PropertyVal>
+      <PropertyVal Name="Top">744</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">842</PropertyVal>
+      <PropertyVal Name="Width">768</PropertyVal>
       <ControlIndex>17</ControlIndex>
       <Locked>0</Locked>
       <PartID>1026347007</PartID>
@@ -16226,7 +16250,7 @@
       <PropertyVal Name="Hint"/>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent"/>
-      <PropertyVal Name="Left">31</PropertyVal>
+      <PropertyVal Name="Left">36</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">True</PropertyVal>
       <PropertyVal Name="LockRight">False</PropertyVal>
@@ -16241,10 +16265,10 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="Text"/>
       <PropertyVal Name="Tooltip">Search for atom packages that match a specified keyword</PropertyVal>
-      <PropertyVal Name="Top">10</PropertyVal>
+      <PropertyVal Name="Top">15</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">554</PropertyVal>
+      <PropertyVal Name="Width">626</PropertyVal>
       <PropertyVal Name="_mIndex">0</PropertyVal>
       <PropertyVal Name="_mInitialParent"/>
       <PropertyVal Name="_mName"/>
@@ -16330,7 +16354,7 @@
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">180</PropertyVal>
+      <PropertyVal Name="Width">192</PropertyVal>
       <PropertyVal Name="_ScrollOffset">0</PropertyVal>
       <PropertyVal Name="_ScrollWidth">-1</PropertyVal>
       <ControlIndex>21</ControlIndex>
@@ -16362,7 +16386,7 @@
       <PropertyVal Name="Top">277</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">164</PropertyVal>
+      <PropertyVal Name="Width">177</PropertyVal>
       <PropertyVal Name="_mIndex">0</PropertyVal>
       <PropertyVal Name="_mInitialParent"/>
       <PropertyVal Name="_mName"/>
@@ -16394,7 +16418,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">Show the About Reactor Window</PropertyVal>
-      <PropertyVal Name="Top">10</PropertyVal>
+      <PropertyVal Name="Top">17</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">16</PropertyVal>
@@ -16449,7 +16473,7 @@
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">180</PropertyVal>
+      <PropertyVal Name="Width">192</PropertyVal>
       <PropertyVal Name="_ScrollOffset">0</PropertyVal>
       <PropertyVal Name="_ScrollWidth">-1</PropertyVal>
       <ControlIndex>24</ControlIndex>
@@ -16502,7 +16526,7 @@
       <PropertyVal Name="Height">16</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent"/>
-      <PropertyVal Name="Left">1113</PropertyVal>
+      <PropertyVal Name="Left">1053</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16514,7 +16538,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">Hide or show the highlights panel</PropertyVal>
-      <PropertyVal Name="Top">12</PropertyVal>
+      <PropertyVal Name="Top">16</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">16</PropertyVal>
@@ -16534,7 +16558,7 @@
       <PropertyVal Name="Height">15</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">993</PropertyVal>
+      <PropertyVal Name="Left">962</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16551,7 +16575,7 @@
       <PropertyVal Name="TextAlignment">3</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c52525600</PropertyVal>
       <PropertyVal Name="Tooltip">The info bar shows Reactor version information</PropertyVal>
-      <PropertyVal Name="Top">663</PropertyVal>
+      <PropertyVal Name="Top">747</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -16571,7 +16595,7 @@
       <PropertyVal Name="FillColor">&amp;c000000D9</PropertyVal>
       <PropertyVal Name="Height">23</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Left">1144</PropertyVal>
+      <PropertyVal Name="Left">1113</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16582,7 +16606,7 @@
       <PropertyVal Name="TabIndex">51</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">658</PropertyVal>
+      <PropertyVal Name="Top">742</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
@@ -16603,7 +16627,7 @@
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightRectangleBlackTint</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">1147</PropertyVal>
+      <PropertyVal Name="Left">1116</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16620,7 +16644,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;cFBCE1E00</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">663</PropertyVal>
+      <PropertyVal Name="Top">747</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -16642,7 +16666,7 @@
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightRectangleBlackTint</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">1187</PropertyVal>
+      <PropertyVal Name="Left">1156</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16659,7 +16683,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c95959300</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">663</PropertyVal>
+      <PropertyVal Name="Top">747</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -16677,9 +16701,9 @@
       <PropertyVal Name="AllowTabs">False</PropertyVal>
       <PropertyVal Name="Backdrop">0</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="Height">44</PropertyVal>
+      <PropertyVal Name="Height">42</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Left">1144</PropertyVal>
+      <PropertyVal Name="Left">1101</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16694,7 +16718,7 @@
       <PropertyVal Name="Top">0</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">256</PropertyVal>
+      <PropertyVal Name="Width">255</PropertyVal>
       <ControlIndex>31</ControlIndex>
       <Locked>0</Locked>
       <PartID>1117790207</PartID>
@@ -16711,7 +16735,7 @@
       <PropertyVal Name="Height">7</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightTopBGCanvas</PropertyVal>
-      <PropertyVal Name="Left">1247</PropertyVal>
+      <PropertyVal Name="Left">1203</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16740,10 +16764,10 @@
       <PropertyVal Name="AllowTabs">False</PropertyVal>
       <PropertyVal Name="Backdrop">1970325503</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="Height">44</PropertyVal>
+      <PropertyVal Name="Height">42</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightTopBGCanvas</PropertyVal>
-      <PropertyVal Name="Left">1359</PropertyVal>
+      <PropertyVal Name="Left">1315</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16755,7 +16779,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">Show next highlight page</PropertyVal>
-      <PropertyVal Name="Top">0</PropertyVal>
+      <PropertyVal Name="Top">1</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">40</PropertyVal>
@@ -16775,7 +16799,7 @@
       <PropertyVal Name="Height">44</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightTopBGCanvas</PropertyVal>
-      <PropertyVal Name="Left">1144</PropertyVal>
+      <PropertyVal Name="Left">1100</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16807,7 +16831,7 @@
       <PropertyVal Name="Height">7</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightTopBGCanvas</PropertyVal>
-      <PropertyVal Name="Left">1261</PropertyVal>
+      <PropertyVal Name="Left">1217</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16839,7 +16863,7 @@
       <PropertyVal Name="Height">7</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightTopBGCanvas</PropertyVal>
-      <PropertyVal Name="Left">1275</PropertyVal>
+      <PropertyVal Name="Left">1231</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16871,7 +16895,7 @@
       <PropertyVal Name="Height">7</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightTopBGCanvas</PropertyVal>
-      <PropertyVal Name="Left">1288</PropertyVal>
+      <PropertyVal Name="Left">1244</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16896,121 +16920,14 @@
       <ItemName>DesktopCanvas</ItemName>
       <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
       <PropertyVal Name="AllowFocus">False</PropertyVal>
-      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
-      <PropertyVal Name="AllowTabs">False</PropertyVal>
-      <PropertyVal Name="Backdrop">439048191</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="Height">190</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Left">1144</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">False</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="Name">HighlightThumbnailCanvas</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
-      <PropertyVal Name="TabIndex">53</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip">Highlights Image</PropertyVal>
-      <PropertyVal Name="Top">44</PropertyVal>
-      <PropertyVal Name="Transparent">True</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">256</PropertyVal>
-      <ControlIndex>38</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>1548871679</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopLabel</ControlClass>
-      <ItemName>DesktopLabel</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">Inter</PropertyVal>
-      <PropertyVal Name="FontSize">1.8e+1</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">35</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">1156</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">False</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="Multiline">False</PropertyVal>
-      <PropertyVal Name="Name">TitleLabel</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Selectable">False</PropertyVal>
-      <PropertyVal Name="Super">DesktopLabel</PropertyVal>
-      <PropertyVal Name="TabIndex">54</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">New Fusion Tools</PropertyVal>
-      <PropertyVal Name="TextAlignment">1</PropertyVal>
-      <PropertyVal Name="TextColor">&amp;cFBCE1E00</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">236</PropertyVal>
-      <PropertyVal Name="Transparent">True</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">232</PropertyVal>
-      <ControlIndex>39</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>621262847</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopLabel</ControlClass>
-      <ItemName>DesktopLabel</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">Inter</PropertyVal>
-      <PropertyVal Name="FontSize">1.1e+1</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">133</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">1156</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">False</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="Multiline">True</PropertyVal>
-      <PropertyVal Name="Name">AboutLabel</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Selectable">False</PropertyVal>
-      <PropertyVal Name="Super">DesktopLabel</PropertyVal>
-      <PropertyVal Name="TabIndex">55</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">Description</PropertyVal>
-      <PropertyVal Name="TextAlignment">1</PropertyVal>
-      <PropertyVal Name="TextColor">&amp;c9B9B9B00</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">274</PropertyVal>
-      <PropertyVal Name="Transparent">True</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">232</PropertyVal>
-      <ControlIndex>40</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>1512222719</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopCanvas</ControlClass>
-      <ItemName>DesktopCanvas</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="AllowFocus">False</PropertyVal>
       <PropertyVal Name="AllowFocusRing">False</PropertyVal>
       <PropertyVal Name="AllowTabs">False</PropertyVal>
       <PropertyVal Name="Backdrop">0</PropertyVal>
       <PropertyVal Name="Enabled">True</PropertyVal>
       <PropertyVal Name="Height">24</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="InitialParent"/>
-      <PropertyVal Name="Left">1183</PropertyVal>
+      <PropertyVal Name="InitialParent">HighlightTopBGCanvas</PropertyVal>
+      <PropertyVal Name="Left">1138</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -17018,7 +16935,7 @@
       <PropertyVal Name="Name">HighlightReactorHighlightsCanvas</PropertyVal>
       <PropertyVal Name="Scope">0</PropertyVal>
       <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
-      <PropertyVal Name="TabIndex">58</PropertyVal>
+      <PropertyVal Name="TabIndex">7</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip"/>
@@ -17026,7 +16943,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">177</PropertyVal>
-      <ControlIndex>41</ControlIndex>
+      <ControlIndex>38</ControlIndex>
       <Locked>0</Locked>
       <PartID>1909157887</PartID>
     </Control>
@@ -17039,11 +16956,11 @@
       <PropertyVal Name="FontName">Inter</PropertyVal>
       <PropertyVal Name="FontSize">1.1e+1</PropertyVal>
       <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">24</PropertyVal>
+      <PropertyVal Name="Height">25</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightReactorHighlightsCanvas</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">1186</PropertyVal>
+      <PropertyVal Name="Left">1142</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -17060,14 +16977,121 @@
       <PropertyVal Name="TextAlignment">2</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c95959300</PropertyVal>
       <PropertyVal Name="Tooltip">Show next highlight page</PropertyVal>
-      <PropertyVal Name="Top">3</PropertyVal>
+      <PropertyVal Name="Top">4</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">174</PropertyVal>
-      <ControlIndex>42</ControlIndex>
+      <ControlIndex>39</ControlIndex>
       <Locked>0</Locked>
       <PartID>744052735</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopCanvas</ControlClass>
+      <ItemName>DesktopCanvas</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowFocus">False</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">True</PropertyVal>
+      <PropertyVal Name="AllowTabs">False</PropertyVal>
+      <PropertyVal Name="Backdrop">439048191</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Height">190</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Left">1101</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">HighlightThumbnailCanvas</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
+      <PropertyVal Name="TabIndex">53</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip">Highlights Image</PropertyVal>
+      <PropertyVal Name="Top">43</PropertyVal>
+      <PropertyVal Name="Transparent">True</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">256</PropertyVal>
+      <ControlIndex>40</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1548871679</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopLabel</ControlClass>
+      <ItemName>DesktopLabel</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">Inter</PropertyVal>
+      <PropertyVal Name="FontSize">1.8e+1</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">35</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">1115</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Multiline">False</PropertyVal>
+      <PropertyVal Name="Name">TitleLabel</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Selectable">False</PropertyVal>
+      <PropertyVal Name="Super">DesktopLabel</PropertyVal>
+      <PropertyVal Name="TabIndex">54</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Text">New Fusion Tools</PropertyVal>
+      <PropertyVal Name="TextAlignment">1</PropertyVal>
+      <PropertyVal Name="TextColor">&amp;cFBCE1E00</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">235</PropertyVal>
+      <PropertyVal Name="Transparent">True</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">244</PropertyVal>
+      <ControlIndex>41</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>621262847</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopLabel</ControlClass>
+      <ItemName>DesktopLabel</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="Bold">False</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="FontName">Inter</PropertyVal>
+      <PropertyVal Name="FontSize">1.1e+1</PropertyVal>
+      <PropertyVal Name="FontUnit">0</PropertyVal>
+      <PropertyVal Name="Height">133</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Italic">False</PropertyVal>
+      <PropertyVal Name="Left">1115</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Multiline">True</PropertyVal>
+      <PropertyVal Name="Name">AboutLabel</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Selectable">False</PropertyVal>
+      <PropertyVal Name="Super">DesktopLabel</PropertyVal>
+      <PropertyVal Name="TabIndex">55</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Text">Description</PropertyVal>
+      <PropertyVal Name="TextAlignment">1</PropertyVal>
+      <PropertyVal Name="TextColor">&amp;c9B9B9B00</PropertyVal>
+      <PropertyVal Name="Tooltip"/>
+      <PropertyVal Name="Top">272</PropertyVal>
+      <PropertyVal Name="Transparent">True</PropertyVal>
+      <PropertyVal Name="Underline">False</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">232</PropertyVal>
+      <ControlIndex>42</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1512222719</PartID>
     </Control>
     <Control>
       <ControlClass>DesktopSeparator</ControlClass>
@@ -17079,7 +17103,7 @@
       <PropertyVal Name="Height">20</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent"/>
-      <PropertyVal Name="Left">1156</PropertyVal>
+      <PropertyVal Name="Left">1113</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -17091,7 +17115,7 @@
       <PropertyVal Name="TabIndex">59</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">402</PropertyVal>
+      <PropertyVal Name="Top">486</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">232</PropertyVal>
@@ -17115,7 +17139,7 @@
       <PropertyVal Name="Height">20</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent"/>
-      <PropertyVal Name="Left">593</PropertyVal>
+      <PropertyVal Name="Left">668</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">True</PropertyVal>
       <PropertyVal Name="LockRight">False</PropertyVal>
@@ -17127,10 +17151,10 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">Search for atom packages that match a specified keyword</PropertyVal>
-      <PropertyVal Name="Top">10</PropertyVal>
+      <PropertyVal Name="Top">15</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">55</PropertyVal>
+      <PropertyVal Name="Width">71</PropertyVal>
       <ControlIndex>44</ControlIndex>
       <Locked>0</Locked>
       <PartID>1360410623</PartID>
@@ -17146,7 +17170,7 @@
       <PropertyVal Name="Enabled">True</PropertyVal>
       <PropertyVal Name="Height">20</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Left">874</PropertyVal>
+      <PropertyVal Name="Left">752</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -17158,10 +17182,10 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">Cancel the current download, and clear out any of the remaining queued download items</PropertyVal>
-      <PropertyVal Name="Top">10</PropertyVal>
+      <PropertyVal Name="Top">15</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">146</PropertyVal>
+      <PropertyVal Name="Width">155</PropertyVal>
       <ControlIndex>45</ControlIndex>
       <Locked>0</Locked>
       <PartID>1025468415</PartID>
@@ -17177,7 +17201,7 @@
       <PropertyVal Name="Enabled">True</PropertyVal>
       <PropertyVal Name="Height">20</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Left">834</PropertyVal>
+      <PropertyVal Name="Left">787</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -17189,10 +17213,10 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">Install the selected atom package</PropertyVal>
-      <PropertyVal Name="Top">632</PropertyVal>
+      <PropertyVal Name="Top">714</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">298</PropertyVal>
+      <PropertyVal Name="Width">284</PropertyVal>
       <ControlIndex>46</ControlIndex>
       <Locked>0</Locked>
       <PartID>1898911743</PartID>
@@ -17209,7 +17233,7 @@
       <PropertyVal Name="Height">20</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent"/>
-      <PropertyVal Name="Left">513</PropertyVal>
+      <PropertyVal Name="Left">484</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -17221,10 +17245,10 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">Update the selected atom package</PropertyVal>
-      <PropertyVal Name="Top">632</PropertyVal>
+      <PropertyVal Name="Top">714</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">298</PropertyVal>
+      <PropertyVal Name="Width">291</PropertyVal>
       <ControlIndex>47</ControlIndex>
       <Locked>0</Locked>
       <PartID>1157853183</PartID>
@@ -17241,7 +17265,7 @@
       <PropertyVal Name="Height">20</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent"/>
-      <PropertyVal Name="Left">192</PropertyVal>
+      <PropertyVal Name="Left">188</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -17253,10 +17277,10 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">Uninstall the selected atom package</PropertyVal>
-      <PropertyVal Name="Top">632</PropertyVal>
+      <PropertyVal Name="Top">714</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">298</PropertyVal>
+      <PropertyVal Name="Width">284</PropertyVal>
       <ControlIndex>48</ControlIndex>
       <Locked>0</Locked>
       <PartID>1899673599</PartID>
@@ -17273,7 +17297,7 @@
       <PropertyVal Name="Height">20</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent"/>
-      <PropertyVal Name="Left">1036</PropertyVal>
+      <PropertyVal Name="Left">944</PropertyVal>
       <PropertyVal Name="LockBottom">False</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -17285,10 +17309,10 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">Click to run Tools from the dropdown menu</PropertyVal>
-      <PropertyVal Name="Top">10</PropertyVal>
+      <PropertyVal Name="Top">14</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">68</PropertyVal>
+      <PropertyVal Name="Width">73</PropertyVal>
       <ControlIndex>49</ControlIndex>
       <Locked>0</Locked>
       <PartID>546228223</PartID>
@@ -17319,7 +17343,7 @@
       <PropertyVal Name="Enabled">True</PropertyVal>
       <PropertyVal Name="Height">8</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Left">874</PropertyVal>
+      <PropertyVal Name="Left">775</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -17331,7 +17355,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">The info bar shows download progress information</PropertyVal>
-      <PropertyVal Name="Top">666</PropertyVal>
+      <PropertyVal Name="Top">751</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">122</PropertyVal>
@@ -30149,14 +30173,14 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="-2" top="25" width="1920" height="992"/>
+        <Rect left="-5" top="25" width="1920" height="1055"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.Controls.ToolsDropdown.Paint</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.RSocket.FileReceived</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
