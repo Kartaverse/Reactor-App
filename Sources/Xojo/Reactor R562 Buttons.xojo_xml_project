@@ -11033,6 +11033,51 @@
       <ItemFlags>0</ItemFlags>
       <IsShared>0</IsShared>
     </Property>
+    <Property>
+      <ItemName>InstallButtonState</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>296701951</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>InstallButtonState As String = "Up"</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>InstallButtonState As String = "Up"</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
+    <Property>
+      <ItemName>RemoveButtonState</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>2099453951</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>RemoveButtonState As String = "Up"</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>RemoveButtonState As String = "Up"</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
+    <Property>
+      <ItemName>UpdateButtonState</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1476646911</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>UpdateButtonState As String = "Up"</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>UpdateButtonState As String = "Up"</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">1789632511</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
@@ -11272,6 +11317,13 @@
       </ViewProperty>
       <ViewProperty>
         <ObjName>SearchButtonState</ObjName>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>Up</PropertyValue>
+        <ItemType>String</ItemType>
+        <EditorType>MultiLineEditor</EditorType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>ClearDownloadQueueButtonState</ObjName>
         <PropertyGroup>Behavior</PropertyGroup>
         <PropertyValue>Up</PropertyValue>
         <ItemType>String</ItemType>
@@ -12160,154 +12212,6 @@
       <Superclass>DesktopProgressBar</Superclass>
     </ControlBehavior>
     <ControlBehavior>
-      <Superclass>DesktopButton</Superclass>
-      <HookInstance>
-        <ItemName>Pressed</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>620652543</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine>// Push the input focus to the atom description views</SourceLine>
-          <SourceLine>DescriptionHTMLViewer.SetFocus()</SourceLine>
-          <SourceLine/>
-          <SourceLine>For row As Integer = 0 To AtomsListBox.LastRowIndex</SourceLine>
-          <SourceLine>If AtomsListBox.RowSelectedAt(row) Then</SourceLine>
-          <SourceLine>Var SelectedAtom As String = AtomsListBox.CellTextAt(row, 8)</SourceLine>
-          <SourceLine>DownloadStatsLabel.Text = SelectedAtom + " Removed"</SourceLine>
-          <SourceLine>DownloadStatsLabel.Refresh(False)</SourceLine>
-          <SourceLine>System.DebugLog("[Remove Button] " + SelectedAtom)</SourceLine>
-          <SourceLine/>
-          <SourceLine>AtomRemoveByRow(row)</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine>Next</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Update the number next to the state rows</SourceLine>
-          <SourceLine>RefreshStateCount()</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Update the number next to the category rows</SourceLine>
-          <SourceLine>RefreshCategoryCount()</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Rebuild the atoms list</SourceLine>
-          <SourceLine>RefreshAtoms()</SourceLine>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopButton</Superclass>
-      <HookInstance>
-        <ItemName>Pressed</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>979922943</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine>Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
-          <SourceLine>If row &gt;= 0 Then</SourceLine>
-          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
-          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
-          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
-          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
-          <SourceLine>Var SelectedAtom As String = AtomID</SourceLine>
-          <SourceLine/>
-          <SourceLine>DownloadStatsLabel.Text = SelectedAtom + " Updated"</SourceLine>
-          <SourceLine>DownloadStatsLabel.Refresh(False)</SourceLine>
-          <SourceLine>System.DebugLog("[Update Button] " + SelectedAtom)</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Push the input focus to the atom description views</SourceLine>
-          <SourceLine>DescriptionHTMLViewer.SetFocus()</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Is the atom installed already</SourceLine>
-          <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
-          <SourceLine>// Verify no active downloads are in progress</SourceLine>
-          <SourceLine/>
-          <SourceLine>If AtomUpdateAvailable(AtomID) = True then</SourceLine>
-          <SourceLine>// Cancel the download task, and update the atom package</SourceLine>
-          <SourceLine>AtomRemoveByRow(row)</SourceLine>
-          <SourceLine>AtomDownloadQueue(AtomID, Atom)</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine/>
-          <SourceLine>For RefreshRow As Integer = 0 to AtomsListBox.RowCount - 1</SourceLine>
-          <SourceLine>// Checkbox Cell</SourceLine>
-          <SourceLine>AtomsListBox.RefreshCell(RefreshRow, 0)</SourceLine>
-          <SourceLine>Next</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Update the number next to the state rows</SourceLine>
-          <SourceLine>RefreshStateCount()</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Update the number next to the category rows</SourceLine>
-          <SourceLine>RefreshCategoryCount()</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Rebuild the atoms list</SourceLine>
-          <SourceLine>RefreshAtoms()</SourceLine>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopButton</Superclass>
-      <HookInstance>
-        <ItemName>Pressed</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>1875154943</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine>For row As Integer = 0 To AtomsListBox.LastRowIndex</SourceLine>
-          <SourceLine>If AtomsListBox.RowSelectedAt(row) Then</SourceLine>
-          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
-          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
-          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
-          <SourceLine> If Atom &lt;&gt; Nil Then</SourceLine>
-          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
-          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
-          <SourceLine>Var SelectedAtom As String = AtomID</SourceLine>
-          <SourceLine/>
-          <SourceLine>System.DebugLog("[Install Button] " + SelectedAtom)</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Push the input focus to the atom description views</SourceLine>
-          <SourceLine>DescriptionHTMLViewer.SetFocus()</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Is the atom installed already</SourceLine>
-          <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Verify no active downloads are in progress</SourceLine>
-          <SourceLine>If AtomUpdateAvailable(AtomID) = True then</SourceLine>
-          <SourceLine>// Cancel the download task, and update the atom package</SourceLine>
-          <SourceLine>AtomRemoveByRow(row)</SourceLine>
-          <SourceLine>AtomDownloadQueue(AtomID, Atom)</SourceLine>
-          <SourceLine>Else</SourceLine>
-          <SourceLine>AtomDownloadQueue(AtomID, Atom)</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Checkbox Cell</SourceLine>
-          <SourceLine>AtomsListBox.RefreshCell(row, 0)</SourceLine>
-          <SourceLine/>
-          <SourceLine>AtomsListBox.CellTextAt(row, 6) = "Queued"</SourceLine>
-          <SourceLine>AtomsListBox.RefreshCell(row, 6)</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine>Next</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Update the number next to the state rows</SourceLine>
-          <SourceLine>//RefreshStateCount()</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Update the number next to the category rows</SourceLine>
-          <SourceLine>RefreshCategoryCount()</SourceLine>
-          <SourceLine/>
-          <SourceLine>// Rebuild the atoms list</SourceLine>
-          <SourceLine>RefreshAtoms()</SourceLine>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
       <Superclass>Timer</Superclass>
       <HookInstance>
         <ItemName>Action</ItemName>
@@ -12403,7 +12307,7 @@
           <SourceLine>DownloadProgress.Indeterminate = False</SourceLine>
           <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + "  Downloaded"</SourceLine>
           <SourceLine>Else</SourceLine>
-          <SourceLine>//Use a 15 second idle timeout period for the download</SourceLine>
+          <SourceLine>// Use a 15 second idle timeout period for the download</SourceLine>
           <SourceLine>RSocket.Send("GET", ZipFileURL, AtomzFile, 15)</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine/>
@@ -13829,6 +13733,556 @@
         </ItemSource>
       </HookInstance>
     </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopCanvas</Superclass>
+      <HookInstance>
+        <ItemName>Paint</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>202274815</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Paint(g As Graphics, areas() As Rect)</SourceLine>
+          <SourceLine>// Button state property name</SourceLine>
+          <SourceLine>Var State As String = InstallButtonState</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text String</SourceLine>
+          <SourceLine>Var buttonTxt As String = "Install"</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Font</SourceLine>
+          <SourceLine>g.FontName = "Inter"</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text bold</SourceLine>
+          <SourceLine>// g.Bold = True</SourceLine>
+          <SourceLine/>
+          <SourceLine>If State = "Up" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>ElseIf State = "Down" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Black</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(19, 19, 19)</SourceLine>
+          <SourceLine>ElseIf State = "Enter" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Black</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(19, 19, 19)</SourceLine>
+          <SourceLine>ElseIf State = "Exit" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>ElseIf State = "Inactive" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Drawing coords</SourceLine>
+          <SourceLine>Var gX As Double = (g.Width - g.TextWidth(buttonTxt)) / 2</SourceLine>
+          <SourceLine>Var gY as Double = (g.Height - g.TextHeight) / 2 + g.FontAscent</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text</SourceLine>
+          <SourceLine>g.DrawText(buttonTxt, gX, gY, Me.Width, True)</SourceLine>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseDown</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1114953727</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function MouseDown(x As Integer, y As Integer) As Boolean</SourceLine>
+          <SourceLine>InstallButtonState = "Down"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine/>
+          <SourceLine>Return True</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseUp</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>191836159</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseUp(x As Integer, y As Integer)</SourceLine>
+          <SourceLine>InstallButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine/>
+          <SourceLine>For row As Integer = 0 To AtomsListBox.LastRowIndex</SourceLine>
+          <SourceLine>If AtomsListBox.RowSelectedAt(row) Then</SourceLine>
+          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+          <SourceLine>If Atom &lt;&gt; Nil Then</SourceLine>
+          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
+          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+          <SourceLine>Var SelectedAtom As String = AtomID</SourceLine>
+          <SourceLine/>
+          <SourceLine>System.DebugLog("[Install Button] " + SelectedAtom)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Push the input focus to the atom description views</SourceLine>
+          <SourceLine>DescriptionHTMLViewer.SetFocus()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Is the atom installed already</SourceLine>
+          <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Verify no active downloads are in progress</SourceLine>
+          <SourceLine>If AtomUpdateAvailable(AtomID) = True then</SourceLine>
+          <SourceLine>// Cancel the download task, and update the atom package</SourceLine>
+          <SourceLine>AtomRemoveByRow(row)</SourceLine>
+          <SourceLine>AtomDownloadQueue(AtomID, Atom)</SourceLine>
+          <SourceLine>Else</SourceLine>
+          <SourceLine>AtomDownloadQueue(AtomID, Atom)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Checkbox Cell</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(row, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomsListBox.CellTextAt(row, 6) = "Queued"</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(row, 6)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the state rows</SourceLine>
+          <SourceLine>//RefreshStateCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the category rows</SourceLine>
+          <SourceLine>RefreshCategoryCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
+          <SourceLine>RefreshAtoms()</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseEnter</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>277768191</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseEnter()</SourceLine>
+          <SourceLine>// InstallButtonState = "Enter"</SourceLine>
+          <SourceLine>InstallButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseExit</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>796678143</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseExit()</SourceLine>
+          <SourceLine>// InstallButtonState = "Exit"</SourceLine>
+          <SourceLine>InstallButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopCanvas</Superclass>
+      <HookInstance>
+        <ItemName>Paint</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1785784319</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Paint(g As Graphics, areas() As Rect)</SourceLine>
+          <SourceLine>// Button state property name</SourceLine>
+          <SourceLine>Var State As String = UpdateButtonState</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text String</SourceLine>
+          <SourceLine>Var buttonTxt As String = "Update"</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Font</SourceLine>
+          <SourceLine>g.FontName = "Inter"</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text bold</SourceLine>
+          <SourceLine>// g.Bold = True</SourceLine>
+          <SourceLine/>
+          <SourceLine>If State = "Up" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>ElseIf State = "Down" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Black</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(19, 19, 19)</SourceLine>
+          <SourceLine>ElseIf State = "Enter" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Black</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(19, 19, 19)</SourceLine>
+          <SourceLine>ElseIf State = "Exit" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>ElseIf State = "Inactive" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Drawing coords</SourceLine>
+          <SourceLine>Var gX As Double = (g.Width - g.TextWidth(buttonTxt)) / 2</SourceLine>
+          <SourceLine>Var gY as Double = (g.Height - g.TextHeight) / 2 + g.FontAscent</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text</SourceLine>
+          <SourceLine>g.DrawText(buttonTxt, gX, gY, Me.Width, True)</SourceLine>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseDown</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1193803775</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function MouseDown(x As Integer, y As Integer) As Boolean</SourceLine>
+          <SourceLine>UpdateButtonState = "Down"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine/>
+          <SourceLine>Return True</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseUp</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1879738367</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseUp(x As Integer, y As Integer)</SourceLine>
+          <SourceLine>UpdateButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine/>
+          <SourceLine>Var row As Integer = AtomsListBox.SelectedRowIndex</SourceLine>
+          <SourceLine>If row &gt;= 0 Then</SourceLine>
+          <SourceLine>Var CellString As String = AtomsListBox.CellTextAt(row, 1)</SourceLine>
+          <SourceLine>Var AtomIndex As Integer = AtomsListBox.CellTagAt(row, 1).IntegerValue</SourceLine>
+          <SourceLine>Var Atom As JSONItem = App.Atoms.Value(AtomIndex.ToString())</SourceLine>
+          <SourceLine>Var AtomDescription As String =  Atom.Value("Description")</SourceLine>
+          <SourceLine>Var AtomID As String =  Atom.Value("ID")</SourceLine>
+          <SourceLine>Var SelectedAtom As String = AtomID</SourceLine>
+          <SourceLine/>
+          <SourceLine>DownloadStatsLabel.Text = SelectedAtom + " Updated"</SourceLine>
+          <SourceLine>DownloadStatsLabel.Refresh(False)</SourceLine>
+          <SourceLine>System.DebugLog("[Update Button] " + SelectedAtom)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Push the input focus to the atom description views</SourceLine>
+          <SourceLine>DescriptionHTMLViewer.SetFocus()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Is the atom installed already</SourceLine>
+          <SourceLine>Var InstallState As Boolean = AtomInstalled(AtomID)</SourceLine>
+          <SourceLine>// Verify no active downloads are in progress</SourceLine>
+          <SourceLine/>
+          <SourceLine>If AtomUpdateAvailable(AtomID) = True then</SourceLine>
+          <SourceLine>// Cancel the download task, and update the atom package</SourceLine>
+          <SourceLine>AtomRemoveByRow(row)</SourceLine>
+          <SourceLine>AtomDownloadQueue(AtomID, Atom)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>For RefreshRow As Integer = 0 to AtomsListBox.RowCount - 1</SourceLine>
+          <SourceLine>// Checkbox Cell</SourceLine>
+          <SourceLine>AtomsListBox.RefreshCell(RefreshRow, 0)</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the state rows</SourceLine>
+          <SourceLine>RefreshStateCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the category rows</SourceLine>
+          <SourceLine>RefreshCategoryCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
+          <SourceLine>RefreshAtoms()</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseEnter</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>10967039</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseEnter()</SourceLine>
+          <SourceLine>// UpdateButtonState = "Enter"</SourceLine>
+          <SourceLine>UpdateButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseExit</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>167108607</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseExit()</SourceLine>
+          <SourceLine>// UpdateButtonState = "Exit"</SourceLine>
+          <SourceLine>UpdateButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopCanvas</Superclass>
+      <HookInstance>
+        <ItemName>Paint</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1131950079</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Paint(g As Graphics, areas() As Rect)</SourceLine>
+          <SourceLine>// Button state property name</SourceLine>
+          <SourceLine>Var State As String = RemoveButtonState</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text String</SourceLine>
+          <SourceLine>Var buttonTxt As String = "Remove"</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Font</SourceLine>
+          <SourceLine>g.FontName = "Inter"</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text bold</SourceLine>
+          <SourceLine>// g.Bold = True</SourceLine>
+          <SourceLine/>
+          <SourceLine>If State = "Up" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>ElseIf State = "Down" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Black</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(19, 19, 19)</SourceLine>
+          <SourceLine>ElseIf State = "Enter" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Black</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(19, 19, 19)</SourceLine>
+          <SourceLine>ElseIf State = "Exit" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>ElseIf State = "Inactive" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Drawing coords</SourceLine>
+          <SourceLine>Var gX As Double = (g.Width - g.TextWidth(buttonTxt)) / 2</SourceLine>
+          <SourceLine>Var gY as Double = (g.Height - g.TextHeight) / 2 + g.FontAscent</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text</SourceLine>
+          <SourceLine>g.DrawText(buttonTxt, gX, gY, Me.Width, True)</SourceLine>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseDown</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1633349631</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function MouseDown(x As Integer, y As Integer) As Boolean</SourceLine>
+          <SourceLine>RemoveButtonState = "Down"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine/>
+          <SourceLine>Return True</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseUp</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1201526783</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseUp(x As Integer, y As Integer)</SourceLine>
+          <SourceLine>RemoveButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Push the input focus to the atom description views</SourceLine>
+          <SourceLine>DescriptionHTMLViewer.SetFocus()</SourceLine>
+          <SourceLine/>
+          <SourceLine>For row As Integer = 0 To AtomsListBox.LastRowIndex</SourceLine>
+          <SourceLine>If AtomsListBox.RowSelectedAt(row) Then</SourceLine>
+          <SourceLine>Var SelectedAtom As String = AtomsListBox.CellTextAt(row, 8)</SourceLine>
+          <SourceLine>DownloadStatsLabel.Text = SelectedAtom + " Removed"</SourceLine>
+          <SourceLine>DownloadStatsLabel.Refresh(False)</SourceLine>
+          <SourceLine>System.DebugLog("[Remove Button] " + SelectedAtom)</SourceLine>
+          <SourceLine/>
+          <SourceLine>AtomRemoveByRow(row)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>Next</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the state rows</SourceLine>
+          <SourceLine>RefreshStateCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Update the number next to the category rows</SourceLine>
+          <SourceLine>RefreshCategoryCount()</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Rebuild the atoms list</SourceLine>
+          <SourceLine>RefreshAtoms()</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseEnter</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>543574015</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseEnter()</SourceLine>
+          <SourceLine>// RemoveButtonState = "Enter"</SourceLine>
+          <SourceLine>RemoveButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseExit</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1683976191</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseExit()</SourceLine>
+          <SourceLine>// RemoveButtonState = "Exit"</SourceLine>
+          <SourceLine>RemoveButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
     <Control>
       <ControlClass>DesktopCanvas</ControlClass>
       <ItemName>DesktopCanvas</ItemName>
@@ -14549,117 +15003,6 @@
       <PartID>549044223</PartID>
     </Control>
     <Control>
-      <ControlClass>DesktopButton</ControlClass>
-      <ItemName>DesktopButton</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Cancel">True</PropertyVal>
-      <PropertyVal Name="Caption">Remove</PropertyVal>
-      <PropertyVal Name="Default">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">Inter</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">20</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">192</PropertyVal>
-      <PropertyVal Name="LockBottom">True</PropertyVal>
-      <PropertyVal Name="LockLeft">False</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">False</PropertyVal>
-      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
-      <PropertyVal Name="Name">RemoveButton</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopButton</PropertyVal>
-      <PropertyVal Name="TabIndex">6</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip">Uninstall the selected atom package</PropertyVal>
-      <PropertyVal Name="Top">632</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">300</PropertyVal>
-      <ControlIndex>20</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>1482766335</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopButton</ControlClass>
-      <ItemName>DesktopButton</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Cancel">True</PropertyVal>
-      <PropertyVal Name="Caption">Update</PropertyVal>
-      <PropertyVal Name="Default">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">Inter</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">20</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">513</PropertyVal>
-      <PropertyVal Name="LockBottom">True</PropertyVal>
-      <PropertyVal Name="LockLeft">False</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">False</PropertyVal>
-      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
-      <PropertyVal Name="Name">UpdateButton</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopButton</PropertyVal>
-      <PropertyVal Name="TabIndex">5</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip">Update the selected atom package</PropertyVal>
-      <PropertyVal Name="Top">632</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">300</PropertyVal>
-      <ControlIndex>21</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>592365567</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopButton</ControlClass>
-      <ItemName>DesktopButton</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Cancel">True</PropertyVal>
-      <PropertyVal Name="Caption">Install</PropertyVal>
-      <PropertyVal Name="Default">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">Inter</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">20</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">834</PropertyVal>
-      <PropertyVal Name="LockBottom">True</PropertyVal>
-      <PropertyVal Name="LockLeft">False</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">False</PropertyVal>
-      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
-      <PropertyVal Name="Name">InstallButton</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopButton</PropertyVal>
-      <PropertyVal Name="TabIndex">4</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip">Install the selected atom package</PropertyVal>
-      <PropertyVal Name="Top">632</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">300</PropertyVal>
-      <ControlIndex>22</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>1667713023</PartID>
-    </Control>
-    <Control>
       <ControlClass>Timer</ControlClass>
       <ItemName>Timer</ItemName>
       <PropertyVal Name="Enabled">True</PropertyVal>
@@ -14670,7 +15013,7 @@
       <PropertyVal Name="Scope">0</PropertyVal>
       <PropertyVal Name="Super">Timer</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <ControlIndex>23</ControlIndex>
+      <ControlIndex>20</ControlIndex>
       <Locked>0</Locked>
       <PartID>1757388799</PartID>
     </Control>
@@ -14685,7 +15028,7 @@
       <PropertyVal Name="Scope">0</PropertyVal>
       <PropertyVal Name="Super">Timer</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <ControlIndex>24</ControlIndex>
+      <ControlIndex>21</ControlIndex>
       <Locked>0</Locked>
       <PartID>1491859455</PartID>
     </Control>
@@ -14739,7 +15082,7 @@
       <PropertyVal Name="Width">180</PropertyVal>
       <PropertyVal Name="_ScrollOffset">0</PropertyVal>
       <PropertyVal Name="_ScrollWidth">-1</PropertyVal>
-      <ControlIndex>25</ControlIndex>
+      <ControlIndex>22</ControlIndex>
       <Locked>0</Locked>
       <PartID>235675647</PartID>
     </Control>
@@ -14773,7 +15116,7 @@
       <PropertyVal Name="_mInitialParent"/>
       <PropertyVal Name="_mName"/>
       <PropertyVal Name="_mPanelIndex">0</PropertyVal>
-      <ControlIndex>26</ControlIndex>
+      <ControlIndex>23</ControlIndex>
       <Locked>0</Locked>
       <PartID>221411327</PartID>
     </Control>
@@ -14804,7 +15147,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">16</PropertyVal>
-      <ControlIndex>27</ControlIndex>
+      <ControlIndex>24</ControlIndex>
       <Locked>0</Locked>
       <PartID>1630363647</PartID>
     </Control>
@@ -14858,7 +15201,7 @@
       <PropertyVal Name="Width">180</PropertyVal>
       <PropertyVal Name="_ScrollOffset">0</PropertyVal>
       <PropertyVal Name="_ScrollWidth">-1</PropertyVal>
-      <ControlIndex>28</ControlIndex>
+      <ControlIndex>25</ControlIndex>
       <Locked>0</Locked>
       <PartID>1750175743</PartID>
     </Control>
@@ -14892,7 +15235,7 @@
       <PropertyVal Name="_mInitialParent"/>
       <PropertyVal Name="_mName"/>
       <PropertyVal Name="_mPanelIndex">0</PropertyVal>
-      <ControlIndex>29</ControlIndex>
+      <ControlIndex>26</ControlIndex>
       <Locked>0</Locked>
       <PartID>1840056319</PartID>
     </Control>
@@ -14924,7 +15267,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">16</PropertyVal>
-      <ControlIndex>30</ControlIndex>
+      <ControlIndex>27</ControlIndex>
       <Locked>0</Locked>
       <PartID>1507905535</PartID>
     </Control>
@@ -14962,7 +15305,7 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">148</PropertyVal>
-      <ControlIndex>31</ControlIndex>
+      <ControlIndex>28</ControlIndex>
       <Locked>0</Locked>
       <PartID>1235154943</PartID>
     </Control>
@@ -14992,7 +15335,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
-      <ControlIndex>32</ControlIndex>
+      <ControlIndex>29</ControlIndex>
       <Locked>0</Locked>
       <PartID>490881023</PartID>
     </Control>
@@ -15031,7 +15374,7 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">38</PropertyVal>
-      <ControlIndex>33</ControlIndex>
+      <ControlIndex>30</ControlIndex>
       <Locked>0</Locked>
       <PartID>1740732415</PartID>
     </Control>
@@ -15070,7 +15413,7 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">202</PropertyVal>
-      <ControlIndex>34</ControlIndex>
+      <ControlIndex>31</ControlIndex>
       <Locked>0</Locked>
       <PartID>1058369535</PartID>
     </Control>
@@ -15101,7 +15444,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
-      <ControlIndex>35</ControlIndex>
+      <ControlIndex>32</ControlIndex>
       <Locked>0</Locked>
       <PartID>1117790207</PartID>
     </Control>
@@ -15133,7 +15476,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">6</PropertyVal>
-      <ControlIndex>36</ControlIndex>
+      <ControlIndex>33</ControlIndex>
       <Locked>0</Locked>
       <PartID>513804287</PartID>
     </Control>
@@ -15165,7 +15508,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">40</PropertyVal>
-      <ControlIndex>37</ControlIndex>
+      <ControlIndex>34</ControlIndex>
       <Locked>0</Locked>
       <PartID>610891775</PartID>
     </Control>
@@ -15197,7 +15540,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">40</PropertyVal>
-      <ControlIndex>38</ControlIndex>
+      <ControlIndex>35</ControlIndex>
       <Locked>0</Locked>
       <PartID>2097180671</PartID>
     </Control>
@@ -15229,7 +15572,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">6</PropertyVal>
-      <ControlIndex>39</ControlIndex>
+      <ControlIndex>36</ControlIndex>
       <Locked>0</Locked>
       <PartID>1490141183</PartID>
     </Control>
@@ -15261,7 +15604,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">6</PropertyVal>
-      <ControlIndex>40</ControlIndex>
+      <ControlIndex>37</ControlIndex>
       <Locked>0</Locked>
       <PartID>266440703</PartID>
     </Control>
@@ -15293,7 +15636,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">6</PropertyVal>
-      <ControlIndex>41</ControlIndex>
+      <ControlIndex>38</ControlIndex>
       <Locked>0</Locked>
       <PartID>1223137279</PartID>
     </Control>
@@ -15324,7 +15667,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
-      <ControlIndex>42</ControlIndex>
+      <ControlIndex>39</ControlIndex>
       <Locked>0</Locked>
       <PartID>1548871679</PartID>
     </Control>
@@ -15362,7 +15705,7 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">232</PropertyVal>
-      <ControlIndex>43</ControlIndex>
+      <ControlIndex>40</ControlIndex>
       <Locked>0</Locked>
       <PartID>621262847</PartID>
     </Control>
@@ -15400,7 +15743,7 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">232</PropertyVal>
-      <ControlIndex>44</ControlIndex>
+      <ControlIndex>41</ControlIndex>
       <Locked>0</Locked>
       <PartID>1512222719</PartID>
     </Control>
@@ -15432,7 +15775,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">177</PropertyVal>
-      <ControlIndex>45</ControlIndex>
+      <ControlIndex>42</ControlIndex>
       <Locked>0</Locked>
       <PartID>1909157887</PartID>
     </Control>
@@ -15471,7 +15814,7 @@
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">174</PropertyVal>
-      <ControlIndex>46</ControlIndex>
+      <ControlIndex>43</ControlIndex>
       <Locked>0</Locked>
       <PartID>744052735</PartID>
     </Control>
@@ -15505,7 +15848,7 @@
       <PropertyVal Name="_mInitialParent"/>
       <PropertyVal Name="_mName"/>
       <PropertyVal Name="_mPanelIndex">0</PropertyVal>
-      <ControlIndex>47</ControlIndex>
+      <ControlIndex>44</ControlIndex>
       <Locked>0</Locked>
       <PartID>54523903</PartID>
     </Control>
@@ -15537,7 +15880,7 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">55</PropertyVal>
-      <ControlIndex>48</ControlIndex>
+      <ControlIndex>45</ControlIndex>
       <Locked>0</Locked>
       <PartID>1360410623</PartID>
     </Control>
@@ -15568,9 +15911,104 @@
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">146</PropertyVal>
-      <ControlIndex>49</ControlIndex>
+      <ControlIndex>46</ControlIndex>
       <Locked>0</Locked>
       <PartID>1025468415</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopCanvas</ControlClass>
+      <ItemName>DesktopCanvas</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowFocus">False</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">False</PropertyVal>
+      <PropertyVal Name="AllowTabs">False</PropertyVal>
+      <PropertyVal Name="Backdrop">0</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Left">834</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">InstallButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
+      <PropertyVal Name="TabIndex">62</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip">Install the selected atom package</PropertyVal>
+      <PropertyVal Name="Top">632</PropertyVal>
+      <PropertyVal Name="Transparent">True</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">298</PropertyVal>
+      <ControlIndex>47</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1898911743</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopCanvas</ControlClass>
+      <ItemName>DesktopCanvas</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowFocus">False</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">False</PropertyVal>
+      <PropertyVal Name="AllowTabs">False</PropertyVal>
+      <PropertyVal Name="Backdrop">0</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialParent"/>
+      <PropertyVal Name="Left">513</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">UpdateButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
+      <PropertyVal Name="TabIndex">63</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip">Update the selected atom package</PropertyVal>
+      <PropertyVal Name="Top">632</PropertyVal>
+      <PropertyVal Name="Transparent">True</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">298</PropertyVal>
+      <ControlIndex>48</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1157853183</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopCanvas</ControlClass>
+      <ItemName>DesktopCanvas</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowFocus">False</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">False</PropertyVal>
+      <PropertyVal Name="AllowTabs">False</PropertyVal>
+      <PropertyVal Name="Backdrop">0</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialParent"/>
+      <PropertyVal Name="Left">192</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">RemoveButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
+      <PropertyVal Name="TabIndex">64</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip">Uninstall the selected atom package</PropertyVal>
+      <PropertyVal Name="Top">632</PropertyVal>
+      <PropertyVal Name="Transparent">True</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">298</PropertyVal>
+      <ControlIndex>49</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1899673599</PartID>
     </Control>
   </block>
   <block type="Menu" ID="1789632511">
@@ -22978,7 +23416,7 @@
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.Controls.SearchButton</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.QueueTimer.Action</EditorLocation>
           <EditorPath/>
           <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
