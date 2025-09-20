@@ -26,10 +26,10 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 // ListPanel Component
 function ListPanel() {
   const checkboxes = [
-    "Checkbox=On.png",
-    "Checkbox=Checkbox=Downloading.png",
-    "Checkbox=In Progress.png",
-    "Checkbox=Off.png",
+    "images/Checkbox=On.png",
+    "images/Checkbox=Checkbox=Downloading.png",
+    "images/Checkbox=In Progress.png",
+    "images/Checkbox=Off.png",
   ];
 
   function createData(install, name, category, version, author, date, status, donation, id) {
