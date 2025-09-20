@@ -10737,9 +10737,11 @@
         <SourceLine>System.DebugLog("Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode))</SourceLine>
         <SourceLine>DownloadStatsLabel.Text = "Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode)</SourceLine>
         <SourceLine>End If</SourceLine>
+        <SourceLine>Exception error As UnsupportedOperationException</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = "Highlight Image Network Error: " + error.Message</SourceLine>
         <SourceLine>Exception error As NetworkException</SourceLine>
-        <SourceLine>System.DebugLog("Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode))</SourceLine>
-        <SourceLine>DownloadStatsLabel.Text = "Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode)</SourceLine>
+        <SourceLine>System.DebugLog("Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode)) + error.Message</SourceLine>
+        <SourceLine>DownloadStatsLabel.Text = "Highlight Image Network Error: " + Str(RSocket.HTTPStatusCode) + error.Message</SourceLine>
         <SourceLine>End Try</SourceLine>
         <SourceLine>End If</SourceLine>
         <SourceLine>End If</SourceLine>
@@ -20640,7 +20642,7 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="-6" top="74" width="1835" height="943"/>
+        <Rect left="0" top="74" width="1835" height="943"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
