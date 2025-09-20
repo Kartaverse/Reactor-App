@@ -7,7 +7,7 @@
     <MinorVersion>0</MinorVersion>
     <SubVersion>0</SubVersion>
     <Release>0</Release>
-    <NonRelease>23</NonRelease>
+    <NonRelease>24</NonRelease>
     <Region/>
     <ShortVersion/>
     <LongVersion>Copyright © 2017-2025 We Suck Less</LongVersion>
@@ -18,7 +18,7 @@
     <DefaultLanguage>0</DefaultLanguage>
     <CurrentLanguage>0</CurrentLanguage>
     <DefaultEncoding>0</DefaultEncoding>
-    <BuildFlags>2320</BuildFlags>
+    <BuildFlags>6400</BuildFlags>
     <UseBuildsFolder>1</UseBuildsFolder>
     <WebApp>0</WebApp>
     <Icon>
@@ -131,6 +131,7 @@
     <HiDPI>1</HiDPI>
     <DarkMode>1</DarkMode>
     <BuildLinuxX86Name>Reactor</BuildLinuxX86Name>
+    <BuildCarbonExecutableFormat>1</BuildCarbonExecutableFormat>
     <DebuggerCommandLine/>
     <LinuxArchitecture>1</LinuxArchitecture>
     <MacArchitecture>4</MacArchitecture>
@@ -3429,7 +3430,7 @@
       <PropertyVal Name="TabIndex">4</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">Version 4 Beta 23 - 2025-09-20</PropertyVal>
+      <PropertyVal Name="Text">Version 4 Beta 24 - 2025-09-20</PropertyVal>
       <PropertyVal Name="TextAlignment">2</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c9B9B9B00</PropertyVal>
       <PropertyVal Name="Tooltip"/>
@@ -12302,10 +12303,23 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Function MouseDown(x As Integer, y As Integer) As Boolean</SourceLine>
+          <SourceLine>Return True</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseUp</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1397194751</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseUp(x As Integer, y As Integer)</SourceLine>
           <SourceLine>// Go to the next highlights page</SourceLine>
           <SourceLine>HighlightNextPage()</SourceLine>
           <SourceLine/>
-          <SourceLine>End Function</SourceLine>
+          <SourceLine>End Sub</SourceLine>
         </ItemSource>
       </HookInstance>
     </ControlBehavior>
@@ -13034,7 +13048,6 @@
           <SourceLine>#PRAGMA unused URL</SourceLine>
           <SourceLine>#PRAGMA unused HTTPStatus</SourceLine>
           <SourceLine/>
-          <SourceLine/>
           <SourceLine>ReactorWindow.ColorProgressBar.Visible = False</SourceLine>
           <SourceLine>ReactorWindow.ClearDownloadQueueButtonState = "Inactive"</SourceLine>
           <SourceLine>ReactorWindow.ColorProgressBar.Refresh(False)</SourceLine>
@@ -13090,8 +13103,7 @@
           <SourceLine>App.DownloadAtomID = ""</SourceLine>
           <SourceLine>ReactorWindow.ClearDownloadQueueButtonState = "Inactive"</SourceLine>
           <SourceLine>ReactorWindow.ColorProgressBar.Refresh(False)</SourceLine>
-          <SourceLine>// CancelButton.Visible = False</SourceLine>
-          <SourceLine>// DownloadStatsLabel.Text = ""</SourceLine>
+          <SourceLine/>
           <SourceLine/>
           <SourceLine/>
           <SourceLine>End Sub</SourceLine>
@@ -13271,14 +13283,14 @@
           <SourceLine>// AtomzFile = downloadFile</SourceLine>
           <SourceLine/>
           <SourceLine>// Test non-blocking code</SourceLine>
-          <SourceLine>// RSocket.Send("GET", ZipFileURL, AtomzFile)</SourceLine>
+          <SourceLine>RSocket.Send("GET", ZipFileURL, AtomzFile, 15)</SourceLine>
           <SourceLine/>
           <SourceLine>// Use a 15 second idle timeout period for the download</SourceLine>
-          <SourceLine>RSocket.SendSync("GET", ZipFileURL, AtomzFile, 15)</SourceLine>
+          <SourceLine>// RSocket.SendSync("GET", ZipFileURL, AtomzFile, 15)</SourceLine>
           <SourceLine/>
-          <SourceLine>ReactorWindow.ColorProgressBar.Visible = True</SourceLine>
-          <SourceLine>ReactorWindow.ColorProgressBar.Refresh(False)</SourceLine>
-          <SourceLine>DownloadStatsLabel.Text = App.DownloadFilename + "  Downloaded"</SourceLine>
+          <SourceLine>// ReactorWindow.ColorProgressBar.Visible = True</SourceLine>
+          <SourceLine>// ReactorWindow.ColorProgressBar.Refresh(False)</SourceLine>
+          <SourceLine>// DownloadStatsLabel.Text = App.DownloadFilename + "  Downloaded"</SourceLine>
           <SourceLine>Else</SourceLine>
           <SourceLine>// Use a 15 second idle timeout period for the download</SourceLine>
           <SourceLine>ReactorWindow.ColorProgressBar.Visible = True</SourceLine>
@@ -14188,13 +14200,22 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub MouseUp(x As Integer, y As Integer)</SourceLine>
-          <SourceLine>If AboutWindow.Visible = False Then</SourceLine>
-          <SourceLine>AboutWindow.Show</SourceLine>
-          <SourceLine>Else</SourceLine>
-          <SourceLine>AboutWindow.Hide</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine/>
+          <SourceLine>// Go to the next highlights page</SourceLine>
+          <SourceLine>HighlightNextPage()</SourceLine>
           <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseDown</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>885829631</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function MouseDown(x As Integer, y As Integer) As Boolean</SourceLine>
+          <SourceLine>Return True</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
         </ItemSource>
       </HookInstance>
     </ControlBehavior>
@@ -14208,13 +14229,22 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Sub MouseUp(x As Integer, y As Integer)</SourceLine>
-          <SourceLine>If AboutWindow.Visible = False Then</SourceLine>
-          <SourceLine>AboutWindow.Show</SourceLine>
-          <SourceLine>Else</SourceLine>
-          <SourceLine>AboutWindow.Hide</SourceLine>
-          <SourceLine>End If</SourceLine>
-          <SourceLine/>
+          <SourceLine>// Go to the next highlights page</SourceLine>
+          <SourceLine>HighlightNextPage()</SourceLine>
           <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseDown</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>649310207</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function MouseDown(x As Integer, y As Integer) As Boolean</SourceLine>
+          <SourceLine>Return True</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
         </ItemSource>
       </HookInstance>
     </ControlBehavior>
@@ -14385,9 +14415,22 @@
         <ItemSource>
           <TextEncoding>134217984</TextEncoding>
           <SourceLine>Function MouseDown(x As Integer, y As Integer) As Boolean</SourceLine>
+          <SourceLine>Return True</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseUp</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1002446847</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseUp(x As Integer, y As Integer)</SourceLine>
           <SourceLine>// Go to the next highlights page</SourceLine>
           <SourceLine>HighlightNextPage()</SourceLine>
-          <SourceLine>End Function</SourceLine>
+          <SourceLine>End Sub</SourceLine>
         </ItemSource>
       </HookInstance>
     </ControlBehavior>
@@ -15619,7 +15662,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">502</PropertyVal>
+      <PropertyVal Name="Top">506</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
@@ -15650,7 +15693,7 @@
       <PropertyVal Name="TabIndex">0</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">742</PropertyVal>
+      <PropertyVal Name="Top">746</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
@@ -15682,7 +15725,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">View discussions</PropertyVal>
-      <PropertyVal Name="Top">551</PropertyVal>
+      <PropertyVal Name="Top">555</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
@@ -15714,7 +15757,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">556</PropertyVal>
+      <PropertyVal Name="Top">560</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">14</PropertyVal>
@@ -15752,7 +15795,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c95959300</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">554</PropertyVal>
+      <PropertyVal Name="Top">558</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -15791,7 +15834,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c52525600</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">554</PropertyVal>
+      <PropertyVal Name="Top">558</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -15824,7 +15867,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">Show related info</PropertyVal>
-      <PropertyVal Name="Top">528</PropertyVal>
+      <PropertyVal Name="Top">532</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
@@ -15856,7 +15899,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">534</PropertyVal>
+      <PropertyVal Name="Top">538</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">14</PropertyVal>
@@ -15894,7 +15937,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c95959300</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">532</PropertyVal>
+      <PropertyVal Name="Top">536</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -15927,7 +15970,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">Show atom package</PropertyVal>
-      <PropertyVal Name="Top">509</PropertyVal>
+      <PropertyVal Name="Top">513</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
@@ -15959,7 +16002,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">514</PropertyVal>
+      <PropertyVal Name="Top">518</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">14</PropertyVal>
@@ -15997,7 +16040,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;cFFFFFF00</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">512</PropertyVal>
+      <PropertyVal Name="Top">516</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -16036,7 +16079,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c95959300</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">512</PropertyVal>
+      <PropertyVal Name="Top">516</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -16227,11 +16270,11 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c83838300</PropertyVal>
       <PropertyVal Name="Tooltip">The info bar shows information about the current task</PropertyVal>
-      <PropertyVal Name="Top">744</PropertyVal>
+      <PropertyVal Name="Top">746</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">768</PropertyVal>
+      <PropertyVal Name="Width">750</PropertyVal>
       <ControlIndex>17</ControlIndex>
       <Locked>0</Locked>
       <PartID>1026347007</PartID>
@@ -16558,7 +16601,7 @@
       <PropertyVal Name="Height">15</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">962</PropertyVal>
+      <PropertyVal Name="Left">948</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16575,7 +16618,7 @@
       <PropertyVal Name="TextAlignment">3</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c52525600</PropertyVal>
       <PropertyVal Name="Tooltip">The info bar shows Reactor version information</PropertyVal>
-      <PropertyVal Name="Top">747</PropertyVal>
+      <PropertyVal Name="Top">749</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -16595,7 +16638,7 @@
       <PropertyVal Name="FillColor">&amp;c000000D9</PropertyVal>
       <PropertyVal Name="Height">23</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Left">1113</PropertyVal>
+      <PropertyVal Name="Left">1101</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16606,7 +16649,7 @@
       <PropertyVal Name="TabIndex">51</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">742</PropertyVal>
+      <PropertyVal Name="Top">744</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">256</PropertyVal>
@@ -16627,7 +16670,7 @@
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightRectangleBlackTint</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">1116</PropertyVal>
+      <PropertyVal Name="Left">1104</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16644,7 +16687,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;cFBCE1E00</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">747</PropertyVal>
+      <PropertyVal Name="Top">749</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -16666,7 +16709,7 @@
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent">HighlightRectangleBlackTint</PropertyVal>
       <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">1156</PropertyVal>
+      <PropertyVal Name="Left">1144</PropertyVal>
       <PropertyVal Name="LockBottom">True</PropertyVal>
       <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
@@ -16683,7 +16726,7 @@
       <PropertyVal Name="TextAlignment">1</PropertyVal>
       <PropertyVal Name="TextColor">&amp;c95959300</PropertyVal>
       <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">747</PropertyVal>
+      <PropertyVal Name="Top">749</PropertyVal>
       <PropertyVal Name="Transparent">True</PropertyVal>
       <PropertyVal Name="Underline">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
@@ -17355,7 +17398,7 @@
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
       <PropertyVal Name="TabStop">True</PropertyVal>
       <PropertyVal Name="Tooltip">The info bar shows download progress information</PropertyVal>
-      <PropertyVal Name="Top">751</PropertyVal>
+      <PropertyVal Name="Top">753</PropertyVal>
       <PropertyVal Name="Transparent">False</PropertyVal>
       <PropertyVal Name="Visible">True</PropertyVal>
       <PropertyVal Name="Width">122</PropertyVal>
@@ -30173,16 +30216,16 @@
     </WarningPreferences>
     <StudioWindowState>
       <EditBounds>
-        <Rect left="-5" top="25" width="1920" height="1055"/>
+        <Rect left="-1" top="25" width="1920" height="1055"/>
       </EditBounds>
       <WindowMaximized>0</WindowMaximized>
       <Editors>
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>ReactorWindow.Controls.RSocket.FileReceived</EditorLocation>
+          <EditorLocation>AboutWindow.Controls.AboutLabel3</EditorLocation>
           <EditorPath/>
-          <EditingPartID>338128895</EditingPartID>
+          <EditingPartID>296974335</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
