@@ -3975,6 +3975,30 @@
         <PropertyValue>False</PropertyValue>
         <ItemType>Boolean</ItemType>
       </ViewProperty>
+      <ViewProperty>
+        <ObjName>NewAtomsCheckboxState</ObjName>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>GamepadSupportCheckBoxState</ObjName>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>False</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>LiveSearchCheckboxState</ObjName>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>True</PropertyValue>
+        <ItemType>Boolean</ItemType>
+      </ViewProperty>
+      <ViewProperty>
+        <ObjName>SaveButtonState</ObjName>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>Up</PropertyValue>
+        <ItemType>String</ItemType>
+      </ViewProperty>
     </ViewBehavior>
     <ControlBehavior>
       <Superclass>DesktopTextField</Superclass>
@@ -6360,421 +6384,6 @@
       <PartID>2112245759</PartID>
     </Control>
   </block>
-  <block type="DesktopWindow" ID="1780813823">
-    <ObjName>DonationWindow</ObjName>
-    <ObjContainerID>0</ObjContainerID>
-    <IsClass>1</IsClass>
-    <Superclass>DesktopWindow</Superclass>
-    <ItemFlags>1</ItemFlags>
-    <IsInterface>0</IsInterface>
-    <Compatibility/>
-    <HookInstance>
-      <ItemName>Opening</ItemName>
-      <Compatibility/>
-      <Visible>1</Visible>
-      <PartID>1196244991</PartID>
-      <ItemSource>
-        <TextEncoding>134217984</TextEncoding>
-        <SourceLine>Sub Opening()</SourceLine>
-        <SourceLine>// Window sizing</SourceLine>
-        <SourceLine>If ReactorWindow.Visible = True Then</SourceLine>
-        <SourceLine>Me.Top = DesktopDisplay.DisplayAt(0).AvailableTop + 28 + (ReactorWindow.Height / 2) - (Me.Height / 2)</SourceLine>
-        <SourceLine>Me.Left = ReactorWindow.Left + (ReactorWindow.Width / 2) - (Me.Width / 2)</SourceLine>
-        <SourceLine>End If</SourceLine>
-        <SourceLine/>
-        <SourceLine/>
-        <SourceLine>End Sub</SourceLine>
-      </ItemSource>
-    </HookInstance>
-    <PropertyVal Name="MenuBarVisible">False</PropertyVal>
-    <PropertyVal Name="MenuBar"/>
-    <PropertyVal Name="Backdrop">0</PropertyVal>
-    <PropertyVal Name="BackgroundColor">&amp;c1D1D1D00</PropertyVal>
-    <PropertyVal Name="HasBackgroundColor">True</PropertyVal>
-    <PropertyVal Name="ImplicitInstance">True</PropertyVal>
-    <PropertyVal Name="Visible">False</PropertyVal>
-    <PropertyVal Name="DefaultLocation">2</PropertyVal>
-    <PropertyVal Name="FullScreen">False</PropertyVal>
-    <PropertyVal Name="MacProcID">0</PropertyVal>
-    <PropertyVal Name="Composite">False</PropertyVal>
-    <PropertyVal Name="Resizeable">True</PropertyVal>
-    <PropertyVal Name="HasTitleBar">True</PropertyVal>
-    <PropertyVal Name="HasFullScreenButton">False</PropertyVal>
-    <PropertyVal Name="HasMinimizeButton">True</PropertyVal>
-    <PropertyVal Name="HasMaximizeButton">True</PropertyVal>
-    <PropertyVal Name="HasCloseButton">True</PropertyVal>
-    <PropertyVal Name="Title">Donate</PropertyVal>
-    <PropertyVal Name="Type">0</PropertyVal>
-    <PropertyVal Name="MaximumHeight">185</PropertyVal>
-    <PropertyVal Name="MaximumWidth">535</PropertyVal>
-    <PropertyVal Name="MinimumHeight">185</PropertyVal>
-    <PropertyVal Name="MinimumWidth">535</PropertyVal>
-    <PropertyVal Name="Height">223</PropertyVal>
-    <PropertyVal Name="Width">532</PropertyVal>
-    <ViewBehavior>
-      <ViewProperty>
-        <ObjName>Name</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>ID</PropertyGroup>
-        <ItemType>String</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Interfaces</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>ID</PropertyGroup>
-        <ItemType>String</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Super</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>ID</PropertyGroup>
-        <ItemType>String</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Width</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Size</PropertyGroup>
-        <PropertyValue>600</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Height</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Size</PropertyGroup>
-        <PropertyValue>400</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MinimumWidth</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Size</PropertyGroup>
-        <PropertyValue>64</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MinimumHeight</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Size</PropertyGroup>
-        <PropertyValue>64</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MaximumWidth</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Size</PropertyGroup>
-        <PropertyValue>32000</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MaximumHeight</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Size</PropertyGroup>
-        <PropertyValue>32000</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Type</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>0</PropertyValue>
-        <ItemType>Types</ItemType>
-        <EditorType>Enum</EditorType>
-        <Enumeration>
-          <ItemDef>0 - Document</ItemDef>
-          <ItemDef>1 - Movable Modal</ItemDef>
-          <ItemDef>2 - Modal Dialog</ItemDef>
-          <ItemDef>3 - Floating Window</ItemDef>
-          <ItemDef>4 - Plain Box</ItemDef>
-          <ItemDef>5 - Shadowed Box</ItemDef>
-          <ItemDef>6 - Rounded Window</ItemDef>
-          <ItemDef>7 - Global Floating Window</ItemDef>
-          <ItemDef>8 - Sheet Window</ItemDef>
-          <ItemDef>9 - Modeless Dialog</ItemDef>
-        </Enumeration>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Title</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>Untitled</PropertyValue>
-        <ItemType>String</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>HasCloseButton</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>HasMaximizeButton</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>HasMinimizeButton</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>HasFullScreenButton</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>False</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>HasTitleBar</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Resizeable</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Frame</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Composite</ObjName>
-        <PropertyGroup>OS X (Carbon)</PropertyGroup>
-        <PropertyValue>False</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MacProcID</ObjName>
-        <PropertyGroup>OS X (Carbon)</PropertyGroup>
-        <PropertyValue>0</PropertyValue>
-        <ItemType>Integer</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>FullScreen</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Behavior</PropertyGroup>
-        <PropertyValue>False</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>DefaultLocation</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Behavior</PropertyGroup>
-        <PropertyValue>2</PropertyValue>
-        <ItemType>Locations</ItemType>
-        <EditorType>Enum</EditorType>
-        <Enumeration>
-          <ItemDef>0 - Default</ItemDef>
-          <ItemDef>1 - Parent Window</ItemDef>
-          <ItemDef>2 - Main Screen</ItemDef>
-          <ItemDef>3 - Parent Window Screen</ItemDef>
-          <ItemDef>4 - Stagger</ItemDef>
-        </Enumeration>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Visible</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Behavior</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>ImplicitInstance</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Window Behavior</PropertyGroup>
-        <PropertyValue>True</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>HasBackgroundColor</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Background</PropertyGroup>
-        <PropertyValue>False</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>BackgroundColor</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Background</PropertyGroup>
-        <PropertyValue>&amp;cFFFFFF</PropertyValue>
-        <ItemType>ColorGroup</ItemType>
-        <EditorType>ColorGroup</EditorType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>Backdrop</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Background</PropertyGroup>
-        <ItemType>Picture</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MenuBar</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Menus</PropertyGroup>
-        <ItemType>DesktopMenuBar</ItemType>
-      </ViewProperty>
-      <ViewProperty>
-        <ObjName>MenuBarVisible</ObjName>
-        <Visible>1</Visible>
-        <PropertyGroup>Deprecated</PropertyGroup>
-        <PropertyValue>False</PropertyValue>
-        <ItemType>Boolean</ItemType>
-      </ViewProperty>
-    </ViewBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopLabel</Superclass>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopButton</Superclass>
-      <HookInstance>
-        <ItemName>Pressed</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>2079225855</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine>DonationWindow.Close</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopButton</Superclass>
-      <HookInstance>
-        <ItemName>Pressed</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>1158070271</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine>DonationWindow.Close</SourceLine>
-          <SourceLine>//System.GotoURL()</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <Control>
-      <ControlClass>DesktopLabel</ControlClass>
-      <ItemName>DesktopLabel</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">Inter</PropertyVal>
-      <PropertyVal Name="FontSize">1.4e+1</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">145</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">20</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="Multiline">True</PropertyVal>
-      <PropertyVal Name="Name">DescriptionLabel</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Selectable">False</PropertyVal>
-      <PropertyVal Name="Super">DesktopLabel</PropertyVal>
-      <PropertyVal Name="TabIndex">1</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Text">
-        <Hex bytes="135">54686520617574686F72206F66207468652061746F6D3A0A3C41746F6D49443E0A68617320737567676573746564206120646F6E6174696F6E206F662024312E300A0A436C69636B2074686520627574746F6E20746F20646F6E61746520766961207468652055524C3A0A68747470733A2F2F7777772E70617970616C2E6D652F3C4E616D653E</Hex>
-      </PropertyVal>
-      <PropertyVal Name="TextAlignment">2</PropertyVal>
-      <PropertyVal Name="TextColor">&amp;c92929200</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">20</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">492</PropertyVal>
-      <ControlIndex>0</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>1595035647</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopButton</ControlClass>
-      <ItemName>DesktopButton</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Cancel">False</PropertyVal>
-      <PropertyVal Name="Caption">Not right now... but I will consider it!</PropertyVal>
-      <PropertyVal Name="Default">True</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">Inter</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">20</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">272</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">False</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
-      <PropertyVal Name="Name">CancelButton</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopButton</PropertyVal>
-      <PropertyVal Name="TabIndex">7</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">177</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">240</PropertyVal>
-      <ControlIndex>1</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>1667102719</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopButton</ControlClass>
-      <ItemName>DesktopButton</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Cancel">True</PropertyVal>
-      <PropertyVal Name="Caption">Shut up and take my money!</PropertyVal>
-      <PropertyVal Name="Default">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">Inter</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">20</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">20</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">False</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
-      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
-      <PropertyVal Name="Name">DonateButton</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopButton</PropertyVal>
-      <PropertyVal Name="TabIndex">8</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip"/>
-      <PropertyVal Name="Top">177</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">240</PropertyVal>
-      <ControlIndex>2</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>448149503</PartID>
-    </Control>
-  </block>
   <block type="DesktopWindow" ID="2046642175">
     <ObjName>LicenseWindow</ObjName>
     <ObjContainerID>0</ObjContainerID>
@@ -6908,6 +6517,36 @@
         <SourceLine>End Function</SourceLine>
       </ItemSource>
     </MenuHandler>
+    <Property>
+      <ItemName>AgreeButtonState</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1558509567</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>AgreeButtonState As String = "Up"</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>AgreeButtonState As String = "Up"</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
+    <Property>
+      <ItemName>DisagreeButtonState</ItemName>
+      <Compatibility/>
+      <Visible>1</Visible>
+      <PartID>1721458687</PartID>
+      <ItemSource>
+        <TextEncoding>134217984</TextEncoding>
+        <SourceLine>DisagreeButtonState As String = "Up"</SourceLine>
+        <SourceLine/>
+      </ItemSource>
+      <TextEncoding>134217984</TextEncoding>
+      <ItemDeclaration>DisagreeButtonState As String = "Up"</ItemDeclaration>
+      <ItemFlags>0</ItemFlags>
+      <IsShared>0</IsShared>
+    </Property>
     <PropertyVal Name="MenuBarVisible">False</PropertyVal>
     <PropertyVal Name="MenuBar">494839807</PropertyVal>
     <PropertyVal Name="Backdrop">0</PropertyVal>
@@ -7145,6 +6784,12 @@
         <PropertyValue>False</PropertyValue>
         <ItemType>Boolean</ItemType>
       </ViewProperty>
+      <ViewProperty>
+        <ObjName>AgreeButtonState</ObjName>
+        <PropertyGroup>Behavior</PropertyGroup>
+        <PropertyValue>Up</PropertyValue>
+        <ItemType>String</ItemType>
+      </ViewProperty>
     </ViewBehavior>
     <ControlBehavior>
       <Superclass>DesktopLabel</Superclass>
@@ -7157,43 +6802,6 @@
     </ControlBehavior>
     <ControlBehavior>
       <Superclass>DesktopCanvas</Superclass>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopButton</Superclass>
-      <HookInstance>
-        <ItemName>Pressed</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>1178068991</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine>App.LicenseAccepted = True</SourceLine>
-          <SourceLine/>
-          <SourceLine>ReactorWindow.Show</SourceLine>
-          <SourceLine>LicenseWindow.Close</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
-    </ControlBehavior>
-    <ControlBehavior>
-      <Superclass>DesktopButton</Superclass>
-      <HookInstance>
-        <ItemName>Pressed</ItemName>
-        <Compatibility/>
-        <Visible>1</Visible>
-        <PartID>2038394879</PartID>
-        <ItemSource>
-          <TextEncoding>134217984</TextEncoding>
-          <SourceLine>Sub Pressed()</SourceLine>
-          <SourceLine>App.LicenseAccepted = False</SourceLine>
-          <SourceLine/>
-          <SourceLine>Quit()</SourceLine>
-          <SourceLine/>
-          <SourceLine>End Sub</SourceLine>
-        </ItemSource>
-      </HookInstance>
     </ControlBehavior>
     <ControlBehavior>
       <Superclass>Timer</Superclass>
@@ -7264,6 +6872,325 @@
           <SourceLine>Catch error As RuntimeException</SourceLine>
           <SourceLine>System.DebugLog("Warning... USB Down"  + EndOfLine + EndOfLine + error.Message)</SourceLine>
           <SourceLine>End Try</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopCanvas</Superclass>
+      <HookInstance>
+        <ItemName>Paint</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1120546815</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Paint(g As Graphics, areas() As Rect)</SourceLine>
+          <SourceLine>// Button state property name</SourceLine>
+          <SourceLine>Var State As String = AgreeButtonState</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text String</SourceLine>
+          <SourceLine>Var buttonTxt As String = "Agree"</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Font</SourceLine>
+          <SourceLine>g.FontName = "Inter"</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text bold</SourceLine>
+          <SourceLine>// g.Bold = True</SourceLine>
+          <SourceLine/>
+          <SourceLine>If State = "Up" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>ElseIf State = "Down" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Black</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(19, 19, 19)</SourceLine>
+          <SourceLine>ElseIf State = "Enter" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Black</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(19, 19, 19)</SourceLine>
+          <SourceLine>ElseIf State = "Exit" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>ElseIf State = "Inactive" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Drawing coords</SourceLine>
+          <SourceLine>Var gX As Double = (g.Width - g.TextWidth(buttonTxt)) / 2</SourceLine>
+          <SourceLine>Var gY as Double = (g.Height - g.TextHeight) / 2 + g.FontAscent</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text</SourceLine>
+          <SourceLine>g.DrawText(buttonTxt, gX, gY, Me.Width, True)</SourceLine>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseDown</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1154228223</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function MouseDown(x As Integer, y As Integer) As Boolean</SourceLine>
+          <SourceLine>If AgreeButtonState &lt;&gt; "Inactive" Then</SourceLine>
+          <SourceLine>AgreeButtonState = "Down"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>Return True</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseUp</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1329840127</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseUp(x As Integer, y As Integer)</SourceLine>
+          <SourceLine>If AgreeButtonState &lt;&gt; "Inactive" Then</SourceLine>
+          <SourceLine>AgreeButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine/>
+          <SourceLine>App.LicenseAccepted = True</SourceLine>
+          <SourceLine>ReactorWindow.Show</SourceLine>
+          <SourceLine>LicenseWindow.Close</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseEnter</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>278951935</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseEnter()</SourceLine>
+          <SourceLine>If AgreeButtonState &lt;&gt; "Inactive" Then</SourceLine>
+          <SourceLine>// AgreeButtonState = "Enter"</SourceLine>
+          <SourceLine>AgreeButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseExit</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>13969407</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseExit()</SourceLine>
+          <SourceLine>If AgreeButtonState &lt;&gt; "Inactive" Then</SourceLine>
+          <SourceLine>// AgreeButtonState = "Exit"</SourceLine>
+          <SourceLine>AgreeButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+    </ControlBehavior>
+    <ControlBehavior>
+      <Superclass>DesktopCanvas</Superclass>
+      <HookInstance>
+        <ItemName>Paint</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>285495295</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub Paint(g As Graphics, areas() As Rect)</SourceLine>
+          <SourceLine>// Button state property name</SourceLine>
+          <SourceLine>Var State As String = AgreeButtonState</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text String</SourceLine>
+          <SourceLine>Var buttonTxt As String = "Disagree"</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Font</SourceLine>
+          <SourceLine>g.FontName = "Inter"</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text bold</SourceLine>
+          <SourceLine>// g.Bold = True</SourceLine>
+          <SourceLine/>
+          <SourceLine>If State = "Up" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>ElseIf State = "Down" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Pressed_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Black</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(19, 19, 19)</SourceLine>
+          <SourceLine>ElseIf State = "Enter" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Default_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Black</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(19, 19, 19)</SourceLine>
+          <SourceLine>ElseIf State = "Exit" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>ElseIf State = "Inactive" Then</SourceLine>
+          <SourceLine>// Button Left Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Left, 0, 0)</SourceLine>
+          <SourceLine>// Button Centre Stretch</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Middle, Button_Pressed_Grey_Left.Width, 0,  g.Width - Button_Pressed_Grey_Left.Width - Button_Pressed_Grey_Right.Width , Button_Pressed_Grey_Middle.Height, 0, 0, Button_Pressed_Grey_Middle.Width, Button_Pressed_Grey_Middle.Height)</SourceLine>
+          <SourceLine>// Button Right Cap</SourceLine>
+          <SourceLine>g.DrawPicture(Button_Inactive_Grey_Right, g.Width - Button_Pressed_Grey_Right.Width, 0)</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text JustCropIt Off White Color</SourceLine>
+          <SourceLine>// g.DrawingColor = Color.RGB(149, 149, 149)</SourceLine>
+          <SourceLine>g.DrawingColor = Color.RGB(208, 208, 208)</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text Drawing coords</SourceLine>
+          <SourceLine>Var gX As Double = (g.Width - g.TextWidth(buttonTxt)) / 2</SourceLine>
+          <SourceLine>Var gY as Double = (g.Height - g.TextHeight) / 2 + g.FontAscent</SourceLine>
+          <SourceLine/>
+          <SourceLine>// Text</SourceLine>
+          <SourceLine>g.DrawText(buttonTxt, gX, gY, Me.Width, True)</SourceLine>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseDown</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>868646911</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Function MouseDown(x As Integer, y As Integer) As Boolean</SourceLine>
+          <SourceLine>If DisagreeButtonState &lt;&gt; "Inactive" Then</SourceLine>
+          <SourceLine>DisagreeButtonState = "Down"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>Return True</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Function</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseUp</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1950150655</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseUp(x As Integer, y As Integer)</SourceLine>
+          <SourceLine>If DisagreeButtonState &lt;&gt; "Inactive" Then</SourceLine>
+          <SourceLine>DisagreeButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine/>
+          <SourceLine>App.LicenseAccepted = False</SourceLine>
+          <SourceLine>Quit()</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine/>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseEnter</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>1703669759</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseEnter()</SourceLine>
+          <SourceLine>If DisagreeButtonState &lt;&gt; "Inactive" Then</SourceLine>
+          <SourceLine>// DisagreeButtonState = "Enter"</SourceLine>
+          <SourceLine>DisagreeButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
+          <SourceLine>End If</SourceLine>
+          <SourceLine>End Sub</SourceLine>
+        </ItemSource>
+      </HookInstance>
+      <HookInstance>
+        <ItemName>MouseExit</ItemName>
+        <Compatibility/>
+        <Visible>1</Visible>
+        <PartID>151152639</PartID>
+        <ItemSource>
+          <TextEncoding>134217984</TextEncoding>
+          <SourceLine>Sub MouseExit()</SourceLine>
+          <SourceLine>If DisagreeButtonState &lt;&gt; "Inactive" Then</SourceLine>
+          <SourceLine>// DisagreeButtonState = "Exit"</SourceLine>
+          <SourceLine>DisagreeButtonState = "Up"</SourceLine>
+          <SourceLine>Me.Refresh</SourceLine>
           <SourceLine>End If</SourceLine>
           <SourceLine>End Sub</SourceLine>
         </ItemSource>
@@ -7415,81 +7342,6 @@
       <PartID>1537968127</PartID>
     </Control>
     <Control>
-      <ControlClass>DesktopButton</ControlClass>
-      <ItemName>DesktopButton</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Cancel">False</PropertyVal>
-      <PropertyVal Name="Caption">Agree</PropertyVal>
-      <PropertyVal Name="Default">True</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">Inter</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">20</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">356</PropertyVal>
-      <PropertyVal Name="LockBottom">True</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">False</PropertyVal>
-      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
-      <PropertyVal Name="Name">AgreeButton</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopButton</PropertyVal>
-      <PropertyVal Name="TabIndex">0</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip">I agree to the Reactor license terms</PropertyVal>
-      <PropertyVal Name="Top">402</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">80</PropertyVal>
-      <ControlIndex>4</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>1146753023</PartID>
-    </Control>
-    <Control>
-      <ControlClass>DesktopButton</ControlClass>
-      <ItemName>DesktopButton</ItemName>
-      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
-      <PropertyVal Name="Bold">False</PropertyVal>
-      <PropertyVal Name="Cancel">True</PropertyVal>
-      <PropertyVal Name="Caption">Disagree</PropertyVal>
-      <PropertyVal Name="Default">False</PropertyVal>
-      <PropertyVal Name="Enabled">True</PropertyVal>
-      <PropertyVal Name="FontName">Inter</PropertyVal>
-      <PropertyVal Name="FontSize">0.0</PropertyVal>
-      <PropertyVal Name="FontUnit">0</PropertyVal>
-      <PropertyVal Name="Height">20</PropertyVal>
-      <PropertyVal Name="Index">-2147483648</PropertyVal>
-      <PropertyVal Name="InitialParent"/>
-      <PropertyVal Name="Italic">False</PropertyVal>
-      <PropertyVal Name="Left">184</PropertyVal>
-      <PropertyVal Name="LockBottom">True</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
-      <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">False</PropertyVal>
-      <PropertyVal Name="MacButtonStyle">0</PropertyVal>
-      <PropertyVal Name="Name">DisagreeButton</PropertyVal>
-      <PropertyVal Name="Scope">0</PropertyVal>
-      <PropertyVal Name="Super">DesktopButton</PropertyVal>
-      <PropertyVal Name="TabIndex">1</PropertyVal>
-      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <PropertyVal Name="TabStop">True</PropertyVal>
-      <PropertyVal Name="Tooltip">I disagree with the Reactor license terms</PropertyVal>
-      <PropertyVal Name="Top">402</PropertyVal>
-      <PropertyVal Name="Transparent">False</PropertyVal>
-      <PropertyVal Name="Underline">False</PropertyVal>
-      <PropertyVal Name="Visible">True</PropertyVal>
-      <PropertyVal Name="Width">80</PropertyVal>
-      <ControlIndex>5</ControlIndex>
-      <Locked>0</Locked>
-      <PartID>1455753215</PartID>
-    </Control>
-    <Control>
       <ControlClass>Timer</ControlClass>
       <ItemName>Timer</ItemName>
       <PropertyVal Name="Enabled">True</PropertyVal>
@@ -7500,9 +7352,72 @@
       <PropertyVal Name="Scope">0</PropertyVal>
       <PropertyVal Name="Super">Timer</PropertyVal>
       <PropertyVal Name="TabPanelIndex">0</PropertyVal>
-      <ControlIndex>6</ControlIndex>
+      <ControlIndex>4</ControlIndex>
       <Locked>0</Locked>
       <PartID>454094847</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopCanvas</ControlClass>
+      <ItemName>DesktopCanvas</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowFocus">False</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">False</PropertyVal>
+      <PropertyVal Name="AllowTabs">False</PropertyVal>
+      <PropertyVal Name="Backdrop">0</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="Left">356</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">AgreeButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
+      <PropertyVal Name="TabIndex">7</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip">I agree to the Reactor license terms</PropertyVal>
+      <PropertyVal Name="Top">402</PropertyVal>
+      <PropertyVal Name="Transparent">True</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">80</PropertyVal>
+      <ControlIndex>5</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>2078242815</PartID>
+    </Control>
+    <Control>
+      <ControlClass>DesktopCanvas</ControlClass>
+      <ItemName>DesktopCanvas</ItemName>
+      <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+      <PropertyVal Name="AllowFocus">False</PropertyVal>
+      <PropertyVal Name="AllowFocusRing">False</PropertyVal>
+      <PropertyVal Name="AllowTabs">False</PropertyVal>
+      <PropertyVal Name="Backdrop">0</PropertyVal>
+      <PropertyVal Name="Enabled">True</PropertyVal>
+      <PropertyVal Name="Height">20</PropertyVal>
+      <PropertyVal Name="Index">-2147483648</PropertyVal>
+      <PropertyVal Name="InitialParent"/>
+      <PropertyVal Name="Left">184</PropertyVal>
+      <PropertyVal Name="LockBottom">False</PropertyVal>
+      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockRight">True</PropertyVal>
+      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="Name">DisagreeButton</PropertyVal>
+      <PropertyVal Name="Scope">0</PropertyVal>
+      <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
+      <PropertyVal Name="TabIndex">8</PropertyVal>
+      <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+      <PropertyVal Name="TabStop">True</PropertyVal>
+      <PropertyVal Name="Tooltip">I agree to the Reactor license terms</PropertyVal>
+      <PropertyVal Name="Top">402</PropertyVal>
+      <PropertyVal Name="Transparent">True</PropertyVal>
+      <PropertyVal Name="Visible">True</PropertyVal>
+      <PropertyVal Name="Width">80</PropertyVal>
+      <ControlIndex>6</ControlIndex>
+      <Locked>0</Locked>
+      <PartID>1197633535</PartID>
     </Control>
   </block>
   <block type="DesktopWindow" ID="338128895">
@@ -16384,10 +16299,10 @@
       <PropertyVal Name="Height">20</PropertyVal>
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="Left">834</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
       <PropertyVal Name="Name">InstallButton</PropertyVal>
       <PropertyVal Name="Scope">0</PropertyVal>
       <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
@@ -16416,10 +16331,10 @@
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent"/>
       <PropertyVal Name="Left">513</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
       <PropertyVal Name="Name">UpdateButton</PropertyVal>
       <PropertyVal Name="Scope">0</PropertyVal>
       <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
@@ -16448,10 +16363,10 @@
       <PropertyVal Name="Index">-2147483648</PropertyVal>
       <PropertyVal Name="InitialParent"/>
       <PropertyVal Name="Left">192</PropertyVal>
-      <PropertyVal Name="LockBottom">False</PropertyVal>
-      <PropertyVal Name="LockLeft">True</PropertyVal>
+      <PropertyVal Name="LockBottom">True</PropertyVal>
+      <PropertyVal Name="LockLeft">False</PropertyVal>
       <PropertyVal Name="LockRight">True</PropertyVal>
-      <PropertyVal Name="LockTop">True</PropertyVal>
+      <PropertyVal Name="LockTop">False</PropertyVal>
       <PropertyVal Name="Name">RemoveButton</PropertyVal>
       <PropertyVal Name="Scope">0</PropertyVal>
       <PropertyVal Name="Super">DesktopCanvas</PropertyVal>
@@ -24562,9 +24477,9 @@
         <EditorCount>1</EditorCount>
         <Editor>
           <EditorIndex>0</EditorIndex>
-          <EditorLocation>PreferencesWindow.Controls.SaveButton.MouseUp</EditorLocation>
+          <EditorLocation>ReactorWindow.Controls.RemoveButton</EditorLocation>
           <EditorPath/>
-          <EditingPartID>241967103</EditingPartID>
+          <EditingPartID>338128895</EditingPartID>
           <EditorPath/>
         </Editor>
         <SelectedTab>0</SelectedTab>
