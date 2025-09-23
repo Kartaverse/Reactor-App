@@ -29,5 +29,16 @@
         "ShowRelatedURL": "https://www.instagram.com/emberlightvfx/",
         "DiscussName": "(WeSuckLess Forum)",
         "DiscussURL": "https://www.steakunderwater.com/wesuckless/viewtopic.php?t=7426"
+    },
+    "4": {
+        "Title": "PROPAGATE Script",
+        "ImageURL": "https://gitlab.com/WeSuckLess/Reactor/-/raw/master/JSON/Highlights-4.png?ref_type=heads",
+        "Blurb": "PROPAGATE is a utility that captures parameter changes on the active node and applies them to other selected nodes, keeping settings, connections, expressions, and animations consistent across a selection.",
+        "AtomName": "PROPAGATE",
+        "AtomID": "com.DominikBargiel.Propagate",
+        "ShowRelatedName": "YouTube Channel",
+        "ShowRelatedURL": "https://www.youtube.com/watch?v=yT1KqW1dVRw",
+        "DiscussName": "(WeSuckLess Forum)",
+        "DiscussURL": "https://www.steakunderwater.com/wesuckless/viewtopic.php?p=56240#p56240"
     }
 }
