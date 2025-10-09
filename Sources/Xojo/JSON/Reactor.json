@@ -451,8 +451,8 @@
         "Date": {
             "__flags": 256,
             "1.0": 2025.0,
-            "2.0": 2.0,
-            "3.0": 16.0
+            "2.0": 10.0,
+            "3.0": 9.0
         },
         "Author": "Andrew Hazelden",
         "Description": "<p>Atomizer is a visual editing tool that simplifies the process of creating a Reactor \"Atom\" package. You can now bundle up your custom Fusion tools and assets in merge minutes and share them with your fellow Fusion users. Atomizer even supports adding a monetization option to your atom packages with the \"Donation Amount\" and \"Donation URL\" tags. This means so you can get paid for your hardwork via PayPal, or other payment methods.</p>\n\n<h2>We Hope You Enjoy Atomizer!</h2>\n\n<p>This script was designed to provide a feature rich user interface that would streamline the process of bundling up your Fusion content so it could be distrbuted quickly and efficently via the WSL forum's Reactor package manager tool.</p>\n\n<h2>For More Information</h2>\n<p>Check out the Reactor topics on the WSL Forum to get up to speed with atom creation workflows and techniques:<br>\nhttps://www.steakunderwater.com/wesuckless/viewtopic.php?p=13229#p13229</p>\n\n<h2>Atom Package Specification</h2>\n<p>https://gitlab.com/WeSuckLess/Reactor/blob/master/Docs/Creating-Atom-Packages.md</p>\n",
@@ -480,18 +480,22 @@
     },
     "17": {
         "__ctor": "Atom",
-        "Version": 1.7,
+        "Version": 4.0,
         "Deploy": {
-            "1.0": "Scripts/Comp/Atomz/Atomz Create.py",
-            "2.0": "Scripts/Support/Atomz Create CLI.py"
+            "1.0": "Scripts/Comp/Atomz/Atom to Markdown.py",
+            "2.0": "Scripts/Comp/Atomz/Atomz Create.py",
+            "3.0": "Scripts/Comp/Atomz/Fusion Atom to JSON.py",
+            "4.0": "Scripts/Comp/Atomz/Houdini Atom to JSON.py",
+            "5.0": "Scripts/Comp/Atomz/LightWave Atom to JSON.py",
+            "6.0": "Scripts/Support/Atomz Create CLI.py"
         },
         "Name": "Reactor Atomz Create",
         "Category": "Scripts/Reactor",
         "Date": {
             "__flags": 256,
             "1.0": 2025.0,
-            "2.0": 8.0,
-            "3.0": 15.0
+            "2.0": 10.0,
+            "3.0": 9.0
         },
         "Author": "Andrew Hazelden",
         "Description": "<p>The \"Script &gt; Atomz &gt; AtomzCreate\" menu converts a GitLab Reactor repository folder into individually zipped atomz packaged archives. The zipped packages are easier to use and manage with a NAS-based offline Reactor Package installation approach.</p>\n\n<h2>Requirements</h2>\n<ul>\n\t<li>Python v3.6 to v3.10+ 64-bit</li>\n\t<li>Fusion Studio 16-20+ or Resolve 16-20+</li>\n</ul>\n\n<p>If you would like to provide feedback on the evolution of zipped Reactor Atomz Package workflows, please check out the <a href=\"https://www.steakunderwater.com/wesuckless/viewtopic.php?t=6115\">development thread on the Steakunderwater forum</a>.</p>\n",
@@ -500,7 +504,7 @@
     },
     "18": {
         "__ctor": "Atom",
-        "Version": 1.7,
+        "Version": 4.0,
         "Deploy": {
             "1.0": "Config/DragDrop/Atomz Expand DragDrop.fu",
             "2.0": "Scripts/Comp/Atomz/Atomz Expand.py"
@@ -11556,18 +11560,18 @@
     },
     "295": {
         "__ctor": "Atom",
-        "Description": "<font color=#ffd100><h2>Blip</h2></font>\n\n<p>Remember the last time you had to animate single frame events in your comp? Muzzle flashes, anyone? Flickering light bulbs? Lightning strikes? Glitchy motion graphics perhaps?</p>\n\n<p>Simply do those little events by typing in the frames where you want them. Super fast, super easy. </p>\n\n<h3>A quick rundown of the available parameters:</h3>\n\n\n<ul>\n\t<li><b>Rest Value</b>: the base value of your parameter. This is the value the Modifier will output on non-Blip Frames. </li>\n\t<li><b>Blip Value</b>: the value the Modifier outputs on the frames defined as Blip Frames. </li>\n\t<li><b>Blip Length</b>: doesn't have to be single frame Blips of course... </li>\n\t<li><b>Attack/Decay</b>: for Blips longer than single frames, you can fade them in or out.</li>\n\t<li><b>Blip Frames</b>: the frames where a Blip starts. You can type one frame per line, comma separate them, space, tab, up to you. You can be as sloppy as you damn well like! v1.4+ also supports ranges such as 1-10.</li>\n\t<li><b>Frame Scale</b>: Scale yor Blip frames, for example Blip frame 10 will become Blip frame 20 with Frame Scale set to 2.</li>\n\t<li><b>Frame Offset</b>: As above, and following the following order of operations: Frame Scale first, then Frame Offset (and you get a preview of all that so you don't have to count inside your precious head!).</li>\n\t<li><b>Supports decimal values!</li>\n</ul>\n\n<h4>If you like Blip and the time it saves you, please consider <a href=\"https://www.patreon.com/wesuckless\">becoming a We Suck Less Patron</a></h4>\n\n<h3>We Suck Less companion topic:</h3>\n\n<p><a href=\"https://www.steakunderwater.com/wesuckless/viewtopic.php?t=3485\">https://www.steakunderwater.com/wesuckless/viewtopic.php?t=3485</a></p>",
+        "Description": "<font color=#ffd100><h2>Blip</h2></font>\n\n<p>Remember the last time you had to animate single frame events in your comp? Muzzle flashes, anyone? Flickering light bulbs? Lightning strikes? Glitchy motion graphics perhaps?</p>\n\n<p>Simply do those little events by typing in the frames where you want them. Super fast, super easy. </p>\n\n<h3>A quick rundown of the available parameters:</h3>\n\n\n<ul>\n\t<li><b>Rest Value</b>: the base value of your parameter. This is the value the Modifier will output on non-Blip Frames. </li>\n\t<li><b>Blip Value</b>: the value the Modifier outputs on the frames defined as Blip Frames. </li>\n\t<li><b>Blip Length</b>: doesn't have to be single frame Blips of course... </li>\n\t<li><b>Attack/Decay</b>: for Blips longer than single frames, you can fade them in or out.</li>\n\t<li><b>Blip Frames</b>: the frames where a Blip starts. You can type one frame per line, comma separate them, space, tab, up to you. You can be as sloppy as you damn well like! v1.4+ also supports ranges such as 1-10.</li>\n\t<li><b>Frame Scale</b>: Scale yor Blip frames, for example Blip frame 10 will become Blip frame 20 with Frame Scale set to 2.</li>\n\t<li><b>Frame Offset</b>: As above, and following the following order of operations: Frame Scale first, then Frame Offset (and you get a preview of all that so you don't have to count inside your precious head!).</li>\n\t<li><b>Supports decimal values!</li>\n</ul>\n\n<font color=#ffd100><h2>Blip 2.5 -- massive overhaul!</h2></font>\n\n<h3>Thanks to <a href=\"https://www.steakunderwater.com/wesuckless/viewtopic.php?p=57799#p57799\">input of the mighty JustCropIt</a>, version 2.5 introduces Repeats!</h3>\n\n<p>Rather than trying to explain exactly what it does, it's really worth reading the topic.</p>\n\n<h3>A quick rundown of the added parameters:</h3>\n\n\n<ul>\n\t<li><b>Repeat Blip</b>: how many times the blips defined in Blip Frames will be repeated - works with ranges too! </li>\n\t<li><b>Repeat Offset</b>: inserts an Offset between the repeats (in whole frames). </li>\n\t<li><b>Value Multiplier</b>: at 1 it does nothing, at 0.5 it halves the Blip Value of every repeated Blip (at 2 it doubles it). So with a Repeat Blip set to 2 instead of the Blip values being 1, 1, 1 they'd be 1, 0.5, 0.25. </li>\n\t<li><b>Multiplier Curve</b>: controls the Value Multiplier, Linear is as the example above, Expo is exponential allowing for easing in/out, and Spline is just wild - play with it! </li>\n\t<li><b>Value Overlap</b>: what happens when repeated blips are starting to overlap - keep the original Blip Value, Replace the Blip Value with the value of the repetition (post multiplier curve) or add both values together. </li>\n</ul>\n\n<h4>If you like Blip and the time it saves you, please consider <a href=\"https://www.patreon.com/wesuckless\">becoming a We Suck Less Patron</a></h4>\n\n<h3>We Suck Less companion topic:</h3>\n\n<p><a href=\"https://www.steakunderwater.com/wesuckless/viewtopic.php?t=3485\">https://www.steakunderwater.com/wesuckless/viewtopic.php?t=3485</a></p>",
         "Deploy": {
             "1.0": "Fuses/Modifiers/Blip.fuse"
         },
         "Date": {
             "__flags": 256,
             "1.0": 2025.0,
-            "2.0": 9.0,
-            "3.0": 20.0
+            "2.0": 10.0,
+            "3.0": 5.0
         },
         "Author": "Pieter Van Houte",
-        "Version": 2.12,
+        "Version": 2.5,
         "Category": "Modifiers",
         "Donation": {
             "Amount": "",
@@ -12767,7 +12771,7 @@
     },
     "346": {
         "__ctor": "Atom",
-        "Version": 1.6,
+        "Version": 1.7,
         "Deploy": {
             "1.0": "Fuses/Effect/XfChroma.fuse"
         },
@@ -12775,9 +12779,9 @@
         "Category": "Tools/Effect",
         "Date": {
             "__flags": 256,
-            "1.0": 2017.0,
-            "2.0": 11.0,
-            "3.0": 8.0
+            "1.0": 2029.0,
+            "2.0": 9.0,
+            "3.0": 29.0
         },
         "Author": "Stefan Ihringer",
         "Description": "Creates a colorful transformation effect, very suitable for chromatic aberrations.",
