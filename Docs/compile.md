@@ -114,12 +114,13 @@ Double-click on the disk image to mount it. The "Reactor.app" file in this disk 
 
 The release files are saved to a local folder with the naming convention:
 
-`Reactor Standalone/Releases/<YYYY-MM-DD> Beta <Number>/reactor-for-linux-x64-v4-beta-<Number>`
-`Reactor Standalone/Releases/<YYYY-MM-DD> Beta <Number>/reactor-for-mac-universal-v4-beta-<Number>`
-`Reactor Standalone/Releases/<YYYY-MM-DD> Beta <Number>/reactor-for-win-x64-v4-beta-<Number>`
+- `Reactor Standalone/Releases/<YYYY-MM-DD> Beta <Number>/reactor-for-linux-x64-v4-beta-<Number>`
+- `Reactor Standalone/Releases/<YYYY-MM-DD> Beta <Number>/reactor-for-mac-universal-v4-beta-<Number>`
+- `Reactor Standalone/Releases/<YYYY-MM-DD> Beta <Number>/reactor-for-win-x64-v4-beta-<Number>`
 
-In this case `<Number>` means a beta release value like "33".
-In this case `<YYYY-MM-DD>` means a date like "2025-10-21".
+The placeholder text `<Number>` means a beta release value like "33".
+
+The placeholder text `<YYYY-MM-DD>` means a date like "2025-10-21".
 
 ### HTML Docs
 
