@@ -46,7 +46,7 @@ Currently Xojo 2025 Release 2.1 is used. The Xojo project file is saved as an XM
 
 ![Xojo XML Pref](Images/xojo-xml.png)
 
-Currently an incrementing number is appended to the Xojo project file name. This number is updated each time a major change happens to the Reactor Standaline source code. This makes it easy to revert changes and know how far back you have to go.
+Currently an incrementing number is appended to the Xojo project file name. This number is updated each time a major change happens to the Reactor Standalone source code. This makes it easy to revert changes and know how far back you have to go.
 
 `$HOME/Xojo Reactor/Reactor R691.xojo_xml_project`
 
@@ -252,7 +252,7 @@ Here is an example of the Reactor.json file structure:
 }
 ```
 
-An interesting note with this Reactor.json file is the "Zipfile" attribute provides the direct download HTTPS link URL for GitLab to deliver a per-atom package zipped download. This means all of the atom package resources are live bundled by GitLab into a single file download as an "Atomz" package that can be saved to disk, and used in a later offline install on an air-gapped TPN (Trusted Partner Network" compilant setup at a studio.
+An interesting note with this Reactor.json file is the "Zipfile" attribute provides the direct download HTTPS link URL for GitLab to deliver a per-atom package zipped download. This means all of the atom package resources are live bundled by GitLab into a single file download as an "Atomz" package that can be saved to disk, and used in a later offline install on an air-gapped TPN (Trusted Partner Network) compilant setup at a studio.
 
 3. A Reactor Standalone "Highlights.json" file is saved to the GitLab repo's "JSON" folder as well. This provides each GitLab repo with a custom news feed for Reactor users to see in the right panel of the Reactor user interface.
 
