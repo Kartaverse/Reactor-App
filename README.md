@@ -1,4 +1,5 @@
-# Reactor for macOS
+# Reactor App Development Repo
+
 ## Overview
 
 Reactor is a package manager created by the [We Suck Less Community](https://www.steakunderwater.com/wesuckless/viewforum.php?f=32) for Fusion/Resolve, Houdini, and LightWave. Reactor streamlines the installation of 3rd party content through the use of "Atom" packages that are synced automatically with a Git repository.
